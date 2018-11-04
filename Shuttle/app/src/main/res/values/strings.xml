@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Shuttle</string>
+    <string name="name">Nombre</string>
+    <string name="password">Contraseña</string>
+    <string name="mail">Mail</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="signin">Registrarse</string>
+    <string name="next">Siguiente</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="find_route">Calcular ruta</string>
+    <string name="set_starting_point">Establecer punto de salida</string>
+    <string name="set_max_passengers">Establecer máximo de pasajeros</string>
 </resources>
