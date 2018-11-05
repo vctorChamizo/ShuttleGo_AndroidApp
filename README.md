@@ -1,6 +1,6 @@
 # TFG_GIS
 
-Autores: Carlos Castellanos Mateo yt Víctor Chamizo Rodriguez
+Autores: Carlos Castellanos Mateo y Víctor Chamizo Rodriguez
 
 
 ### Links documentación
