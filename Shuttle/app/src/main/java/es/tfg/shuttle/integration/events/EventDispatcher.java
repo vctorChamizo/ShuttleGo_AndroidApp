@@ -17,14 +17,18 @@ class EventDispatcher {
     private RequestQueue queue = null;
     private EventDispatcher() {};
 
+    private static final String proyectId = "shuttlebus-c7c54";
+    private static final String proyectURL = "https://us-central1-"+proyectId+".cloudfunctions.net/";
+    private Context context;
+
 
     static EventDispatcher getInstance(Context context) {
 
         if(ourInstance == null){
             ourInstance = new EventDispatcher();
             ourInstance.queue = Volley.newRequestQueue(context);
-
         }
+        ourInstance.context = context;
 
         return ourInstance;
     }
@@ -33,11 +37,11 @@ class EventDispatcher {
     public void dispatchEvent(Events event, JSONObject data){
 
         Request request = null;
-        
+
         switch(event){
             case SIGNIN:
 
-                request = new JsonObjectRequest(Request.Method.POST, "aqui hay que meter la url",data,
+                request = new JsonObjectRequest(Request.Method.POST,proyectURL+"signin",data,
 
                     new Response.Listener<JSONObject>() {
                     @Override
