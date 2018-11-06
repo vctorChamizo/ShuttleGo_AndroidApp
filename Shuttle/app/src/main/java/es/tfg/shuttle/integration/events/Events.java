@@ -1,6 +1,6 @@
 package es.tfg.shuttle.integration.events;
 
-public enum ShuttleEvents {
+public enum Events {
 
     //Persons events
     SIGNUP,

@@ -11,9 +11,10 @@ class EventDispatcher {
     }
     private EventDispatcher() {};
 
+    
     private RequestHandler rh = new RequestHandler();
 
-    public void dispatchEvent(ShuttleEvents event){
+    public void dispatchEvent(Events event, Object data){
 
         switch(event){
             case SIGNIN:
