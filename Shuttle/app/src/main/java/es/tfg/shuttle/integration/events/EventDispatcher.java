@@ -1,7 +1,5 @@
 package es.tfg.shuttle.integration.events;
 
-import es.tfg.shuttle.integration.requestHandler.RequestHandler;
-
 class EventDispatcher {
 
     //atributos y metodos del singleton
@@ -11,13 +9,11 @@ class EventDispatcher {
     }
     private EventDispatcher() {};
 
-    
-    private RequestHandler rh = new RequestHandler();
-
     public void dispatchEvent(Events event, Object data){
 
         switch(event){
             case SIGNIN:
+
             break;
         }
 
