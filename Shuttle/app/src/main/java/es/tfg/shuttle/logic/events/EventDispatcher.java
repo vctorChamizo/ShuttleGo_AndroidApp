@@ -1,4 +1,4 @@
-package es.tfg.shuttle.integration.events;
+package es.tfg.shuttle.logic.events;
 
 import android.content.Context;
 
@@ -11,7 +11,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-class EventDispatcher {
+public class EventDispatcher {
 
     private static EventDispatcher ourInstance = null;
     private RequestQueue queue = null;
@@ -19,16 +19,14 @@ class EventDispatcher {
 
     private static final String proyectId = "shuttlebus-c7c54";
     private static final String proyectURL = "https://us-central1-"+proyectId+".cloudfunctions.net/";
-    private Context context;
 
 
-    static EventDispatcher getInstance(Context context) {
+    static EventDispatcher getInstance(Context ApplicationContext) {
 
         if(ourInstance == null){
             ourInstance = new EventDispatcher();
-            ourInstance.queue = Volley.newRequestQueue(context);
+            ourInstance.queue = Volley.newRequestQueue(ApplicationContext);
         }
-        ourInstance.context = context;
 
         return ourInstance;
     }

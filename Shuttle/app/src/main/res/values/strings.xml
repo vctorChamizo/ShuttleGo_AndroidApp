@@ -11,4 +11,7 @@
     <string name="find_route">Calcular ruta</string>
     <string name="set_starting_point">Establecer punto de salida</string>
     <string name="set_max_passengers">Establecer máximo de pasajeros</string>
+    
+    <!--Error strings-->
+    <string name="notlogged">the user is not logged</string>
 </resources>

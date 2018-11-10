@@ -9,6 +9,8 @@ Funciones en firebase: https://firebase.google.com/docs/functions/get-started?au
 
 Mandar petición http en android: https://developer.android.com/training/volley/simple
 
+Licencias y limitaciones en Firebase: https://firebase.google.com/pricing/
+
 Alternativa Google Maps:
   - https://www.mapbox.com/
   - https://www.mapbox.com/mapbox.js/example/v1.0.0/single-marker/

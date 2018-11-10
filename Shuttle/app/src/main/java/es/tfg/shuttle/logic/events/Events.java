@@ -1,4 +1,4 @@
-package es.tfg.shuttle.integration.events;
+package es.tfg.shuttle.logic.events;
 
 public enum Events {
 
