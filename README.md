@@ -16,3 +16,8 @@ Alternativa Google Maps:
   - https://www.mapbox.com/mapbox.js/example/v1.0.0/single-marker/
   
 Promesas en javascript: https://javascript.info/promise-chaining
+
+Recibir peticiones http en firebase: https://firebase.google.com/docs/functions/http-events?hl=es-419
+
+
+Enviar peticiones post desde android: https://www.itworld.com/article/2702452/development/how-to-send-a-post-request-with-google-volley-on-android.html
