@@ -14,3 +14,5 @@ Licencias y limitaciones en Firebase: https://firebase.google.com/pricing/
 Alternativa Google Maps:
   - https://www.mapbox.com/
   - https://www.mapbox.com/mapbox.js/example/v1.0.0/single-marker/
+  
+Promesas en javascript: https://javascript.info/promise-chaining

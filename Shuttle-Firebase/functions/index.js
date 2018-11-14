@@ -1,10 +1,12 @@
 const functions = require('firebase-functions');
+const personSA = require("./business/personSA");
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
- exports.signin = functions.https.onRequest((request, response) => {
-    
-    console.log(request.body);
-  //  response.send("Hello from Firebase!");
- });
+exports.signin = functions.https.onRequest((request, response) =>{
+  
+  let user = request.body.user;
+
+  personSA.signIn(user.email, user.password).then((sucessful)=>{
+      response.status(200).send(sucessful);
+  });
+
+});
