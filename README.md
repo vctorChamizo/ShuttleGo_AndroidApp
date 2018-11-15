@@ -15,8 +15,11 @@ Mandar petición http en android:
 	
 Recibir peticiones http en firebase: https://firebase.google.com/docs/functions/http-events?hl=es-419
 
-Promesas en javascript: https://javascript.info/promise-chaining
+Depurar funciones de firebase:
+	- https://cloud.google.com/functions/docs/emulator
+	- https://www.youtube.com/watch?v=knb8UK4RGN8
 
+Promesas en javascript: https://javascript.info/promise-chaining
 
 Alternativa Google Maps:
 	- https://www.mapbox.com/
