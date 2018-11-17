@@ -7,5 +7,7 @@ admin.initializeApp({
   databaseURL: "https://shuttlebus-c7c54.firebaseio.com"
 });
 
-admin.database().goOnline();
-module.exports = admin.firestore();
+const db = admin.firestore();
+db.settings.timestampsInSnapshots=true; //para que no salga un aviso
+
+module.exports = db;
