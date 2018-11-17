@@ -11,8 +11,8 @@ exports.signin = functions.https.onRequest((request, response) =>{
     response.status(200).send(sucessful)        //200 = OK
   )
   .catch((err)=>{
-    console.log(new Error("database Error: "+err));
-    response.status(500).send();                //500 = Internal Server Error
+    console.log(err);
+    response.status(500).send(""+err);          //500 = Internal Server Error
     }
   )
 
