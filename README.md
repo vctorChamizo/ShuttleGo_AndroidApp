@@ -9,9 +9,7 @@ Licencias y limitaciones en Firebase: https://firebase.google.com/pricing/
 
 Funciones en firebase: https://firebase.google.com/docs/functions/get-started?authuser=0
 
-Mandar petición http en android:
-	- https://developer.android.com/training/volley/simple
-	- https://www.itworld.com/article/2702452/development/how-to-send-a-post-request-with-google-volley-on-android.html
+Llamar al servidor desde android: https://firebase.google.com/docs/functions/callable?hl=es-419
 	
 Recibir peticiones http en firebase: https://firebase.google.com/docs/functions/http-events?hl=es-419
 
