@@ -40,7 +40,7 @@ public class EventDispatcher {
 
             case SIGNIN:
 
-                this.mFunctions
+                return this.mFunctions
                         .getHttpsCallable("addMessage")
                         .call(data)
                         .continueWith(new Continuation<HttpsCallableResult, String>() {
@@ -48,17 +48,11 @@ public class EventDispatcher {
                             public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
 
                                 String result = (String) task.getResult().getData();
+
                                 return result;
                             }
-                        }).addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-
-                        task.toString();
-                        System.out.print("Prueba");
-                    }
-                });
-        }
+                        });
+        }//switch
 
         return null;
     }

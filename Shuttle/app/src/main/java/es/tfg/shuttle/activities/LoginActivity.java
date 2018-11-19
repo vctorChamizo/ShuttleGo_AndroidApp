@@ -1,12 +1,16 @@
 package es.tfg.shuttle.activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.functions.FirebaseFunctionsException;
 
 
 import org.json.JSONException;
@@ -47,10 +51,32 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Task<String> t = EventDispatcher.getInstance().dispatchEvent(Event.SIGNIN, user);
+                EventDispatcher.getInstance().dispatchEvent(Event.SIGNIN, user)
+                        .addOnCompleteListener(new OnCompleteListener<String>() {
 
-                Intent welcomeIntent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                startActivity(welcomeIntent);
+                            @Override
+                            public void onComplete(@NonNull Task<String> task) {
+
+                                if (!task.isSuccessful()) {
+
+                                    Exception e = task.getException();
+
+                                    if (e instanceof FirebaseFunctionsException) {
+
+                                        FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+                                        FirebaseFunctionsException.Code code = ffe.getCode();
+                                        Object details = ffe.getDetails();
+                                    }
+                                }
+                                else {
+
+                                    Intent welcomeIntent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                                    startActivity(welcomeIntent);
+                                }
+                            }//onComplete
+                        });
+
+
             }
         });
     }
