@@ -34,18 +34,20 @@ public class LoginActivity extends AppCompatActivity {
                 String password = ((EditText)findViewById(R.id.password_signin_text)).getText().toString();
 
                 JSONObject json = new JSONObject();
+                JSONObject user = new JSONObject();
 
                 try {
 
                     json.put("email", email);
                     json.put("password", password);
+                    user.put("user", json);
 
                 } catch (JSONException e) {
 
                     e.printStackTrace();
                 }
 
-                Task<String> t = EventDispatcher.getInstance().dispatchEvent(Event.SIGNIN, json);
+                Task<String> t = EventDispatcher.getInstance().dispatchEvent(Event.SIGNIN, user);
 
                 Intent welcomeIntent = new Intent(LoginActivity.this, WelcomeActivity.class);
                 startActivity(welcomeIntent);
