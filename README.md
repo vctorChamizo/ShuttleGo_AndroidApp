@@ -5,6 +5,8 @@ Autores: Carlos Castellanos Mateo y Víctor Chamizo Rodriguez
 
 ### Links documentación
 
+#### Servidor
+
 Licencias y limitaciones en Firebase: https://firebase.google.com/pricing/
 
 Funciones en firebase: https://firebase.google.com/docs/functions/get-started?authuser=0
@@ -18,6 +20,11 @@ Depurar funciones de firebase:
 	- https://www.youtube.com/watch?v=knb8UK4RGN8
 
 Promesas en javascript: https://javascript.info/promise-chaining
+
+
+#### Front-end:
+
+Librerias Gradle y uso Gson: http://www.proyectosimio.com/es/programacion-android-gson-libreria-para-parsear-documentos-json/
 
 Alternativa Google Maps:
 	- https://www.mapbox.com/
