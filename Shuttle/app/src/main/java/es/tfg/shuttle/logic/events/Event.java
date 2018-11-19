@@ -1,6 +1,6 @@
 package es.tfg.shuttle.logic.events;
 
-public enum Events {
+public enum Event {
 
     //Persons events
     SIGNUP,

@@ -1,21 +1,31 @@
 package es.tfg.shuttle.logic.events;
 
-import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import org.json.JSONObject;
+
 
 public class EventDispatcher {
 
     private static EventDispatcher ourInstance = null;
-    private EventDispatcher() {};
-
     private FirebaseFunctions mFunctions;
 
-    static EventDispatcher getInstance(Context ApplicationContext) {
+
+    private EventDispatcher() {}
+
+
+    public static EventDispatcher getInstance() {
 
         if(ourInstance == null){
+
             ourInstance = new EventDispatcher();
             ourInstance.mFunctions = FirebaseFunctions.getInstance();
         }
@@ -24,12 +34,32 @@ public class EventDispatcher {
     }
 
 
-    public void dispatchEvent(Events event, JSONObject data){
+    public Task<String> dispatchEvent(Event event, JSONObject data){
 
         switch(event){
+
             case SIGNIN:
-               // this.mFunctions.getHttpsCallable("signin").call(data).getResult
-                break;
+
+                this.mFunctions
+                        .getHttpsCallable("addMessage")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, String>() {
+                            @Override
+                            public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+
+                                String result = (String) task.getResult().getData();
+                                return result;
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+
+                        task.toString();
+                        System.out.print("Prueba");
+                    }
+                });
         }
+
+        return null;
     }
 }
