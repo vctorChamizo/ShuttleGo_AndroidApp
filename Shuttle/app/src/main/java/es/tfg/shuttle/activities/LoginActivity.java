@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Button signInButton = findViewById(R.id.signin_button);
-
         signInButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -48,35 +48,22 @@ public class LoginActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
 
-                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
                 }
 
-                EventDispatcher.getInstance().dispatchEvent(Event.SIGNIN, user)
-                        .addOnCompleteListener(new OnCompleteListener<String>() {
+                EventDispatcher.getInstance()
+                .dispatchEvent(Event.SIGNIN, user)
+                .addOnCompleteListener(new OnCompleteListener<String>() {
 
-                            @Override
-                            public void onComplete(@NonNull Task<String> task) {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
 
-                                if (!task.isSuccessful()) {
+                        if (!task.isSuccessful())
+                            Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
 
-                                    Exception e = task.getException();
-
-                                    if (e instanceof FirebaseFunctionsException) {
-
-                                        FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
-                                        FirebaseFunctionsException.Code code = ffe.getCode();
-                                        Object details = ffe.getDetails();
-                                    }
-                                }
-                                else {
-
-                                    Intent welcomeIntent = new Intent(LoginActivity.this, WelcomeActivity.class);
-                                    startActivity(welcomeIntent);
-                                }
-                            }//onComplete
-                        });
-
-
+                        else startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                    }//onComplete
+                });
             }
         });
     }

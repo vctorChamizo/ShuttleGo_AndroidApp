@@ -3,6 +3,7 @@ package es.tfg.shuttle.logic.session;
 import org.json.JSONObject;
 
 public class Session{
+
     private static final Session ourInstance = new Session();
 
     static Session getInstance() {
