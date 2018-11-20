@@ -3,7 +3,10 @@ const personSA = require("./business/personSA");
 
 exports.signin = functions.https.onRequest((request, response) =>{
 
-  let user = request.body.user;
+  //all the request body is here
+  const data = request.body.data;
+
+  let user = data.user;
 
   personSA.signIn(user.email, user.password)
   

@@ -28,6 +28,9 @@ public class EventDispatcher {
 
             ourInstance = new EventDispatcher();
             ourInstance.mFunctions = FirebaseFunctions.getInstance();
+
+            //descomentar para usar simulador
+            //ourInstance.mFunctions.useFunctionsEmulator("http://10.0.2.2:8010");
         }
 
         return ourInstance;
@@ -41,15 +44,19 @@ public class EventDispatcher {
             case SIGNIN:
 
                 return this.mFunctions
-                        .getHttpsCallable("addMessage")
+                        .getHttpsCallable("signin")
                         .call(data)
                         .continueWith(new Continuation<HttpsCallableResult, String>() {
                             @Override
-                            public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                            public String then(@NonNull Task<HttpsCallableResult> task) {
+                                try {
+                                    //aqui llega la respuesta
+                                    return task.getResult().getData().toString();
+                                }catch(Exception e){
+                                    System.out.print("ERROR: "+e);
+                                }
 
-                                String result = (String) task.getResult().getData();
-
-                                return result;
+                                return null;
                             }
                         });
         }//switch
