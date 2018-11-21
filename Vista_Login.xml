@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.LoginActivity">
+
+
+    <ImageView
+        android:id="@+id/main_bg_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:scaleType="centerCrop"
+        android:src="@drawable/main_bg" />
+
+    <TextView
+        android:id="@+id/tittle_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor=""
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/subtittle_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tittle_login"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/secondaryTextColor"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/subTittle"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subtittle_login"
+        android:layout_margin="40dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/email_login"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_text_bg"
+            android:paddingHorizontal="15dp"
+            android:text="@string/email"
+            android:textColor="@color/secondaryTextColor"
+            android:inputType=""
+            tools:ignore="TextFields" />
+
+        <EditText
+            android:id="@+id/password_login"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/edit_text_bg"
+            android:paddingHorizontal="15dp"
+            android:text="@string/password"
+            android:textColor="@color/secondaryTextColor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear1"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_bg"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparentColor"
+            android:text="@string/signin" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Registrate"
+            android:textAllCaps="true"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="sans-serif"
+            android:text="@string/forgotPassword"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
