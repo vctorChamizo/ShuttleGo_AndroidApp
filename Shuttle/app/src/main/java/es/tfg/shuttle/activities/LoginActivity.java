@@ -16,6 +16,9 @@ import com.google.firebase.functions.FirebaseFunctionsException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+
 import es.tfg.shuttle.R;
 import es.tfg.shuttle.logic.events.Event;
 import es.tfg.shuttle.logic.events.EventDispatcher;
@@ -53,12 +56,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 EventDispatcher.getInstance()
                 .dispatchEvent(Event.SIGNIN, user)
-                .addOnCompleteListener(new OnCompleteListener<String>() {
+                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
 
                     @Override
-                    public void onComplete(@NonNull Task<String> task) {
+                    public void onComplete(@NonNull Task<HashMap<String,String>> task) {
 
-                        if (!task.isSuccessful())
+                        if (!task.isSuccessful() || task.getResult() == null)
                             Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
 
                         else startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));

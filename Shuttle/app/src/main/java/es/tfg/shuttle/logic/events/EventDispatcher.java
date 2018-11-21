@@ -8,6 +8,8 @@ import com.google.firebase.functions.HttpsCallableResult;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 
 public class EventDispatcher {
 
@@ -24,13 +26,16 @@ public class EventDispatcher {
 
             ourInstance = new EventDispatcher();
             ourInstance.mFunctions = FirebaseFunctions.getInstance();
+
+            //descomentar para usar simulador
+            //ourInstance.mFunctions.useFunctionsEmulator("http://10.0.2.2:8010");
         }
 
         return ourInstance;
     }
 
 
-    public Task<String> dispatchEvent(Event event, JSONObject data){
+    public Task<HashMap<String,String>> dispatchEvent(Event event, JSONObject data){
 
         switch(event){
 
@@ -39,12 +44,12 @@ public class EventDispatcher {
                 return this.mFunctions
                         .getHttpsCallable("signin")
                         .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, String>() {
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
 
                             @Override
-                            public String then(@NonNull Task<HttpsCallableResult> task) {
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
 
-                               return (String) task.getResult().getData();
+                               return  (HashMap<String,String>)task.getResult().getData();
                             }
                         });//signin
 
