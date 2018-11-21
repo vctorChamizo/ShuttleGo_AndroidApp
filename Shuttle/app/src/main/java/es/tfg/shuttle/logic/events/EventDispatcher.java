@@ -48,8 +48,7 @@ public class EventDispatcher {
 
                             @Override
                             public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-
-                               return  (HashMap<String,String>)task.getResult().getData();
+                                return  (HashMap<String,String>)task.getResult().getData();
                             }
                         });//signin
 

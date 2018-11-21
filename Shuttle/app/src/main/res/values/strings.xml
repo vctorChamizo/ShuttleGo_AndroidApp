@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Shuttle</string>
+    <string name="app_name">ShuttleGo</string>
     <string name="name">Nombre</string>
     <string name="password">Contraseña</string>
-    <string name="mail">Mail</string>
+    <string name="mail">Email</string>
     <string name="login">Iniciar sesión</string>
     <string name="signin">Registrarse</string>
     <string name="next">Siguiente</string>
