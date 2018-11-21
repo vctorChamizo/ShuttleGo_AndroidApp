@@ -8,17 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.functions.FirebaseFunctionsException;
-
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
-
 import es.tfg.shuttle.R;
 import es.tfg.shuttle.logic.events.Event;
 import es.tfg.shuttle.logic.events.EventDispatcher;
@@ -31,14 +25,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button signInButton = findViewById(R.id.signin_button);
+        Button signInButton = findViewById(R.id.btn_signin_login);
         signInButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                String email = ((EditText)findViewById(R.id.email_signin_text)).getText().toString();
-                String password = ((EditText)findViewById(R.id.password_signin_text)).getText().toString();
+                String email = ((EditText)findViewById(R.id.email_login)).getText().toString();
+                String password = ((EditText)findViewById(R.id.password_login)).getText().toString();
 
                 JSONObject json = new JSONObject();
                 JSONObject user = new JSONObject();

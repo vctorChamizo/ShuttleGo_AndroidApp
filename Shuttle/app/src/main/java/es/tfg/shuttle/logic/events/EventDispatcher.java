@@ -5,9 +5,7 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
-
 import org.json.JSONObject;
-
 import java.util.HashMap;
 
 
@@ -39,6 +37,8 @@ public class EventDispatcher {
 
         switch(event){
 
+            case SIGNUP:
+                break;
             case SIGNIN:
 
                 return this.mFunctions
@@ -52,7 +52,11 @@ public class EventDispatcher {
                             }
                         });//signin
 
+            case SIGNOUT:
+                break;
             default: return null;
         }//switch
+
+        return null;
     }
 }

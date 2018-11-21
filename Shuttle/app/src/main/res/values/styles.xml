@@ -1,21 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
-        <!-- Colors -->
-        <item name="primaryColor">@color/primaryColor</item>
-        <item name="primaryLightColor">@color/primaryLightColor</item>
-        <item name="primaryDarkColor">@color/primaryDarkColor</item>
-        <item name="secondaryColor">@color/secondaryColor</item>
-        <item name="secondaryLightColor">@color/secondaryLightColor</item>
-        <item name="secondaryDarkColor">@color/secondaryDarkColor</item>
-        <item name="primaryTextColor">@color/primaryTextColor</item>
-        <item name="secondaryTextColor">@color/secondaryTextColor</item>
-        <item name="transparentColor">@color/transparentColor</item>
 
     </style>
 

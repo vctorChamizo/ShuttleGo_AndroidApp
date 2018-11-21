@@ -1,17 +1,21 @@
 <resources>
-    <string name="app_name">ShuttleGo</string>
-    <string name="name">Nombre</string>
-    <string name="password">Contraseña</string>
-    <string name="mail">Email</string>
-    <string name="login">Iniciar sesión</string>
-    <string name="signin">Registrarse</string>
-    <string name="next">Siguiente</string>
-    <string name="accept">Aceptar</string>
-    <string name="cancel">Cancelar</string>
-    <string name="find_route">Calcular ruta</string>
-    <string name="set_starting_point">Establecer punto de salida</string>
-    <string name="set_max_passengers">Establecer máximo de pasajeros</string>
 
-    <!--Error strings-->
-    <string name="notlogged">the user is not logged</string>
+    <!-- Main -->
+    <string name="app_name">ShuttleGo</string>
+    <string name="subTittle">Haz tu viaje más fácil</string>
+
+
+    <!-- Login -->
+    <string name="signin">Iniciar sesión</string>
+    <string name="signup">Registrate</string>
+    <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
+
+
+    <!-- User -->
+    <string name="name">Nombre</string>
+    <string name="surname">Apellidos</string>
+    <string name="number">Número</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+
 </resources>
