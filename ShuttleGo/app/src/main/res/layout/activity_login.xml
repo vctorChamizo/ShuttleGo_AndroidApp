@@ -34,12 +34,12 @@
 
         <EditText
             android:id="@+id/email_login"
-            android:text="@string/email"
+            android:hint="@string/email"
             style="@style/DataLogin"/>
 
         <EditText
             android:id="@+id/password_login"
-            android:text="@string/password"
+            android:hint="@string/password"
             style="@style/DataLogin"/>
 
     </LinearLayout>
