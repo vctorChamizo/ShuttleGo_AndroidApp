@@ -8,15 +8,15 @@ import com.google.firebase.functions.HttpsCallableResult;
 import org.json.JSONObject;
 import java.util.HashMap;
 
-
+/**
+ * Access the business data to create the content of the view with respect to the returned data.
+ */
 public class EventDispatcher {
 
     private static EventDispatcher ourInstance = null;
     private FirebaseFunctions mFunctions;
 
-
     private EventDispatcher() {}
-
 
     public static EventDispatcher getInstance() {
 

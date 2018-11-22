@@ -1,5 +1,6 @@
 package tfg.shuttlego.logic.person;
 
+
 public class Person {
 
     private String name;
@@ -12,12 +13,12 @@ public class Person {
 
     public Person() {}
 
+
     public Person (String email, String password){
 
         this.email = email;
         this.password = password;
     }
-
 
 
     public String getName() {

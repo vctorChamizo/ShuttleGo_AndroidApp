@@ -18,7 +18,11 @@ import tfg.shuttlego.R;
 import tfg.shuttlego.logic.events.Event;
 import tfg.shuttlego.logic.events.EventDispatcher;
 
-@SuppressLint("Registered")
+
+/**
+ * Control the login of the application.
+ * Allows you to enter the application if the account entered by the user is correct.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     @Override
