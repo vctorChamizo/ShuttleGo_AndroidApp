@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "819297468256",
+    "firebase_url": "https://shuttlebus-c7c54.firebaseio.com",
+    "project_id": "shuttlebus-c7c54",
+    "storage_bucket": "shuttlebus-c7c54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819297468256:android:dfab852219d82bc4",
+        "android_client_info": {
+          "package_name": "tfg.shuttlego"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819297468256-n9dvc9a63sanq74loqnfvtuheo9i18bk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tfg.shuttlego",
+            "certificate_hash": "09c09510d4d17236f6a66a010ef7dbdf656ff5cf"
+          }
+        },
+        {
+          "client_id": "819297468256-i9rpppt98qioi7cdiah56epllh6hm31l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRkJBKMSyX3bmAyEYbgfyXIP_ogC4NHjQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819297468256-i9rpppt98qioi7cdiah56epllh6hm31l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
