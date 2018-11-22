@@ -10,4 +10,5 @@
     <color name="colorSecondaryText">#ffffff</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="colorAccent">#ffa000</color>
 </resources>
