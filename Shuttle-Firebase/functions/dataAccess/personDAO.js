@@ -3,9 +3,9 @@ const db = require("./database.js");
 
 
 /**
- * @function Check that the user is in the database
+ * Check that the user is in the database
  * @param {String} email Account's email.
- * @returns User data in the correct case and null in the wrong case.
+ * @returns {Object} User data in the correct case and null in the wrong case.
  */
 function getUser(email){
 
