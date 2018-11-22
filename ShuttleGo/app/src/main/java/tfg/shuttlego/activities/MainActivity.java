@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import tfg.shuttlego.R;
 
-@SuppressLint("Registered")
 public class MainActivity extends AppCompatActivity {
 
     @Override
