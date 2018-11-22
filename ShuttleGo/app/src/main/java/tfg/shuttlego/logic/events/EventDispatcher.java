@@ -20,12 +20,8 @@ public class EventDispatcher {
 
     private EventDispatcher() {}
 
-<<<<<<< HEAD
-
     public static EventDispatcher getInstance(Context applicationContext) {
-=======
-    public static EventDispatcher getInstance() {
->>>>>>> ae16242d5f39b482a8bafd706d561218c5b10e1e
+
 
         if(ourInstance == null){
 
