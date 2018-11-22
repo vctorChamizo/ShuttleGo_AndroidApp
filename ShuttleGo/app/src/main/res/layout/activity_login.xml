@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+
+    <ImageView
+        android:id="@+id/login_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/background" />
+
+    <TextView
+        android:id="@+id/tittle_login"
+        android:text="@string/app_name"
+        style="@style/TittleApp"/>
+
+    <TextView
+        android:id="@+id/subtittle_login"
+        android:layout_below="@+id/tittle_login"
+        android:text="@string/subTittle"
+        style="@style/SubTittleApp"/>
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_below="@+id/subtittle_login"
+        android:layout_margin="40dp"
+        style="@style/VerticalLinear">
+
+        <EditText
+            android:id="@+id/email_login"
+            android:text="@string/email"
+            style="@style/DataLogin"/>
+
+        <EditText
+            android:id="@+id/password_login"
+            android:text="@string/password"
+            style="@style/DataLogin"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_below="@+id/linear1"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginTop="30dp"
+        style="@style/VerticalLinear">
+
+        <Button
+            android:id="@+id/btn_signin_login"
+            android:text="@string/signin"
+            style="@style/ButtonLogin"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <Button
+            android:id="@+id/btn_signup_login"
+            android:text="@string/signup"
+            style="@style/SecondaryButtonLogin" />
+
+        <Button
+            android:id="@+id/btn_forgot_login"
+            android:layout_alignParentEnd="true"
+            android:textAllCaps="false"
+            android:text="@string/forgotPassword"
+            style="@style/SecondaryButtonLogin" />
+    </RelativeLayout>
+</RelativeLayout>
