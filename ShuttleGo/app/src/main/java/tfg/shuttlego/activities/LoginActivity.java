@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -53,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
                 }
 
-                EventDispatcher.getInstance()
+                EventDispatcher.getInstance(getApplicationContext())
                 .dispatchEvent(Event.SIGNIN, user)
                 .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
                     @Override
