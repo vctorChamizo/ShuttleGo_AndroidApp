@@ -53,8 +53,8 @@
 
         <Button
             android:id="@+id/btn_signin_login"
-            android:text="@string/signin"
-            style="@style/ButtonLogin"/>
+            style="@style/ButtonLogin"
+            android:text="@string/signin" />
     </LinearLayout>
 
     <RelativeLayout
@@ -70,11 +70,14 @@
             android:text="@string/signup"
             style="@style/SecondaryButtonLogin" />
 
+        <!--
         <Button
             android:id="@+id/btn_forgot_login"
             android:layout_alignParentEnd="true"
             android:textAllCaps="false"
             android:text="@string/forgotPassword"
-            style="@style/SecondaryButtonLogin" />
+            style="@style/SecondaryButtonLogin"
+            />
+         -->
     </RelativeLayout>
 </RelativeLayout>
