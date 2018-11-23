@@ -57,27 +57,20 @@
             android:text="@string/signin" />
     </LinearLayout>
 
-    <RelativeLayout
+    <!--
+    <LinearLayout
         android:id="@+id/relative2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp">
 
         <Button
             android:id="@+id/btn_signup_login"
-            android:text="@string/signup"
-            style="@style/SecondaryButtonLogin" />
-
-        <!--
-        <Button
-            android:id="@+id/btn_forgot_login"
-            android:layout_alignParentEnd="true"
-            android:textAllCaps="false"
-            android:text="@string/forgotPassword"
             style="@style/SecondaryButtonLogin"
-            />
-         -->
-    </RelativeLayout>
+            android:text="@string/signup" />
+
+    </LinearLayout>-->
 </RelativeLayout>
