@@ -57,20 +57,19 @@
             android:text="@string/signin" />
     </LinearLayout>
 
-    <!--
+
     <LinearLayout
-        android:id="@+id/relative2"
+        android:id="@+id/linear3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="0dp">
+        android:layout_below="@+id/linear2"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="20dp">
 
         <Button
             android:id="@+id/btn_signup_login"
             style="@style/SecondaryButtonLogin"
             android:text="@string/signup" />
 
-    </LinearLayout>-->
+    </LinearLayout>
 </RelativeLayout>
