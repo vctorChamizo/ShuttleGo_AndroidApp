@@ -8,6 +8,6 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-db.settings.timestampsInSnapshots=true; //para que no salga un aviso
+db.settings.timestampsInSnapshots=true;
 
 module.exports = db;

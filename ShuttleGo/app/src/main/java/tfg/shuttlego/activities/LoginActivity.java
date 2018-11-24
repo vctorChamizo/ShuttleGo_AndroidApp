@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<HashMap<String,String>> task) {
 
-                        if (!task.isSuccessful() || task.getResult() == null)
+                        if (!task.isSuccessful() || task.getResult() == null || task.getResult().containsKey("error"))
                             Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
 
                         else startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
