@@ -29,7 +29,7 @@ public class EventDispatcher {
             FirebaseApp.initializeApp(applicationContext);
             ourInstance.mFunctions = FirebaseFunctions.getInstance();
 
-            //descomentar para usar simulador NO BORRAR!
+            //descomentar para llamar al servidor en local NO BORRAR!
             //ourInstance.mFunctions.useFunctionsEmulator("http://10.0.2.2:8010");
         }
 
