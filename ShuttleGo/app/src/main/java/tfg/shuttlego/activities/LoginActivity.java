@@ -61,10 +61,21 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<HashMap<String,String>> task) {
 
-                        if (!task.isSuccessful() || task.getResult() == null || task.getResult().containsKey("error"))
-                            Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                        if (!task.isSuccessful() || task.getResult() == null)
+                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
 
-                        else startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                        else if(task.getResult().containsKey("error")) {
+
+                            if(task.getResult().get("error").equals("incorrectSignin") || task.getResult().get("error").equals("userDoesntExists"))
+                                Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
+
+                            else if(task.getResult().get("error").equals("server"))
+                                Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
+
+                            else
+                                Toast.makeText(getApplicationContext(), "Error desconocido: "+task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+
+                        }else startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
                     }//onComplete
                 });
             }
