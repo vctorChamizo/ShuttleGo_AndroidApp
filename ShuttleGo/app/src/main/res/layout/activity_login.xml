@@ -55,6 +55,7 @@
             android:id="@+id/btn_signin_login"
             style="@style/ButtonLogin"
             android:text="@string/signin" />
+
     </LinearLayout>
 
 

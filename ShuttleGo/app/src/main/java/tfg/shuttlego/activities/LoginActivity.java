@@ -1,7 +1,8 @@
 package tfg.shuttlego.activities;
 
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,14 +12,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import tfg.shuttlego.R;
 import tfg.shuttlego.logic.events.Event;
 import tfg.shuttlego.logic.events.EventDispatcher;
+
 
 
 /**
