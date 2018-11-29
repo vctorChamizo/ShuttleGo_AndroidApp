@@ -1,6 +1,8 @@
 package tfg.shuttlego.activities;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
+import java.util.Objects;
+
 import tfg.shuttlego.R;
 import tfg.shuttlego.logic.events.Event;
 import tfg.shuttlego.logic.events.EventDispatcher;
@@ -27,7 +31,7 @@ import tfg.shuttlego.logic.events.EventDispatcher;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private ProgressBar progressBar;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +44,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                findViewById(R.id.relative_form_login).setVisibility(View.GONE);
+                findViewById(R.id.login_progress).setVisibility(View.VISIBLE);
+
                 String email = ((EditText)findViewById(R.id.email_login)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password_login)).getText().toString();
-
-                setContentView(R.layout.activity_progress_bar);
 
                 JSONObject json = new JSONObject();
                 JSONObject user = new JSONObject();
@@ -65,21 +70,37 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<HashMap<String,String>> task) {
 
-                        if (!task.isSuccessful() || task.getResult() == null)
-                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                        if (!task.isSuccessful() || task.getResult() == null){
 
+                            findViewById(R.id.relative_form_login).setVisibility(View.VISIBLE);
+                            pb = findViewById(R.id.login_progress);
+
+                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                        }
                         else if(task.getResult().containsKey("error")) {
 
-                            if(task.getResult().get("error").equals("incorrectSignin") || task.getResult().get("error").equals("userDoesntExists"))
-                                Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                            findViewById(R.id.relative_form_login).setVisibility(View.VISIBLE);
+                            findViewById(R.id.login_progress).setVisibility(View.GONE);
 
-                            else if(task.getResult().get("error").equals("server"))
-                                Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
+                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
 
-                            else
-                                Toast.makeText(getApplicationContext(), "Error desconocido: "+task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+                                case "incorrectSignin":
+                                case "userDoesntExists":
+                                    Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                                    break;
 
-                        }else startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                                case "server":
+                                    Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
+                                    break;
+
+                                default:
+                                    Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+
+                        }else {
+                            startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                        }
                     }//onComplete
                 });
             }
