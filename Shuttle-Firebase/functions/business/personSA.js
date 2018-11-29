@@ -3,6 +3,15 @@ const ERROR = require("../errors")
 const personDAO = require("../dataAccess/personDAO");
 
 
+function checkUser(user,userType){
+    personSA.signIn(user.email,user.password).then((result)=>{
+        if(result != null && (result.type == null || result.type != userType))
+            throw ERROR.noPermissions;
+    })
+  }
+
+
+
 /**
  * @description Check that the user exists and that the password entered is correct.
  * @param {String} email Account's email.
@@ -26,14 +35,14 @@ function signIn(email, password) {
 
 /**
  * @description register a new user in the database if not exists and meets the requirements
- * @param {Object} newUser 
+ * @param {Object} newUser the new user data
  * @returns {Promise}
  * @throws {Object} error
  */
 function signUp(newUser){
     
-   // if (!checkRequirements(newUser))
-   //     throw ERROR.badRequestForm;
+   if (!checkRequirements(newUser))
+        throw ERROR.badRequestForm;
     
    // else
         return personDAO
@@ -43,18 +52,17 @@ function signUp(newUser){
             else  return personDAO.insertUser(newUser);     
         });
 };
-
 function checkRequirements(newUser){
     return checkType(newUser.type) &&
-    newUser.name != null && newUser.length > 0 &&
+    newUser.name != null && newUser.name.length > 0 &&
     newUser.surname != null && newUser.surname.length > 0 &&
     newUser.password != null && newUser.password.length >= 3 &&
     newUser.number!= null && typeof newUser.number == 'number';
 }
-
 function checkType(type){
     return type == "passenger" || type == "driver"; //admin can't signUp
 };//signup
+
 
 
 
