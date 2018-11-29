@@ -2,13 +2,13 @@ package tfg.shuttlego.activities;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +27,8 @@ import tfg.shuttlego.logic.events.EventDispatcher;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 String email = ((EditText)findViewById(R.id.email_login)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password_login)).getText().toString();
+
+                setContentView(R.layout.activity_progress_bar);
 
                 JSONObject json = new JSONObject();
                 JSONObject user = new JSONObject();

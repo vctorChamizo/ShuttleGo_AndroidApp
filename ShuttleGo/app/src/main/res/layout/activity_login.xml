@@ -35,12 +35,14 @@
         <EditText
             android:id="@+id/email_login"
             android:hint="@string/email"
-            style="@style/DataLogin"/>
+            style="@style/DataLogin"
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/password_login"
             android:hint="@string/password"
-            style="@style/DataLogin"/>
+            style="@style/DataLogin"
+            android:inputType="textPassword"/>
 
     </LinearLayout>
 
@@ -71,6 +73,7 @@
             android:id="@+id/btn_signup_login"
             style="@style/SecondaryButtonLogin"
             android:text="@string/signup" />
+
 
     </LinearLayout>
 </RelativeLayout>
