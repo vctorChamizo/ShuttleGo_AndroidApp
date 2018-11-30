@@ -19,7 +19,7 @@
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.WelcomeActivity" />
-        <activity android:name=".activities.ProgressBarActivity"></activity>
+        <activity android:name=".activities.RegisterActivity"></activity>
     </application>
 
 </manifest>
