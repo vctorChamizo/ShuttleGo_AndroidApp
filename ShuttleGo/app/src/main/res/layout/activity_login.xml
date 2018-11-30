@@ -49,7 +49,8 @@
         <LinearLayout
             android:id="@+id/linear1"
             android:layout_below="@+id/subtittle_login"
-            android:layout_margin="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="15dp"
             style="@style/VerticalLinear">
 
             <EditText
@@ -67,21 +68,23 @@
 
         <LinearLayout
             android:id="@+id/linear2"
+            style="@style/VerticalLinear"
             android:layout_below="@+id/linear1"
-            android:layout_marginHorizontal="70dp"
-            android:layout_marginTop="30dp"
-            style="@style/VerticalLinear">
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="60dp">
 
             <Button
                 android:id="@+id/btn_signin_login"
                 style="@style/ButtonLogin"
-                android:text="@string/signin" />
+                android:text="@string/signin"
+                android:textColor="@color/colorPrimaryDark"/>
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/relative1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/linear2"
             android:layout_marginTop="30dp">
 
@@ -90,6 +93,7 @@
                 style="@style/SecondaryButtonLogin"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
                 android:text="@string/signup" />
         </RelativeLayout>
     </RelativeLayout>
