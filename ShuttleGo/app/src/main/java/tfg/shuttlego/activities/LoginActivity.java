@@ -1,8 +1,6 @@
 package tfg.shuttlego.activities;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Objects;
-
 import tfg.shuttlego.R;
 import tfg.shuttlego.logic.events.Event;
 import tfg.shuttlego.logic.events.EventDispatcher;
@@ -32,6 +29,7 @@ import tfg.shuttlego.logic.events.EventDispatcher;
 public class LoginActivity extends AppCompatActivity {
 
     ProgressBar pb;
+    Button signupButton, signInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +37,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button signupButton = findViewById(R.id.btn_signup_login);
+        signupButton = findViewById(R.id.btn_signup_login);
+        signInButton = findViewById(R.id.btn_signin_login);
+
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                overridePendingTransition(R.anim.right_in, R.anim.right_out);
             }
         });
 
-        Button signInButton = findViewById(R.id.btn_signin_login);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 findViewById(R.id.relative_form_login).setVisibility(View.GONE);
-                findViewById(R.id.login_progress).setVisibility(View.VISIBLE);
+                findViewById(R.id.progress).setVisibility(View.VISIBLE);
 
                 String email = ((EditText)findViewById(R.id.email_login)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password_login)).getText().toString();
@@ -82,14 +82,14 @@ public class LoginActivity extends AppCompatActivity {
                         if (!task.isSuccessful() || task.getResult() == null){
 
                             findViewById(R.id.relative_form_login).setVisibility(View.VISIBLE);
-                            pb = findViewById(R.id.login_progress);
+                            pb = findViewById(R.id.progress);
 
                             Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
                         }
                         else if(task.getResult().containsKey("error")) {
 
                             findViewById(R.id.relative_form_login).setVisibility(View.VISIBLE);
-                            findViewById(R.id.login_progress).setVisibility(View.GONE);
+                            findViewById(R.id.progress).setVisibility(View.GONE);
 
                             switch (Objects.requireNonNull(task.getResult().get("error"))) {
 

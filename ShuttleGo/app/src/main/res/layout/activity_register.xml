@@ -1,30 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".activities.RegisterActivity"
     android:background="@color/colorPrimaryDark">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="20dp">
+        android:id="@+id/linear_progress"
+        style="@style/VerticalLinear">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="385dp"
-            android:layout_height="518dp"
-            android:gravity="center"
-            android:text="Pantalla de Registro"
-            android:textSize="30dp"
-            tools:layout_editor_absoluteX="12dp"
-            tools:layout_editor_absoluteY="204dp" />
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/ProgressBar"/>
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <!-- Layout que pide el email -->
+    <RelativeLayout
+    android:id="@+id/relative1_form_register"
+    style="@style/relativeForm">
+
+        <LinearLayout
+            android:id="@+id/linear1_relative1_register"
+            android:layout_marginTop="30dp"
+            style="@style/VerticalLinear">
+
+            <TextView
+                android:id="@+id/tittle1_register"
+                style="@style/TittleWelcome"
+                android:text="@string/tittleWelcome" />
+
+            <TextView
+                android:id="@+id/subtittle1_register"
+                android:text="@string/subtittleWelcome"
+                style="@style/SubTittleWelcome"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2_relative1_register"
+            android:layout_below="@+id/linear1_relative1_register"
+            style="@style/VerticalLinear"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/et_email_register"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                style="@style/DataRegister"/>
+
+            <RadioGroup
+                android:id="@+id/rg_register"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb1_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/driver" />
+
+                <RadioButton
+                    android:id="@+id/rb2_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/passanger" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btn_next1_register"
+                android:layout_marginTop="50dp"
+                android:text="@string/next"
+                style="@style/ButtonSign"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Layout que pide los datos personales -->
+    <RelativeLayout
+        android:id="@+id/relative2_form_register"
+        style="@style/relativeForm"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/linear1_relative2_register"
+            android:layout_marginTop="30dp"
+            style="@style/VerticalLinear">
+
+            <TextView
+                android:id="@+id/tittle2_register"
+                style="@style/TittleWelcome"
+                android:text="@string/tittleDataRegister" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2_relative2_register"
+            android:layout_below="@+id/linear1_relative2_register"
+            style="@style/VerticalLinear"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/et_name_register"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
+                style="@style/DataRegister" />
+
+            <EditText
+                android:id="@+id/et_surname_register"
+                android:layout_marginTop="20dp"
+                android:hint="@string/surname"
+                android:inputType="textPersonName"
+                style="@style/DataRegister"/>
+
+            <EditText
+                android:id="@+id/et_phone_register"
+                android:layout_marginTop="20dp"
+                android:hint="@string/phone"
+                android:inputType="phone"
+                style="@style/DataRegister"/>
+
+            <Button
+                android:id="@+id/btn_next2_register"
+                android:layout_marginTop="50dp"
+                android:text="@string/next"
+                style="@style/ButtonSign"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Layout que pide la contraseña -->
+    <RelativeLayout
+        android:id="@+id/relative3_form_register"
+        style="@style/relativeForm"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/linear1_relative3_register"
+            android:layout_marginTop="30dp"
+            style="@style/VerticalLinear">
+
+            <TextView
+                android:id="@+id/tittle3_register"
+                style="@style/TittleWelcome"
+                android:text="@string/tittlePasswordRegister" />
+
+            <TextView
+                android:id="@+id/subtittle2_register"
+                android:layout_below="@+id/tittle3_register"
+                android:text="@string/subtittlePasswordRegister"
+                style="@style/SubTittleWelcome"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2_relative3_register"
+            android:layout_below="@+id/linear1_relative3_register"
+            style="@style/VerticalLinear"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/et_password_register"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                style="@style/DataRegister" />
+
+            <Button
+                android:id="@+id/btn_finish_register"
+                android:layout_marginTop="50dp"
+                android:text="@string/finish"
+                style="@style/ButtonSign" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

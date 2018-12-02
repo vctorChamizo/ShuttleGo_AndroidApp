@@ -8,10 +8,23 @@
     <string name="signup">Registrate</string>
     <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
 
+    <!-- Register -->
+    <string name="tittleWelcome">Te damos la bienvenida a ShuttleGo</string>
+    <string name="subtittleWelcome">Registrte con tu email</string>
+    <string name="tittleDataRegister">Algunos datos más...</string>
+    <string name="tittlePasswordRegister">Ya casi hemos terminado</string>
+    <string name="subtittlePasswordRegister">Introduce una constraseña</string>
+    <string name="next">Siguiente</string>
+    <string name="finish">Finalizar</string>
+
+
     <!-- User -->
     <string name="name">Nombre</string>
     <string name="surname">Apellidos</string>
-    <string name="number">Número</string>
+    <string name="phone">Telefono</string>
     <string name="email">Email</string>
     <string name="password">Contraseña</string>
+    <string name="passanger">Pasajero</string>
+    <string name="driver">Conductor</string>
+    <string name="admin">Administrador</string>
 </resources>

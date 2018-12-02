@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/colorPrimaryDark"
-    tools:context=".activities.LoginActivity">
+    tools:context=".activities.LoginActivity"
+    android:background="@color/colorPrimaryDark" >
 
     <!---<ImageView
      android:id="@+id/login_bg"
@@ -16,18 +16,12 @@
      app:srcCompat="@drawable/background" /> -->
 
     <LinearLayout
-        android:id="@+id/linear_progress_login"
+        android:id="@+id/linear_progress"
         style="@style/VerticalLinear">
 
         <ProgressBar
-            android:id="@+id/login_progress"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:indeterminateDrawable="@drawable/progressbar_circular"
-            android:visibility="gone"/>
-
-
+            android:id="@+id/progress"
+            style="@style/ProgressBar"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -76,7 +70,7 @@
 
             <Button
                 android:id="@+id/btn_signin_login"
-                style="@style/ButtonLogin"
+                style="@style/ButtonSign"
                 android:text="@string/signin"
                 android:textColor="@color/colorPrimaryDark"/>
         </LinearLayout>
