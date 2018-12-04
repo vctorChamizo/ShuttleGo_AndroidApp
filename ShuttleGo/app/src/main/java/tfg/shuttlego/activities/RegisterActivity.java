@@ -62,6 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                findViewById(R.id.relative3_form_register).setVisibility(View.GONE);
+                findViewById(R.id.progress).setVisibility(View.VISIBLE);
                 startActivity(new Intent(RegisterActivity.this, WelcomeActivity.class));
                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }

@@ -17,11 +17,11 @@
 
     <LinearLayout
         android:id="@+id/linear_progress"
-        style="@style/VerticalLinear">
+        style="@style/LinearProgress">
 
         <ProgressBar
             android:id="@+id/progress"
-            style="@style/ProgressBar"/>
+            style="@style/ProgressBar" />
     </LinearLayout>
 
     <RelativeLayout
