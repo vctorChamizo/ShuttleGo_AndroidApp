@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,8 +29,10 @@ import tfg.shuttlego.logic.events.EventDispatcher;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    ProgressBar pb;
-    Button signupButton, signInButton;
+    private ProgressBar pBar;
+    private Button signupButton, signInButton;
+    private RelativeLayout relFormLogin;
+    private EditText emailText, passwordText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +40,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        relFormLogin = findViewById(R.id.relative_form_login);
         signupButton = findViewById(R.id.btn_signup_login);
         signInButton = findViewById(R.id.btn_signin_login);
+        pBar = findViewById(R.id.progress);
+        emailText = findViewById(R.id.email_login);
+        passwordText = findViewById(R.id.password_login);
+
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,11 +61,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                findViewById(R.id.relative_form_login).setVisibility(View.GONE);
-                findViewById(R.id.progress).setVisibility(View.VISIBLE);
+                relFormLogin.setVisibility(View.GONE);
+                pBar.setVisibility(View.VISIBLE);
 
-                String email = ((EditText)findViewById(R.id.email_login)).getText().toString();
-                String password = ((EditText)findViewById(R.id.password_login)).getText().toString();
+                String email = emailText.getText().toString();
+                String password = passwordText.getText().toString();
 
                 JSONObject json = new JSONObject();
                 JSONObject user = new JSONObject();
@@ -81,15 +89,14 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (!task.isSuccessful() || task.getResult() == null){
 
-                            findViewById(R.id.relative_form_login).setVisibility(View.VISIBLE);
-                            pb = findViewById(R.id.progress);
-
+                            relFormLogin.setVisibility(View.VISIBLE);
+                            pBar.setVisibility(View.GONE);
                             Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
                         }
                         else if(task.getResult().containsKey("error")) {
 
-                            findViewById(R.id.relative_form_login).setVisibility(View.VISIBLE);
-                            findViewById(R.id.progress).setVisibility(View.GONE);
+                            relFormLogin.setVisibility(View.VISIBLE);
+                            pBar.setVisibility(View.GONE);
 
                             switch (Objects.requireNonNull(task.getResult().get("error"))) {
 
