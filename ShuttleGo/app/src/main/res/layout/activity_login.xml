@@ -50,14 +50,16 @@
             <EditText
                 android:id="@+id/email_login"
                 android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 style="@style/DataLogin"
-                android:inputType="textEmailAddress"/>
+                android:theme="@style/ThemeData" />
 
             <EditText
                 android:id="@+id/password_login"
                 android:hint="@string/password"
+                android:inputType="textPassword"
                 style="@style/DataLogin"
-                android:inputType="textPassword" />
+                android:theme="@style/ThemeData" />
         </LinearLayout>
 
         <LinearLayout

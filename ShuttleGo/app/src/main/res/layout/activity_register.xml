@@ -48,7 +48,8 @@
                 android:id="@+id/et_email_register"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                style="@style/DataRegister" />
+                style="@style/DataRegister"
+                android:theme="@style/ThemeData"/>
 
             <RadioGroup
                 android:id="@+id/rg_register"
@@ -107,21 +108,24 @@
                 android:id="@+id/et_name_register"
                 android:hint="@string/name"
                 android:inputType="textPersonName"
-                style="@style/DataRegister" />
+                style="@style/DataRegister"
+                android:theme="@style/ThemeData"/>
 
             <EditText
                 android:id="@+id/et_surname_register"
                 android:layout_marginTop="20dp"
                 android:hint="@string/surname"
                 android:inputType="textPersonName"
-                style="@style/DataRegister"/>
+                style="@style/DataRegister"
+                android:theme="@style/ThemeData"/>
 
             <EditText
                 android:id="@+id/et_phone_register"
                 android:layout_marginTop="20dp"
                 android:hint="@string/phone"
                 android:inputType="phone"
-                style="@style/DataRegister"/>
+                style="@style/DataRegister"
+                android:theme="@style/ThemeData"/>
 
             <Button
                 android:id="@+id/btn_next2_register"
@@ -164,7 +168,8 @@
                 android:id="@+id/et_password_register"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                style="@style/DataRegister" />
+                style="@style/DataRegister"
+                android:theme="@style/ThemeData"/>
 
             <Button
                 android:id="@+id/btn_finish_register"
