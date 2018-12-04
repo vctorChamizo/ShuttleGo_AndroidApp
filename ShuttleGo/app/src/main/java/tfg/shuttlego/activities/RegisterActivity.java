@@ -52,7 +52,6 @@ public class RegisterActivity extends AppCompatActivity {
         pBar = findViewById(R.id.progress);
 
 
-        // Capture the email
         next1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +65,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        //Capture the name, surname and phone
         next2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        //Capture the password and call server.
+        //Capture data and call server.
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = emailText.getText().toString();
                 String name = emailText.getText().toString();
                 String surname = surnameText.getText().toString();
-                Editable phone = phoneText.getText();               //Controlar bien el tipo de dato que devuelve.
+                Editable phone = phoneText.getText();//Controlar bien el tipo de dato que devuelve.
                 String password = passwordText.getText().toString();
 
                 try {
@@ -118,11 +116,11 @@ public class RegisterActivity extends AppCompatActivity {
                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
                         //Insercción de control de respuestas
+
+                        startActivity(new Intent(RegisterActivity.this, WelcomeActivity.class));
+                        overridePendingTransition(R.anim.left_in, R.anim.left_out);
                    }
                 });
-
-                startActivity(new Intent(RegisterActivity.this, WelcomeActivity.class));
-                overridePendingTransition(R.anim.left_in, R.anim.left_out);
 
 
             }
