@@ -33,7 +33,7 @@
     <style name="ButtonSign">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/btn_login</item>
+        <item name="android:background">@drawable/btn_sign</item>
     </style>
 
     <style name="ThemeData" parent="Widget.AppCompat.EditText">

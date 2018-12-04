@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         }else {
 
-                            //Control de usuario llegado.
+                            //Control de respuesta
                             startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
                         }
                     }//onComplete

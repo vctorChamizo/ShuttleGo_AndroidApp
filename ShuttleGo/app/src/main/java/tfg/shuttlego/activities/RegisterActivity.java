@@ -5,12 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import tfg.shuttlego.R;
 import tfg.shuttlego.logic.events.Event;
@@ -32,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button next1Button, next2Button, finishButton;
     private RelativeLayout relative1, relative2, relative3;
     private EditText emailText, nameText, surnameText, phoneText, passwordText;
+    private RadioButton driverButton, passengerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
         surnameText = findViewById(R.id.et_surname_register);
         phoneText = findViewById(R.id.et_phone_register);
         passwordText = findViewById(R.id.et_password_register);
+        driverButton = findViewById(R.id.rb1_register);
+        passengerButton = findViewById(R.id.rb2_register);
         pBar = findViewById(R.id.progress);
-
 
         next1Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +99,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String surname = surnameText.getText().toString();
                 Editable phone = phoneText.getText();//Controlar bien el tipo de dato que devuelve.
                 String password = passwordText.getText().toString();
+                String type;
+                if (driverButton.isChecked()) type = "driver";
+                else if (passengerButton.isChecked()) type = "passenger";
 
                 try {
 
@@ -115,14 +123,41 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                        //Insercción de control de respuestas
+                        if (!task.isSuccessful() || task.getResult() == null){
 
-                        startActivity(new Intent(RegisterActivity.this, WelcomeActivity.class));
-                        overridePendingTransition(R.anim.left_in, R.anim.left_out);
-                   }
+                            relative3.setVisibility(View.VISIBLE);
+                            pBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(task.getResult().containsKey("error")) {
+
+                            relative3.setVisibility(View.VISIBLE);
+                            pBar.setVisibility(View.GONE);
+
+                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
+
+                                /*case "incorrectSignup":
+                                case "userDoesntExists":
+                                    Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                                    break;
+                                */
+                                case "server":
+                                    Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
+                                    break;
+
+                                default:
+                                    Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+
+                        }else {
+
+                            //Control de repsuesta
+                            startActivity(new Intent(RegisterActivity.this, WelcomeActivity.class));
+                            //overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                        }
+                   }//onComlete
                 });
-
-
             }
         });
     }

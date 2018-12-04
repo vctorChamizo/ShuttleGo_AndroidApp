@@ -3,14 +3,11 @@ const personSA = require("./business/personSA");
 const originSA = require("./business/originSA");
 const ERROR = require("./errors");
 
-
-//formato para pruebas NOOO BORRARR!
-//signin({user:{email:"jose@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
-
-function checkData(data){
-  if(data == null || data.user == null || data.user.email == null || data.user.password == null)
-    data={user:{email:"",password:""}};
-}
+/*
+  DATA EXAMPLES:
+    - SIGNIN: signin({user:{email:"jose@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
+    - SIGNUP: signup({user:{surname:"ramirez",number:123,email:"joos@gmil.com",password:"123",type:"driver",name:"jose"}}, {headers: {Authorization: 'Bearer $token'}});
+*/
 
 /**
  * @description Check the correct login of a user in the application.
@@ -23,14 +20,11 @@ exports.signin = functions.https.onCall((data, context) =>{
   .then(result=>result,error=>error);
 });
 
-
-
-//signup({user:{surname:"ramirez",number:123,email:"joos@gmil.com",password:"123",type:"driver",name:"jose"}}, {headers: {Authorization: 'Bearer $token'}});
 /**
  * @description Signs up a new user if not exists
  * @returns {Promise} a promise that returns the new user with the new id or an error
  */
-exports.signup = functions.https.onCall((data,context)=>{
+exports.signup = functions.https.onCall((data, context)=>{
   checkData(data);
   let newUser = data.user;
   return personSA.signUp(newUser)
@@ -45,3 +39,12 @@ exports.getAllOrigins = functions.https.onCall((data,context)=>{
   return originSA.getAllOrigins()
   .then(result=>result,error=>error);
 })
+
+/**
+ * @description
+ * @param {*} data 
+ */
+function checkData(data){
+  if(data == null || data.user == null || data.user.email == null || data.user.password == null)
+    data={user:{email:"",password:""}};
+}//checkData
