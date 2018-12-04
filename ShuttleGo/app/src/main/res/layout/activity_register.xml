@@ -48,7 +48,7 @@
                 android:id="@+id/et_email_register"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                style="@style/DataRegister"/>
+                style="@style/DataRegister" />
 
             <RadioGroup
                 android:id="@+id/rg_register"

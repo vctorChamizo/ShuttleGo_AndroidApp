@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.WelcomeActivity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryDark"
+    android:padding="30dp">
 
     <TextView
         android:id="@+id/textView"
@@ -14,10 +15,6 @@
         android:text="Bienvenido a ShuttleGo"
         android:textColor="@color/colorSecondaryText"
         android:textSize="70px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.188" />
+        android:gravity="center"/>
 
 </android.support.constraint.ConstraintLayout>
