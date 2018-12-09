@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -153,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }else {
 
                             //Control de repsuesta
-                            startActivity(new Intent(RegisterActivity.this, WelcomeActivity.class));
+                            startActivity(new Intent(RegisterActivity.this, StartActivity.class));
                             //overridePendingTransition(R.anim.left_in, R.anim.left_out);
                         }
                    }//onComlete

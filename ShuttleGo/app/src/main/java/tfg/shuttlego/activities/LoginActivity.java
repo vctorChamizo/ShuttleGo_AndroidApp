@@ -20,7 +20,8 @@ import java.util.Objects;
 import tfg.shuttlego.R;
 import tfg.shuttlego.logic.events.Event;
 import tfg.shuttlego.logic.events.EventDispatcher;
-
+import tfg.shuttlego.logic.person.Person;
+import tfg.shuttlego.logic.person.TypePerson;
 
 
 /**
@@ -30,7 +31,6 @@ import tfg.shuttlego.logic.events.EventDispatcher;
 public class LoginActivity extends AppCompatActivity {
 
     private ProgressBar pBar;
-    private Button signupButton, signInButton;
     private RelativeLayout relFormLogin;
     private EditText emailText, passwordText;
 
@@ -41,11 +41,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         relFormLogin = findViewById(R.id.relative_form_login);
-        signupButton = findViewById(R.id.btn_signup_login);
-        signInButton = findViewById(R.id.btn_signin_login);
         pBar = findViewById(R.id.progress);
         emailText = findViewById(R.id.email_login);
         passwordText = findViewById(R.id.password_login);
+        Button signupButton = findViewById(R.id.btn_signup_login);
+        Button signInButton = findViewById(R.id.btn_signin_login);
 
 
         signupButton.setOnClickListener(new View.OnClickListener() {
@@ -116,8 +116,25 @@ public class LoginActivity extends AppCompatActivity {
 
                         }else {
 
-                            //Control de respuesta
-                            startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                            HashMap<String, ?> p = task.getResult();
+                            TypePerson typePerson;
+
+                            String email = p.get("email").toString();
+                            String password = p.get("password").toString();
+                            String name = p.get("name").toString();
+                            String surname = p.get("surname").toString();
+                            int phone = Integer.parseInt(p.get("number").toString());
+                            String type = p.get("type").toString();
+
+                            if (type.equals("passenger")) typePerson = TypePerson.USER;
+                            else if (type.equals("driver")) typePerson = TypePerson.DRIVER;
+                            else typePerson = TypePerson.ADMIN;
+
+                            Person user = new Person(email, password, name, surname, phone, typePerson);
+
+                            Intent logIntent = new Intent(LoginActivity.this, StartActivity.class);
+                            logIntent.putExtra("user", user);
+                            startActivity(logIntent);
                         }
                     }//onComplete
                 });

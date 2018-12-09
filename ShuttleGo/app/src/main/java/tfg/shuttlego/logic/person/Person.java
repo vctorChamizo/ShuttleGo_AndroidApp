@@ -1,11 +1,13 @@
 package tfg.shuttlego.logic.person;
 
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
 
     private String name;
     private String surname;
-    private int number;
+    private int phone;
     private String email;
     private String password;
     private TypePerson type;
@@ -13,11 +15,20 @@ public class Person {
 
     public Person() {}
 
-
     public Person (String email, String password){
 
         this.email = email;
         this.password = password;
+    }
+
+    public Person (String email, String password, String name, String surname, int phone, TypePerson type){
+
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.type = type;
     }
 
 
@@ -29,8 +40,8 @@ public class Person {
         return surname;
     }
 
-    public int getNumber() {
-        return number;
+    public int getPhone() {
+        return phone;
     }
 
     public String getEmail() {
@@ -53,8 +64,8 @@ public class Person {
         this.surname = surname;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setPhone(int phone) {
+        this.phone = phone;
     }
 
     public void setEmail(String email) {
