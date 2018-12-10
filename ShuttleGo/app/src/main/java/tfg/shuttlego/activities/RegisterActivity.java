@@ -164,11 +164,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 switch (Objects.requireNonNull(task.getResult().get("error"))) {
 
-                                    /*case "incorrectSignup":
-                                    case "userDoesntExists":
-                                        Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                                    case "badRequestForm":
+                                        Toast.makeText(getApplicationContext(), "Formato de datos incorrecto", Toast.LENGTH_SHORT).show();
                                         break;
-                                    */
+
+                                    case "userAlreadyExists":
+                                        Toast.makeText(getApplicationContext(), "Usuario ya existente", Toast.LENGTH_SHORT).show();
+                                        break;
+
                                     case "server":
                                         Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
                                         break;

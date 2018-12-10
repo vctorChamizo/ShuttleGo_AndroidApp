@@ -54,7 +54,15 @@ public class EventDispatcher {
                         });//signin
 
             case SIGNUP:
-                break;
+                return this.mFunctions
+                        .getHttpsCallable("signup")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+                            @Override
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                                return  (HashMap<String,String>)task.getResult().getData();
+                            }
+                        });//signin
 
             case SIGNOUT:
                 break;
