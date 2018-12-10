@@ -31,9 +31,12 @@ import tfg.shuttlego.logic.events.EventDispatcher;
 public class RegisterActivity extends AppCompatActivity {
 
     private ProgressBar pBar;
-    private Button next1Button, next2Button, finishButton;
     private RelativeLayout relative1, relative2, relative3;
-    private EditText emailText, nameText, surnameText, phoneText, passwordText;
+    private EditText emailText;
+    private EditText passwordText;
+    private EditText nameText;
+    private EditText surnameText;
+    private EditText phoneText;
     private RadioButton driverButton, passengerButton;
 
     @Override
@@ -41,9 +44,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        next1Button = findViewById(R.id.btn_next1_register);
-        next2Button = findViewById(R.id.btn_next2_register);
-        finishButton = findViewById(R.id.btn_finish_register);
+        Button next1Button = findViewById(R.id.btn_next1_register);
+        Button next2Button = findViewById(R.id.btn_next2_register);
+        Button finishButton = findViewById(R.id.btn_finish_register);
         relative1 = findViewById(R.id.relative1_form_register);
         relative2 = findViewById(R.id.relative2_form_register);
         relative3 = findViewById(R.id.relative3_form_register);
@@ -60,12 +63,21 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Animation animationIn = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_in);
-                Animation animationOut = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_out);
-                relative1.startAnimation(animationOut);
-                relative2.startAnimation(animationIn);
-                relative1.setVisibility(View.GONE);
-                relative2.setVisibility(View.VISIBLE);
+                boolean empty = false;
+
+                if (emailText.getText().toString().isEmpty()) empty = true;
+                if (!driverButton.isChecked() && !passengerButton.isChecked()) empty = true;
+
+                if (!empty){
+                    Animation animationIn = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_in);
+                    Animation animationOut = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_out);
+                    relative1.startAnimation(animationOut);
+                    relative2.startAnimation(animationIn);
+                    relative1.setVisibility(View.GONE);
+                    relative2.setVisibility(View.VISIBLE);
+
+                }
+                else Toast.makeText(getApplicationContext(), "Introduzca todos los datos", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -73,12 +85,22 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Animation animationIn = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_in);
-                Animation animationOut = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_out);
-                relative2.startAnimation(animationOut);
-                relative3.startAnimation(animationIn);
-                relative2.setVisibility(View.GONE);
-                relative3.setVisibility(View.VISIBLE);
+                boolean empty = false;
+
+                if (nameText.getText().toString().isEmpty()) empty = true;
+                if (surnameText.getText().toString().isEmpty()) empty = true;
+                if (phoneText.getText().toString().isEmpty()) empty = true;
+
+                if (!empty){
+                    Animation animationIn = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_in);
+                    Animation animationOut = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_out);
+                    relative2.startAnimation(animationOut);
+                    relative3.startAnimation(animationIn);
+                    relative2.setVisibility(View.GONE);
+                    relative3.setVisibility(View.VISIBLE);
+
+                }
+                else Toast.makeText(getApplicationContext(), "Introduzca todos los datos", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -87,77 +109,87 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                relative3.setVisibility(View.GONE);
-                pBar.setVisibility(View.VISIBLE);
+                boolean empty = false;
 
-                JSONObject json = new JSONObject();
-                JSONObject user = new JSONObject();
+                if (passwordText.getText().toString().isEmpty()) empty = true;
 
-                String email = emailText.getText().toString();
-                String name = emailText.getText().toString();
-                String surname = surnameText.getText().toString();
-                Editable phone = phoneText.getText();//Controlar bien el tipo de dato que devuelve.
-                String password = passwordText.getText().toString();
-                String type;
-                if (driverButton.isChecked()) type = "driver";
-                else if (passengerButton.isChecked()) type = "passenger";
+                if (!empty){
 
-                try {
+                    relative3.setVisibility(View.GONE);
+                    pBar.setVisibility(View.VISIBLE);
 
-                    json.put("email", email);
-                    json.put("name", name);
-                    json.put("surname", surname);
-                    json.put("phone", phone);
-                    json.put("password", password);
-                    user.put("user", json);
+                    JSONObject json = new JSONObject();
+                    JSONObject user = new JSONObject();
 
-                } catch (JSONException e) {
+                    String email = emailText.getText().toString();
+                    String name = nameText.getText().toString();
+                    String surname = surnameText.getText().toString();
+                    Editable phone = phoneText.getText();//Controlar bien el tipo de dato que devuelve.
+                    String password = passwordText.getText().toString();
+                    String type;
+                    if (driverButton.isChecked()) type = "driver";
+                    else type = "passenger";
 
-                    Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
-                }
+                    try {
 
-                EventDispatcher.getInstance(getApplicationContext())
-                .dispatchEvent(Event.SIGNUP, user)
-                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-                    @Override
-                   public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+                        json.put("email", email);
+                        json.put("name", name);
+                        json.put("surname", surname);
+                        json.put("phone", phone);
+                        json.put("password", password);
+                        json.put("type", type);
+                        user.put("user", json);
 
-                        if (!task.isSuccessful() || task.getResult() == null){
+                    } catch (JSONException e) {
 
-                            relative3.setVisibility(View.VISIBLE);
-                            pBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
-                        }
-                        else if(task.getResult().containsKey("error")) {
+                        Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
+                    }
 
-                            relative3.setVisibility(View.VISIBLE);
-                            pBar.setVisibility(View.GONE);
+                    EventDispatcher.getInstance(getApplicationContext())
+                    .dispatchEvent(Event.SIGNUP, user)
+                    .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+                        @Override
+                        public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                            if (!task.isSuccessful() || task.getResult() == null){
 
-                                /*case "incorrectSignup":
-                                case "userDoesntExists":
-                                    Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                                    break;
-                                */
-                                case "server":
-                                    Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                default:
-                                    Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
-                                    break;
+                                relative3.setVisibility(View.VISIBLE);
+                                pBar.setVisibility(View.GONE);
+                                Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
                             }
+                            else if(task.getResult().containsKey("error")) {
 
-                        }else {
+                                relative3.setVisibility(View.VISIBLE);
+                                pBar.setVisibility(View.GONE);
 
-                            //Control de repsuesta
-                            startActivity(new Intent(RegisterActivity.this, StartActivity.class));
-                            //overridePendingTransition(R.anim.left_in, R.anim.left_out);
-                        }
-                   }//onComlete
-                });
-            }
+                                switch (Objects.requireNonNull(task.getResult().get("error"))) {
+
+                                    /*case "incorrectSignup":
+                                    case "userDoesntExists":
+                                        Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    */
+                                    case "server":
+                                        Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
+                                        break;
+
+                                    default:
+                                        Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            }//else if
+                            else {
+
+                                //Control de repsuesta
+                                startActivity(new Intent(RegisterActivity.this, StartActivity.class));
+                                //overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                            }
+                        }//onComlete
+                    });
+
+                }//if
+                else Toast.makeText(getApplicationContext(), "Introduzca una contraseña", Toast.LENGTH_SHORT).show();
+            }//onClick
         });
     }
 }
