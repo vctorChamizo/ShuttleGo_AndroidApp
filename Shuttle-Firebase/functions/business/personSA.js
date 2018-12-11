@@ -20,10 +20,9 @@ function signIn(email, password) {
 }//signIn
 
 /**
- * @description register a new user in the database if not exists and meets the requirements
- * @param {Object} newUser the new user data
- * @returns {Promise}
- * @throws {Object} error
+ * @description Register a new user in the database if not exists and meets the requirements.
+ * @param {Object} newUser The new user data.
+ * @returns {Promise} A promise that returns null or error.
  */
 function signUp(newUser){
     return new Promise((resolve,reject)=>{
@@ -42,10 +41,10 @@ function signUp(newUser){
 }//signUp
 
 /**
- * @description
- * @param {} user 
- * @param {*} userType
- * @throws
+ * @description Check the type and if exists the user. (It should be called when getting or editing risk information )
+ * @param {Object} user User data.
+ * @param {String} userType The type of the user that can do that action.
+ * @returns {Promise} Promise that returns null or error.
  */
 function checkUser(user,userType){
     personSA.signIn(user.email,user.password).then((result)=>{
@@ -54,10 +53,17 @@ function checkUser(user,userType){
     });
 }//checkUser
 
+
+
+
+
+
+
+//--------------PRIVATE METHODS----------------
 /**
- * @description
- * @param {*} newUser 
- * @returns
+ * @description Check sign up requirements.
+ * @param {Object} newUser New user data. 
+ * @returns {Boolean}
  */
 function checkRequirements(newUser){
     return checkType(newUser.type) &&
@@ -68,13 +74,16 @@ function checkRequirements(newUser){
 }//checkRequirements
 
 /**
- * @description admin can't signUp
- * @param {*} type 
+ * @description Check that you are signing up with the correct type
+ * @param {String} type 
  * @returns
  */
 function checkType(type){ 
     return type == "passenger" || type == "driver"; 
 };//checkType
+
+
+
 
 module.exports = {
     signIn:signIn,

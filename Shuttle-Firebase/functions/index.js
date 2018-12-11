@@ -3,6 +3,10 @@ const personSA = require("./business/personSA");
 const originSA = require("./business/originSA");
 const ERROR = require("./errors");
 
+
+
+
+//----------------EXPORTED FUNCTIONS---------------------
 /*
   DATA EXAMPLES:
     - SIGNIN: signin({user:{email:"jose@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
@@ -11,7 +15,7 @@ const ERROR = require("./errors");
 
 /**
  * @description Check the correct login of a user in the application.
- * @returns {Promise} User data in the correct case and error in the wrong case.
+ * @returns {Promise} a promise with user data in the correct case and error in the wrong case.
  */
 exports.signin = functions.https.onCall((data, context) =>{
   checkData(data);
@@ -22,7 +26,7 @@ exports.signin = functions.https.onCall((data, context) =>{
 
 /**
  * @description Signs up a new user if not exists
- * @returns {Promise} a promise that returns the new user with the new id or an error
+ * @returns {Promise} a promise that returns "signedUp:true" if its correct(it allows client to check if connection goes well) or an error
  */
 exports.signup = functions.https.onCall((data, context)=>{
   checkData(data);
@@ -33,16 +37,21 @@ exports.signup = functions.https.onCall((data, context)=>{
 
 /**
  * @description Get all route origins
- * @returns {Promise} a promise that return a list of strings
+ * @returns {Promise} a promise that return a list of route names
  */
 exports.getAllOrigins = functions.https.onCall((data,context)=>{
   return originSA.getAllOrigins()
   .then(result=>result,error=>error);
 })
 
+
+
+
+
+//---------PRIVATE METHODS----------
 /**
- * @description
- * @param {*} data 
+ * @description Avoid internal null errors, it should be called at the first line of all exported functions.
+ * @param {*} data from callable functions.
  */
 function checkData(data){
   if(data == null || data.user == null || data.user.email == null || data.user.password == null)
