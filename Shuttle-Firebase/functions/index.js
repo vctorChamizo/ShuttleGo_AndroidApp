@@ -28,7 +28,7 @@ exports.signup = functions.https.onCall((data, context)=>{
   checkData(data);
   let newUser = data.user;
   return personSA.signUp(newUser)
-  .then(result =>result,error=>error);
+  .then(result =>{return {signedUp:true}},error=>error);
 })
 
 /**

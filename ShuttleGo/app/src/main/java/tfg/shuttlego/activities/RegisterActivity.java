@@ -135,7 +135,8 @@ public class RegisterActivity extends AppCompatActivity {
                         json.put("email", email);
                         json.put("name", name);
                         json.put("surname", surname);
-                        json.put("phone", phone);
+                        json.put("number", phone);
+
                         json.put("password", password);
                         json.put("type", type);
                         user.put("user", json);

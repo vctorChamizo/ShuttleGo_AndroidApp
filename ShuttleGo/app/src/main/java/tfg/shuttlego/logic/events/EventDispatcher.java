@@ -27,10 +27,11 @@ public class EventDispatcher {
 
             ourInstance = new EventDispatcher();
             FirebaseApp.initializeApp(applicationContext);
+
             ourInstance.mFunctions = FirebaseFunctions.getInstance();
 
             //descomentar para llamar al servidor en local NO BORRAR!
-            //ourInstance.mFunctions.useFunctionsEmulator("http://10.0.2.2:8010");
+           //ourInstance.mFunctions.useFunctionsEmulator("http://10.0.2.2:8010");
         }
 
         return ourInstance;

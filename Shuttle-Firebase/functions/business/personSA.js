@@ -26,13 +26,18 @@ function signIn(email, password) {
  * @throws {Object} error
  */
 function signUp(newUser){
-    if (!checkRequirements(newUser)) throw ERROR.badRequestForm;
-
-    return personDAO
-    .getUser(newUser.email)
-    .then(result => {
-        if (result != null) throw ERROR.userAlreadyExists;
-        else return personDAO.insertUser(newUser);     
+    return new Promise((resolve,reject)=>{
+    
+    if (!checkRequirements(newUser)) reject(ERROR.badRequestForm);
+    else resolve();
+    }).then(()=>{
+        return personDAO.getUser(newUser.email);
+    }).then(result => {
+            if (result != null) throw ERROR.userAlreadyExists;
+            else{
+                newUser.number=Number(newUser.number);
+                 return personDAO.insertUser(newUser); 
+            }    
     });
 }//signUp
 
@@ -59,7 +64,7 @@ function checkRequirements(newUser){
     newUser.name != null && newUser.name.length > 0 &&
     newUser.surname != null && newUser.surname.length > 0 &&
     newUser.password != null && newUser.password.length >= 3 &&
-    newUser.number!= null && typeof newUser.number == 'number';
+    newUser.number!= null && Number(newUser.number)!=NaN;
 }//checkRequirements
 
 /**
