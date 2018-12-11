@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,19 +13,17 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Objects;
-
 import tfg.shuttlego.R;
 import tfg.shuttlego.logic.events.Event;
 import tfg.shuttlego.logic.events.EventDispatcher;
+import tfg.shuttlego.logic.person.Person;
+import tfg.shuttlego.logic.person.TypePerson;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -38,6 +35,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText surnameText;
     private EditText phoneText;
     private RadioButton driverButton, passengerButton;
+    private String email;
+    private String name;
+    private String surname;
+    private int phone;
+    private String password;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (emailText.getText().toString().isEmpty()) empty = true;
                 if (!driverButton.isChecked() && !passengerButton.isChecked()) empty = true;
-
                 if (!empty){
                     Animation animationIn = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_in);
                     Animation animationOut = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_out);
@@ -75,7 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
                     relative2.startAnimation(animationIn);
                     relative1.setVisibility(View.GONE);
                     relative2.setVisibility(View.VISIBLE);
-
                 }
                 else Toast.makeText(getApplicationContext(), "Introduzca todos los datos", Toast.LENGTH_SHORT).show();
             }
@@ -90,7 +91,6 @@ public class RegisterActivity extends AppCompatActivity {
                 if (nameText.getText().toString().isEmpty()) empty = true;
                 if (surnameText.getText().toString().isEmpty()) empty = true;
                 if (phoneText.getText().toString().isEmpty()) empty = true;
-
                 if (!empty){
                     Animation animationIn = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_in);
                     Animation animationOut = AnimationUtils.loadAnimation(RegisterActivity.this, R.anim.left_out);
@@ -98,7 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
                     relative3.startAnimation(animationIn);
                     relative2.setVisibility(View.GONE);
                     relative3.setVisibility(View.VISIBLE);
-
                 }
                 else Toast.makeText(getApplicationContext(), "Introduzca todos los datos", Toast.LENGTH_SHORT).show();
             }
@@ -112,7 +111,6 @@ public class RegisterActivity extends AppCompatActivity {
                 boolean empty = false;
 
                 if (passwordText.getText().toString().isEmpty()) empty = true;
-
                 if (!empty){
 
                     relative3.setVisibility(View.GONE);
@@ -121,12 +119,11 @@ public class RegisterActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject();
                     JSONObject user = new JSONObject();
 
-                    String email = emailText.getText().toString();
-                    String name = nameText.getText().toString();
-                    String surname = surnameText.getText().toString();
-                    Editable phone = phoneText.getText();//Controlar bien el tipo de dato que devuelve.
-                    String password = passwordText.getText().toString();
-                    String type;
+                    email = emailText.getText().toString();
+                    name = nameText.getText().toString();
+                    surname = surnameText.getText().toString();
+                    phone = Integer.parseInt(phoneText.getText().toString());
+                    password = passwordText.getText().toString();
                     if (driverButton.isChecked()) type = "driver";
                     else type = "passenger";
 
@@ -136,7 +133,6 @@ public class RegisterActivity extends AppCompatActivity {
                         json.put("name", name);
                         json.put("surname", surname);
                         json.put("number", phone);
-
                         json.put("password", password);
                         json.put("type", type);
                         user.put("user", json);
@@ -184,9 +180,15 @@ public class RegisterActivity extends AppCompatActivity {
                             }//else if
                             else {
 
-                                //Control de repsuesta
-                                startActivity(new Intent(RegisterActivity.this, StartActivity.class));
-                                //overridePendingTransition(R.anim.left_in, R.anim.left_out);
+                                TypePerson typePerson;
+                                if (type.equals("passenger")) typePerson = TypePerson.USER;
+                                else typePerson = TypePerson.DRIVER;
+
+                                Person user = new Person(email, password, name, surname, phone, typePerson);
+
+                                Intent logIntent = new Intent(RegisterActivity.this, StartActivity.class);
+                                logIntent.putExtra("user", user);
+                                startActivity(logIntent);
                             }
                         }//onComlete
                     });
