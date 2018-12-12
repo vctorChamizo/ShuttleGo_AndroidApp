@@ -108,94 +108,119 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                boolean empty = false;
+            boolean empty = false;
 
-                if (passwordText.getText().toString().isEmpty()) empty = true;
-                if (!empty){
+            if (passwordText.getText().toString().isEmpty()) empty = true;
+            if (!empty){
 
-                    relative3.setVisibility(View.GONE);
-                    pBar.setVisibility(View.VISIBLE);
+                relative3.setVisibility(View.GONE);
+                pBar.setVisibility(View.VISIBLE);
 
-                    JSONObject json = new JSONObject();
-                    JSONObject user = new JSONObject();
+                JSONObject json = new JSONObject();
+                JSONObject user = new JSONObject();
 
-                    email = emailText.getText().toString();
-                    name = nameText.getText().toString();
-                    surname = surnameText.getText().toString();
+                email = emailText.getText().toString();
+                name = nameText.getText().toString();
+                surname = surnameText.getText().toString();
+                password = passwordText.getText().toString();
+
+                try {
+
                     phone = Integer.parseInt(phoneText.getText().toString());
-                    password = passwordText.getText().toString();
-                    if (driverButton.isChecked()) type = "driver";
-                    else type = "passenger";
+                }
+                catch (NumberFormatException e){
 
-                    try {
+                    Toast.makeText(getApplicationContext(), "Introduzca un telefono correcto", Toast.LENGTH_SHORT).show();
+                }
 
-                        json.put("email", email);
-                        json.put("name", name);
-                        json.put("surname", surname);
-                        json.put("number", phone);
-                        json.put("password", password);
-                        json.put("type", type);
-                        user.put("user", json);
+                if (driverButton.isChecked()) type = "driver";
+                else type = "passenger";
 
-                    } catch (JSONException e) {
+                try {
 
-                        Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
-                    }
+                    json.put("email", email);
+                    json.put("name", name);
+                    json.put("surname", surname);
+                    json.put("number", phone);
+                    json.put("password", password);
+                    json.put("type", type);
+                    user.put("user", json);
 
-                    EventDispatcher.getInstance(getApplicationContext())
-                    .dispatchEvent(Event.SIGNUP, user)
-                    .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-                        @Override
-                        public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+                } catch (JSONException e) {
 
-                            if (!task.isSuccessful() || task.getResult() == null){
+                    relative1.setVisibility(View.VISIBLE);
+                    relative3.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
+                }
 
-                                relative3.setVisibility(View.VISIBLE);
-                                pBar.setVisibility(View.GONE);
-                                Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
-                            }
-                            else if(task.getResult().containsKey("error")) {
+                EventDispatcher.getInstance(getApplicationContext())
+                        .dispatchEvent(Event.SIGNUP, user)
+                        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+                            @Override
+                            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                                relative3.setVisibility(View.VISIBLE);
-                                pBar.setVisibility(View.GONE);
+                                if (!task.isSuccessful() || task.getResult() == null) {
 
-                                switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                                    relative3.setVisibility(View.VISIBLE);
+                                    pBar.setVisibility(View.GONE);
+                                    Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                                } else if (task.getResult().containsKey("error")) {
 
-                                    case "badRequestForm":
-                                        Toast.makeText(getApplicationContext(), "Formato de datos incorrecto", Toast.LENGTH_SHORT).show();
-                                        break;
+                                    relative3.setVisibility(View.VISIBLE);
+                                    pBar.setVisibility(View.GONE);
 
-                                    case "userAlreadyExists":
-                                        Toast.makeText(getApplicationContext(), "Usuario ya existente", Toast.LENGTH_SHORT).show();
-                                        break;
+                                    switch (Objects.requireNonNull(task.getResult().get("error"))) {
 
-                                    case "server":
-                                        Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
-                                        break;
+                                        case "badRequestForm":
+                                            Toast.makeText(getApplicationContext(), "Formato de datos incorrecto", Toast.LENGTH_SHORT).show();
+                                            break;
 
-                                    default:
-                                        Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
-                                        break;
+                                        case "userAlreadyExists":
+                                            Toast.makeText(getApplicationContext(), "Usuario ya existente", Toast.LENGTH_SHORT).show();
+                                            break;
+
+                                        case "server":
+                                            Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
+                                            break;
+
+                                        default:
+                                            Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+                                            break;
+                                    }
+                                }//else if
+                                else {
+
+                                    TypePerson typePerson;
+                                    Class nextClass;
+
+                                    switch (type) {
+                                        case "passenger":
+                                            typePerson = TypePerson.USER;
+                                            //nextClass = PassengerStartActivity.class;
+                                            break;
+
+                                        default:
+                                            typePerson = TypePerson.DRIVER;
+                                            //nextClass = DriverStartActivity.class;
+                                            break;
+                                    }
+
+                                    Person user = new Person(email, password, name, surname, phone, typePerson);
+
+                        /*
+                        Intent logIntent = new Intent(LoginActivity.this, nextClass);
+                        logIntent.putExtra("user", user);
+                        startActivity(logIntent);
+                        */
+
+                                    //Captura del parametro pasado en la siguiente actvidad.
+                                    //Person user = (Person)getIntent().getExtras().getSerializable("user");
                                 }
-                            }//else if
-                            else {
-
-                                TypePerson typePerson;
-                                if (type.equals("passenger")) typePerson = TypePerson.USER;
-                                else typePerson = TypePerson.DRIVER;
-
-                                Person user = new Person(email, password, name, surname, phone, typePerson);
-
-                                Intent logIntent = new Intent(RegisterActivity.this, StartActivity.class);
-                                logIntent.putExtra("user", user);
-                                startActivity(logIntent);
-                            }
-                        }//onComlete
-                    });
-
-                }//if
-                else Toast.makeText(getApplicationContext(), "Introduzca una contraseña", Toast.LENGTH_SHORT).show();
-            }//onClick
-        });
+                            }//onComlete
+                        })
+            }//if
+            else Toast.makeText(getApplicationContext(), "Introduzca una contraseña", Toast.LENGTH_SHORT).show();
+        }//onClick
+    });
     }
 }

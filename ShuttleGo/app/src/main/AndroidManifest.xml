@@ -18,11 +18,7 @@
         </activity>
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.StartActivity" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.PassengerStartActivity" />
-        <activity android:name=".activities.DriverStartActivity" />
-        <activity android:name=".activities.AdminStartActivity"></activity>
     </application>
 
 </manifest>
