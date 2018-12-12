@@ -22,15 +22,12 @@ public class EventDispatcher {
 
     public static EventDispatcher getInstance(Context applicationContext) {
 
-
         if(ourInstance == null){
 
             ourInstance = new EventDispatcher();
             FirebaseApp.initializeApp(applicationContext);
-
             ourInstance.mFunctions = FirebaseFunctions.getInstance();
 
-            //descomentar para llamar al servidor en local NO BORRAR!
            //ourInstance.mFunctions.useFunctionsEmulator("http://10.0.2.2:8010");
         }
 
@@ -42,8 +39,8 @@ public class EventDispatcher {
 
         switch(event){
 
+            /* ACCOUNT */
             case SIGNIN:
-
                 return this.mFunctions
                         .getHttpsCallable("signin")
                         .call(data)
@@ -68,6 +65,8 @@ public class EventDispatcher {
             case SIGNOUT:
                 break;
 
+
+            /* ORIGIN */
             case GETORIGINS:
                 return this.mFunctions
                         .getHttpsCallable("getAllOrigins")
@@ -79,6 +78,19 @@ public class EventDispatcher {
                             }
                         });//getorigin
 
+            case CREATEORIGIN:
+                return this.mFunctions
+                        .getHttpsCallable("createOrigin")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+                            @Override
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                                return  (HashMap<String,String>)task.getResult().getData();
+                            }
+                        });//createOrigin
+
+
+            /* DEFAULT */
             default: return null;
         }//switch
 

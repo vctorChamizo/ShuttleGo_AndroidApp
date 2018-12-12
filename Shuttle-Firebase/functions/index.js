@@ -5,20 +5,25 @@ const ERROR = require("./errors");
 
 
 
-
-//----------------EXPORTED FUNCTIONS---------------------
-
-//-----------------Person Functions---------------
-/*
-  DATA EXAMPLES:
-    - SIGNIN: signin({user:{email:"jose@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
-    - SIGNUP: signup({user:{surname:"ramirez",number:123,email:"joos@gmil.com",password:"123",type:"driver",name:"jose"}}, {headers: {Authorization: 'Bearer $token'}});
-    - GETORIGINBYID: getOriginById({origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
-    - DELETEORIGIN: deleteOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
-    - CREATEORIGIN: createOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{name:"Barajas T5"}}, {headers: {Authorization: 'Bearer $token'}});
-    - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
+/* DATA IN EXAMPLES
+    
+    ** ACCOUNT **
+      - SIGNIN: signin({user:{email:"jose@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
+      - SIGNUP: signup({user:{surname:"ramirez",number:123,email:"joos@gmil.com",password:"123",type:"driver",name:"jose"}}, {headers: {Authorization: 'Bearer $token'}});
+    
+    ** ORIGIN **
+      - GETORIGINBYID: getOriginById({origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
+      - DELETEORIGIN: deleteOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
+      - CREATEORIGIN: createOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{name:"Barajas T5"}}, {headers: {Authorization: 'Bearer $token'}});
+      - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
 */
 
+
+
+/*---------------- Exported Functions ---------------*/
+
+
+/*---------------- ACCOUNT Functions ---------------*/
 /**
  * @description Check the correct login of a user in the application.
  * @returns {Promise} a promise with user data in the correct case and error in the wrong case.
@@ -42,9 +47,7 @@ exports.signup = functions.https.onCall((data, context)=>{
 })
 
 
-
-
-//----------------origin Functions---------------
+/*---------------- ORIGIN Functions ---------------*/
 /**
  * @description Get all route origins
  * @returns {Promise} a promise that return a list of route names
@@ -54,7 +57,10 @@ exports.getAllOrigins = functions.https.onCall((data,context)=>{
   .then(result=>{return {origins:result}},error=>error);
 })
 
-
+/**
+ * @description
+ * @returns
+ */
 exports.getOrigin = functions.https.onCall((data,context)=>{
   return checkData(data)
   .then(()=>checkOrigin(data.origin))
@@ -62,6 +68,10 @@ exports.getOrigin = functions.https.onCall((data,context)=>{
   .then(result=>result,error=>error);
 })
 
+/**
+ * @description
+ * @returns
+ */
 exports.modifyOrigin = functions.https.onCall((data, context)=>{
   return checkData(data)
   .then(()=>checkOrigin(data.origin))
@@ -70,6 +80,10 @@ exports.modifyOrigin = functions.https.onCall((data, context)=>{
   .then(()=>{return {modified:true}},error=>error);
 });
 
+/**
+ * @description
+ * @returns
+ */
 exports.deleteOrigin = functions.https.onCall((data,context)=>{
   return checkData(data)
   .then(()=>checkUser(data.user,"admin")) //only admin can delete a origin.
@@ -78,6 +92,10 @@ exports.deleteOrigin = functions.https.onCall((data,context)=>{
   .then(()=>{return {deleted:true}},error=>error);
 })
 
+/**
+ * @description
+ * @returns
+ */
 exports.createOrigin = functions.https.onCall((data,context)=>{
   return checkData(data)
   .then(()=>checkUser(data.user,"admin"))
@@ -86,7 +104,8 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>{return {created:true}},error=>error);
 })
 
-//---------PRIVATE METHODS----------
+
+/*---------------- PRIVATE Functions ---------------*/
 /**
  * @description Avoid internal null errors, it should be called at the first line of all exported functions.
  * @param {*} data from callable functions.
@@ -98,13 +117,22 @@ function checkData(data){
   });
 }//checkData
 
+/**
+ * @description 
+ * @param {*} origin 
+ */
 function checkOrigin(origin){
   return new Promise((resolve,reject)=>{
     if(origin == null) reject(ERROR.necessaryDataIsNull);
     else resolve();
   });
-}
+}//checkOrigin
 
+/**
+ * @description 
+ * @param {*} user 
+ * @param {*} userType 
+ */
 function checkUser(user,userType=null){
   return personSA.checkUser(user,userType);
-}
+}//checkUser
