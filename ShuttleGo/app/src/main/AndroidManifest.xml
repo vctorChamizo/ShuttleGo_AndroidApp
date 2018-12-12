@@ -19,6 +19,8 @@
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.StartAdminActivity" />
+        <activity android:name=".activities.AdminStartActivity"></activity>
     </application>
 
 </manifest>

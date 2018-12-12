@@ -1,6 +1,5 @@
 package tfg.shuttlego.activities;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -154,70 +153,67 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 EventDispatcher.getInstance(getApplicationContext())
-                        .dispatchEvent(Event.SIGNUP, user)
-                        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-                            @Override
-                            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+                .dispatchEvent(Event.SIGNUP, user)
+                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                                if (!task.isSuccessful() || task.getResult() == null) {
+                        if (!task.isSuccessful() || task.getResult() == null) {
 
-                                    relative3.setVisibility(View.VISIBLE);
-                                    pBar.setVisibility(View.GONE);
-                                    Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
-                                } else if (task.getResult().containsKey("error")) {
+                            relative3.setVisibility(View.VISIBLE);
+                            pBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                        } else if (task.getResult().containsKey("error")) {
 
-                                    relative3.setVisibility(View.VISIBLE);
-                                    pBar.setVisibility(View.GONE);
+                            relative3.setVisibility(View.VISIBLE);
+                            pBar.setVisibility(View.GONE);
 
-                                    switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
 
-                                        case "badRequestForm":
-                                            Toast.makeText(getApplicationContext(), "Formato de datos incorrecto", Toast.LENGTH_SHORT).show();
-                                            break;
+                                case "badRequestForm":
+                                    Toast.makeText(getApplicationContext(), "Formato de datos incorrecto", Toast.LENGTH_SHORT).show();
+                                    break;
 
-                                        case "userAlreadyExists":
-                                            Toast.makeText(getApplicationContext(), "Usuario ya existente", Toast.LENGTH_SHORT).show();
-                                            break;
+                                case "userAlreadyExists":
+                                    Toast.makeText(getApplicationContext(), "Usuario ya existente", Toast.LENGTH_SHORT).show();
+                                    break;
 
-                                        case "server":
-                                            Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
-                                            break;
+                                case "server":
+                                    Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
+                                    break;
 
-                                        default:
-                                            Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
-                                            break;
-                                    }
-                                }//else if
-                                else {
+                                default:
+                                    Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                        }//else if
+                        else {
 
-                                    TypePerson typePerson;
-                                    Class nextClass;
+                            TypePerson typePerson;
+                            Class nextClass;
 
-                                    switch (type) {
-                                        case "passenger":
-                                            typePerson = TypePerson.USER;
-                                            //nextClass = PassengerStartActivity.class;
-                                            break;
+                            switch (type) {
+                                case "passenger":
+                                    typePerson = TypePerson.USER;
+                                    //nextClass = PassengerStartActivity.class;
+                                    break;
 
-                                        default:
-                                            typePerson = TypePerson.DRIVER;
-                                            //nextClass = DriverStartActivity.class;
-                                            break;
-                                    }
+                                default:
+                                    typePerson = TypePerson.DRIVER;
+                                    //nextClass = DriverStartActivity.class;
+                                    break;
+                            }
 
-                                    Person user = new Person(email, password, name, surname, phone, typePerson);
+                            Person user = new Person(email, password, name, surname, phone, typePerson);
 
-                        /*
-                        Intent logIntent = new Intent(LoginActivity.this, nextClass);
-                        logIntent.putExtra("user", user);
-                        startActivity(logIntent);
-                        */
-
-                                    //Captura del parametro pasado en la siguiente actvidad.
-                                    //Person user = (Person)getIntent().getExtras().getSerializable("user");
-                                }
-                            }//onComlete
-                        })
+                            /*
+                            Intent logIntent = new Intent(RegisterActivity.this, nextClass);
+                            logIntent.putExtra("user", user);
+                            startActivity(logIntent);
+                            */
+                        }
+                    }//onComlete
+                });
             }//if
             else Toast.makeText(getApplicationContext(), "Introduzca una contraseña", Toast.LENGTH_SHORT).show();
         }//onClick

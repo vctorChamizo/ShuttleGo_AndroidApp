@@ -68,6 +68,17 @@ public class EventDispatcher {
             case SIGNOUT:
                 break;
 
+            case GETORIGINS:
+                return this.mFunctions
+                        .getHttpsCallable("getAllOrigins")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+                            @Override
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                                return  (HashMap<String,String>)task.getResult().getData();
+                            }
+                        });//getorigin
+
             default: return null;
         }//switch
 

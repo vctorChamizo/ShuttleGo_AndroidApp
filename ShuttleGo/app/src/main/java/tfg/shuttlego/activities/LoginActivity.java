@@ -87,76 +87,71 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                        if (!task.isSuccessful() || task.getResult() == null) {
+                    if (!task.isSuccessful() || task.getResult() == null) {
 
-                            relFormLogin.setVisibility(View.VISIBLE);
-                            pBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
-                        } else if (task.getResult().containsKey("error")) {
+                        relFormLogin.setVisibility(View.VISIBLE);
+                        pBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                    } else if (task.getResult().containsKey("error")) {
 
-                            relFormLogin.setVisibility(View.VISIBLE);
-                            pBar.setVisibility(View.GONE);
+                        relFormLogin.setVisibility(View.VISIBLE);
+                        pBar.setVisibility(View.GONE);
 
-                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                        switch (Objects.requireNonNull(task.getResult().get("error"))) {
 
-                                case "incorrectSignin":
-                                case "userDoesntExists":
-                                    Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                                    break;
+                            case "incorrectSignin":
+                            case "userDoesntExists":
+                                Toast.makeText(getApplicationContext(), "Usuario/contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                                break;
 
-                                case "server":
-                                    Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
-                                    break;
+                            case "server":
+                                Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
+                                break;
 
-                                default:
-                                    Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-
-                        }// else if
-                        else {
-
-                            HashMap<String, ?> p = task.getResult();
-                            TypePerson typePerson;
-                            Class nextClass;
-
-                            String email = Objects.requireNonNull(p.get("email")).toString();
-                            String password = Objects.requireNonNull(p.get("password")).toString();
-                            String name = Objects.requireNonNull(p.get("name")).toString();
-                            String surname = Objects.requireNonNull(p.get("surname")).toString();
-                            int phone = Integer.parseInt(p.get("number").toString()); // ¿try - catch?
-                            String type = Objects.requireNonNull(p.get("type")).toString();
-
-                            switch (type) {
-                                case "passenger":
-                                    typePerson = TypePerson.USER;
-                                    //nextClass = PassengerStartActivity.class;
-                                    break;
-
-                                case "driver":
-                                    typePerson = TypePerson.DRIVER;
-                                    //nextClass = DriverStartActivity.class;
-                                    break;
-
-                                default:
-                                    typePerson = TypePerson.ADMIN;
-                                    //nextClass = AdminStartActivity.class;
-                                    break;
-                            }
-
-                            Person user = new Person(email, password, name, surname, phone, typePerson);
-
-                            /*
-                            Intent logIntent = new Intent(LoginActivity.this, nextClass);
-                            logIntent.putExtra("user", user);
-                            startActivity(logIntent);
-                            */
-
-                            //Captura del parametro pasado en la siguiente actvidad.
-                            //Person user = (Person)getIntent().getExtras().getSerializable("user");
+                            default:
+                                Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+                                break;
                         }
-                    }//onComplete
-                });
+
+                    }// else if
+                    else {
+
+                        HashMap<String, ?> p = task.getResult();
+                        TypePerson typePerson;
+                        Class nextClass = null;
+
+                        String email = Objects.requireNonNull(p.get("email")).toString();
+                        String password = Objects.requireNonNull(p.get("password")).toString();
+                        String name = Objects.requireNonNull(p.get("name")).toString();
+                        String surname = Objects.requireNonNull(p.get("surname")).toString();
+                        String type = Objects.requireNonNull(p.get("type")).toString();
+                        int phone = Integer.parseInt(Objects.requireNonNull(p.get("number")).toString());
+
+                        switch (type) {
+                            case "passenger":
+                                typePerson = TypePerson.USER;
+                                //nextClass = PassengerStartActivity.class;
+                                break;
+
+                            case "driver":
+                                typePerson = TypePerson.DRIVER;
+                                //nextClass = DriverStartActivity.class;
+                                break;
+
+                            default:
+                                typePerson = TypePerson.ADMIN;
+                                nextClass = AdminStartActivity.class;
+                                break;
+                        }
+
+                        Person user = new Person(email, password, name, surname, phone, typePerson);
+
+                        Intent logIntent = new Intent(LoginActivity.this, nextClass);
+                        logIntent.putExtra("user", user);
+                        startActivity(logIntent);
+                    }
+                }//onComplete
+            });
             }
         });
     }

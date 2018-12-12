@@ -4,5 +4,6 @@ public enum Event {
 
     SIGNIN,
     SIGNUP,
-    SIGNOUT
+    SIGNOUT,
+    GETORIGINS
 }

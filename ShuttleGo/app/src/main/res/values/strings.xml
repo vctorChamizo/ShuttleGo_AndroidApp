@@ -3,6 +3,14 @@
     <string name="app_name">ShuttleGo</string>
     <string name="subTittle">Haz tu viaje más fácil</string>
 
+    <!-- Drawer Menu -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">ShuttleGo</string>
+    <string name="nav_header_subtitle">shuttlego@shuttlego.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
     <!-- Login -->
     <string name="signin">Iniciar sesión</string>
     <string name="signup">Registrate</string>
