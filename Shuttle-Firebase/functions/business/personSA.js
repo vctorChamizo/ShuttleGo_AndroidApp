@@ -46,9 +46,15 @@ function signUp(newUser){
  * @param {String} userType The type of the user that can do that action.
  * @returns {Promise} Promise that returns null or error.
  */
-function checkUser(user,userType){
-     return signIn(user.email,user.password).then((result)=>{
-        if(result == null || result.type == null || result.type != userType)
+function checkUser(user,userType=null){
+
+    return new Promise((resolve,reject)=>{
+        if(user==null)reject(ERROR.necessaryDataIsNull);
+        else resolve();
+    })
+    .then(()=>signIn(user.email,user.password))
+    .then((result)=>{
+        if(result == null ||(userType != null &&( result.type == null || result.type != userType)))
             throw ERROR.noPermissions;
     });
 }//checkUser
