@@ -10,7 +10,7 @@ const errors = {
     badRequestForm:{error:"badRequestForm"},            //The form requirements are not met.
     noPermissions:{error:"noPermissions"},              //The account you are using is not allowed to do this.
     originDoesntExists:{error:"originDoesntExists"},    //The origin you are trying to get doesnt exists
-    necessaryDataIsNull:{error:"necessaryDataIsNull"}   //The data that server needs is null.
+    necessaryDataIsNull:{error:"necessaryDataIsNull"}   //The data that server needs is null. (Check index.html)
 }
 
 module.exports = errors;

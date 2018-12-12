@@ -52,7 +52,7 @@ exports.getAllOrigins = functions.https.onCall((data,context)=>{
 })
 
 
-exports.getOriginById = functions.https.onCall((data,context)=>{
+exports.getOrigin = functions.https.onCall((data,context)=>{
   return checkData(data)
   .then(()=>checkOrigin(data.origin))
   .then(()=>originSA.getOriginById(data.origin.id))
