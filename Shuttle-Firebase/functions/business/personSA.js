@@ -47,8 +47,8 @@ function signUp(newUser){
  * @returns {Promise} Promise that returns null or error.
  */
 function checkUser(user,userType){
-    personSA.signIn(user.email,user.password).then((result)=>{
-        if(result != null && (result.type == null || result.type != userType))
+     return signIn(user.email,user.password).then((result)=>{
+        if(result == null || result.type == null || result.type != userType)
             throw ERROR.noPermissions;
     });
 }//checkUser
@@ -87,5 +87,6 @@ function checkType(type){
 
 module.exports = {
     signIn:signIn,
-    signUp:signUp
+    signUp:signUp,
+    checkUser:checkUser
 }

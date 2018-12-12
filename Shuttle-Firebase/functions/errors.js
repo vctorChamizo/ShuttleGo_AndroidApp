@@ -8,7 +8,9 @@ const errors = {
     incorrectSignin:{error:"incorrectSignin"},          //The credentials are wrong.
     userDoesntExists:{error:"userDoesntExists"},        //The user you are trying to use doesn't exists.
     badRequestForm:{error:"badRequestForm"},            //The form requirements are not met.
-    noPermissions:{error:"noPermissions"}               //The account you are using is not allowed to do this.
+    noPermissions:{error:"noPermissions"},              //The account you are using is not allowed to do this.
+    originDoesntExists:{error:"originDoesntExists"},    //The origin you are trying to get doesnt exists
+    necessaryDataIsNull:{error:"necessaryDataIsNull"}   //The data that server needs is null.
 }
 
 module.exports = errors;
