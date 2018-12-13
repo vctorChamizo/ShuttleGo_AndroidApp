@@ -9,6 +9,7 @@ public enum Event {
 
     /* ORIGIN */
     GETORIGINS,
+    GETORIGINBYID,
     CREATEORIGIN,
     MODIFYORIGIN,
     DELEEORIGIN

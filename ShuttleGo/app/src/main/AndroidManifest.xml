@@ -21,7 +21,8 @@
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.StartAdminActivity" />
         <activity android:name=".activities.AdminStartActivity" />
-        <activity android:name=".activities.AddOriginActivity"></activity>
+        <activity android:name=".activities.AddOriginActivity" />
+        <activity android:name=".activities.EditOriginActivity"></activity>
     </application>
 
 </manifest>

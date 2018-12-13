@@ -8,19 +8,19 @@
     card_view:cardElevation="5dp"
     card_view:cardCornerRadius="3dp">
 
+
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/name_origin_text"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btndddd"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@android:style/TextAppearance"
-            android:padding="20dp"/>
+            android:background="@color/colorTransparent"
+            android:padding="20dp"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/id_origin_text"
@@ -28,31 +28,8 @@
             android:layout_height="wrap_content"
             android:visibility="gone"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end">
+    </LinearLayout>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/btn_edit_origin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                android:backgroundTint="@color/colorAccent"
-                android:src="@drawable/ic_edit_black_24dp" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/btn_delete_origin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                android:backgroundTint="@color/colorAccent"
-                android:src="@drawable/ic_delete_black_24dp" />
-        </LinearLayout>
-
-</LinearLayout>
 
 </android.support.v7.widget.CardView>
