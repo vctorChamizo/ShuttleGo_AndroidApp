@@ -22,7 +22,9 @@
         <activity android:name=".activities.StartAdminActivity" />
         <activity android:name=".activities.AdminStartActivity" />
         <activity android:name=".activities.AddOriginActivity" />
-        <activity android:name=".activities.EditOriginActivity"></activity>
+        <activity android:name=".activities.EditOriginActivity" />
+        <activity android:name=".activities.PassengerStartActivity" />
+        <activity android:name=".activities.DriverStartActivity"></activity>
     </application>
 
 </manifest>

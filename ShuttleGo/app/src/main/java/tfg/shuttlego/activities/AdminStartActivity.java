@@ -35,7 +35,7 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
     private Person user;
     private RecyclerView recycler;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter = new OriginAdapter(listOrigins);
+    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +121,7 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
         recycler = findViewById(R.id.my_recycler_view);
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
-        adapter = new OriginAdapter(listOrigins);
+        adapter = new OriginAdapter(listOrigins, user);
         recycler.setAdapter(adapter);
 
         //Quitar el progress bar y mostrar la lista.

@@ -1,5 +1,6 @@
 package tfg.shuttlego.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import tfg.shuttlego.R;
 import tfg.shuttlego.logic.events.Event;
 import tfg.shuttlego.logic.events.EventDispatcher;
 import tfg.shuttlego.logic.origin.Origin;
+import tfg.shuttlego.logic.person.Person;
 
 public class EditOriginActivity extends AppCompatActivity {
 
@@ -25,6 +27,7 @@ public class EditOriginActivity extends AppCompatActivity {
     Button deleteOriginButton;
     Button editOrigin;
     JSONObject origin;
+    Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class EditOriginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_origin);
 
         id_origin = (String) getIntent().getExtras().get("origin");
+        user = (Person) getIntent().getExtras().get("user");
 
         inicializateItems();
         origin = makeJson(id_origin);
@@ -41,7 +45,24 @@ public class EditOriginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                deleteOrigin(origin);
+                JSONObject dataUser = new JSONObject();
+                JSONObject dataOrigin = new JSONObject();
+                JSONObject createOrigin = new JSONObject();
+
+                try {
+
+                    dataUser.put("email", user.getEmail());
+                    dataUser.put("password", user.getPassword());
+                    dataOrigin.put("id", id_origin);
+                    createOrigin.put("user", dataUser);
+                    createOrigin.put("origin", dataOrigin);
+
+                } catch (JSONException e) {
+
+                    Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
+                }
+
+                deleteOrigin(createOrigin);
             }
         });
 
@@ -74,7 +95,9 @@ public class EditOriginActivity extends AppCompatActivity {
                 }// else if
                 else {
 
-                    Object hm_origin = task.getResult();
+                    Intent intent = new Intent(EditOriginActivity.this, AdminStartActivity.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
                 }
             }//onComplete
         });

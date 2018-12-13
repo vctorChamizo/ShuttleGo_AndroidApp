@@ -13,12 +13,17 @@ import java.util.ArrayList;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.EditOriginActivity;
 import tfg.shuttlego.logic.origin.Origin;
+import tfg.shuttlego.logic.person.Person;
 
 public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginViewHolder> {
 
     private ArrayList<Origin> originList;
+    private static Person user;
 
-    public OriginAdapter(ArrayList<Origin> originList) { this.originList = originList; }
+    public OriginAdapter(ArrayList<Origin> originList, Person user) {
+        this.originList = originList;
+        this.user = user;
+    }
 
     public static class OriginViewHolder extends RecyclerView.ViewHolder {
 
@@ -47,6 +52,7 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
 
                     Intent intent = new Intent(context, EditOriginActivity.class);
                     intent.putExtra("origin", idText.getText());
+                    intent.putExtra("user", user);
                     context.startActivity(intent);
                 }
             });
