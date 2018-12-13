@@ -39,7 +39,7 @@ function createOrigin(newOrigin){
     return checkRequirements(newOrigin)
     .then(()=>originDAO.getOriginByName(newOrigin.name))
     .then((origin)=>{
-        if(origin != null) throw ERROR.OriginAlreadyExists;
+        if(origin != null) throw ERROR.originAlreadyExists;
         else return originDAO.createOrigin(newOrigin);
     })
 }
