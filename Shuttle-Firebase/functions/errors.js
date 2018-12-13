@@ -1,4 +1,3 @@
-
 /**
  * @description Errors which will be sent to the clients
  */

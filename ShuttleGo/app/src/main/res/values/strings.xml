@@ -25,7 +25,6 @@
     <string name="next">Siguiente</string>
     <string name="finish">Finalizar</string>
 
-
     <!-- User -->
     <string name="name">Nombre</string>
     <string name="surname">Apellidos</string>
@@ -35,4 +34,9 @@
     <string name="passanger">Pasajero</string>
     <string name="driver">Conductor</string>
     <string name="admin">Administrador</string>
+
+    <!-- Add -->
+    <string name="add">Añadir</string>
+    <string name="addOrigin">Añadir origen</string>
+    <string name="origin">Origen</string>
 </resources>

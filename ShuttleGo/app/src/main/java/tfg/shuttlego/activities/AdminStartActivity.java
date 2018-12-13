@@ -1,6 +1,7 @@
 package tfg.shuttlego.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -19,10 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -51,72 +48,25 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-
         setCredencials();
         loadOriginList();
         createList();
-
         setSupportActionBar(toolbar);
-
-        //BOTON DE AÑADIR
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                /*DATA EXAMPLE: {user:{email:"admin@gmail.com",password:"123"},origin:{name:"Barajas T5"}}*/
-
-                JSONObject dataUser = new JSONObject();
-                JSONObject dataOrigin = new JSONObject();
-                JSONObject createOrigin = new JSONObject();
-
-                try {
-
-                    dataUser.put("email", "admin@gmail.com");
-                    dataUser.put("password", "123");
-                    dataOrigin.put("name", "Barajas T8");
-                    createOrigin.put("user", dataUser);
-                    createOrigin.put("origin", dataOrigin);
-
-                } catch (JSONException e) {
-
-                    Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
-                }
-
-
-                // CONTROLAR MAS ERRORES --> ESTO ES SOLO UNA PRUEBA DE SERVIDOR.
-                EventDispatcher.getInstance(getApplicationContext())
-                .dispatchEvent(Event.CREATEORIGIN, createOrigin)
-                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-                    @Override
-                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
-
-                        if (!task.isSuccessful() || task.getResult() == null) {
-                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
-
-                        } else if (task.getResult().containsKey("error"))
-                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
-                                case "server":
-                                    Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                default:
-                                    Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-                        else {
-
-                            Object result = task.getResult();
-
-                        }//else
-                    }//onComplete
-                });
-            }
-        });
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+                Intent logIntent = new Intent(AdminStartActivity.this, AddOriginActivity.class);
+                logIntent.putExtra("user", user);
+                startActivity(logIntent);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
+            }
+        });
     }
 
     private void createList() {
