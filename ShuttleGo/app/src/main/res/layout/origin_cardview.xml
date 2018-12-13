@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/origin_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     card_view:cardUseCompatPadding="true"
     card_view:cardElevation="5dp"
     card_view:cardCornerRadius="3dp">
@@ -16,12 +17,17 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/tvUserName"
+            android:id="@+id/name_origin_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance"
-            android:text="Juan Ramos"
             android:padding="20dp"/>
+
+        <TextView
+            android:id="@+id/id_origin_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="match_parent"
