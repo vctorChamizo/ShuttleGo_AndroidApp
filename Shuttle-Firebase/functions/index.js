@@ -41,7 +41,7 @@ exports.signin = functions.https.onCall((data, context) =>{
  */
 exports.signup = functions.https.onCall((data, context)=>{
   return checkData(data)
-  .then(()=>checkUser(data.user))
+  .then(()=>checkData(data.user))
   .then(()=>personSA.signUp(data.user))
   .then(()=>{return {signedUp:true}},error=>error);
 })
