@@ -36,7 +36,7 @@ exports.signin = functions.https.onCall((data, context) =>{
 });
 
 /**
- * @description Signs up a new user if not exists
+ * @description Signs up a new user if not exists.
  * @returns {Promise} a promise that returns "signedUp:true" if its correct(it allows client to check if connection goes well) or an error
  */
 exports.signup = functions.https.onCall((data, context)=>{
@@ -49,8 +49,8 @@ exports.signup = functions.https.onCall((data, context)=>{
 
 /*---------------- ORIGIN Functions ---------------*/
 /**
- * @description Get all route origins
- * @returns {Promise} a promise that return a list of route names
+ * @description Get a list of id and name origins.
+ * @returns {Promise} A promise that return a list of route names.
  */
 exports.getAllOrigins = functions.https.onCall((data,context)=>{
   return originSA.getAllOrigins()
@@ -58,8 +58,8 @@ exports.getAllOrigins = functions.https.onCall((data,context)=>{
 })
 
 /**
- * @description
- * @returns
+ * @description Get all data from an Origin.
+ * @returns {Promise} A promise that returns a data from an Origin.
  */
 exports.getOrigin = functions.https.onCall((data,context)=>{
   return checkData(data)
@@ -69,8 +69,8 @@ exports.getOrigin = functions.https.onCall((data,context)=>{
 })
 
 /**
- * @description
- * @returns
+ * @description modify an origin.
+ * @returns {Promise}
  */
 exports.modifyOrigin = functions.https.onCall((data, context)=>{
   return checkData(data)
@@ -81,8 +81,8 @@ exports.modifyOrigin = functions.https.onCall((data, context)=>{
 });
 
 /**
- * @description
- * @returns
+ * @description Delete an origin.
+ * @returns {Promise}
  */
 exports.deleteOrigin = functions.https.onCall((data,context)=>{
   return checkData(data)
@@ -93,8 +93,8 @@ exports.deleteOrigin = functions.https.onCall((data,context)=>{
 })
 
 /**
- * @description
- * @returns
+ * @description Creates a new origin.
+ * @returns {Promise}
  */
 exports.createOrigin = functions.https.onCall((data,context)=>{
   return checkData(data)
@@ -128,10 +128,13 @@ function checkOrigin(origin){
   });
 }//checkOrigin
 
+
+
+
 /**
- * @description 
- * @param {*} user 
- * @param {*} userType 
+ * @description Checks if an user exists and the type if it is indicated.
+ * @param {Objct} user 
+ * @param {String=null} userType 
  */
 function checkUser(user,userType=null){
   return personSA.checkUser(user,userType);

@@ -4,7 +4,7 @@
 const errors = {
 
     /* General */
-    server:{error:"server"},                                //Internal error.
+    server:{error:"server"},                                //Internal error. (This error is thrown when database calls fail).
     badRequestForm:{error:"badRequestForm"},                //The form requirements are not met.
     necessaryDataIsNull:{error:"necessaryDataIsNull"},      //The data that server needs is null. (Check index.html).
 
