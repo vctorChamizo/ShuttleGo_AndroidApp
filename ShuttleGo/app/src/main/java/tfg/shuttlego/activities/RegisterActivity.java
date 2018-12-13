@@ -1,5 +1,6 @@
 package tfg.shuttlego.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -195,22 +196,21 @@ public class RegisterActivity extends AppCompatActivity {
                             switch (type) {
                                 case "passenger":
                                     typePerson = TypePerson.USER;
-                                    //nextClass = PassengerStartActivity.class;
+                                    nextClass = PassengerStartActivity.class;
                                     break;
 
                                 default:
                                     typePerson = TypePerson.DRIVER;
-                                    //nextClass = DriverStartActivity.class;
+                                    nextClass = DriverStartActivity.class;
                                     break;
                             }
 
                             Person user = new Person(email, password, name, surname, phone, typePerson);
 
-                            /*
                             Intent logIntent = new Intent(RegisterActivity.this, nextClass);
                             logIntent.putExtra("user", user);
                             startActivity(logIntent);
-                            */
+
                         }
                     }//onComlete
                 });

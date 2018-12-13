@@ -130,12 +130,12 @@ public class LoginActivity extends AppCompatActivity {
                         switch (type) {
                             case "passenger":
                                 typePerson = TypePerson.USER;
-                                //nextClass = PassengerStartActivity.class;
+                                nextClass = PassengerStartActivity.class;
                                 break;
 
                             case "driver":
                                 typePerson = TypePerson.DRIVER;
-                                //nextClass = DriverStartActivity.class;
+                                nextClass = DriverStartActivity.class;
                                 break;
 
                             default:
