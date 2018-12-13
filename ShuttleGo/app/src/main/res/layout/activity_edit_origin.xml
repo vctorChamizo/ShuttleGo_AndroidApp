@@ -14,6 +14,7 @@
         android:padding="40dp">
 
         <TextView
+            android:id="@+id/name_origin_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40dp" />
@@ -26,12 +27,14 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btn_edit_origin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Editar"/>
 
         <Button
+            android:id="@+id/btn_delete_origin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

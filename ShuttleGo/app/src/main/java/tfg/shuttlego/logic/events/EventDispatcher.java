@@ -89,6 +89,28 @@ public class EventDispatcher {
                             }
                         });//createOrigin
 
+            case GETORIGINBYID:
+                return this.mFunctions
+                        .getHttpsCallable("getOrigin")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+                            @Override
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                                return  (HashMap<String,String>)task.getResult().getData();
+                            }
+                        });//createOrigin
+
+            case DELEEORIGIN:
+                return this.mFunctions
+                        .getHttpsCallable("deleteOrigin")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+                            @Override
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                                return  (HashMap<String,String>)task.getResult().getData();
+                            }
+                        });//createOrigin
+
 
             /* DEFAULT */
             default: return null;
