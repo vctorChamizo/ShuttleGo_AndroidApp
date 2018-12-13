@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +29,8 @@ public class AddOriginActivity extends AppCompatActivity {
 
     private Person user;
     private EditText origin;
+    private RelativeLayout relFormOrigin;
+    private ProgressBar pBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +41,16 @@ public class AddOriginActivity extends AppCompatActivity {
 
         Button addButton = findViewById(R.id.btn_origin_add);
         origin = findViewById(R.id.origin_add);
+        relFormOrigin = findViewById(R.id.relative_form_add_origin);
+        pBar = findViewById(R.id.progress);
+
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                relFormOrigin.setVisibility(View.GONE);
+                pBar.setVisibility(View.VISIBLE);
 
                 JSONObject dataUser = new JSONObject();
                 JSONObject dataOrigin = new JSONObject();

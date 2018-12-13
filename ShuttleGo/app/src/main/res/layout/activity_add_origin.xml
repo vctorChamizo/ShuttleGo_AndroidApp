@@ -18,7 +18,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/relative_form_login"
+        android:id="@+id/relative_form_add_origin"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

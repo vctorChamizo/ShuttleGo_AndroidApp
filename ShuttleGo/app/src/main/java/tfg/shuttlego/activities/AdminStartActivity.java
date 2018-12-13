@@ -47,7 +47,6 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
         navigationView = findViewById(R.id.nav_view);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
         setCredencials();
         loadOriginList();
         createList();
@@ -56,17 +55,6 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                
-                Intent logIntent = new Intent(AdminStartActivity.this, AddOriginActivity.class);
-                logIntent.putExtra("user", user);
-                startActivity(logIntent);
-                overridePendingTransition(R.anim.left_in, R.anim.left_out);
-            }
-        });
     }
 
     private void createList() {
@@ -165,25 +153,22 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_add_origin) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            Intent logIntent = new Intent(AdminStartActivity.this, AddOriginActivity.class);
+            logIntent.putExtra("user", user);
+            startActivity(logIntent);
+            overridePendingTransition(R.anim.left_out, R.anim.left_in);
         }
+        else if (id == R.id.nav_settings_admin) { }
+        else if (id == R.id.nav_signout_admin) { }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
-    }
+    }//onNavigationItemSelected
 }
