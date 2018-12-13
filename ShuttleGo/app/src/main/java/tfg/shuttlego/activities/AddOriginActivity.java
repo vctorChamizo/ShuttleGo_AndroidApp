@@ -35,7 +35,7 @@ public class AddOriginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_origin);
+        setContentView(R.layout.admin_origin_add);
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
 

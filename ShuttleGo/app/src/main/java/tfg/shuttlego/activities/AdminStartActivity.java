@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.logic.OriginAdapter;
+import tfg.shuttlego.adapters.OriginAdapter;
 import tfg.shuttlego.logic.events.Event;
 import tfg.shuttlego.logic.events.EventDispatcher;
 import tfg.shuttlego.logic.origin.Origin;
@@ -41,7 +41,7 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_start);
+        setContentView(R.layout.admin_main);
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
 
