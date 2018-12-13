@@ -2,6 +2,7 @@ package tfg.shuttlego.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +10,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.AddOriginActivity;
+import tfg.shuttlego.activities.AdminStartActivity;
+import tfg.shuttlego.logic.events.Event;
+import tfg.shuttlego.logic.events.EventDispatcher;
 import tfg.shuttlego.logic.origin.Origin;
 
 public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginViewHolder> {
@@ -54,7 +70,22 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
             switch (v.getId()){
 
                 case R.id.btn_delete_origin:
-                    
+
+                    JSONObject dataOrigin = new JSONObject();
+                    JSONObject deleteOrigin = new JSONObject();
+
+                    try {
+
+                        dataOrigin.put("id", idText.getText());
+                        deleteOrigin.put("origin", dataOrigin);
+
+                    } catch (JSONException e) {
+
+                        Toast.makeText(context, "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
+                    }
+
+                    deleteOrigin(deleteOrigin);
+
                     break;
 
                 case R.id.btn_edit_origin:
@@ -68,6 +99,35 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
                     break;
             }//switch
 
+        }
+
+        private void deleteOrigin(JSONObject deleteOrigin) {
+
+            EventDispatcher.getInstance(context)
+            .dispatchEvent(Event.CREATEORIGIN, deleteOrigin)
+            .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+                @Override
+                public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+
+                    if (!task.isSuccessful() || task.getResult() == null) {
+                        Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show();
+
+                    } else if (task.getResult().containsKey("error"))
+                        switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                            case "server":
+                                Toast.makeText(context, "Error del servidor", Toast.LENGTH_SHORT).show();
+                                break;
+
+                            default:
+                                Toast.makeText(context, "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
+                                break;
+                        }//else if
+                    else{
+
+                    }
+
+                }//onComplete
+            });
         }
     }
 
