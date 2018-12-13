@@ -99,11 +99,11 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
                     HashMap<?, ?> result = task.getResult();
                     ArrayList<HashMap<?,?>> list = (ArrayList<HashMap<?,?>>)result.get("origins");
                     listOrigins = new ArrayList<>();
-                    Origin origin = new Origin();
 
                     //Controlar que la lista no llegue vacia ¿assert?
 
                     for (int i = 0; i < list.size(); ++i){
+                        Origin origin = new Origin();
                         origin.setId((String) list.get(i).get("id"));
                         origin.setName((String) list.get(i).get("name"));
                         listOrigins.add(origin);
