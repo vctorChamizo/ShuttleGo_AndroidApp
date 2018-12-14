@@ -1,3 +1,6 @@
+/**
+ * @module business/originSA
+ */
 const ERROR = require("../errors");
 const originDAO = require("../dataAccess/originDAO");
 

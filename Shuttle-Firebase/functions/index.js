@@ -1,3 +1,8 @@
+/**
+ * @module Index
+ */
+
+
 const functions = require('firebase-functions');
 const personSA = require("./business/personSA");
 const originSA = require("./business/originSA");
@@ -134,8 +139,8 @@ function checkOrigin(origin){
 /**
  * @description Checks if an user exists and the type if it is indicated.
  * @param {Objct} user 
- * @param {String=null} userType 
+ * @param {string = null} userType 
  */
-function checkUser(user,userType=null){
+function checkUser(user,userType = null){
   return personSA.checkUser(user,userType);
 }//checkUser

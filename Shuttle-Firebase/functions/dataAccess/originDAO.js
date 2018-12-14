@@ -1,3 +1,6 @@
+/**
+ *@module dataAccess/originDAO
+ */
 const ERROR = require("../errors");
 const db = require("./database.js");
 
