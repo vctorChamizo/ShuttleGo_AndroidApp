@@ -1,5 +1,5 @@
 /**
- * @module bussines/personSA
+ * @module business/personSA
  */
 const ERROR = require("../errors")
 const personDAO = require("../dataAccess/personDAO");
