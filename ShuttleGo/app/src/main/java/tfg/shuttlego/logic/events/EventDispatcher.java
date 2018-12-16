@@ -20,6 +20,11 @@ public class EventDispatcher {
 
     private EventDispatcher() {}
 
+    /**
+     *
+     * @param applicationContext
+     * @return
+     */
     public static EventDispatcher getInstance(Context applicationContext) {
 
         if(ourInstance == null){
@@ -32,9 +37,14 @@ public class EventDispatcher {
         }
 
         return ourInstance;
-    }
+    }//getInstance
 
-
+    /**
+     *
+     * @param event
+     * @param data
+     * @return
+     */
     public Task<HashMap<String,String>> dispatchEvent(Event event, JSONObject data){
 
         switch(event){
@@ -111,11 +121,14 @@ public class EventDispatcher {
                             }
                         });//createOrigin
 
+            case MODIFYORIGIN:
+                break;
+
 
             /* DEFAULT */
             default: return null;
         }//switch
 
         return null;
-    }
+    }//dispatchEvent
 }

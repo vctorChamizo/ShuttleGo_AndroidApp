@@ -1,5 +1,6 @@
 package tfg.shuttlego.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -27,31 +28,30 @@ import tfg.shuttlego.logic.events.EventDispatcher;
 import tfg.shuttlego.logic.origin.Origin;
 import tfg.shuttlego.logic.person.Person;
 
-
+/**
+ *
+ */
 public class AdminStartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ArrayList<Origin> listOrigins;
     private NavigationView navigationView;
     private Person user;
-    private RecyclerView recycler;
-    private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_main);
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
 
         setMenuDrawer();
-
         setCredencials();
-
-        loadOriginList();
+        throwEvent();
     }
 
+    /**
+     *
+     */
     private void setMenuDrawer() {
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -63,6 +63,10 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
         toggle.syncState();
     }//setMenuDrawer
 
+    /**
+     *
+     */
+    @SuppressLint("SetTextI18n")
     private void setCredencials() {
         View hView =  navigationView.getHeaderView(0);
         TextView nav_name_text = hView.findViewById(R.id.name_admin_text);
@@ -71,61 +75,77 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
         nav_email_text.setText(user.getEmail());
     }//setCredencials
 
-    private void loadOriginList() {
+    /**
+     *
+     */
+    private void throwEvent() {
 
         //Activar el progressBar aqui
 
         EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.GETORIGINS, null)
-        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+                .dispatchEvent(Event.GETORIGINS, null)
+                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                if (!task.isSuccessful() || task.getResult() == null) {
-                    Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                        if (!task.isSuccessful() || task.getResult() == null) {
+                            //changeVisibility();
+                            throwToast("Error de conexion");
+                        } else if (task.getResult().containsKey("error")) {
 
-                } else if (task.getResult().containsKey("error"))
-                        switch (Objects.requireNonNull(task.getResult().get("error"))) {
-                            case "server":
-                                Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
-                                break;
+                            //changeVisibility();
 
-                            default:
-                                Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                else {
+                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                                case "server":
+                                    throwToast("Error del servidor");
+                                    break;
 
-                    HashMap<?, ?> result = task.getResult();
-                    ArrayList<HashMap<?,?>> list = (ArrayList<HashMap<?,?>>)result.get("origins");
-                    listOrigins = new ArrayList<>();
+                                default:
+                                    throwToast("Error desconocido: " + task.getResult().get("error"));
+                                    break;
+                            }//switch
+                        } else {
 
-                    //Controlar que la lista no llegue vacia ¿assert?
+                            HashMap<?, ?> result = task.getResult();
+                            ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("origins");
+                            listOrigins = new ArrayList<>();
 
-                    for (int i = 0; i < list.size(); ++i){
-                        Origin origin = new Origin();
-                        origin.setId((String) list.get(i).get("id"));
-                        origin.setName((String) list.get(i).get("name"));
-                        listOrigins.add(origin);
-                    }//for
+                            assert list != null;
+                            for (int i = 0; i < list.size(); ++i) {
+                                Origin origin = new Origin();
+                                origin.setId((String) list.get(i).get("id"));
+                                origin.setName((String) list.get(i).get("name"));
+                                listOrigins.add(origin);
+                            }//for
 
-                    createListView(); // --> mejorar la forma, haciendo que se espere hasta que se obtenga el resultado.
+                            createListView(); // --> mejorar la forma, haciendo que se espere hasta que se obtenga el resultado.
 
-                }//else
-            }//onComplete
-        });
+                        }//else
+                    }//onComplete
+                })
     }//loadOriginList
 
+    /**
+     *
+     */
     private void createListView() {
 
-        recycler = findViewById(R.id.my_recycler_view);
-        layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView recycler = findViewById(R.id.my_recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
-        adapter = new OriginAdapter(listOrigins, user);
+        RecyclerView.Adapter<OriginAdapter.OriginViewHolder> adapter = new OriginAdapter(listOrigins, user);
         recycler.setAdapter(adapter);
 
         //Quitar el progress bar y mostrar la lista.
     }//createListView
+
+    /**
+     *
+     * @param msg
+     */
+    private void throwToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }//throwToast
 
     @Override
     public void onBackPressed() {

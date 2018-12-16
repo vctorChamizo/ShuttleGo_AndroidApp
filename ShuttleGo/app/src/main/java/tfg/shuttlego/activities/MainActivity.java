@@ -1,7 +1,7 @@
 package tfg.shuttlego.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import tfg.shuttlego.R;
@@ -12,11 +12,20 @@ import tfg.shuttlego.R;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private final int DURATION_SPLASH = 3000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.splash);
 
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        new Handler().postDelayed(new Runnable(){
+            public void run(){
+
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        };
+    },DURATION_SPLASH);
     }
 }
