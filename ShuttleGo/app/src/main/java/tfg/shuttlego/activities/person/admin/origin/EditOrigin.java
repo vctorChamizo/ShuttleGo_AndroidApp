@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities;
+package tfg.shuttlego.activities.person.admin.origin;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -15,12 +15,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.logic.events.Event;
-import tfg.shuttlego.logic.events.EventDispatcher;
-import tfg.shuttlego.logic.origin.Origin;
-import tfg.shuttlego.logic.person.Person;
+import tfg.shuttlego.activities.person.admin.AdminMain;
+import tfg.shuttlego.model.events.Event;
+import tfg.shuttlego.model.events.EventDispatcher;
+import tfg.shuttlego.model.transfers.origin.Origin;
+import tfg.shuttlego.model.transfers.person.Person;
 
-public class EditOriginActivity extends AppCompatActivity {
+public class EditOrigin extends AppCompatActivity {
 
     String id_origin;
     TextView name_origin_tetxt;
@@ -32,7 +33,7 @@ public class EditOriginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_origin);
+        setContentView(R.layout.admin_origin_edit);
 
         id_origin = (String) getIntent().getExtras().get("origin");
         user = (Person) getIntent().getExtras().get("user");
@@ -95,7 +96,7 @@ public class EditOriginActivity extends AppCompatActivity {
                 }// else if
                 else {
 
-                    Intent intent = new Intent(EditOriginActivity.this, AdminStartActivity.class);
+                    Intent intent = new Intent(EditOrigin.this, AdminMain.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
                 }

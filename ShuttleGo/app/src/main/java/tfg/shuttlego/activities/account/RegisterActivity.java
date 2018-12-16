@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities;
+package tfg.shuttlego.activities.account;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -20,10 +20,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.logic.events.Event;
-import tfg.shuttlego.logic.events.EventDispatcher;
-import tfg.shuttlego.logic.person.Person;
-import tfg.shuttlego.logic.person.TypePerson;
+import tfg.shuttlego.activities.person.driver.DriverMain;
+import tfg.shuttlego.activities.person.passenger.PassengerMain;
+import tfg.shuttlego.model.events.Event;
+import tfg.shuttlego.model.events.EventDispatcher;
+import tfg.shuttlego.model.transfers.person.Person;
+import tfg.shuttlego.model.transfers.person.TypePerson;
 
 /**
  *
@@ -44,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.register_main);
 
         inicializateView();
         inicializateAnimation();
@@ -182,12 +184,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 switch (type) {
                     case "passenger":
                         typePerson = TypePerson.USER;
-                        nextClass = PassengerStartActivity.class;
+                        nextClass = PassengerMain.class;
                         break;
 
                     default:
                         typePerson = TypePerson.DRIVER;
-                        nextClass = DriverStartActivity.class;
+                        nextClass = DriverMain.class;
                         break;
                 }//switch
             }

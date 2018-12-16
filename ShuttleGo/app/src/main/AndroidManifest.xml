@@ -20,12 +20,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.AdminStartActivity" />
-        <activity android:name=".activities.AddOriginActivity" />
-        <activity android:name=".activities.EditOriginActivity" />
-        <activity android:name=".activities.PassengerStartActivity" />
-        <activity android:name=".activities.DriverStartActivity" />
+        <activity android:name=".activities.account.LoginActivity" />
+        <activity android:name=".activities.account.RegisterActivity" />
+        <activity android:name=".activities.person.admin.AdminMain" />
+        <activity android:name=".activities.person.admin.origin.AddOrigin" />
+        <activity android:name=".activities.person.admin.origin.EditOrigin" />
+        <activity android:name=".activities.person.passenger.PassengerMain" />
+        <activity android:name=".activities.person.driver.DriverMain" />
     </application>
 </manifest>

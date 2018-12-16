@@ -1,4 +1,4 @@
-package tfg.shuttlego.adapters;
+package tfg.shuttlego.model.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.EditOriginActivity;
-import tfg.shuttlego.logic.origin.Origin;
-import tfg.shuttlego.logic.person.Person;
+import tfg.shuttlego.activities.person.admin.origin.EditOrigin;
+import tfg.shuttlego.model.transfers.origin.Origin;
+import tfg.shuttlego.model.transfers.person.Person;
 
 /**
  *
@@ -68,7 +68,7 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(context, EditOriginActivity.class);
+                    Intent intent = new Intent(context, EditOrigin.class);
                     intent.putExtra("origin", idText.getText());
                     intent.putExtra("user", user);
                     context.startActivity(intent);

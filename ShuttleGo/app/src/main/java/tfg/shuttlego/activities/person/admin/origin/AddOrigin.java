@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities;
+package tfg.shuttlego.activities.person.admin.origin;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -21,11 +21,12 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.logic.events.Event;
-import tfg.shuttlego.logic.events.EventDispatcher;
-import tfg.shuttlego.logic.person.Person;
+import tfg.shuttlego.activities.person.admin.AdminMain;
+import tfg.shuttlego.model.events.Event;
+import tfg.shuttlego.model.events.EventDispatcher;
+import tfg.shuttlego.model.transfers.person.Person;
 
-public class AddOriginActivity extends AppCompatActivity {
+public class AddOrigin extends AppCompatActivity {
 
     private Person user;
     private EditText origin;
@@ -93,7 +94,7 @@ public class AddOriginActivity extends AppCompatActivity {
                                     break;
                             }//else if
                         else {
-                            Intent logIntent = new Intent(AddOriginActivity.this, AdminStartActivity.class);
+                            Intent logIntent = new Intent(AddOrigin.this, AdminMain.class);
                             logIntent.putExtra("user", user);
                             startActivity(logIntent);
                         }//else

@@ -1,4 +1,4 @@
-package tfg.shuttlego.logic.person;
+package tfg.shuttlego.model.transfers.person;
 
 public enum TypePerson {
 

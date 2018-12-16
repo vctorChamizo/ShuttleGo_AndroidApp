@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities;
+package tfg.shuttlego.activities.account;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -17,10 +17,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.logic.events.Event;
-import tfg.shuttlego.logic.events.EventDispatcher;
-import tfg.shuttlego.logic.person.Person;
-import tfg.shuttlego.logic.person.TypePerson;
+import tfg.shuttlego.activities.person.admin.AdminMain;
+import tfg.shuttlego.activities.person.driver.DriverMain;
+import tfg.shuttlego.activities.person.passenger.PassengerMain;
+import tfg.shuttlego.model.events.Event;
+import tfg.shuttlego.model.events.EventDispatcher;
+import tfg.shuttlego.model.transfers.person.Person;
+import tfg.shuttlego.model.transfers.person.TypePerson;
 
 /**
  * Control the login of the application.
@@ -40,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_main);
 
         inicializateView();
 
@@ -149,17 +152,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 switch (type) {
                     case "passenger":
                         typePerson = TypePerson.USER;
-                        nextClass = PassengerStartActivity.class;
+                        nextClass = PassengerMain.class;
                         break;
 
                     case "driver":
                         typePerson = TypePerson.DRIVER;
-                        nextClass = DriverStartActivity.class;
+                        nextClass = DriverMain.class;
                         break;
 
                     default:
                         typePerson = TypePerson.ADMIN;
-                        nextClass = AdminStartActivity.class;
+                        nextClass = AdminMain.class;
                         break;
                 }//switch
             }

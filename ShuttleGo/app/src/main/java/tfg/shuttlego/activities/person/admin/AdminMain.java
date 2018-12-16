@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities;
+package tfg.shuttlego.activities.person.admin;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -22,16 +22,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.adapters.OriginAdapter;
-import tfg.shuttlego.logic.events.Event;
-import tfg.shuttlego.logic.events.EventDispatcher;
-import tfg.shuttlego.logic.origin.Origin;
-import tfg.shuttlego.logic.person.Person;
+import tfg.shuttlego.activities.person.admin.origin.AddOrigin;
+import tfg.shuttlego.model.adapters.OriginAdapter;
+import tfg.shuttlego.model.events.Event;
+import tfg.shuttlego.model.events.EventDispatcher;
+import tfg.shuttlego.model.transfers.origin.Origin;
+import tfg.shuttlego.model.transfers.person.Person;
 
 /**
  *
  */
-public class AdminStartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ArrayList<Origin> listOrigins;
     private NavigationView navigationView;
@@ -83,46 +84,46 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
         //Activar el progressBar aqui
 
         EventDispatcher.getInstance(getApplicationContext())
-                .dispatchEvent(Event.GETORIGINS, null)
-                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-                    @Override
-                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+        .dispatchEvent(Event.GETORIGINS, null)
+        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+            @Override
+            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                        if (!task.isSuccessful() || task.getResult() == null) {
-                            //changeVisibility();
-                            throwToast("Error de conexion");
-                        } else if (task.getResult().containsKey("error")) {
+                if (!task.isSuccessful() || task.getResult() == null) {
+                    //changeVisibility();
+                    throwToast("Error de conexion");
+                } else if (task.getResult().containsKey("error")) {
 
-                            //changeVisibility();
+                    //changeVisibility();
 
-                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
-                                case "server":
-                                    throwToast("Error del servidor");
-                                    break;
+                    switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                        case "server":
+                            throwToast("Error del servidor");
+                            break;
 
-                                default:
-                                    throwToast("Error desconocido: " + task.getResult().get("error"));
-                                    break;
-                            }//switch
-                        } else {
+                        default:
+                            throwToast("Error desconocido: " + task.getResult().get("error"));
+                            break;
+                    }//switch
+                } else {
 
-                            HashMap<?, ?> result = task.getResult();
-                            ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("origins");
-                            listOrigins = new ArrayList<>();
+                    HashMap<?, ?> result = task.getResult();
+                    ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("origins");
+                    listOrigins = new ArrayList<>();
 
-                            assert list != null;
-                            for (int i = 0; i < list.size(); ++i) {
-                                Origin origin = new Origin();
-                                origin.setId((String) list.get(i).get("id"));
-                                origin.setName((String) list.get(i).get("name"));
-                                listOrigins.add(origin);
-                            }//for
+                    assert list != null;
+                    for (int i = 0; i < list.size(); ++i) {
+                        Origin origin = new Origin();
+                        origin.setId((String) list.get(i).get("id"));
+                        origin.setName((String) list.get(i).get("name"));
+                        listOrigins.add(origin);
+                    }//for
 
-                            createListView(); // --> mejorar la forma, haciendo que se espere hasta que se obtenga el resultado.
+                    createListView();
 
-                        }//else
-                    }//onComplete
-                })
+                }//else
+            }//onComplete
+        });
     }//loadOriginList
 
     /**
@@ -165,7 +166,7 @@ public class AdminStartActivity extends AppCompatActivity implements NavigationV
 
         if (id == R.id.nav_add_origin) {
 
-            Intent logIntent = new Intent(AdminStartActivity.this, AddOriginActivity.class);
+            Intent logIntent = new Intent(AdminMain.this, AddOrigin.class);
             logIntent.putExtra("user", user);
             startActivity(logIntent);
             overridePendingTransition(R.anim.left_out, R.anim.left_in);

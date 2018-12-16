@@ -1,4 +1,4 @@
-package tfg.shuttlego.logic.events;
+package tfg.shuttlego.model.events;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

@@ -1,4 +1,4 @@
-package tfg.shuttlego.logic.origin;
+package tfg.shuttlego.model.transfers.origin;
 
 
 import java.io.Serializable;

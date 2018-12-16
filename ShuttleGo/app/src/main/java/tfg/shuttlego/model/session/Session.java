@@ -1,4 +1,4 @@
-package tfg.shuttlego.logic.session;
+package tfg.shuttlego.model.session;
 
 import org.json.JSONObject;
 

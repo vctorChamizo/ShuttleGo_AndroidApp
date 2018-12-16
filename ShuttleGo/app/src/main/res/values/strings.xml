@@ -4,12 +4,11 @@
     <string name="subTittle">Haz tu viaje más fácil</string>
 
     <!-- Drawer Menu -->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">ShuttleGo</string>
     <string name="nav_header_subtitle">shuttlego@shuttlego.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="nav_account">Cuenta</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_logout">Cerrar Sesion</string>
 
     <!-- Login -->
     <string name="signin">Iniciar sesión</string>
@@ -35,8 +34,13 @@
     <string name="driver">Conductor</string>
     <string name="admin">Administrador</string>
 
-    <!-- Add -->
-    <string name="add">Añadir</string>
-    <string name="addOrigin">Añadir origen</string>
+    <!-- Admin Menu Drawer -->
     <string name="origin">Origen</string>
+    <string name="addOrigin">Añadir origen</string>
+    <string name="add">Añadir</string>
+
+    <!-- Passenger Menu Drawer -->
+
+    <!-- Driver Menu Drawer -->
+
 </resources>
