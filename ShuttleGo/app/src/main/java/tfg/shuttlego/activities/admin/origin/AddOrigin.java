@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.person.admin.origin;
+package tfg.shuttlego.activities.admin.origin;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.admin.AdminMain;
+import tfg.shuttlego.activities.admin.AdminMain;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;
 import tfg.shuttlego.model.transfers.person.Person;
@@ -102,6 +102,10 @@ public class AddOrigin extends AppCompatActivity implements View.OnClickListener
 
                     switch (Objects.requireNonNull(task.getResult().get("error"))) {
 
+                        case "badRequestForm":
+                            throwToast("Formato de datos incorrecto");
+                            break;
+
                         case "originAlreadyExists":
                             throwToast("El origen ya existe");
                             break;
@@ -145,13 +149,21 @@ public class AddOrigin extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
+        boolean empty = false;
+
         switch (v.getId()){
 
             case R.id.btn_origin_add:
 
-                changeVisibility(relFormOrigin, pBar);
-                JSONObject createOrigin = buildJson();
-                throwEvent(createOrigin);
+                if (origin.getText().toString().isEmpty()) empty = true;
+
+                if (!empty) {
+
+                    changeVisibility(relFormOrigin, pBar);
+                    JSONObject createOrigin = buildJson();
+                    throwEvent(createOrigin);
+                }
+                else throwToast("Introduzca un origen");
                 break;
         }//switch
     }//onClick

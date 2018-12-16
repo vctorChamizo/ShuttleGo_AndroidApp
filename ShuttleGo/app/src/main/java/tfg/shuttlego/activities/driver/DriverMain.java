@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.person.passenger;
+package tfg.shuttlego.activities.driver;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
@@ -13,17 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.transfers.origin.Origin;
 import tfg.shuttlego.model.transfers.person.Person;
 
 /**
  *
  */
-public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private Person user;
@@ -31,7 +29,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.passenger_main);
+        setContentView(R.layout.driver_main);
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
 

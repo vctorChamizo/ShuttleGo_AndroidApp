@@ -1,7 +1,6 @@
-package tfg.shuttlego.activities.person.driver;
+package tfg.shuttlego.activities.passenger;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,34 +8,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.admin.AdminMain;
-import tfg.shuttlego.activities.person.admin.origin.AddOrigin;
-import tfg.shuttlego.model.adapters.OriginAdapter;
-import tfg.shuttlego.model.events.Event;
-import tfg.shuttlego.model.events.EventDispatcher;
 import tfg.shuttlego.model.transfers.origin.Origin;
 import tfg.shuttlego.model.transfers.person.Person;
 
 /**
  *
  */
-public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private Person user;
@@ -44,7 +31,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.driver_main);
+        setContentView(R.layout.passenger_main);
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
 

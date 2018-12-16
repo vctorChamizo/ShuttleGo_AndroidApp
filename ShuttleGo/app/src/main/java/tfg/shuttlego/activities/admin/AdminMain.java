@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.person.admin;
+package tfg.shuttlego.activities.admin;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.admin.origin.AddOrigin;
+import tfg.shuttlego.activities.admin.origin.AddOrigin;
 import tfg.shuttlego.model.adapters.OriginAdapter;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;

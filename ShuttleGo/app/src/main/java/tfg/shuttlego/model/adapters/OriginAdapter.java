@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.admin.origin.EditOrigin;
+import tfg.shuttlego.activities.admin.origin.EditOrigin;
 import tfg.shuttlego.model.transfers.origin.Origin;
 import tfg.shuttlego.model.transfers.person.Person;
 

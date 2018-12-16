@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.person.admin.origin;
+package tfg.shuttlego.activities.admin.origin;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,7 +17,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.admin.AdminMain;
+import tfg.shuttlego.activities.admin.AdminMain;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;
 import tfg.shuttlego.model.transfers.origin.Origin;
@@ -23,6 +25,8 @@ import tfg.shuttlego.model.transfers.person.Person;
 
 public class EditOrigin extends AppCompatActivity implements View.OnClickListener {
 
+    RelativeLayout rel_layout;
+    ProgressBar pB;
     String id_origin;
     TextView name_origin_tetxt;
     Button deleteOriginButton, editOriginButton;
@@ -37,7 +41,9 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
         user = (Person) getIntent().getExtras().get("user");
 
         inicializateView();
+        changeVisibility(rel_layout, pB);
         throwGetOriginEvent();
+        changeVisibility(pB, rel_layout);
 
         deleteOriginButton.setOnClickListener(this);
         editOriginButton.setOnClickListener(this);
@@ -48,6 +54,8 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
      *
      */
     private void inicializateView() {
+        rel_layout = findViewById(R.id.relative_origin_edit);
+        pB = findViewById(R.id.progress);
         name_origin_tetxt = findViewById(R.id.name_origin_text);
         deleteOriginButton = findViewById(R.id.btn_delete_origin);
         editOriginButton = findViewById(R.id.btn_edit_origin);
@@ -95,6 +103,8 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
      */
     private void throwDeleteEvent() {
 
+        changeVisibility(rel_layout, pB);
+
         JSONObject deleteOrigin = buildDeleteOriginJson();
 
         EventDispatcher.getInstance(getApplicationContext())
@@ -104,9 +114,12 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
             public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
             if (!task.isSuccessful() || task.getResult() == null) {
+                changeVisibility(pB, rel_layout);
                 throwToast("Error de conexion");
             }
             else if (task.getResult().containsKey("error")) {
+
+                changeVisibility(pB, rel_layout);
 
                 switch (Objects.requireNonNull(task.getResult().get("error"))) {
                     case "server":
@@ -174,6 +187,16 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
 
         return deleteOrigin;
     }//buildJson
+
+    /**
+     *
+     * @param vGone
+     * @param vVisible
+     */
+    private void changeVisibility(View vGone, View vVisible) {
+        vGone.setVisibility(View.GONE);
+        vVisible.setVisibility(View.VISIBLE);
+    }//changeVisibility
 
     /**
      *
