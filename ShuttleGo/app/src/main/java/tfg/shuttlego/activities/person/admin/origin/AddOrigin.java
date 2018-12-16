@@ -26,12 +26,13 @@ import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;
 import tfg.shuttlego.model.transfers.person.Person;
 
-public class AddOrigin extends AppCompatActivity {
+public class AddOrigin extends AppCompatActivity implements View.OnClickListener {
 
     private Person user;
     private EditText origin;
     private RelativeLayout relFormOrigin;
     private ProgressBar pBar;
+    private Button addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,67 +41,118 @@ public class AddOrigin extends AppCompatActivity {
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
 
-        Button addButton = findViewById(R.id.btn_origin_add);
+        inicializateView();
+
+        addButton.setOnClickListener(this);
+    }//onCreate
+
+    /**
+     *
+     */
+    private void inicializateView() {
+        addButton = findViewById(R.id.btn_origin_add);
         origin = findViewById(R.id.origin_add);
         relFormOrigin = findViewById(R.id.relative_form_add_origin);
         pBar = findViewById(R.id.progress);
+    }//inicializateView
 
+    /**
+     *
+     * @return
+     */
+    private JSONObject buildJson() {
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        JSONObject dataUser = new JSONObject();
+        JSONObject dataOrigin = new JSONObject();
+        JSONObject createOrigin = new JSONObject();
+
+        try {
+
+            dataUser.put("email", user.getEmail());
+            dataUser.put("password", user.getPassword());
+            dataOrigin.put("name", origin.getText());
+            createOrigin.put("user", dataUser);
+            createOrigin.put("origin", dataOrigin);
+
+        } catch (JSONException e) {
+            throwToast("ERROR. Vuelva a intentarlo");
+        }
+
+        return createOrigin;
+    }//buildJson
+
+    /**
+     *
+     * @param createOrigin
+     */
+    private void throwEvent(JSONObject createOrigin) {
+
+        EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(Event.CREATEORIGIN, createOrigin)
+        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
             @Override
-            public void onClick(View view) {
+            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                relFormOrigin.setVisibility(View.GONE);
-                pBar.setVisibility(View.VISIBLE);
+                if (!task.isSuccessful() || task.getResult() == null) {
+                    changeVisibility(pBar, relFormOrigin);
+                    throwToast("Error de conexion");
+                } else if (task.getResult().containsKey("error")){
 
-                JSONObject dataUser = new JSONObject();
-                JSONObject dataOrigin = new JSONObject();
-                JSONObject createOrigin = new JSONObject();
+                    changeVisibility(pBar, relFormOrigin);
 
-                try {
+                    switch (Objects.requireNonNull(task.getResult().get("error"))) {
 
-                    dataUser.put("email", user.getEmail());
-                    dataUser.put("password", user.getPassword());
-                    dataOrigin.put("name", origin.getText());
-                    createOrigin.put("user", dataUser);
-                    createOrigin.put("origin", dataOrigin);
+                        case "originAlreadyExists":
+                            throwToast("El origen ya existe");
+                            break;
 
-                } catch (JSONException e) {
+                        case "server":
+                            throwToast("Error del servidor");
+                            break;
 
-                    Toast.makeText(getApplicationContext(), "ERROR. Vuelva a intentarlo", Toast.LENGTH_SHORT).show();
+                        default:
+                            throwToast("Error desconocido: " + task.getResult().get("error"));
+                            break;
+                    }//switch
                 }
-
-                EventDispatcher.getInstance(getApplicationContext())
-                .dispatchEvent(Event.CREATEORIGIN, createOrigin)
-                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-                    @Override
-                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
-
-                        if (!task.isSuccessful() || task.getResult() == null) {
-                            Toast.makeText(getApplicationContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
-
-                        } else if (task.getResult().containsKey("error"))
-                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
-                                case "server":
-                                    Toast.makeText(getApplicationContext(), "Error del servidor", Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                case "originAlreadyExists":
-                                    Toast.makeText(getApplicationContext(), "El origen ya existe", Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                default:
-                                    Toast.makeText(getApplicationContext(), "Error desconocido: " + task.getResult().get("error"), Toast.LENGTH_SHORT).show();
-                                    break;
-                            }//else if
-                        else {
-                            Intent logIntent = new Intent(AddOrigin.this, AdminMain.class);
-                            logIntent.putExtra("user", user);
-                            startActivity(logIntent);
-                        }//else
-                    }//onComplete
-                });
-            }
+                else {
+                    Intent logIntent = new Intent(AddOrigin.this, AdminMain.class);
+                    logIntent.putExtra("user", user);
+                    startActivity(logIntent);
+                }//else
+            }//onComplete
         });
-    }
+    }//throwEvent
+
+    /**
+     *
+     * @param vGone
+     * @param vVisible
+     */
+    private void changeVisibility(View vGone, View vVisible) {
+        vGone.setVisibility(View.GONE);
+        vVisible.setVisibility(View.VISIBLE);
+    }//changeVisibility
+
+    /**
+     *
+     * @param msg
+     */
+    private void throwToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }//throwToast
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.btn_origin_add:
+
+                changeVisibility(relFormOrigin, pBar);
+                JSONObject createOrigin = buildJson();
+                throwEvent(createOrigin);
+                break;
+        }//switch
+    }//onClick
 }

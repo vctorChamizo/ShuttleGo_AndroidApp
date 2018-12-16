@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      *
      * @return
      */
-    private JSONObject makeJson() {
+    private JSONObject buildJson() {
 
         JSONObject json = new JSONObject();
         JSONObject user = new JSONObject();
@@ -124,16 +124,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         return user;
-    }//makeJson
+    }//buildJson
 
     /**
      *
-     * @param user
+     * @param data
      */
-    private void throwEvent(JSONObject user) {
+    private void throwEvent(JSONObject data) {
 
         EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.SIGNUP, user)
+        .dispatchEvent(Event.SIGNUP, data)
         .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
             @Override
             public void onComplete(@NonNull Task<HashMap<String, String>> task) {
@@ -262,7 +262,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 if (!empty){
                     changeVisibility(relative3, pBar);
-                    JSONObject user = makeJson();
+                    JSONObject user = buildJson();
                     throwEvent(user);
                 }
                 else throwToast("Introduzca una contraseña");

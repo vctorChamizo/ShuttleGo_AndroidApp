@@ -5,6 +5,8 @@
 
     <!-- Drawer Menu -->
     <string name="nav_header_title">ShuttleGo</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_subtitle">shuttlego@shuttlego.com</string>
     <string name="nav_account">Cuenta</string>
     <string name="action_settings">Ajustes</string>

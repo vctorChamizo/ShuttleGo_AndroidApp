@@ -32,7 +32,7 @@ import tfg.shuttlego.model.transfers.person.Person;
 /**
  *
  */
-public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ArrayList<Origin> listOrigins;
     private NavigationView navigationView;
@@ -124,7 +124,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
                 }//else
             }//onComplete
         });
-    }//loadOriginList
+    }//throwEvent
 
     /**
      *
@@ -156,7 +156,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         } else {
             super.onBackPressed();
         }
-    }
+    }//onBackPressed
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

@@ -12,5 +12,5 @@ public enum Event {
     GETORIGINBYID,
     CREATEORIGIN,
     MODIFYORIGIN,
-    DELEEORIGIN
+    DELETEORIGIN
 }

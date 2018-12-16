@@ -110,7 +110,7 @@ public class EventDispatcher {
                             }
                         });//createOrigin
 
-            case DELEEORIGIN:
+            case DELETEORIGIN:
                 return this.mFunctions
                         .getHttpsCallable("deleteOrigin")
                         .call(data)

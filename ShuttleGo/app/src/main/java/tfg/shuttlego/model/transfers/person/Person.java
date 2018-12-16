@@ -12,15 +12,6 @@ public class Person implements Serializable {
     private String password;
     private TypePerson type;
 
-
-    public Person() {}
-
-    public Person (String email, String password){
-
-        this.email = email;
-        this.password = password;
-    }
-
     public Person (String email, String password, String name, String surname, int phone, TypePerson type){
 
         this.email = email;
@@ -30,7 +21,6 @@ public class Person implements Serializable {
         this.phone = phone;
         this.type = type;
     }
-
 
     public String getName() {
         return name;

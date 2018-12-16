@@ -31,7 +31,7 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
     public OriginAdapter(ArrayList<Origin> originList, Person user) {
         this.originList = originList;
         this.user = user;
-    }
+    }//OriginAdapter
 
     /**
      *
@@ -57,7 +57,7 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
             nameText = v.findViewById(R.id.btndddd);
             originCard = v.findViewById(R.id.origin_card_view);
             idText = v.findViewById(R.id.id_origin_text);
-        }
+        }//OriginViewHolder
 
         /**
          *
@@ -74,15 +74,15 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
                     context.startActivity(intent);
                 }
             });
-        }
-    }
+        }//setOnClickListeners
+    }//OriginViewHolder
 
     @Override
     public OriginViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.admin_origin_cardiew, viewGroup, false);
         OriginViewHolder vh = new OriginViewHolder(v);
         return vh;
-    }
+    }//OriginViewHolder
 
     @Override
     public void onBindViewHolder(OriginViewHolder originHolder, int i) {
@@ -90,7 +90,7 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
         originHolder.idText.setText(originList.get(i).getId());
 
         originHolder.setOnClickListeners();
-    }
+    }//onBindViewHolder
 
     @Override
     public int getItemCount() {
@@ -100,5 +100,5 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-    }
+    }//onAttachedToRecyclerView
 }

@@ -89,12 +89,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     /**
      *
-     * @param user
+     * @param data
      */
-    private void throwEvent(JSONObject user) {
+    private void throwEvent(JSONObject data) {
 
         EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.SIGNIN, user)
+        .dispatchEvent(Event.SIGNIN, data)
         .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
             @Override
             public void onComplete(@NonNull Task<HashMap<String, String>> task) {
