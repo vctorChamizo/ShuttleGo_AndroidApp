@@ -19,7 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.account.LoginActivity" />
         <activity android:name=".activities.account.RegisterActivity" />
         <activity android:name=".activities.admin.AdminMain" />
@@ -28,4 +27,5 @@
         <activity android:name=".activities.passenger.PassengerMain" />
         <activity android:name=".activities.driver.DriverMain" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
