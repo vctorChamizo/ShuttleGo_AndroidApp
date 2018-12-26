@@ -21,7 +21,10 @@ const errors = {
 
     /* Origins */
     originDoesntExists:{error:"originDoesntExists"},        //The origin you are trying to get doesnt exists.
-    originAlreadyExists:{error:"originAlreadyExists"}       //The origin you are trying to register already exists in the db. (Checks the name)
+    originAlreadyExists:{error:"originAlreadyExists"},      //The origin you are trying to register already exists in the db. (Checks the name)
+
+    /* Routes */
+    routeDoesntExists:{error:"routeDoesntExists"}
 }
 
 module.exports = errors;
