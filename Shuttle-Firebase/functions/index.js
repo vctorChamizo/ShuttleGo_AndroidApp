@@ -109,6 +109,13 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>{return {created:true}},error=>error);
 })
 
+exports.createRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkUser(data.user,"driver"))
+  .then(()=>checkData(data.route)
+  .then(()=>
+})
+
 
 /*---------------- PRIVATE Functions ---------------*/
 /**
