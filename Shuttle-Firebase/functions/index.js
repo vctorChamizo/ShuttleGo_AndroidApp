@@ -112,8 +112,9 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
 exports.createRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkUser(data.user,"driver"))
-  .then(()=>checkData(data.route)
-  .then(()=>
+  .then(()=>{ data.driver=data.user.id ; return null}) //No se si funciona OjO
+  .then(()=>checkData(data.route))
+  .then(()=>createRoute(data.route),error=>error);
 })
 
 

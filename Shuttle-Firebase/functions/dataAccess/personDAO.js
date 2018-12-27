@@ -17,6 +17,18 @@ function getUser(email){
     (err)=>{throw ERROR.server })
 }//getUser
 
+function getUserById(id){
+    return db.collection("persons").doc(id).get()
+    .then((snapshot)=>{
+        if(!snapshot.exists)
+            return null;
+        else{
+            let user = snapshot.data();
+            user.id = snapshot.id;
+            return user;
+        };
+    },error=>{throw ERROR.server});
+}
 /**
  * @description Insert a new user in the database.
  * @param {Object} newUser  new user data
@@ -34,5 +46,6 @@ function insertUser(newUser){
 
 module.exports = {
     getUser: getUser,
-    insertUser: insertUser
+    insertUser: insertUser,
+    getUserById:getUserById
 }

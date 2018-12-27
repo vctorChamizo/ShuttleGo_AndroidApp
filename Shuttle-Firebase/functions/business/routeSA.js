@@ -4,16 +4,18 @@ const originDao = require("../dataAccess/originDAO");
 const personDao = require("../dataAccess/personDAO");
 
 function createRoute(route){
-
-     /*
    return checkRequirements(route)
-   .then(()=>originDao.getOriginById(route.origin))
-   .then((origin)=>{
-       if(origin == null) throw ERROR.originDoesntExists;
-       else return personDao.getUser()
-   })
+        .then(()=>originDao.getOriginById(route.origin))
+        .then((origin)=>{
+            if(origin == null) throw ERROR.originDoesntExists;
+            else return personDao.getUserById(route.driver);
+        })
+        .then((driver)=>{
+            if(driver == null) throw ERROR.userDoesntExists;
+            else if(driver.type != "driver") throw ERROR.noPermissions;
+            else return routeDao.createRoute(route);
+        } )
 
-   */
 }
 
 function getRouteById(id){
