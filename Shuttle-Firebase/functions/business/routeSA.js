@@ -11,9 +11,10 @@ function createRoute(route){
             else return personDao.getUserById(route.driver);
         })
         .then((driver)=>{
+            route.max=Number(route.max);
             if(driver == null) throw ERROR.userDoesntExists;
             else if(driver.type != "driver") throw ERROR.noPermissions;
-            else return routeDao.createRoute(route);
+            else return routeDao.insertRoute(route);
         } )
 
 }

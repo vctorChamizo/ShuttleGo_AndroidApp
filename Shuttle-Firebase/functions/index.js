@@ -7,6 +7,7 @@ const functions = require('firebase-functions');
 const personSA = require("./business/personSA");
 const originSA = require("./business/originSA");
 const ERROR = require("./errors");
+const routeSA = require("./business/routeSA");
 
 
 
@@ -21,6 +22,9 @@ const ERROR = require("./errors");
       - DELETEORIGIN: deleteOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
       - CREATEORIGIN: createOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{name:"Barajas T5"}}, {headers: {Authorization: 'Bearer $token'}});
       - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
+    
+    ** Route **
+      - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123",id:"wxn6auBOwCJDFCDs0bTx"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm"}}, {headers: {Authorization: 'Bearer $token'}});
 */
 
 
@@ -112,9 +116,10 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
 exports.createRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkUser(data.user,"driver"))
-  .then(()=>{ data.driver=data.user.id ; return null}) //No se si funciona OjO
+  .then(()=>checkData(data.user.id))
   .then(()=>checkData(data.route))
-  .then(()=>createRoute(data.route),error=>error);
+  .then(()=>{data.route.driver=data.user.id; return routeSA.createRoute(data.route);})
+  .then(()=>{return {created:true}},error=>error);
 })
 
 
