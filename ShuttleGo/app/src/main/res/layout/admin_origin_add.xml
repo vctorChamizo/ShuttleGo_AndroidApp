@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".activities.account.LoginActivity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@drawable/bg_degraded">
 
     <LinearLayout
         android:id="@+id/linear_progress"
@@ -53,9 +53,9 @@
 
             <Button
                 android:id="@+id/btn_origin_add"
-                style="@style/ButtonAdd"
+                style="@style/ButtonBigRound"
                 android:text="@string/add"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textColor="@color/colorPrimary"/>
         </LinearLayout>
 
 

@@ -1,9 +1,14 @@
 <resources>
-    <!-- Main -->
+
+    <!--*************************************************************************
+    *********************************  Main  ************************************
+    **************************************************************************-->
+
+    <!-- ******************************  App  ******************************* -->
     <string name="app_name">ShuttleGo</string>
     <string name="subTittle">Haz tu viaje más fácil</string>
 
-    <!-- Drawer Menu -->
+    <!-- **************************  Drawer Menu  **************************** -->
     <string name="nav_header_title">ShuttleGo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -12,12 +17,12 @@
     <string name="action_settings">Ajustes</string>
     <string name="action_logout">Cerrar Sesion</string>
 
-    <!-- Login -->
+    <!-- ****************************  Login  ********************************* -->
     <string name="signin">Iniciar sesión</string>
     <string name="signup">Registrate</string>
     <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
 
-    <!-- Register -->
+    <!-- **************************  Register  ********************************* -->
     <string name="tittleWelcome">Te damos la bienvenida a ShuttleGo</string>
     <string name="subtittleWelcome">Registrte con tu email</string>
     <string name="tittleDataRegister">Algunos datos más...</string>
@@ -26,7 +31,7 @@
     <string name="next">Siguiente</string>
     <string name="finish">Finalizar</string>
 
-    <!-- User -->
+    <!-- **************************  User  ********************************** -->
     <string name="name">Nombre</string>
     <string name="surname">Apellidos</string>
     <string name="phone">Telefono</string>
@@ -36,13 +41,49 @@
     <string name="driver">Conductor</string>
     <string name="admin">Administrador</string>
 
-    <!-- Admin Menu Drawer -->
-    <string name="origin">Origen</string>
-    <string name="addOrigin">Añadir origen</string>
+    <!--*************************************************************************-->
+
+
+
+
+    <!--**************************************************************************
+    *******************************  Admin  **************************************
+    ***************************************************************************-->
+
+    <!-- *************************  Edit Origin ****************************** -->
+    <string name="editOrigin">Editar</string>
+    <string name="deleteOrigin">Eliminar</string>
+
+    <!-- *************************  Edit Origin ****************************** -->
     <string name="add">Añadir</string>
 
-    <!-- Passenger Menu Drawer -->
+    <!-- *********************  Admin Menu Drawer  *************************** -->
+    <string name="origin">Origen</string>
+    <string name="addOrigin">Añadir origen</string>
 
-    <!-- Driver Menu Drawer -->
+
+    <!--*************************************************************************-->
+
+
+
+
+    <!--*************************************************************************
+    *****************************  Passenger  ***********************************
+    **************************************************************************-->
+
+    <!-- *******************  Passenger Menu Drawer  ************************* -->
+
+    <!--*************************************************************************-->
+
+
+
+
+    <!--*************************************************************************
+    ******************************  Driver  *************************************
+    **************************************************************************-->
+
+    <!-- *********************  Driver Menu Drawer  *************************** -->
+
+    <!--*************************************************************************-->
 
 </resources>
