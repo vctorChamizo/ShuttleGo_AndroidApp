@@ -30,3 +30,6 @@ Librerias Gradle y uso Gson: http://www.proyectosimio.com/es/programacion-androi
 Alternativa Google Maps:
 	- https://www.mapbox.com/
 	- https://www.mapbox.com/mapbox.js/example/v1.0.0/single-marker/
+
+Tutorial plantilla de latex:
+http://gaia.fdi.ucm.es/files/research/texis/nightlybuilds/TeXiS-Manual-NightlyBuild.pdf
