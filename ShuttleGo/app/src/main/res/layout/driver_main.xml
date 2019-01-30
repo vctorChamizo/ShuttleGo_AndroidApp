@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.driver.DriverMain"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/bg_degraded"
     android:padding="40dp">
 
 

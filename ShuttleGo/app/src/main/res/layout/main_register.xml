@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".activities.account.RegisterActivity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@drawable/bg_degraded">
 
     <LinearLayout
         android:id="@+id/linear_progress"
@@ -77,8 +77,8 @@
                 android:id="@+id/btn_next1_register"
                 android:layout_marginTop="50dp"
                 android:text="@string/next"
-                android:textColor="@color/colorPrimaryDark"
-                style="@style/ButtonSign"/>
+                android:textColor="@color/colorPrimary"
+                style="@style/ButtonBigRound"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -132,8 +132,8 @@
                 android:id="@+id/btn_next2_register"
                 android:layout_marginTop="50dp"
                 android:text="@string/next"
-                android:textColor="@color/colorPrimaryDark"
-                style="@style/ButtonSign"/>
+                android:textColor="@color/colorPrimary"
+                style="@style/ButtonBigRound"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -177,8 +177,8 @@
                 android:id="@+id/btn_finish_register"
                 android:layout_marginTop="50dp"
                 android:text="@string/finish"
-                android:textColor="@color/colorPrimaryDark"
-                style="@style/ButtonSign" />
+                android:textColor="@color/colorPrimary"
+                style="@style/ButtonBigRound" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

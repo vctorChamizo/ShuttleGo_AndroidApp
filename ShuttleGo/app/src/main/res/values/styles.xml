@@ -1,15 +1,20 @@
 <resources>
 
-    <!-- Tema de la aplicación -->
+    <!--*************************************************************************
+    *********************************  Main  ************************************
+    **************************************************************************-->
+
+    <!-- ******************************  App  ******************************* -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorAccent</item>
-        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
-    <!-- Drawer Menu -->
+
+    <!-- *************************  Drawer Menu  **************************** -->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -19,7 +24,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- App -->
+
+    <!-- *************************  Progress Bar  **************************** -->
     <style name="LinearProgress">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -30,20 +36,24 @@
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">80dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:indeterminateDrawable">@drawable/progressbar_circular</item>
+        <item name="android:indeterminateDrawable">@drawable/pg_circular</item>
         <item name="android:visibility">gone</item>
     </style>
 
+
+    <!-- ****************+******  Vertical Layout *************************** -->
     <style name="VerticalLinear">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="ButtonSign">
+
+    <!-- *************************  Buttons App  **************************** -->
+    <style name="ButtonBigRound">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/btn_sign</item>
+        <item name="android:background">@drawable/btn_change_white</item>
     </style>
 
     <style name="ThemeData" parent="Widget.AppCompat.EditText">
@@ -51,7 +61,8 @@
         <item name="colorControlNormal">@color/colorWhite</item>
     </style>
 
-    <!-- Login -->
+
+    <!-- *****************************  Login ******************************* -->
     <style name="TittleApp">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -87,8 +98,7 @@
         <item name="android:textColor">@drawable/btn_register</item>
     </style>
 
-
-    <!-- Register -->
+    <!-- ***************************  Register ****************************** -->
     <style name="relativeForm">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -121,13 +131,35 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+    <!--***********************************************************************-->
 
-    <style name="ButtonAdd">
-        <item name="android:layout_width">170dp</item>
+
+    <!--*************************************************************************
+    *********************************  Admin  ************************************
+    **************************************************************************-->
+
+    <style name="ButtonDeleteOrigin">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:background">@drawable/btn_sign</item>
+        <item name="android:background">@drawable/btn_change_orange</item>
     </style>
 
+    <!--***********************************************************************-->
+
+
+    <!--*************************************************************************
+    *******************************  Passenger  *********************************
+    **************************************************************************-->
+
+
+    <!--***********************************************************************-->
+
+
+    <!--*************************************************************************
+    *********************************  Driver  **********************************
+    **************************************************************************-->
+
+
+    <!--***********************************************************************-->
 
 </resources>

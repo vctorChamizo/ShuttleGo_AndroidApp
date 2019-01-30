@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_add_origin"
-            android:icon="@drawable/ic_library_add_black_24dp"
+            android:icon="@drawable/ic_add_origin"
             android:title="@string/addOrigin" />
     </group>
 
@@ -14,11 +14,11 @@
         <menu>
             <item
                 android:id="@+id/nav_settings_admin"
-                android:icon="@drawable/ic_settings_black_24dp"
+                android:icon="@drawable/ic_settings"
                 android:title="@string/action_settings" />
             <item
                 android:id="@+id/nav_signout_admin"
-                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:icon="@drawable/ic_exit"
                 android:title="@string/action_logout" />
         </menu>
     </item>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.admin.origin.EditOrigin"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/bg_degraded"
     android:padding="20dp"
     android:orientation="vertical">
 
@@ -44,17 +44,17 @@
 
             <Button
                 android:id="@+id/btn_edit_origin"
-                style="@style/ButtonSign"
-                android:textColor="@color/colorPrimaryDark"
+                style="@style/ButtonBigRound"
+                android:textColor="@color/colorPrimary"
                 android:layout_marginBottom="10dp"
-                android:text="Editar"/>
+                android:text="@string/editOrigin"/>
 
             <Button
                 android:id="@+id/btn_delete_origin"
-                style="@style/ButtonSign"
-                android:textColor="@color/colorAccent"
+                style="@style/ButtonDeleteOrigin"
+                android:textColor="@color/colorWhite"
                 android:layout_marginTop="10dp"
-                android:text="Eliminar"/>
+                android:text="@string/deleteOrigin"/>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
