@@ -4,12 +4,15 @@ import android.content.Context;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.mapbox.api.geocoding.v5.GeocodingCriteria;
+import com.mapbox.api.geocoding.v5.models.CarmenContext;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.api.geocoding.v5.MapboxGeocoding;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,14 +32,14 @@ public class Maps {
 
     private Maps() {}
 
-    public Task<String> getPlace(String address){
+    public Task<Direction> getPlace(String address){
 
-        TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
+        TaskCompletionSource<Direction> taskCompletionSource = new TaskCompletionSource<>();
 
         MapboxGeocoding query = MapboxGeocoding.builder()
             .accessToken(Maps.accessToken)
             .query(address)
-            .geocodingTypes(GeocodingCriteria.TYPE_DISTRICT) //esto se puede cambiar
+            .geocodingTypes(GeocodingCriteria.TYPE_ADDRESS,GeocodingCriteria.TYPE_POSTCODE) //esto se puede cambiar
             .build();
 
         query.enqueueCall(new Callback<GeocodingResponse>() {
@@ -44,7 +47,13 @@ public class Maps {
             public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
 
                 List<CarmenFeature> result = response.body().features();
-                taskCompletionSource.setResult("prueba");
+                String postalCode = "";
+
+                for(int i = 0; postalCode.equals("") && i<result.get(0).context().size();i++)
+                    if(result.get(0).context().get(i).id().matches("postcode.*"))
+                        postalCode = result.get(0).context().get(i).text();
+
+                taskCompletionSource.setResult(result.size()>0 ? new Direction(result.get(0).placeName(),postalCode) : null);
             }
 
 
