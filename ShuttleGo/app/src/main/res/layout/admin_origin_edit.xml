@@ -6,6 +6,7 @@
     tools:context=".activities.admin.origin.EditOrigin"
     android:background="@drawable/bg_degraded"
     android:padding="20dp"
+    android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout

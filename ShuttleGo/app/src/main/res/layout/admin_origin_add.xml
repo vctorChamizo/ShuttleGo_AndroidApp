@@ -58,6 +58,5 @@
                 android:textColor="@color/colorPrimary"/>
         </LinearLayout>
 
-
     </RelativeLayout>
 </LinearLayout>
