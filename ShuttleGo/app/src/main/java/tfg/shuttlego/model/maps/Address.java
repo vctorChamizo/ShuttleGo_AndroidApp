@@ -1,14 +1,14 @@
 package tfg.shuttlego.model.maps;
 
-public class Direction {
+public class Address {
     private String fullDirection;
     private int postalCode;
 
-    public Direction(String fullDirection,String postalCode){
+    public Address(String fullDirection,String postalCode){
         this.fullDirection = fullDirection;
         this.postalCode = Integer.parseInt(postalCode);
     }
-    public Direction(String fullDirection,int postalCode){
+    public Address(String fullDirection,int postalCode){
         this.fullDirection = fullDirection;
         this.postalCode = postalCode;
     }

@@ -4,15 +4,13 @@ import android.content.Context;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.mapbox.api.geocoding.v5.GeocodingCriteria;
-import com.mapbox.api.geocoding.v5.models.CarmenContext;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.api.geocoding.v5.MapboxGeocoding;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,9 +30,14 @@ public class Maps {
 
     private Maps() {}
 
-    public Task<Direction> getPlace(String address){
+    /**
+     * Return the full address with the postcode that have been found
+     * @param address the address to search
+     * @return a task with the found address list or null if there is an error
+     */
+    public Task<List<Address>> getFullAddress(String address){
 
-        TaskCompletionSource<Direction> taskCompletionSource = new TaskCompletionSource<>();
+        TaskCompletionSource<List<Address>> taskCompletionSource = new TaskCompletionSource<List<Address>>();
 
         MapboxGeocoding query = MapboxGeocoding.builder()
             .accessToken(Maps.accessToken)
@@ -46,20 +49,24 @@ public class Maps {
             @Override
             public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
 
-                List<CarmenFeature> result = response.body().features();
-                String postalCode = "";
+                List<CarmenFeature> results = response.body().features();
+                List<Address> addresses = new ArrayList<Address>();
+                String postalCode;
 
-                for(int i = 0; postalCode.equals("") && i<result.get(0).context().size();i++)
-                    if(result.get(0).context().get(i).id().matches("postcode.*"))
-                        postalCode = result.get(0).context().get(i).text();
+                for(CarmenFeature result:results) {
+                    postalCode="";
+                    for (int i = 0; postalCode.equals("") && i < result.context().size(); i++)
+                        if (result.context().get(i).id().matches("postcode.*"))
+                            addresses.add(new Address(result.placeName(),result.context().get(i).text()));
+                }
 
-                taskCompletionSource.setResult(result.size()>0 ? new Direction(result.get(0).placeName(),postalCode) : null);
+                taskCompletionSource.setResult(addresses);
             }
 
 
             @Override
             public void onFailure(Call<GeocodingResponse> call, Throwable t) {
-                System.out.print("fallo");
+                taskCompletionSource.setResult(null);
             }
         });
 
