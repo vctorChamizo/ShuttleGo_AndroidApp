@@ -113,15 +113,23 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>{return {created:true}},error=>error);
 })
 
+//---------------ROUTE FUNCTIONS-----------------------------
 exports.createRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkUser(data.user,"driver"))
   .then(()=>checkData(data.user.id))
   .then(()=>checkData(data.route))
-  .then(()=>{data.route.driver=data.user.id; return routeSA.createRoute(data.route);})
+  .then(()=>{data.route.driver=data.user.id; return routeSA.createRoute(data.route);}) //the driver must be the user who created the route.
   .then(()=>{return {created:true}},error=>error);
 })
 
+exports.searchRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkData(data-route.postCode))
+  .then(()=>routeSA.getRoutesByPostCode(data.route.postCode))
+  .then((routes)=>routes,(error)=>error);
+})
 
 /*---------------- PRIVATE Functions ---------------*/
 /**

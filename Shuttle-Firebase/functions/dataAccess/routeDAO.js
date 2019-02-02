@@ -25,8 +25,16 @@ function deleteRouteById(id){
     .then(()=>null,error=>{throw ERROR.server});
 }
 
+function getRoutesByPostCode(postCode){
+    return db.collection("routes").where("postcode","==",postCode).get()
+    .then((snapshot) => {
+        if(snapshot.docs.length > 0) return snapshot.docs.map(element=>{return element.data()});
+        else return [];},
+    (err)=>{throw ERROR.server })
+}
 module.exports = {
     deleteRouteById:deleteRouteById,
     insertRoute:insertRoute,
-    getRouteById:getRouteById
+    getRouteById:getRouteById,
+    getRoutesByPostCode:getRoutesByPostCode
 }

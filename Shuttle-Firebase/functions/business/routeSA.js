@@ -27,6 +27,9 @@ function getRouteById(id){
     })
 }
 
+function getRoutesByPostCode(postCode){
+    return routeDao.getRoutesByPostCode(postCode);
+}
 
 function checkRequirements(route){
     return new Promise((resolve,reject)=>{
@@ -38,5 +41,6 @@ function checkRequirements(route){
 
 module.exports = {
     createRoute:createRoute,
-    getRouteById:getRouteById
+    getRouteById:getRouteById,
+    getRoutesByPostCode:getRoutesByPostCode
 }
