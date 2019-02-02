@@ -26,7 +26,7 @@ function deleteRouteById(id){
 }
 
 function getRoutesByPostCode(postCode){
-    return db.collection("routes").where("postcode","==",postCode).get()
+    return db.collection("routes").where("postCode","==",postCode).get()
     .then((snapshot) => {
         if(snapshot.docs.length > 0) return snapshot.docs.map(element=>{return element.data()});
         else return [];},

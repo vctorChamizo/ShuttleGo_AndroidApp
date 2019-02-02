@@ -11,7 +11,7 @@ const routeSA = require("./business/routeSA");
 
 
 
-/* DATA IN EXAMPLES
+/* DATA EXAMPLES
     
     ** ACCOUNT **
       - SIGNIN: signin({user:{email:"jose@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
@@ -25,6 +25,7 @@ const routeSA = require("./business/routeSA");
     
     ** Route **
       - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123",id:"wxn6auBOwCJDFCDs0bTx"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm"}}, {headers: {Authorization: 'Bearer $token'}});
+      - SEARCHROUTE: searchRoute({route:{postCode:28008}}, {headers: {Authorization: 'Bearer $token'}});})
 */
 
 
@@ -126,7 +127,7 @@ exports.createRoute = functions.https.onCall((data,conext)=>{
 exports.searchRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkData(data.route))
-  .then(()=>checkData(data-route.postCode))
+  .then(()=>checkData(data.route.postCode))
   .then(()=>routeSA.getRoutesByPostCode(data.route.postCode))
   .then((routes)=>routes,(error)=>error);
 })
