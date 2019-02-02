@@ -88,10 +88,9 @@ constantes,guionado,Cascaras/bibliografia,config%
 % "Metadatos" para el PDF
 %
 \ifpdf\hypersetup{%
-    pdftitle = {\titulo},
-    pdfsubject = {Plantilla de Tesis},
-    pdfkeywords = {Plantilla, LaTeX, tesis, trabajo de
-      investigación, trabajo de Master},
+    pdftitle = {Trabajo de Fin de Grado - ShuttleGo},
+    pdfsubject = {Trabajo de Fin de Grado},
+    pdfkeywords = {TFG, ShuttleGo, Shuttle bus, trabajo de fin de grado},
     pdfauthor = {\textcopyright\ \autor},
     pdfcreator = {\LaTeX\ con el paquete \flqq hyperref\frqq},
     pdfproducer = {pdfeTeX-0.\the\pdftexversion\pdftexrevision},
@@ -115,7 +114,7 @@ constantes,guionado,Cascaras/bibliografia,config%
 
 \include{Cascaras/cover}
 
-\include{Cascaras/dedicatoria}
+%\include{Cascaras/dedicatoria}
 
 \include{Cascaras/agradecimientos}
 
@@ -130,13 +129,11 @@ constantes,guionado,Cascaras/bibliografia,config%
 % páginas) y ponemos la cabecera normal
 \mainmatter
 \restauraCabecera
-
-\include{Capitulos/Parte1}
-\include{Capitulos/01Capitulo1}
-%\include{...}
-%\include{...}
-%\include{...}
-%\include{...}
+\include{Capitulos/introduccion}
+\include{Capitulos/motivacion}
+\include{Capitulos/estadoArte}
+\include{Capitulos/tecnologia}
+\include{Capitulos/casosUso}
 %\include{...}
 
 % Apéndices
