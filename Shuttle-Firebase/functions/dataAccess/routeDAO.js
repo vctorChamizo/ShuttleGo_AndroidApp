@@ -13,13 +13,22 @@ function getRouteById(id){
         if(!snapshot.exists)
             return null;
         else{
-            let origin = snapshot.data();
-            origin.id = snapshot.id;
-            return origin;
+            let route = snapshot.data();
+            route.id = snapshot.id;
+            return getPassengers(id);
         };
-    },error=>{throw ERROR.server});
+    }).then((passengers)=>route.passengers = passengers,error=>{throw ERROR.server});
 }
 
+function getPassengers(route){
+    return db.collection("check-in").where("route","==",route).get()
+    .then((snapshot)=>{
+        if(!snapshot.exists)
+            return [];
+        else
+            return snapshot.docs.map(element=>element.data().passenger);
+    }),(error => {throw ERROR.server});
+}
 function deleteRouteById(id){
     return db.collection("routes").doc(id).delete()
     .then(()=>null,error=>{throw ERROR.server});
@@ -32,9 +41,21 @@ function getRoutesByPostCode(postCode){
         else return [];},
     (err)=>{throw ERROR.server })
 }
+
+function addToRoute(user,route){
+    return db.collection("routes").doc(route)
+    .set({
+        passenger:user,
+        route:route,
+        order:route.length
+    }),(err)=>{throw ERROR.server };
+}
+
 module.exports = {
     deleteRouteById:deleteRouteById,
     insertRoute:insertRoute,
     getRouteById:getRouteById,
-    getRoutesByPostCode:getRoutesByPostCode
+    getRoutesByPostCode:getRoutesByPostCode,
+    addToRoute:addToRoute,
+    getPassengers:getPassengers
 }

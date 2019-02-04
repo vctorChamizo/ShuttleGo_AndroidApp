@@ -31,6 +31,16 @@ function getRoutesByPostCode(postCode){
     return routeDao.getRoutesByPostCode(postCode);
 }
 
+function addToRoute(user,route){
+    return getRouteById(route)
+    .then((route)=>{
+        if (!route) throw ERROR.routeDoesntExists;
+        else  if (route.passengers.length >= route.max) throw ERROR.routeSoldOut;
+        else return routeDao.addToRoute(user,route);
+    })
+}
+
+
 function checkRequirements(route){
     return new Promise((resolve,reject)=>{
         if(route == null || route.driver == null || route.origin == null ||
@@ -38,9 +48,9 @@ function checkRequirements(route){
         else resolve();
     });
 }
-
 module.exports = {
     createRoute:createRoute,
     getRouteById:getRouteById,
-    getRoutesByPostCode:getRoutesByPostCode
+    getRoutesByPostCode:getRoutesByPostCode,
+    addToRoute:addToRoute
 }
