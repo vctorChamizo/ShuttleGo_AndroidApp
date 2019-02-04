@@ -32,7 +32,7 @@ function getRoutesByPostCode(postCode){
 }
 
 function addToRoute(user,route){
-    return getRouteById(route)
+    return routeDao.getRouteById(route)
     .then((route)=>{
         if (!route) throw ERROR.routeDoesntExists;
         else  if (route.passengers.length >= route.max) throw ERROR.routeSoldOut;

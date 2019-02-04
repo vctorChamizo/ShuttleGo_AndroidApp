@@ -132,6 +132,13 @@ exports.searchRoute = functions.https.onCall((data,conext)=>{
   .then((routes)=>routes,(error)=>error);
 })
 
+exports.addToRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkUser(data.user))
+  .then(()=>routeSA.addToRoute(data.user,data.route));
+});
+
 /*---------------- PRIVATE Functions ---------------*/
 /**
  * @description Avoid internal null errors, it should be called at the first line of all exported functions.
