@@ -32,11 +32,20 @@ function getRoutesByPostCode(postCode){
 }
 
 function addToRoute(user,route){
-    return routeDao.getRouteById(route)
+    let passenger;
+    return personDao.getUser(user.email)
+    .then((result)=>{
+        if (!result) throw ERROR.userDoesntExists;
+        else{
+            passenger = result;
+            return routeDao.getRouteById(route.id);
+        }
+    })
     .then((route)=>{
         if (!route) throw ERROR.routeDoesntExists;
         else  if (route.passengers.length >= route.max) throw ERROR.routeSoldOut;
-        else return routeDao.addToRoute(user,route);
+        else if (route.passengers.indexOf(passenger.id) != -1) throw ERROR.userAlreadyAdded;
+        else return routeDao.addToRoute(passenger.id,route);
     })
 }
 

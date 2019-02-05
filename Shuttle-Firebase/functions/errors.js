@@ -25,7 +25,8 @@ const errors = {
 
     /* Routes */
     routeDoesntExists:{error:"routeDoesntExists"},          //The route you are trying to get doesnt exists.
-    routeSoldOut:{error:"routeSoldOut"}                     //The bus is full.
+    routeSoldOut:{error:"routeSoldOut"},                    //The bus is full.
+    userAlreadyAdded:{error:"userAlreadyAdded"}             //The user was already added to the route.
 }
 
 module.exports = errors;

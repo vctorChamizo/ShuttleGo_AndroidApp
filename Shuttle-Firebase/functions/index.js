@@ -26,6 +26,7 @@ const routeSA = require("./business/routeSA");
     ** Route **
       - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123",id:"wxn6auBOwCJDFCDs0bTx"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm"}}, {headers: {Authorization: 'Bearer $token'}});
       - SEARCHROUTE: searchRoute({route:{postCode:28008}}, {headers: {Authorization: 'Bearer $token'}});})
+      - ADDTOROUTE: addToRoute({route:{id:"9hiuhK8P9L1HjBvfzuWP"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
 */
 
 
@@ -136,7 +137,8 @@ exports.addToRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkData(data.route))
   .then(()=>checkUser(data.user))
-  .then(()=>routeSA.addToRoute(data.user,data.route));
+  .then(()=>routeSA.addToRoute(data.user,data.route))
+  .then(()=>{return {added:true}},(error => error));
 });
 
 /*---------------- PRIVATE Functions ---------------*/

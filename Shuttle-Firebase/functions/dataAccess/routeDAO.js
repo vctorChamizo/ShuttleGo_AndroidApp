@@ -8,26 +8,29 @@ function insertRoute(newData){
 }
 
 function getRouteById(id){
+    let route;
+    
     return db.collection("routes").doc(id).get()
     .then((snapshot)=>{
         if(!snapshot.exists)
             return null;
         else{
-            let route = snapshot.data();
+            route = snapshot.data();
             route.id = snapshot.id;
             return getPassengers(id);
         };
-    }).then((passengers)=>route.passengers = passengers,error=>{throw ERROR.server});
+    })
+    .then((passengers)=>{
+        route.passengers = passengers;
+        return route;
+    },error=>{throw ERROR.server});
 }
 
 function getPassengers(route){
     return db.collection("check-in").where("route","==",route).get()
     .then((snapshot)=>{
-        if(!snapshot.exists)
-            return [];
-        else
-            return snapshot.docs.map(element=>element.data().passenger);
-    }),(error => {throw ERROR.server});
+        return snapshot.docs.map(element=>element.data().passenger);
+    },error => {throw ERROR.server});
 }
 function deleteRouteById(id){
     return db.collection("routes").doc(id).delete()
@@ -43,12 +46,13 @@ function getRoutesByPostCode(postCode){
 }
 
 function addToRoute(user,route){
-    return db.collection("routes").doc(route)
-    .set({
+    return db.collection("check-in")
+    .add({
         passenger:user,
-        route:route,
-        order:route.length
-    }),(err)=>{throw ERROR.server };
+        route:route.id,
+        order:route.passengers.length
+    })
+    .then(()=>null,(err)=>{throw ERROR.server });
 }
 
 module.exports = {
