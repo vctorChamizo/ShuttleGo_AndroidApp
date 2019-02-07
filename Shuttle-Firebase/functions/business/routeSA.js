@@ -27,11 +27,11 @@ function getRouteById(id){
     })
 }
 
-function getRoutesByPostCode(postCode){
-    return routeDao.getRoutesByPostCode(postCode);
+function searchRoutes(origin,destination){
+    return routeDao.getRoutesByOriginAndDestination(origin,destination);
 }
 
-function addToRoute(user,route){
+function addToRoute(user,route,address){
     let passenger;
     return personDao.getUser(user.email)
     .then((result)=>{
@@ -45,14 +45,14 @@ function addToRoute(user,route){
         if (!route) throw ERROR.routeDoesntExists;
         else  if (route.passengers.length >= route.max) throw ERROR.routeSoldOut;
         else if (route.passengers.indexOf(passenger.id) != -1) throw ERROR.userAlreadyAdded;
-        else return routeDao.addToRoute(passenger.id,route);
+        else return routeDao.addToRoute(passenger.id,route,address);
     })
 }
 
 
 function checkRequirements(route){
     return new Promise((resolve,reject)=>{
-        if(route == null || route.driver == null || route.origin == null ||
+        if(route == null || route.driver == null || route.origin == null || route.destination == null ||
            route.max == null || Number(route.max) == NaN || Number(route.max)<0) reject(ERROR.badRequestForm);
         else resolve();
     });
@@ -60,6 +60,6 @@ function checkRequirements(route){
 module.exports = {
     createRoute:createRoute,
     getRouteById:getRouteById,
-    getRoutesByPostCode:getRoutesByPostCode,
+    searchRoutes:searchRoutes,
     addToRoute:addToRoute
 }

@@ -37,20 +37,21 @@ function deleteRouteById(id){
     .then(()=>null,error=>{throw ERROR.server});
 }
 
-function getRoutesByPostCode(postCode){
-    return db.collection("routes").where("postCode","==",postCode).get()
+function getRoutesByOriginAndDestination(origin,destination){
+    return db.collection("routes").where("destination","==",destination).where("origin","==",origin).get()
     .then((snapshot) => {
         if(snapshot.docs.length > 0) return snapshot.docs.map(element=>{return element.data()});
         else return [];},
     (err)=>{throw ERROR.server })
 }
 
-function addToRoute(user,route){
+function addToRoute(user,route,address){
     return db.collection("check-in")
     .add({
         passenger:user,
         route:route.id,
-        order:route.passengers.length
+        order:route.passengers.length,
+        address:address
     })
     .then(()=>null,(err)=>{throw ERROR.server });
 }
@@ -59,7 +60,7 @@ module.exports = {
     deleteRouteById:deleteRouteById,
     insertRoute:insertRoute,
     getRouteById:getRouteById,
-    getRoutesByPostCode:getRoutesByPostCode,
+    getRoutesByOriginAndDestination:getRoutesByOriginAndDestination,
     addToRoute:addToRoute,
     getPassengers:getPassengers
 }

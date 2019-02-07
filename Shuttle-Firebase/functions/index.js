@@ -25,8 +25,8 @@ const routeSA = require("./business/routeSA");
     
     ** Route **
       - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123",id:"wxn6auBOwCJDFCDs0bTx"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm"}}, {headers: {Authorization: 'Bearer $token'}});
-      - SEARCHROUTE: searchRoute({route:{postCode:28008}}, {headers: {Authorization: 'Bearer $token'}});})
-      - ADDTOROUTE: addToRoute({route:{id:"9hiuhK8P9L1HjBvfzuWP"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
+      - SEARCHROUTE: searchRoute({route:{destination:28008,origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
+      - ADDTOROUTE: addToRoute({address:"passenger address",route:{id:"9hiuhK8P9L1HjBvfzuWP"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
 */
 
 
@@ -128,14 +128,16 @@ exports.createRoute = functions.https.onCall((data,conext)=>{
 exports.searchRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkData(data.route))
-  .then(()=>checkData(data.route.postCode))
-  .then(()=>routeSA.getRoutesByPostCode(data.route.postCode))
+  .then(()=>checkData(data.route.origin))
+  .then(()=>checkData(data.route.destination))
+  .then(()=>routeSA.searchRoutes(data.route.origin,data.route.destination))
   .then((routes)=>routes,(error)=>error);
 })
 
 exports.addToRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkData(data.route))
+  .then(()=>checkData(data.address))
   .then(()=>checkUser(data.user))
   .then(()=>routeSA.addToRoute(data.user,data.route))
   .then(()=>{return {added:true}},(error => error));
