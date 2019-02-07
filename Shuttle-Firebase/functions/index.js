@@ -24,9 +24,9 @@ const routeSA = require("./business/routeSA");
       - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** Route **
-      - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123",id:"wxn6auBOwCJDFCDs0bTx"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm"}}, {headers: {Authorization: 'Bearer $token'}});
-      - SEARCHROUTE: searchRoute({route:{destination:28008,origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
-      - ADDTOROUTE: addToRoute({address:"passenger address",route:{id:"9hiuhK8P9L1HjBvfzuWP"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
+      - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123",id:"wxn6auBOwCJDFCDs0bTx"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
+      - SEARCHROUTE: searchRoute({route:{destination:"28008",origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
+      - ADDTOROUTE: addToRoute({address:"passenger address",route:{id:"7ptW7eHRPqtoaHL4SWae"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
 */
 
 
@@ -130,6 +130,7 @@ exports.searchRoute = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkData(data.route.origin))
   .then(()=>checkData(data.route.destination))
+  .then(()=>checkData(data.route.address))
   .then(()=>routeSA.searchRoutes(data.route.origin,data.route.destination))
   .then((routes)=>routes,(error)=>error);
 })
@@ -139,7 +140,7 @@ exports.addToRoute = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkData(data.address))
   .then(()=>checkUser(data.user))
-  .then(()=>routeSA.addToRoute(data.user,data.route))
+  .then(()=>routeSA.addToRoute(data.user,data.route,data.address))
   .then(()=>{return {added:true}},(error => error));
 });
 

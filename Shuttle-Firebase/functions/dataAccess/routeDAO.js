@@ -12,6 +12,7 @@ function getRouteById(id){
     
     return db.collection("routes").doc(id).get()
     .then((snapshot)=>{
+        console.log(snapshot.exists)
         if(!snapshot.exists)
             return null;
         else{
@@ -21,6 +22,8 @@ function getRouteById(id){
         };
     })
     .then((passengers)=>{
+        if(!passengers)
+            return null;
         route.passengers = passengers;
         return route;
     },error=>{throw ERROR.server});
@@ -46,14 +49,13 @@ function getRoutesByOriginAndDestination(origin,destination){
 }
 
 function addToRoute(user,route,address){
-    return db.collection("check-in")
-    .add({
+
+    return db.collection("check-in").add({
         passenger:user,
         route:route.id,
         order:route.passengers.length,
         address:address
-    })
-    .then(()=>null,(err)=>{throw ERROR.server });
+    }).then(()=>null,(err)=>{throw ERROR.server });
 }
 
 module.exports = {
