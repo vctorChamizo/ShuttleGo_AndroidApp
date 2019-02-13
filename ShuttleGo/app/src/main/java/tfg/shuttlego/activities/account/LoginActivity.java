@@ -19,6 +19,7 @@ import java.util.Objects;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.admin.AdminMain;
 import tfg.shuttlego.activities.driver.DriverMain;
+import tfg.shuttlego.activities.map.MapActivity;
 import tfg.shuttlego.activities.passenger.PassengerMain;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;
@@ -157,7 +158,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     case "driver":
                         typePerson = TypePerson.DRIVER;
-                        nextClass = DriverMain.class;
+                        //nextClass = DriverMain.class;
+                        nextClass = MapActivity.class;
                         break;
 
                     default:

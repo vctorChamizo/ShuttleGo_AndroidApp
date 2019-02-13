@@ -56,7 +56,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     private void setMenuDrawer() {
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.admin_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -150,7 +150,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.admin_main);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -174,7 +174,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         else if (id == R.id.nav_settings_admin) { }
         else if (id == R.id.nav_signout_admin) { }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.admin_main);
         drawer.closeDrawer(GravityCompat.START);
 
         return true;

@@ -115,7 +115,10 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>{return {created:true}},error=>error);
 })
 
-//---------------ROUTE FUNCTIONS-----------------------------
+/*---------------- ROUTE Functions ---------------*/
+/**
+ * 
+ */
 exports.createRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkUser(data.user,"driver"))
@@ -125,6 +128,9 @@ exports.createRoute = functions.https.onCall((data,conext)=>{
   .then(()=>{return {created:true}},error=>error);
 })
 
+/**
+ * 
+ */
 exports.searchRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkData(data.route))
@@ -135,6 +141,9 @@ exports.searchRoute = functions.https.onCall((data,conext)=>{
   .then((routes)=>routes,(error)=>error);
 })
 
+/**
+ * 
+ */
 exports.addToRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkData(data.route))
@@ -166,9 +175,6 @@ function checkOrigin(origin){
     else resolve();
   });
 }//checkOrigin
-
-
-
 
 /**
  * @description Checks if an user exists and the type if it is indicated.

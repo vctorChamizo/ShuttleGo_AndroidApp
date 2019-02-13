@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable(){
             public void run(){
 
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        };
-    },DURATION_SPLASH);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            };
+        },DURATION_SPLASH);
     }
 }
