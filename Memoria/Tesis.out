@@ -17,16 +17,25 @@
 \BOOKMARK [1][-]{section.3.1}{Introducci\363n}{chapter.3}% 17
 \BOOKMARK [1][-]{section.3.1}{Notas bibliogr\341ficas}{chapter.3}% 18
 \BOOKMARK [1][-]{section.3.1}{En el pr\363ximo cap\355tulo}{chapter.3}% 19
-\BOOKMARK [0][-]{chapter.4}{Tecnolog\355a empleada}{}% 20
+\BOOKMARK [0][-]{chapter.4}{Arquitectura}{}% 20
 \BOOKMARK [1][-]{section.4.1}{Introducci\363n}{chapter.4}% 21
-\BOOKMARK [1][-]{section.4.1}{Notas bibliogr\341ficas}{chapter.4}% 22
-\BOOKMARK [1][-]{section.4.1}{En el pr\363ximo cap\355tulo}{chapter.4}% 23
-\BOOKMARK [0][-]{chapter.5}{Casos de Uso}{}% 24
-\BOOKMARK [1][-]{section.5.1}{introducci\363n}{chapter.5}% 25
-\BOOKMARK [1][-]{section.5.1}{Notas bibliogr\341ficas}{chapter.5}% 26
-\BOOKMARK [1][-]{section.5.1}{En el pr\363ximo cap\355tulo}{chapter.5}% 27
-\BOOKMARK [-1][-]{part.1}{I Ap\351ndices}{}% 28
-\BOOKMARK [0][-]{appendix.Alph1}{As\355 se hizo...}{part.1}% 29
-\BOOKMARK [1][-]{section.Alph1.1}{Introducci\363n}{appendix.Alph1}% 30
-\BOOKMARK [-1][-]{appendix*.6}{Bibliograf\355a}{}% 31
-\BOOKMARK [-1][-]{fin.-1}{Fin}{}% 32
+\BOOKMARK [1][-]{section.4.2}{Arquitectura general de la aplicaci\363n}{chapter.4}% 22
+\BOOKMARK [1][-]{section.4.3}{Arquitectura del cliente}{chapter.4}% 23
+\BOOKMARK [1][-]{section.4.4}{Arquitectura del servidor}{chapter.4}% 24
+\BOOKMARK [1][-]{Item.4}{Notas bibliogr\341ficas}{chapter.4}% 25
+\BOOKMARK [1][-]{Item.4}{En el pr\363ximo cap\355tulo}{chapter.4}% 26
+\BOOKMARK [0][-]{chapter.5}{Tecnolog\355a empleada}{}% 27
+\BOOKMARK [1][-]{section.5.1}{Introducci\363n}{chapter.5}% 28
+\BOOKMARK [1][-]{section.5.2}{Cliente}{chapter.5}% 29
+\BOOKMARK [1][-]{section.5.3}{Servidor}{chapter.5}% 30
+\BOOKMARK [1][-]{section.5.3}{Notas bibliogr\341ficas}{chapter.5}% 31
+\BOOKMARK [1][-]{section.5.3}{En el pr\363ximo cap\355tulo}{chapter.5}% 32
+\BOOKMARK [0][-]{chapter.6}{Casos de Uso}{}% 33
+\BOOKMARK [1][-]{section.6.1}{introducci\363n}{chapter.6}% 34
+\BOOKMARK [1][-]{section.6.1}{Notas bibliogr\341ficas}{chapter.6}% 35
+\BOOKMARK [1][-]{section.6.1}{En el pr\363ximo cap\355tulo}{chapter.6}% 36
+\BOOKMARK [-1][-]{part.1}{I Ap\351ndices}{}% 37
+\BOOKMARK [0][-]{appendix.Alph1}{As\355 se hizo...}{part.1}% 38
+\BOOKMARK [1][-]{section.Alph1.1}{Introducci\363n}{appendix.Alph1}% 39
+\BOOKMARK [-1][-]{appendix*.6}{Bibliograf\355a}{}% 40
+\BOOKMARK [-1][-]{fin.-1}{Fin}{}% 41

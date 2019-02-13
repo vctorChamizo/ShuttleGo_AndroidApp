@@ -1,0 +1,61 @@
+\chapter{Arquitectura}
+
+\section{Introducción}
+%-------------------------------------------------------------------
+\label{cap1:sec:introduccion}
+En este apartado se explicará la arquitectura de toda la aplicación en detalle.
+En la primera sección se explicará la arquitectura general de toda la aplicación, mientras que en los siguientes apartados se describirá de forma más detallada la arquitectura del cliente y del servidor. 
+
+\section{Arquitectura general de la aplicación}
+\label{cap1:sec:arquitecturacliente}
+La arquitectura de este proyecto sigue el patrón típico de cliente-servidor, donde el cliente se encarga de la interacción del sistema con el usuario, mientras que la función del servidor consiste en asegurarse que se cumplan todas las reglas de negocio y de la interacción con la base de datos.
+Además, en este caso, el cliente es también el encargado de hacer de intermediario con la API que gestiona los mapas, esto es debido a que queremos evitar sobrecargar el servidor con demasiadas peticiones y aunque hubieramos querido, el plan gratuito de Firebase no permite conectar el servidor con servicios externos a Google.
+Con todo esto, la aplicación tendría la siguiente estructura:
+\section{Arquitectura del cliente}
+\label{cap1:sec:arquitecturacliente}
+
+
+\section{Arquitectura del servidor}
+\label{cap1:sec:arquitecturaservidor}
+El servidor tiene una arquitectura multicapa formada por tres partes bien delimitadas:
+\begin{itemize}  
+    \item Controlador frontal: Representado por el archivo "index.js". Es el encargado de recibir las peticiones. Además también realiza pequeñas validaciones de datos que están estrechamente ligados al formato de las peticiones y que podrían suponer un error de ejecución (ej: comprobar que no lleguen los datos vacios) y validaciones de autorización (ej: comprobar que el usuario que ha mandado la petición de eliminar un origen es un administrador);
+    \item Capa de negocio: Formada por todos los servicios de aplicación ubicados en la carpeta "business". El objetivo de esta capa es asegurarse de que se cumplen las diferentes reglas de negocio (ej: No se pueden añadir más pasajeros a un viaje si están todas las plazas ocupadas).
+    \item Capa de integración: Formada por los "Data Access Objects" (DAOs) de la carpeta "dataAccess". Esta capa se encarga de dar acceso al sistema a la base de datos mediante operaciones simples.
+\end{itemize}
+Una vez que el cliente ha enviado una petición al servidor se realizan los clientes pasos:
+\begin{enumerate}
+    \item Se ejecuta la función del controlador asociada a la petición, donde primeramente se realizan comprobaciones de autorización y validación de datos.
+    \item Esa función llama a un servicio de aplicación.
+    \item El servicio de aplicación lleva a cabo las reglas de negocio llamando a las funciones de los DAOs.
+    \item Los DAOs interactuan directamente con la base de datos obteniendo, introduciendo y modificando información.
+\end{enumerate}
+%-------------------------------------------------------------------
+\section*{\NotasBibliograficas}
+%-------------------------------------------------------------------
+\TocNotasBibliograficas
+
+Citamos algo para que aparezca en la bibliografía\ldots
+\citep{ldesc2e}
+
+\medskip
+
+Y también ponemos el acrónimo \ac{CVS} para que no cruja.
+
+Ten en cuenta que si no quieres acrónimos (o no quieres que te falle la compilación en ``release'' mientras no tengas ninguno) basta con que no definas la constante \verb+\acronimosEnRelease+ (en \texttt{config.tex}).
+
+
+%-------------------------------------------------------------------
+\section*{\ProximoCapitulo}
+%-------------------------------------------------------------------
+\TocProximoCapitulo
+
+...
+
+% Variable local para emacs, para  que encuentre el fichero maestro de
+% compilación y funcionen mejor algunas teclas rápidas de AucTeX
+%%%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../Tesis.tex"
+%%% End:
