@@ -7,6 +7,8 @@ Autores: Carlos Castellanos Mateo y Víctor Chamizo Rodriguez
 
 
 #### Servidor
+
+##### Documentacion Firebase
 Licencias y limitaciones en Firebase: https://firebase.google.com/pricing/
 
 Funciones en firebase: https://firebase.google.com/docs/functions/get-started?authuser=0
@@ -30,3 +32,9 @@ Librerias Gradle y uso Gson: http://www.proyectosimio.com/es/programacion-androi
 Alternativa Google Maps:
 	- https://www.mapbox.com/
 	- https://www.mapbox.com/mapbox.js/example/v1.0.0/single-marker/
+	
+	
+#### Credenciales para Account-Mapbox:
+	username: shuttleGpTFG
+	mail: vicham01@ucm.es
+	password: shuttle2018
