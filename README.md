@@ -21,7 +21,7 @@
 ##### Docuementación Android Studio: https://developer.android.com/studio/
 ##### Documentacion Mapbox: https://docs.mapbox.com/android/maps/overview/
 ##### Credenciales Account-Mapbox:
-- username: shuttleGpTFG
+- username: shuttleGoTFG
 - mail: vicham01@ucm.es
 - password: shuttle2018
 
