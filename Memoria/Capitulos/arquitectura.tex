@@ -11,7 +11,7 @@ En la primera sección se explicará la arquitectura general de toda la aplicación
 La arquitectura de este proyecto sigue el patrón típico de cliente-servidor, donde el cliente se encarga de la interacción del sistema con el usuario, mientras que la función del servidor consiste en asegurarse que se cumplan todas las reglas de negocio y de la interacción con la base de datos.
 Además, en este caso, el cliente es también el encargado de hacer de intermediario con la API que gestiona los mapas, esto es debido a que queremos evitar sobrecargar el servidor con demasiadas peticiones y aunque hubieramos querido, el plan gratuito de Firebase no permite conectar el servidor con servicios externos a Google.
 Las conexión entre cliente y servidor se realiza mediante peticiones https.
-Con todo esto, la aplicación tendría la siguiente estructura:
+Con todo esto, la aplicación tendría la estructura de la figura~\ref{fig:arquitecturaGeneral}
 
 \figura{Vectorial/arquitecturaGeneral}{width=.9\textwidth}{fig:arquitecturaGeneral}%
 {Arquitectura general de la aplicación.}
