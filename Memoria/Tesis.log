@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.2)  13 FEB 2019 02:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.2)  14 FEB 2019 02:10
 entering extended mode
 **c:/Users/carlo/Documents/GitHub/TFG_GIS/Memoria/Tesis.tex
 (c:/Users/carlo/Documents/GitHub/TFG_GIS/Memoria/Tesis.tex
@@ -418,9 +418,6 @@ LaTeX Warning: Label `cap1:sec:introduccion' multiply defined.
 
 LaTeX Warning: Label `cap1:sec:introduccion' multiply defined.
 
-
-LaTeX Warning: Label `cap1:sec:arquitecturacliente' multiply defined.
-
 ) (Capitulos/tecnologia.aux
 
 LaTeX Warning: Label `cap1:sec:introduccion' multiply defined.
@@ -626,62 +623,70 @@ Cap\'itulo 3.
 
 ]
 Cap\'itulo 4.
-[7])
+<Imagenes/Vectorial/arquitecturaGeneral.pdf, id=307, 333.16469pt x 132.495pt>
+File: Imagenes/Vectorial/arquitecturaGeneral.pdf Graphic file (type pdf)
+<use Imagenes/Vectorial/arquitecturaGeneral.pdf>
+Package pdftex.def Info: Imagenes/Vectorial/arquitecturaGeneral.pdf  used on input line 17.
+(pdftex.def)             Requested size: 323.9978pt x 128.85153pt.
+[7]
+LaTeX Info: Redefining \. on input line 36.
+LaTeX Info: Redefining \% on input line 36.
+ [8 <./Imagenes/Vectorial/arquitecturaGeneral.pdf>])
 LaTeX Info: Redefining \. on input line 135.
 LaTeX Info: Redefining \% on input line 135.
- [8]
+ [9]
 \openout2 = `Capitulos/tecnologia.aux'.
 
- (Capitulos/tecnologia.tex
-Cap\'itulo 5.
-) [9
+ (Capitulos/tecnologia.tex [10
 
 
 
 ]
+Cap\'itulo 5.
+) [11]
 LaTeX Info: Redefining \. on input line 136.
 LaTeX Info: Redefining \% on input line 136.
- [10]
+ [12]
 \openout2 = `Capitulos/casosUso.aux'.
 
  (Capitulos/casosUso.tex
 Cap\'itulo 6.
-) [11
+) [13
 
 
 
 ]
 \openout2 = `Apendices/ParteApendices.aux'.
 
- (Apendices/ParteApendices.tex [12
+ (Apendices/ParteApendices.tex [14
 
 
 
-] [13] [14])
+] [15] [16])
 \openout2 = `Apendices/01ApendiceA.aux'.
 
  (Apendices/01ApendiceA.tex
 Ap\'{e}ndice A.
-) [15
+) [17
 
 
 
-] [16
+] [18
 
 
 ]
 \openout2 = `Cascaras/bibliografia.aux'.
 
- (Cascaras/bibliografia.tex (Tesis.bbl)) [17
+ (Cascaras/bibliografia.tex (Tesis.bbl)) [19
 
 
 ]
 \openout2 = `Cascaras/fin.aux'.
 
- (Cascaras/fin.tex [18
+ (Cascaras/fin.tex [20
 
 
-] [19])
+] [21])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 191.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 191.
  (Tesis.aux (Cascaras/cover.aux)
@@ -691,7 +696,7 @@ LaTeX Info: Redefining \% on input line 25.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 191.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 191.
 Package rerunfilecheck Info: File `Tesis.out' has not changed.
-(rerunfilecheck)             Checksum: 496CB02CB8F133A0251346A007AE0F91;2604.
+(rerunfilecheck)             Checksum: E380BE85591EFA72B73513D9D1580221;2604.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -699,17 +704,17 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 191.
  ) 
 Here is how much of TeX's memory you used:
- 10488 strings out of 492946
- 158845 string characters out of 3126267
- 261234 words of memory out of 3000000
- 13802 multiletter control sequences out of 15000+200000
- 21436 words of font info for 44 fonts, out of 3000000 for 9000
+ 10504 strings out of 492946
+ 159264 string characters out of 3126267
+ 261372 words of memory out of 3000000
+ 13814 multiletter control sequences out of 15000+200000
+ 22200 words of font info for 45 fonts, out of 3000000 for 9000
  1379 hyphenation exceptions out of 8191
  55i,11n,51p,566b,656s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti0800.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecxc1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecxc1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2488.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk><C:/Users/carlo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Tesis.pdf (33 pages, 571493 bytes).
+ <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti0800.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecxc1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecxc1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2488.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk><C:/Users/carlo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on Tesis.pdf (35 pages, 610203 bytes).
 PDF statistics:
- 904 PDF objects out of 1000 (max. 8388607)
- 71 named destinations out of 1000 (max. 500000)
- 334 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 935 PDF objects out of 1000 (max. 8388607)
+ 73 named destinations out of 1000 (max. 500000)
+ 339 words of extra memory for PDF output out of 10000 (max. 10000000)
 
