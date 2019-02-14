@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.2)  14 FEB 2019 02:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.2)  14 FEB 2019 14:54
 entering extended mode
 **c:/Users/carlo/Documents/GitHub/TFG_GIS/Memoria/Tesis.tex
 (c:/Users/carlo/Documents/GitHub/TFG_GIS/Memoria/Tesis.tex
@@ -406,7 +406,7 @@ Copyright Marco Antonio and Pedro Pablo Gomez Martin
 (Tesis.aux (Cascaras/cover.aux)
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
- (Cascaras/agradecimientos.aux) (Cascaras/resumen.aux) (TeXiS/TeXiS_toc.aux) (Capitulos/introduccion.aux) (Capitulos/motivacion.aux
+ (Cascaras/resumen.aux) (TeXiS/TeXiS_toc.aux) (Capitulos/introduccion.aux) (Capitulos/motivacion.aux
 
 LaTeX Warning: Label `cap1:sec:introduccion' multiply defined.
 
@@ -498,7 +498,7 @@ Package grfext Info: Graphics extension search list:
 \evensidemarginOriginal=\skip72
 \oddsidemarginOriginal=\skip73
 \longTitulo=\skip74
-<Imagenes/Vectorial/escudoUCM.pdf, id=156, 597.23125pt x 844.15375pt>
+<Imagenes/Vectorial/escudoUCM.pdf, id=152, 597.23125pt x 844.15375pt>
 File: Imagenes/Vectorial/escudoUCM.pdf Graphic file (type pdf)
 <use Imagenes/Vectorial/escudoUCM.pdf>
 Package pdftex.def Info: Imagenes/Vectorial/escudoUCM.pdf  used on input line 159.
@@ -531,23 +531,16 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 159.
 ) [4]
-\openout2 = `Cascaras/agradecimientos.aux'.
+\openout2 = `Cascaras/resumen.aux'.
 
- (Cascaras/agradecimientos.tex) [5
+ (Cascaras/resumen.tex) [5
 
 
 
 ]
-\openout2 = `Cascaras/resumen.aux'.
-
- (Cascaras/resumen.tex [6
-
-
-
-]) [7]
 \openout2 = `TeXiS/TeXiS_toc.aux'.
 
- (TeXiS/TeXiS_toc.tex [8
+ (TeXiS/TeXiS_toc.tex [6
 
 
 
@@ -555,25 +548,25 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 5.
+(Font)              <10.95> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 5.
+(Font)              <8> on input line 4.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 5.
- [9])
+(Font)              <6> on input line 4.
+ [7])
 \tf@toc=\write6
 \openout6 = `Tesis.toc'.
 
- [10] (Tesis.lof
+ [8] (Tesis.lof
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 )
 \tf@lof=\write7
 \openout7 = `Tesis.lof'.
 
- [11
+ [9
 
-] [12
+] [10
 
 ] (Tesis.lot
 LaTeX Info: Redefining \. on input line 1.
@@ -582,7 +575,7 @@ LaTeX Info: Redefining \% on input line 1.
 \tf@lot=\write8
 \openout8 = `Tesis.lot'.
 
- [13]) [14
+ [11]) [12
 
 
 ]
@@ -623,17 +616,20 @@ Cap\'itulo 3.
 
 ]
 Cap\'itulo 4.
-<Imagenes/Vectorial/arquitecturaGeneral.pdf, id=308, 333.16469pt x 132.495pt>
+<Imagenes/Vectorial/arquitecturaGeneral.pdf, id=294, 333.16469pt x 132.495pt>
 File: Imagenes/Vectorial/arquitecturaGeneral.pdf Graphic file (type pdf)
 <use Imagenes/Vectorial/arquitecturaGeneral.pdf>
-Package pdftex.def Info: Imagenes/Vectorial/arquitecturaGeneral.pdf  used on input line 17.
+Package pdftex.def Info: Imagenes/Vectorial/arquitecturaGeneral.pdf  used on input line 18.
 (pdftex.def)             Requested size: 323.9978pt x 128.85153pt.
-[7]
-LaTeX Info: Redefining \. on input line 36.
-LaTeX Info: Redefining \% on input line 36.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7]
+LaTeX Info: Redefining \. on input line 34.
+LaTeX Info: Redefining \% on input line 34.
  [8 <./Imagenes/Vectorial/arquitecturaGeneral.pdf>])
-LaTeX Info: Redefining \. on input line 135.
-LaTeX Info: Redefining \% on input line 135.
+LaTeX Info: Redefining \. on input line 133.
+LaTeX Info: Redefining \% on input line 133.
  [9]
 \openout2 = `Capitulos/tecnologia.aux'.
 
@@ -644,8 +640,8 @@ LaTeX Info: Redefining \% on input line 135.
 ]
 Cap\'itulo 5.
 ) [11]
-LaTeX Info: Redefining \. on input line 136.
-LaTeX Info: Redefining \% on input line 136.
+LaTeX Info: Redefining \. on input line 134.
+LaTeX Info: Redefining \% on input line 134.
  [12]
 \openout2 = `Capitulos/casosUso.aux'.
 
@@ -687,34 +683,34 @@ Ap\'{e}ndice A.
 
 
 ] [21])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 191.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 191.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 189.
  (Tesis.aux (Cascaras/cover.aux)
 LaTeX Info: Redefining \. on input line 25.
 LaTeX Info: Redefining \% on input line 25.
- (Cascaras/agradecimientos.aux) (Cascaras/resumen.aux) (TeXiS/TeXiS_toc.aux) (Capitulos/introduccion.aux) (Capitulos/motivacion.aux) (Capitulos/estadoArte.aux) (Capitulos/arquitectura.aux) (Capitulos/tecnologia.aux) (Capitulos/casosUso.aux) (Apendices/ParteApendices.aux) (Apendices/01ApendiceA.aux) (Cascaras/bibliografia.aux) (Cascaras/fin.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 191.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 191.
+ (Cascaras/resumen.aux) (TeXiS/TeXiS_toc.aux) (Capitulos/introduccion.aux) (Capitulos/motivacion.aux) (Capitulos/estadoArte.aux) (Capitulos/arquitectura.aux) (Capitulos/tecnologia.aux) (Capitulos/casosUso.aux) (Apendices/ParteApendices.aux) (Apendices/01ApendiceA.aux) (Cascaras/bibliografia.aux) (Cascaras/fin.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
 Package rerunfilecheck Info: File `Tesis.out' has not changed.
-(rerunfilecheck)             Checksum: E380BE85591EFA72B73513D9D1580221;2604.
+(rerunfilecheck)             Checksum: 7E63B0C17C4DB7DA6B6464F4DFDD999C;2551.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 191.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 189.
  ) 
 Here is how much of TeX's memory you used:
- 10505 strings out of 492946
- 159282 string characters out of 3126267
- 261372 words of memory out of 3000000
- 13815 multiletter control sequences out of 15000+200000
+ 10493 strings out of 492946
+ 158889 string characters out of 3126267
+ 260847 words of memory out of 3000000
+ 13813 multiletter control sequences out of 15000+200000
  22200 words of font info for 45 fonts, out of 3000000 for 9000
  1379 hyphenation exceptions out of 8191
- 55i,11n,51p,566b,656s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,11n,50p,568b,677s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti0800.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecxc1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecxc1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2488.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\carlo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2074.pk><C:/Users/carlo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Tesis.pdf (35 pages, 610412 bytes).
+Output written on Tesis.pdf (33 pages, 607317 bytes).
 PDF statistics:
- 936 PDF objects out of 1000 (max. 8388607)
- 73 named destinations out of 1000 (max. 500000)
- 339 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 916 PDF objects out of 1000 (max. 8388607)
+ 70 named destinations out of 1000 (max. 500000)
+ 331 words of extra memory for PDF output out of 10000 (max. 10000000)
 
