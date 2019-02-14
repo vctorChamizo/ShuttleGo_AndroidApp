@@ -26,7 +26,6 @@ import com.mapbox.mapboxsdk.location.modes.CameraMode;
 // classes needed to add a marker
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
-import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
@@ -74,24 +73,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 addDestinationIconSymbolLayer(style);
 
                 mapboxMap.addOnMapClickListener(MapActivity.this);
-                /*
 
-                // Add the marker image to map
-                style.addImage("marker-icon-id",
-                        BitmapFactory.decodeResource(
-                                MapActivity.this.getResources(), R.drawable.mapbox_marker_icon_default));
-
-                GeoJsonSource geoJsonSource = new GeoJsonSource("source-id", Feature.fromGeometry(
-                        Point.fromLngLat(-87.679, 41.885)));
-                style.addSource(geoJsonSource);
-
-                SymbolLayer symbolLayer = new SymbolLayer("layer-id", "source-id");
-                symbolLayer.withProperties(
-                        PropertyFactory.iconImage("marker-icon-id")
-                );
-                style.addLayer(symbolLayer);
-
-                */
             }
         });
     }//onMapReady
