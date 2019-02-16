@@ -18,7 +18,7 @@ import tfg.shuttlego.model.transfers.person.Person;
 /**
  *
  */
-public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginViewHolder> {
+public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> {
 
     private ArrayList<Origin> originList;
     private static Person user;
@@ -28,10 +28,10 @@ public class OriginAdapter extends RecyclerView.Adapter<OriginAdapter.OriginView
      * @param originList
      * @param user
      */
-    public OriginAdapter(ArrayList<Origin> originList, Person user) {
+    public RecyclerViewAdapterOrigin(ArrayList<Origin> originList, Person user) {
         this.originList = originList;
         this.user = user;
-    }//OriginAdapter
+    }//RecyclerViewAdapterOrigin
 
     /**
      *

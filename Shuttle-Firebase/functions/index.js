@@ -61,10 +61,10 @@ exports.signup = functions.https.onCall((data, context)=>{
 /*---------------- ORIGIN Functions ---------------*/
 /**
  * @description Get a list of id and name origins.
- * @returns {Promise} A promise that return a list of route names.
+ * @returns {Promise} A promise that return a list of origins.
  */
 exports.getAllOrigins = functions.https.onCall((data,context)=>{
-  return originSA.getAllOrigins()
+  return originSA.getAllOrigins() 
   .then(result=>{return {origins:result}},error=>error);
 })
 

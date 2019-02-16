@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.admin.origin.AddOrigin;
-import tfg.shuttlego.model.adapters.OriginAdapter;
+import tfg.shuttlego.model.adapters.RecyclerViewAdapterOrigin;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;
 import tfg.shuttlego.model.transfers.origin.Origin;
@@ -54,6 +54,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
      *
      */
     private void setMenuDrawer() {
+
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         DrawerLayout drawer = findViewById(R.id.admin_main);
@@ -67,11 +68,11 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     /**
      *
      */
-    @SuppressLint("SetTextI18n")
     private void setCredencials() {
+
         View hView =  navigationView.getHeaderView(0);
-        TextView nav_name_text = hView.findViewById(R.id.name_admin_text);
-        TextView nav_email_text = hView.findViewById(R.id.email_admin_text);
+        TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
+        TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
         nav_name_text.setText(user.getName() + " " + user.getSurname());
         nav_email_text.setText(user.getEmail());
     }//setCredencials
@@ -134,7 +135,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         RecyclerView recycler = findViewById(R.id.my_recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
-        RecyclerView.Adapter<OriginAdapter.OriginViewHolder> adapter = new OriginAdapter(listOrigins, user);
+        RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> adapter = new RecyclerViewAdapterOrigin(listOrigins, user);
         recycler.setAdapter(adapter);
 
         //Quitar el progress bar y mostrar la lista.

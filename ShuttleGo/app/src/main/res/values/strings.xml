@@ -82,7 +82,8 @@
     **************************************************************************-->
 
     <!-- *********************  Driver Menu Drawer  *************************** -->
-
+    <string name="createRoute">Crea un nuevo trayecto:</string>
+    <string name="code">Crea un nuevo trayecto:</string>
     <!--*************************************************************************-->
 
 </resources>

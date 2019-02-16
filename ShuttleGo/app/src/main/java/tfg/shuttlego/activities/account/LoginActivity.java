@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     case "driver":
                         typePerson = TypePerson.DRIVER;
                         //nextClass = DriverMain.class;
-                        nextClass = MapActivity.class;
+                        nextClass = DriverMain.class;
                         break;
 
                     default:

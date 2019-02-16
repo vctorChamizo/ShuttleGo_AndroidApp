@@ -9,11 +9,6 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/admin_main_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -22,4 +17,9 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/menu_nav_header"
         app:menu="@menu/driver_drawer" />
+
+    <include
+        layout="@layout/driver_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </android.support.v4.widget.DrawerLayout>

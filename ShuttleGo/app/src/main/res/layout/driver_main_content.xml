@@ -17,4 +17,81 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/driver_main_content_relative"
+        style="@style/RelativeMain">
+
+        <LinearLayout
+            android:id="@+id/driver_main_content_tittleLinear"
+            style="@style/VerticalLinear">
+
+            <TextView
+                android:id="@+id/driver_main_content_tittle"
+                style="@style/TittleWelcome"
+                android:text="@string/createRoute" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/driver_main_content_originLinear"
+            android:layout_below="@+id/driver_main_content_tittleLinear"
+            android:layout_marginTop="20dp"
+            style="@style/VerticalLinear">
+
+            <SearchView
+                android:id="@+id/driver_main_content_search"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:iconifiedByDefault="false">
+            </SearchView>
+
+            <ListView
+                android:id="@+id/driver_main_content_listview"
+                android:layout_below="@+id/driver_main_content_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/driver_main_content_limitLinear"
+            android:layout_below="@+id/driver_main_content_originLinear"
+            android:layout_marginTop="30dp"
+            style="@style/VerticalLinear" >
+
+            <EditText
+                android:id="@+id/driver_main_content_limit"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                style="@style/DataRegister"
+                android:theme="@style/ThemeData"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/driver_main_content_passengersLinear"
+            android:layout_below="@+id/driver_main_content_limitLinear"
+            style="@style/VerticalLinear"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/driver_main_content_passengers"
+                android:hint="@string/email"
+                android:inputType="number"
+                style="@style/DataRegister"
+                android:theme="@style/ThemeData"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/driver_main_content_buttonLinear"
+            android:layout_below="@+id/driver_main_content_passengersLinear"
+            style="@style/VerticalLinear"
+            android:layout_marginTop="50dp">
+
+            <Button
+                android:id="@+id/driver_main_content_button"
+                android:layout_marginTop="30dp"
+                android:text="@string/next"
+                android:textColor="@color/colorPrimary"
+                style="@style/ButtonBigRound"/>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

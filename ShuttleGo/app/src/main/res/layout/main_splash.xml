@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_degraded"
     android:padding="50dp"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.launcher.MainActivity">
 
 
     <ImageView

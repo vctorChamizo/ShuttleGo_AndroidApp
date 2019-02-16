@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities;
+package tfg.shuttlego.activities.launcher;
 
 import android.content.Intent;
 import android.os.Handler;

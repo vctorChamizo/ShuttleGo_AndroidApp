@@ -35,7 +35,6 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 import java.util.List;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.MainActivity;
 
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
