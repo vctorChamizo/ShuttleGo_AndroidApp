@@ -65,8 +65,8 @@ public class ListViewAdapterOrigin extends BaseAdapter {
         charText = charText.toLowerCase(Locale.getDefault());
         originList.clear();
 
-        if (charText.length() > 0)
-            for (Origin or : originArrayList)
+        if (charText.length() == 0) originList.addAll(originArrayList);
+        else for (Origin or : originArrayList)
                 if (or.getName().toLowerCase(Locale.getDefault()).contains(charText))
                     originList.add(or);
 

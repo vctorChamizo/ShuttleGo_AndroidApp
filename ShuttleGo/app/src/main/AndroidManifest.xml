@@ -22,12 +22,12 @@
         </activity>
         <activity android:name=".activities.account.LoginActivity" />
         <activity android:name=".activities.account.RegisterActivity" />
-        <activity android:name=".activities.admin.AdminMain" />
-        <activity android:name=".activities.admin.origin.AddOrigin" />
-        <activity android:name=".activities.admin.origin.EditOrigin" />
-        <activity android:name=".activities.passenger.PassengerMain" />
-        <activity android:name=".activities.driver.DriverMain" />
-        <activity android:name=".activities.map.MapMain"></activity>
+        <activity android:name=".activities.person.admin.AdminMain" />
+        <activity android:name=".activities.origin.AddOrigin" />
+        <activity android:name=".activities.origin.EditOrigin" />
+        <activity android:name=".activities.person.passenger.PassengerMain" />
+        <activity android:name=".activities.person.driver.DriverMain" />
+        <activity android:name=".activities.map.MapMain" />
     </application>
 
 </manifest>

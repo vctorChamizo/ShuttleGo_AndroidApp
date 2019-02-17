@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.admin.origin;
+package tfg.shuttlego.activities.origin;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.admin.AdminMain;
+import tfg.shuttlego.activities.person.admin.AdminMain;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;
 import tfg.shuttlego.model.transfers.origin.Origin;

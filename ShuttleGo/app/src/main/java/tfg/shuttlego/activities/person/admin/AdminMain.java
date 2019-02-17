@@ -1,6 +1,5 @@
-package tfg.shuttlego.activities.admin;
+package tfg.shuttlego.activities.person.admin;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.admin.origin.AddOrigin;
+import tfg.shuttlego.activities.origin.AddOrigin;
 import tfg.shuttlego.model.adapters.RecyclerViewAdapterOrigin;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;

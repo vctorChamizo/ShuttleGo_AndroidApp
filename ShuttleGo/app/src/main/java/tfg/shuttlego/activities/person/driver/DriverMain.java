@@ -1,6 +1,5 @@
-package tfg.shuttlego.activities.driver;
+package tfg.shuttlego.activities.person.driver;
 
-import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,13 +7,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.SearchView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +23,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.adapters.ListViewAdapterOrigin;
-import tfg.shuttlego.model.adapters.RecyclerViewAdapterOrigin;
+import tfg.shuttlego.activities.CuadroDialogo;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;
 import tfg.shuttlego.model.transfers.origin.Origin;
@@ -36,16 +32,13 @@ import tfg.shuttlego.model.transfers.person.Person;
 /**
  *
  */
-public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
+public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private NavigationView navigationView;
     private Person user;
-
-    private ListView list;
-    private ListViewAdapterOrigin adapter;
-    private SearchView editsearch;
+    private EditText limitArea, limitPassengers;
+    private Button origin, createRoute;
     private ArrayList<Origin> originList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +48,48 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
 
+        origin = findViewById(R.id.driver_main_content_origin);
+        limitArea = findViewById(R.id.driver_main_content_limit);
+        limitPassengers = findViewById(R.id.driver_main_content_passengers);
+        createRoute = findViewById(R.id.driver_main_content_button);
+
         setMenuDrawer();
         setCredencials();
-        setSearchSpinner();
 
-        /*list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });*/
+        origin.setOnClickListener(this);
 
     }//onCreate
 
-    /**
-     *
-     */
-    private void setSearchSpinner() {
+    @Override
+    public void onClick(View v) {
+
+        boolean empty = false;
+
+        switch (v.getId()) {
+
+            case R.id.driver_main_content_origin:
+
+                getAllOrigins();
+                break;
+
+            case R.id.driver_main_content_button:
+
+                if (limitArea.getText().toString().isEmpty()) empty = true;
+                if (limitPassengers.getText().toString().isEmpty()) empty = true;
+
+                if (!empty) {
+
+                    // ...
+                }
+                else throwToast("Introduzca todos los datos");
+                break;
+
+            default:
+                break;
+        }//switch
+    }
+
+    private void getAllOrigins(){
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.GETORIGINS, null)
@@ -108,37 +125,15 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                         originList.add(origin);
                     }//for
 
-                    createListView();
+                    createDialogo(originList);
+
                 }//else
             }//onComplete
         });
-    }//setSearchSpinner
-
-    /**
-     *
-     */
-    private void createListView() {
-
-        list = findViewById(R.id.driver_main_content_listview);
-        adapter = new ListViewAdapterOrigin(this, originList);
-        editsearch = findViewById(R.id.driver_main_content_search);
-        editsearch.setOnQueryTextListener(this);
-    }//createListView
-
-    @Override
-    public boolean onQueryTextSubmit(String query) { return false; }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-
-        String text = newText;
-        list.setVisibility(View.VISIBLE);
-        list.setAdapter(adapter);
-        adapter.filter(text);
-
-        return false;
     }
 
+
+    private void createDialogo(ArrayList<Origin> originArrayList) { new CuadroDialogo(this, originArrayList); }
 
     /**
      *
