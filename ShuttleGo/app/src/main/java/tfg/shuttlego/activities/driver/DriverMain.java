@@ -112,7 +112,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 }//else
             }//onComplete
         });
-    }//getOriginList
+    }//setSearchSpinner
 
     /**
      *
@@ -124,6 +124,20 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         editsearch = findViewById(R.id.driver_main_content_search);
         editsearch.setOnQueryTextListener(this);
     }//createListView
+
+    @Override
+    public boolean onQueryTextSubmit(String query) { return false; }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        String text = newText;
+        list.setVisibility(View.VISIBLE);
+        list.setAdapter(adapter);
+        adapter.filter(text);
+
+        return false;
+    }
 
 
     /**
@@ -181,18 +195,4 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
         return true;
     }//onNavigationItemSelected
-
-    @Override
-    public boolean onQueryTextSubmit(String query) { return false; }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-
-        String text = newText;
-        list.setVisibility(View.VISIBLE);
-        list.setAdapter(adapter);
-        adapter.filter(text);
-
-        return false;
-    }
 }

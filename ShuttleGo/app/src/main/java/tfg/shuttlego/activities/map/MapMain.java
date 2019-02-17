@@ -52,7 +52,7 @@ public class MapMain extends AppCompatActivity implements OnMapReadyCallback, Ma
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.map_main);
-        mapView = findViewById(R.id.mapView);
+        mapView = findViewById(R.id.map_main_map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 

@@ -2,6 +2,7 @@ package tfg.shuttlego.activities.passenger;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +13,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.mapboxsdk.Mapbox;
@@ -25,18 +30,30 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.map.MapMain;
+import tfg.shuttlego.model.adapters.ListViewAdapterOrigin;
+import tfg.shuttlego.model.events.Event;
+import tfg.shuttlego.model.events.EventDispatcher;
+import tfg.shuttlego.model.transfers.origin.Origin;
 import tfg.shuttlego.model.transfers.person.Person;
+
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
+import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 
 /**
  *
  */
-public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener {
+public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, SearchView.OnQueryTextListener {
 
     private NavigationView navigationView;
     private Person user;
@@ -45,6 +62,11 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     // for adding location layer
     private PermissionsManager permissionsManager;
     private LocationComponent locationComponent;
+
+    private ListView list;
+    private ListViewAdapterOrigin adapter;
+    private SearchView editsearch;
+    private ArrayList<Origin> originList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +79,88 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
         setMenuDrawer();
         setCredencials();
+        setSearchSpinner();
 
-        mapView = findViewById(R.id.mapView);
+        mapView = findViewById(R.id.passenger_main_content_map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
     }
+
+    /**
+     *
+     */
+    private void setSearchSpinner() {
+
+        EventDispatcher.getInstance(getApplicationContext())
+                .dispatchEvent(Event.GETORIGINS, null)
+                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+
+                        if (!task.isSuccessful() || task.getResult() == null) {
+                            //changeVisibility();
+                            throwToast("Error de conexion");
+                        } else if (task.getResult().containsKey("error")) {
+
+                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                                case "server":
+                                    throwToast("Error del servidor");
+                                    break;
+
+                                default:
+                                    throwToast("Error desconocido: " + task.getResult().get("error"));
+                                    break;
+                            }//switch
+                        } else {
+
+                            HashMap<?, ?> result = task.getResult();
+                            ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("origins");
+                            originList = new ArrayList<>();
+
+                            assert list != null;
+                            for (int i = 0; i < list.size(); ++i) {
+                                Origin origin = new Origin();
+                                origin.setId((String) list.get(i).get("id"));
+                                origin.setName((String) list.get(i).get("name"));
+                                originList.add(origin);
+                            }//for
+
+                            createListView();
+                        }//else
+                    }//onComplete
+                });
+    }//getOriginList
+
+    /**
+     *
+     */
+    private void createListView() {
+
+        list = findViewById(R.id.passenger_main_content_listview);
+        adapter = new ListViewAdapterOrigin(this, originList);
+        editsearch = findViewById(R.id.passenger_main_content_search);
+        editsearch.setOnQueryTextListener(this);
+    }//createListView
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        String text = newText;
+        list.setVisibility(View.VISIBLE);
+        list.setAdapter(adapter);
+        adapter.filter(text);
+
+        return false;
+    }
+
+    /*
+        ***********************************   Map Code   *******************************************
+     */
 
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -100,6 +199,44 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         }
     }//enableLocationComponent
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onExplanationNeeded(List<String> permissionsToExplain) {
+        Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPermissionResult(boolean granted) {
+        if (granted) {
+            enableLocationComponent(mapboxMap.getStyle());
+        } else {
+            Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
+
+    @Override
+    public boolean onMapClick(@NonNull LatLng point) {
+
+        Intent logIntent = new Intent(PassengerMain.this, MapMain.class);
+        startActivity(logIntent);
+
+        return true;
+    }
+
+    /*
+    *********************************************************************************************
+     */
+
+    /*
+     ***********************************   Menu Code   ******************************************
+     */
+
     /**
      *
      */
@@ -136,12 +273,10 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = findViewById(R.id.passenger_main);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
+        else super.onBackPressed();
     }//onBackPressed
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -150,37 +285,12 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
         int id = item.getItemId();
 
-        /*if (id == R.id.nav_add_origin) { }
-        else if (id == R.id.nav_settings_admin) { }
-        else if (id == R.id.nav_signout_admin) { }*/
+        if (id == R.id.nav_settings_admin) { }
+        else if (id == R.id.nav_signout_admin) { }
 
         DrawerLayout drawer = findViewById(R.id.passenger_main);
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
     }//onNavigationItemSelected
-
-    @Override
-    public void onExplanationNeeded(List<String> permissionsToExplain) {
-        Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onPermissionResult(boolean granted) {
-        if (granted) {
-            enableLocationComponent(mapboxMap.getStyle());
-        } else {
-            Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
-            finish();
-        }
-    }
-
-    @Override
-    public boolean onMapClick(@NonNull LatLng point) {
-
-        Intent logIntent = new Intent(PassengerMain.this, MapMain.class);
-        startActivity(logIntent);
-
-        return true;
-    }
 }

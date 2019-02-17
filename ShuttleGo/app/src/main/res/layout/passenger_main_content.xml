@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:mapbox="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@drawable/bg_degraded">
 
@@ -19,60 +20,78 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/colorPrimaryTranslucent">
-
-        <include layout="@layout/map_main" />
-
-        <EditText
-            android:id="@+id/driver_main_content_limit"
-            style="@style/dataMap"
-            android:hint="@string/introduceDestiny"
-            android:theme="@style/ThemeData" />
-    </RelativeLayout>
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/driver_main_content_originLinear"
-            android:layout_below="@+id/driver_main_content_tittle"
-            android:layout_marginTop="40dp"
-            android:layout_marginHorizontal="20dp"
-            style="@style/VerticalLinear">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/driver_main_content_subtittle1"
-                style="@style/SubTittleDriveMain"
-                android:textAlignment="textStart"
-                android:hint="@string/origin"
-                android:text="@string/addOriginToRoute" />
-
-            <SearchView
-                android:id="@+id/driver_main_content_search"
+            <RelativeLayout
+                android:id="@+id/passenger_main_content_realtive"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="0dp"
-                android:layout_marginTop="10dp"
-                android:iconifiedByDefault="false"
-                style="@style/DataLogin">
-            </SearchView>
+                android:layout_height="250dp"
+                android:background="@color/colorPrimaryTranslucent">
 
-            <ListView
-                android:id="@+id/driver_main_content_listview"
-                android:layout_below="@+id/driver_main_content_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:visibility="gone"/>
+                <com.mapbox.mapboxsdk.maps.MapView
+                    android:id="@+id/passenger_main_content_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    mapbox:mapbox_cameraTargetLat="38.9098"
+                    mapbox:mapbox_cameraTargetLng="-77.0295"
+                    mapbox:mapbox_cameraZoom="12" />
+
+                <EditText
+                    android:id="@+id/passenger_main_content_destiny"
+                    style="@style/dataMap"
+                    android:hint="@string/introduceDestiny"
+                    android:theme="@style/ThemeData" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/passenger_main_content_linear"
+                android:layout_below="@+id/driver_main_content_tittle"
+                android:layout_marginTop="40dp"
+                android:layout_marginHorizontal="20dp"
+                style="@style/VerticalLinear">
+
+                <TextView
+                    android:id="@+id/passenger_main_content_subtittle"
+                    style="@style/SubTittleDriveMain"
+                    android:textAlignment="textStart"
+                    android:hint="@string/origin"
+                    android:text="@string/addOriginToRoute" />
+
+                <SearchView
+                    android:id="@+id/passenger_main_content_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="0dp"
+                    android:layout_marginTop="10dp"
+                    android:iconifiedByDefault="false"
+                    style="@style/DataLogin">
+                </SearchView>
+
+                <ListView
+                    android:id="@+id/passenger_main_content_listview"
+                    android:layout_below="@+id/driver_main_content_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/passenger_main_content_button"
+                android:layout_below="@+id/driver_main_content_limitLinear"
+                android:text="@string/searchRoute"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="70dp"
+                android:layout_marginHorizontal="20dp"
+                style="@style/ButtonBigRound"/>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/driver_main_content_button"
-            android:layout_below="@+id/driver_main_content_limitLinear"
-            android:text="@string/searchRoute"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="70dp"
-            android:layout_marginHorizontal="20dp"
-            style="@style/ButtonBigRound"/>
+    </ScrollView>
 </LinearLayout>

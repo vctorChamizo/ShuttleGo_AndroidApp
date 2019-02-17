@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.mapbox.mapboxsdk.maps.MapView
-        android:id="@+id/mapView"
+        android:id="@+id/map_main_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         mapbox:mapbox_cameraTargetLat="38.9098"
         mapbox:mapbox_cameraTargetLng="-77.0295"
         mapbox:mapbox_cameraZoom="12" />
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/map_main_destiny"
+        style="@style/dataMap"
+        android:hint="@string/introduceDestiny"
+        android:layout_marginTop="40dp"
+        android:theme="@style/ThemeData" />
+
+    <Button
+        android:id="@+id/map_main_button"
+        android:text="@string/confirmDestiny"
+        android:layout_marginTop="520dp"
+        style="@style/ButtonMap"/>
+</RelativeLayout>
