@@ -16,7 +16,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/menu_nav_header"
-        app:menu="@menu/admin_drawer" />
+        app:menu="@menu/passenger_drawer" />
 
     <include layout="@layout/passenger_main_content"/>
 </android.support.v4.widget.DrawerLayout>
