@@ -189,6 +189,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     public boolean onQueryTextChange(String newText) {
 
         String text = newText;
+        list.setVisibility(View.VISIBLE);
         list.setAdapter(adapter);
         adapter.filter(text);
 

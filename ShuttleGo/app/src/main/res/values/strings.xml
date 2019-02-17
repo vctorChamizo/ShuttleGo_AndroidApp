@@ -82,8 +82,13 @@
     **************************************************************************-->
 
     <!-- *********************  Driver Menu Drawer  *************************** -->
-    <string name="createRoute">Crea un nuevo trayecto:</string>
-    <string name="code">Crea un nuevo trayecto:</string>
+    <string name="createRoute">Crea un nuevo trayecto</string>
+    <string name="addOriginToRoute">Introduce el punto de partida:</string>
+    <string name="addLimitArea">Delimita el area del servicio:</string>
+    <string name="addLimitPassenger">¿Cúantos pasajeros puedes llevar?:</string>
+    <string name="postalCode">Código Postal</string>
+    <string name="numerPassengers">Número de pasajeros</string>
+    <string name="createRouteButton">Crear trayecto</string>
     <!--*************************************************************************-->
 
 </resources>

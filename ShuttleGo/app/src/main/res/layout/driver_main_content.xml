@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg_degraded">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,34 +23,45 @@
         android:id="@+id/driver_main_content_relative"
         style="@style/RelativeMain">
 
-        <LinearLayout
-            android:id="@+id/driver_main_content_tittleLinear"
-            style="@style/VerticalLinear">
-
-            <TextView
-                android:id="@+id/driver_main_content_tittle"
-                style="@style/TittleWelcome"
-                android:text="@string/createRoute" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/driver_main_content_tittle"
+            style="@style/TittleWelcome"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/createRoute" />
 
         <LinearLayout
             android:id="@+id/driver_main_content_originLinear"
-            android:layout_below="@+id/driver_main_content_tittleLinear"
+            android:layout_below="@+id/driver_main_content_tittle"
             android:layout_marginTop="20dp"
             style="@style/VerticalLinear">
 
+            <TextView
+                android:id="@+id/driver_main_content_subtittle1"
+                style="@style/SubTittleDriveMain"
+                android:textAlignment="textStart"
+                android:hint="@string/origin"
+                android:text="@string/addOriginToRoute" />
+
             <SearchView
                 android:id="@+id/driver_main_content_search"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:iconifiedByDefault="false">
+                android:paddingLeft="0dp"
+                android:layout_marginTop="10dp"
+                android:iconifiedByDefault="false"
+                style="@style/DataLogin">
             </SearchView>
 
             <ListView
                 android:id="@+id/driver_main_content_listview"
                 android:layout_below="@+id/driver_main_content_search"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -58,12 +70,19 @@
             android:layout_marginTop="30dp"
             style="@style/VerticalLinear" >
 
+            <TextView
+                android:id="@+id/driver_main_content_subtittle2"
+                style="@style/SubTittleDriveMain"
+                android:textAlignment="textStart"
+                android:text="@string/addLimitArea" />
+
             <EditText
                 android:id="@+id/driver_main_content_limit"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                style="@style/DataRegister"
-                android:theme="@style/ThemeData"/>
+                style="@style/DataLogin"
+                android:layout_marginTop="10dp"
+                android:hint="@string/postalCode"
+                android:inputType="number"
+                android:theme="@style/ThemeData" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,26 +91,28 @@
             style="@style/VerticalLinear"
             android:layout_marginTop="30dp">
 
+            <TextView
+                android:id="@+id/driver_main_content_subtittle3"
+                style="@style/SubTittleDriveMain"
+                android:textAlignment="textStart"
+                android:text="@string/addLimitPassenger" />
+
             <EditText
                 android:id="@+id/driver_main_content_passengers"
-                android:hint="@string/email"
+                android:hint="@string/numerPassengers"
                 android:inputType="number"
-                style="@style/DataRegister"
+                android:layout_marginTop="10dp"
+                style="@style/DataLogin"
                 android:theme="@style/ThemeData"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/driver_main_content_buttonLinear"
+        <Button
+            android:id="@+id/driver_main_content_button"
             android:layout_below="@+id/driver_main_content_passengersLinear"
-            style="@style/VerticalLinear"
-            android:layout_marginTop="50dp">
+            android:text="@string/createRouteButton"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="50dp"
+            style="@style/ButtonBigRound"/>
 
-            <Button
-                android:id="@+id/driver_main_content_button"
-                android:layout_marginTop="30dp"
-                android:text="@string/next"
-                android:textColor="@color/colorPrimary"
-                style="@style/ButtonBigRound"/>
-        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

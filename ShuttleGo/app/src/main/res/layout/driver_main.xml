@@ -18,8 +18,5 @@
         app:headerLayout="@layout/menu_nav_header"
         app:menu="@menu/driver_drawer" />
 
-    <include
-        layout="@layout/driver_main_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/driver_main_content" />
 </android.support.v4.widget.DrawerLayout>

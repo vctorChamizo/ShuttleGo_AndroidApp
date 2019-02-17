@@ -37,7 +37,7 @@ import java.util.List;
 import tfg.shuttlego.R;
 
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
+public class MapMain extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
 
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -71,8 +71,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 enableLocationComponent(style);
                 addDestinationIconSymbolLayer(style);
 
-                mapboxMap.addOnMapClickListener(MapActivity.this);
-
+                mapboxMap.addOnMapClickListener(MapMain.this);
             }
         });
     }//onMapReady
