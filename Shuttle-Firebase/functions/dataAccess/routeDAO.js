@@ -4,7 +4,7 @@ const db = require("./database.js");
 function insertRoute(newData){
     if(newData.id != "undefined") delete newData.id;
     return db.collection("routes").add(newData)
-    .then(()=>null,error=>{throw ERROR.server});
+    .then((result)=>result.id,error=>{throw ERROR.server});
 }
 
 function getRouteById(id){

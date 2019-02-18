@@ -133,7 +133,7 @@ exports.createRoute = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkUser(data.user,"driver"))
   .then((fullUser)=>{data.route.driver=fullUser.id; return routeSA.createRoute(data.route);}) //the driver must be the user who created the route.
-  .then(()=>{return {created:true}},error=>error);
+  .then((id)=>{return {route:{id:id}}},error=>error);
 })
 
 /**
@@ -161,6 +161,13 @@ exports.addToRoute = functions.https.onCall((data,conext)=>{
   .then(()=>{return {added:true}},(error => error));
 });
 
+exports.getRouteById = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkData(data.route.id))
+  .then(()=>routeSA.getRouteById(data.route.id))
+  .then((route)=>route,error=>error);
+})
 /*---------------- PRIVATE Functions ---------------*/
 /**
  * @description Avoid internal null errors, it should be called at the first line of all exported functions.
