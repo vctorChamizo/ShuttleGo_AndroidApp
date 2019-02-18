@@ -7,10 +7,18 @@
     <!-- ******************************  App  ******************************* -->
     <string name="app_name">ShuttleGo</string>
     <string name="subTittle">Haz tu viaje más fácil</string>
+
+    <!-- ******************************  Errors  ******************************* -->
+    <string name="err">ERROR. Vuelva a intentarlo</string>
     <string name="errConexion">ERROR. Fallo en la conexión</string>
     <string name="errServer">ERROR. Fallo en el servidor</string>
     <string name="errDataEmpty">Hay campos vacios</string>
-    <string name="err">ERROR. Vuelva a intentarlo</string>
+    <string name="errUserDontExist">Hay campos vacios</string>
+    <string name="errIncorrectSignin">Hay campos vacios</string>
+    <string name="errPhoneNumber">Introduce un telefono correcto</string>
+    <string name="errBadFormat">Formato de datos incorrecto</string>
+    <string name="errUserExisit">El usuario ya existe</string>
+
 
     <!-- **************************  Drawer Menu  **************************** -->
     <string name="nav_header_title">ShuttleGo</string>

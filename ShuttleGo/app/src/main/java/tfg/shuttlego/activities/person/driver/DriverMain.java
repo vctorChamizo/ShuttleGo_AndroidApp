@@ -1,6 +1,5 @@
 package tfg.shuttlego.activities.person.driver;
 
-import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -33,7 +32,6 @@ import java.util.Objects;
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.events.Event;
 import tfg.shuttlego.model.events.EventDispatcher;
-import tfg.shuttlego.model.transfers.origin.Origin;
 import tfg.shuttlego.model.transfers.person.Person;
 
 /**
@@ -76,7 +74,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         limitArea = findViewById(R.id.driver_main_content_limit);
         limitPassengers = findViewById(R.id.driver_main_content_passengers);
         createRoute = findViewById(R.id.driver_main_content_button);
-    }
+    }//incializateView
 
     /**
      *
@@ -85,7 +83,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
         driveMainProgress.setVisibility(View.VISIBLE);
         driveMainScroll.setVisibility(View.GONE);
-    }
+    }//setProgressBar
 
     /**
      *
@@ -94,7 +92,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
         driveMainProgress.setVisibility(View.GONE);
         driveMainScroll.setVisibility(View.VISIBLE);
-    }
+    }//removeProgressBar
 
     /**
      *
@@ -201,9 +199,10 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
             int codePostal = Integer.parseInt(limitArea.getText().toString());
             int passengers = Integer.parseInt(limitPassengers.getText().toString());
 
-            userJson.put("name", user.getPassword());
-            userJson.put("surname", user.getId());
             userJson.put("email", user.getEmail());
+            userJson.put("password", user.getPassword());
+            userJson.put("id", user.getId());
+
 
             routeJson.put("max", passengers);
             //routeJson.put("origin", passengers);
@@ -269,8 +268,8 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
                 if (!empty) {
 
+                    setProgressBar();
                     JSONObject route = buildJson();
-
                     throwEventCreteRoute(route);
                 }
                 else throwToast(R.string.errDataEmpty);
