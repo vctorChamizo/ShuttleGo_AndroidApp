@@ -18,6 +18,7 @@ const routeSA = require("./business/routeSA");
       - SIGNUP: signup({user:{surname:"ramirez",number:123,email:"joos@gmil.com",password:"123",type:"driver",name:"jose"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** ORIGIN **
+      - GETORIGINBYID: getOriginByName({origin:{name:"nombre"}}, {headers: {Authorization: 'Bearer $token'}});
       - GETALLORIGINS: getAllOrigins({}, {headers: {Authorization: 'Bearer $token'}});
       - GETORIGINBYID: getOriginById({origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
       - DELETEORIGIN: deleteOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
@@ -25,7 +26,7 @@ const routeSA = require("./business/routeSA");
       - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** Route **
-      - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123",id:"wxn6auBOwCJDFCDs0bTx"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
+      - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
       - SEARCHROUTE: searchRoute({route:{destination:"28008",origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
       - ADDTOROUTE: addToRoute({address:"passenger address",route:{id:"7ptW7eHRPqtoaHL4SWae"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
 */
@@ -116,16 +117,22 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>{return {created:true}},error=>error);
 })
 
+exports.getOriginByName = functions.https.onCall((data,context)=>{
+  return checkData(data)
+  .then(()=>checkData(data.origin))
+  .then(()=>checkData(data.origin.name))
+  .then(()=>originSA.getOriginByName(data.origin.name))
+  .then((origin)=>origin,error=>error);
+})
 /*---------------- ROUTE Functions ---------------*/
 /**
  * 
  */
 exports.createRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
-  .then(()=>checkUser(data.user,"driver"))
-  .then(()=>checkData(data.user.id))
   .then(()=>checkData(data.route))
-  .then(()=>{data.route.driver=data.user.id; return routeSA.createRoute(data.route);}) //the driver must be the user who created the route.
+  .then(()=>checkUser(data.user,"driver"))
+  .then((fullUser)=>{data.route.driver=fullUser.id; return routeSA.createRoute(data.route);}) //the driver must be the user who created the route.
   .then(()=>{return {created:true}},error=>error);
 })
 
