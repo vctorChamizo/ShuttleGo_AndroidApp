@@ -10,6 +10,6 @@ public class RouteMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_route_main);
+        setContentView(R.layout.driver_route_show);
     }
 }

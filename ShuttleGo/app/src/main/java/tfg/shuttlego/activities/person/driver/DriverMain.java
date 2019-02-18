@@ -1,5 +1,6 @@
 package tfg.shuttlego.activities.person.driver;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,6 +32,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.origin.AddOrigin;
+import tfg.shuttlego.activities.person.admin.AdminMain;
+import tfg.shuttlego.activities.route.RouteMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.transfer.person.Person;
@@ -202,7 +206,8 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
                 else {
 
-
+                    Intent logIntent = new Intent(DriverMain.this, RouteMain.class);
+                    startActivity(logIntent);
 
                 }//else
             }//onComplete
