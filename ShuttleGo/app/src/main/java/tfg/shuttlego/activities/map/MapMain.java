@@ -1,7 +1,6 @@
 
 package tfg.shuttlego.activities.map;
 
-
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -36,13 +35,10 @@ import java.util.List;
 
 import tfg.shuttlego.R;
 
-
 public class MapMain extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
 
     private MapView mapView;
     private MapboxMap mapboxMap;
-
-    // for adding location layer
     private PermissionsManager permissionsManager;
     private LocationComponent locationComponent;
 
@@ -70,7 +66,6 @@ public class MapMain extends AppCompatActivity implements OnMapReadyCallback, Ma
 
                 enableLocationComponent(style);
                 addDestinationIconSymbolLayer(style);
-
                 mapboxMap.addOnMapClickListener(MapMain.this);
             }
         });
@@ -79,15 +74,12 @@ public class MapMain extends AppCompatActivity implements OnMapReadyCallback, Ma
     @SuppressWarnings( {"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
 
-        // Check if permissions are enabled and if not request
+
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
 
-            // Activate the MapboxMap LocationComponent to show user location
-            // Adding in LocationComponentOptions is also an optional parameter
             locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
-            // Set the component's camera mode
             locationComponent.setCameraMode(CameraMode.TRACKING);
         }
         else {
@@ -143,9 +135,9 @@ public class MapMain extends AppCompatActivity implements OnMapReadyCallback, Ma
 
     @Override
     public void onPermissionResult(boolean granted) {
-        if (granted) {
-            enableLocationComponent(mapboxMap.getStyle());
-        } else {
+
+        if (granted) enableLocationComponent(mapboxMap.getStyle());
+        else {
             Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
             finish();
         }
@@ -192,5 +184,4 @@ public class MapMain extends AppCompatActivity implements OnMapReadyCallback, Ma
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
-
 }

@@ -25,12 +25,12 @@ import tfg.shuttlego.model.transfers.person.Person;
 
 public class EditOrigin extends AppCompatActivity implements View.OnClickListener {
 
-    RelativeLayout rel_layout;
-    ProgressBar pB;
-    String id_origin;
-    TextView name_origin_tetxt;
-    Button deleteOriginButton, editOriginButton;
-    Person user;
+    private RelativeLayout editOriginRelative;
+    private ProgressBar editOriginProgress;
+    private String id_origin;
+    private TextView editOriginTextView;
+    private Button deleteOriginButton, editOriginButton;
+    private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,22 +41,21 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
         user = (Person) getIntent().getExtras().get("user");
 
         inicializateView();
-        changeVisibility(rel_layout, pB);
-        throwGetOriginEvent();
-        changeVisibility(pB, rel_layout);
-
-        deleteOriginButton.setOnClickListener(this);
-        editOriginButton.setOnClickListener(this);
-
+        listeners();
+        JSONObject origin = buildGetOriginJson(id_origin);
+        setProgressBar();
+        throwEventGetOrigin(origin);
+        removeProgressBar();
     }//onCreate
 
     /**
      *
      */
     private void inicializateView() {
-        rel_layout = findViewById(R.id.relative_origin_edit);
-        pB = findViewById(R.id.progress);
-        name_origin_tetxt = findViewById(R.id.name_origin_text);
+
+        editOriginRelative = findViewById(R.id.relative_origin_edit);
+        editOriginProgress = findViewById(R.id.progress);
+        editOriginTextView = findViewById(R.id.name_origin_text);
         deleteOriginButton = findViewById(R.id.btn_delete_origin);
         editOriginButton = findViewById(R.id.btn_edit_origin);
     }//inicializateView
@@ -64,82 +63,29 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
     /**
      *
      */
-    private void throwGetOriginEvent() {
+    private void listeners() {
 
-        JSONObject origin = buildGetOriginJson(id_origin);
-
-        EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.GETORIGINBYID, origin)
-        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
-
-                if (!task.isSuccessful() || task.getResult() == null) {
-                    throwToast("Error de conexion");
-                }
-                else if (task.getResult().containsKey("error")) {
-
-                    switch (Objects.requireNonNull(task.getResult().get("error"))) {
-                        case "server":
-                            throwToast("Error del servidor");
-                            break;
-
-                        default:
-                            throwToast("Error desconocido: " + task.getResult().get("error"));
-                            break;
-                    }//switch
-                }
-                else {
-                    HashMap<?, ?> hm_origin = task.getResult();
-                    Origin origin = new Origin((String)hm_origin.get("id"), (String)hm_origin.get("name"));
-                    name_origin_tetxt.setText(origin.getName());
-                }
-            }//onComplete
-        });
-    }//throwGetOriginEvent
+        deleteOriginButton.setOnClickListener(this);
+        editOriginButton.setOnClickListener(this);
+    }//listeners
 
     /**
      *
      */
-    private void throwDeleteEvent() {
+    private void setProgressBar () {
 
-        changeVisibility(rel_layout, pB);
+        editOriginProgress.setVisibility(View.VISIBLE);
+        editOriginRelative.setVisibility(View.GONE);
+    }//setProgressBar
 
-        JSONObject deleteOrigin = buildDeleteOriginJson();
+    /**
+     *
+     */
+    private void removeProgressBar () {
 
-        EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.DELETEORIGIN, deleteOrigin)
-        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
-
-            if (!task.isSuccessful() || task.getResult() == null) {
-                changeVisibility(pB, rel_layout);
-                throwToast("Error de conexion");
-            }
-            else if (task.getResult().containsKey("error")) {
-
-                changeVisibility(pB, rel_layout);
-
-                switch (Objects.requireNonNull(task.getResult().get("error"))) {
-                    case "server":
-                        throwToast("Error del servidor");
-                        break;
-
-                    default:
-                        throwToast("Error desconocido: " + task.getResult().get("error"));
-                        break;
-                }//switch
-            }
-            else {
-
-                Intent intent = new Intent(EditOrigin.this, AdminMain.class);
-                intent.putExtra("user", user);
-                startActivity(intent);
-            }
-        }//onComplete
-    });
-    }//throwDeleteEvent
+        editOriginProgress.setVisibility(View.GONE);
+        editOriginRelative.setVisibility(View.VISIBLE);
+    }//removeProgressBar
 
     /**
      *
@@ -156,12 +102,10 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
             id.put("id", id_origin);
             getOrigin.put("origin", id);
         }
-        catch (JSONException e) {
-            throwToast("ERROR. Vuelva a intentarlo");
-        }
+        catch (JSONException e) { throwToast(R.string.err); }
 
         return getOrigin;
-    }//buildJson
+    }//buildGetOriginJson
 
     /**
      *
@@ -181,44 +125,80 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
             deleteOrigin.put("user", dataUser);
             deleteOrigin.put("origin", dataOrigin);
         }
-        catch (JSONException e) {
-            throwToast("ERROR. Vuelva a intentarlo");
-        }
+        catch (JSONException e) { throwToast(R.string.err); }
 
         return deleteOrigin;
-    }//buildJson
+    }//buildDeleteOriginJson
 
     /**
      *
-     * @param vGone
-     * @param vVisible
      */
-    private void changeVisibility(View vGone, View vVisible) {
-        vGone.setVisibility(View.GONE);
-        vVisible.setVisibility(View.VISIBLE);
-    }//changeVisibility
+    private void throwEventGetOrigin(JSONObject origin) {
+
+        EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(Event.GETORIGINBYID, origin)
+        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+            @Override
+            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+
+                if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
+                else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
+                else {
+
+                    HashMap<?, ?> hm_origin = task.getResult();
+                    Origin origin = new Origin((String)hm_origin.get("id"), (String)hm_origin.get("name"));
+                    editOriginTextView.setText(origin.getName());
+                }
+            }//onComplete
+        });
+    }//throwEventGetOrigin
+
+    /**
+     *
+     */
+    private void throwEventRemoveOrigin() {
+
+        setProgressBar();
+
+        JSONObject deleteOrigin = buildDeleteOriginJson();
+
+        EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(Event.DELETEORIGIN, deleteOrigin)
+        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+            @Override
+            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+
+                if (!task.isSuccessful() || task.getResult() == null) {
+                    removeProgressBar();
+                    throwToast(R.string.errConexion);
+                }
+                else if (task.getResult().containsKey("error")) {
+                    removeProgressBar();
+                    throwToast(R.string.errServer);
+                }
+                else {
+
+                    Intent intent = new Intent(EditOrigin.this, AdminMain.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
+                }
+            }
+        });
+    }//throwEventRemoveOrigin
 
     /**
      *
      * @param msg
      */
-    private void throwToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-    }//throwToast
+    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
 
-            case R.id.btn_delete_origin:
-
-                throwDeleteEvent();
-                break;
-
-            case R.id.btn_edit_origin:
-                break;
-
-        }//switch
-    }//onClick
+            case R.id.btn_delete_origin: throwEventRemoveOrigin();break;
+            case R.id.btn_edit_origin: break;
+        }
+    }
 }

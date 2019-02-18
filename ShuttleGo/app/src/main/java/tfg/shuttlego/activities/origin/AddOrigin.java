@@ -30,8 +30,8 @@ public class AddOrigin extends AppCompatActivity implements View.OnClickListener
 
     private Person user;
     private EditText origin;
-    private RelativeLayout relFormOrigin;
-    private ProgressBar pBar;
+    private RelativeLayout addOriginRelative;
+    private ProgressBar addOriginProgress;
     private Button addButton;
 
     @Override
@@ -40,21 +40,47 @@ public class AddOrigin extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.admin_origin_add);
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
-
         inicializateView();
+        listeners();
 
-        addButton.setOnClickListener(this);
     }//onCreate
 
     /**
      *
      */
     private void inicializateView() {
+
         addButton = findViewById(R.id.btn_origin_add);
         origin = findViewById(R.id.origin_add);
-        relFormOrigin = findViewById(R.id.relative_form_add_origin);
-        pBar = findViewById(R.id.progress);
+        addOriginRelative = findViewById(R.id.relative_form_add_origin);
+        addOriginProgress = findViewById(R.id.progress);
     }//inicializateView
+
+    /**
+     *
+     */
+    private void listeners() {
+
+        addButton.setOnClickListener(this);
+    }//listeners
+
+    /**
+     *
+     */
+    private void setProgressBar () {
+
+        addOriginProgress.setVisibility(View.VISIBLE);
+        addOriginRelative.setVisibility(View.GONE);
+    }//setProgressBar
+
+    /**
+     *
+     */
+    private void removeProgressBar () {
+
+        addOriginProgress.setVisibility(View.GONE);
+        addOriginRelative.setVisibility(View.VISIBLE);
+    }//removeProgressBar
 
     /**
      *
@@ -74,9 +100,7 @@ public class AddOrigin extends AppCompatActivity implements View.OnClickListener
             createOrigin.put("user", dataUser);
             createOrigin.put("origin", dataOrigin);
 
-        } catch (JSONException e) {
-            throwToast("ERROR. Vuelva a intentarlo");
-        }
+        } catch (JSONException e) { throwToast(R.string.err); }
 
         return createOrigin;
     }//buildJson
@@ -85,7 +109,7 @@ public class AddOrigin extends AppCompatActivity implements View.OnClickListener
      *
      * @param createOrigin
      */
-    private void throwEvent(JSONObject createOrigin) {
+    private void throwEventAddOrigin(JSONObject createOrigin) {
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.CREATEORIGIN, createOrigin)
@@ -94,57 +118,33 @@ public class AddOrigin extends AppCompatActivity implements View.OnClickListener
             public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
                 if (!task.isSuccessful() || task.getResult() == null) {
-                    changeVisibility(pBar, relFormOrigin);
-                    throwToast("Error de conexion");
+
+                    removeProgressBar();
+                    throwToast(R.string.errConexion);
                 } else if (task.getResult().containsKey("error")){
 
-                    changeVisibility(pBar, relFormOrigin);
+                    removeProgressBar();
 
                     switch (Objects.requireNonNull(task.getResult().get("error"))) {
-
-                        case "badRequestForm":
-                            throwToast("Formato de datos incorrecto");
-                            break;
-
-                        case "originAlreadyExists":
-                            throwToast("El origen ya existe");
-                            break;
-
-                        case "server":
-                            throwToast("Error del servidor");
-                            break;
-
-                        default:
-                            throwToast("Error desconocido: " + task.getResult().get("error"));
-                            break;
-                    }//switch
+                        case "badRequestForm": throwToast(R.string.errBadFormat); break;
+                        case "originAlreadyExists": throwToast(R.string.errOriginExisit); break;
+                        case "server": throwToast(R.string.errServer); break;
+                    }
                 }
                 else {
                     Intent logIntent = new Intent(AddOrigin.this, AdminMain.class);
                     logIntent.putExtra("user", user);
                     startActivity(logIntent);
-                }//else
-            }//onComplete
+                }
+            }
         });
     }//throwEvent
 
     /**
      *
-     * @param vGone
-     * @param vVisible
-     */
-    private void changeVisibility(View vGone, View vVisible) {
-        vGone.setVisibility(View.GONE);
-        vVisible.setVisibility(View.VISIBLE);
-    }//changeVisibility
-
-    /**
-     *
      * @param msg
      */
-    private void throwToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-    }//throwToast
+    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void onClick(View v) {
@@ -154,17 +154,16 @@ public class AddOrigin extends AppCompatActivity implements View.OnClickListener
         switch (v.getId()){
 
             case R.id.btn_origin_add:
-
                 if (origin.getText().toString().isEmpty()) empty = true;
 
                 if (!empty) {
 
-                    changeVisibility(relFormOrigin, pBar);
+                    setProgressBar();
                     JSONObject createOrigin = buildJson();
-                    throwEvent(createOrigin);
+                    throwEventAddOrigin(createOrigin);
                 }
-                else throwToast("Introduzca un origen");
+                else throwToast(R.string.errDataEmpty);
                 break;
-        }//switch
-    }//onClick
+        }
+    }
 }

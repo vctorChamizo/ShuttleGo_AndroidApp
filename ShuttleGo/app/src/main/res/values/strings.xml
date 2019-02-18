@@ -18,6 +18,7 @@
     <string name="errPhoneNumber">Introduce un telefono correcto</string>
     <string name="errBadFormat">Formato de datos incorrecto</string>
     <string name="errUserExisit">El usuario ya existe</string>
+    <string name="errOriginExisit">El origen ya existe</string>
 
 
     <!-- **************************  Drawer Menu  **************************** -->
