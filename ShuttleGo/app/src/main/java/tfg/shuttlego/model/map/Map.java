@@ -1,4 +1,4 @@
-package tfg.shuttlego.model.maps;
+package tfg.shuttlego.model.map;
 
 import android.content.Context;
 
@@ -16,22 +16,22 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import tfg.shuttlego.model.transfers.adress.Address;
+import tfg.shuttlego.model.transfer.adress.Address;
 
-public class Maps {
+public class Map {
 
-    private static Maps ourInstance = null;
+    private static Map ourInstance = null;
     private static final String accessToken = "pk.eyJ1Ijoic2h1dHRsZWdvdGZnIiwiYSI6ImNqczNnYTBkejBnN2k0M254bnV4MG5hNXYifQ.NoH-PJACPLpQWZ_2A1vvMg";
-    public static Maps getInstance(Context applicationContext) {
+    public static Map getInstance(Context applicationContext) {
 
         if(ourInstance == null) {
             Mapbox.getInstance(applicationContext, accessToken);
-            ourInstance = new Maps();
+            ourInstance = new Map();
         }
         return ourInstance;
     }
 
-    private Maps() {}
+    private Map() {}
 
     /**
      * Return the full address with the postcode that have been found
@@ -43,7 +43,7 @@ public class Maps {
         TaskCompletionSource<List<Address>> taskCompletionSource = new TaskCompletionSource<List<Address>>();
 
         MapboxGeocoding query = MapboxGeocoding.builder()
-                .accessToken(Maps.accessToken)
+                .accessToken(Map.accessToken)
                 .query(address)
                 .geocodingTypes(GeocodingCriteria.TYPE_ADDRESS,GeocodingCriteria.TYPE_POSTCODE) //esto se puede cambiar
                 .build();

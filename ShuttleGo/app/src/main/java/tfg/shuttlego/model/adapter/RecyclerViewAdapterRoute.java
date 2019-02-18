@@ -1,4 +1,4 @@
-package tfg.shuttlego.model.adapters;
+package tfg.shuttlego.model.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,18 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.origin.EditOrigin;
-import tfg.shuttlego.model.transfers.origin.Origin;
-import tfg.shuttlego.model.transfers.person.Person;
+import tfg.shuttlego.model.transfer.origin.Origin;
+import tfg.shuttlego.model.transfer.person.Person;
 
 /**
  *
  */
-public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> {
+public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> {
 
-    private ArrayList<Origin> originList;
+    private ArrayList<Origin> routeList;
     private static Person user;
 
     /**
@@ -28,15 +30,16 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
      * @param originList
      * @param user
      */
-    public RecyclerViewAdapterOrigin(ArrayList<Origin> originList, Person user) {
-        this.originList = originList;
+    public RecyclerViewAdapterRoute(ArrayList<Origin> originList, Person user) {
+
+        this.routeList = originList;
         this.user = user;
     }//RecyclerViewAdapterOrigin
 
     /**
      *
      */
-    public static class OriginViewHolder extends RecyclerView.ViewHolder {
+    public static class RouteViewHolder extends RecyclerView.ViewHolder {
 
         Context context;
 
@@ -48,15 +51,15 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
          *
          * @param v
          */
-        public OriginViewHolder(View v) {
+        public RouteViewHolder(View v) {
 
             super(v);
 
             context = v.getContext();
 
-            nameText = v.findViewById(R.id.btndddd);
+            nameText = v.findViewById(R.id.passenger_route_cardview_button);
             originCard = v.findViewById(R.id.origin_card_view);
-            idText = v.findViewById(R.id.id_origin_text);
+            idText = v.findViewById(R.id.passenger_route_cardview_textview);
         }//OriginViewHolder
 
         /**
@@ -78,23 +81,24 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
     }//OriginViewHolder
 
     @Override
-    public OriginViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RouteViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.admin_origin_cardiew, viewGroup, false);
-        OriginViewHolder vh = new OriginViewHolder(v);
+        RouteViewHolder vh = new RouteViewHolder(v);
         return vh;
     }//OriginViewHolder
 
     @Override
-    public void onBindViewHolder(OriginViewHolder originHolder, int i) {
-        originHolder.nameText.setText(originList.get(i).getName());
-        originHolder.idText.setText(originList.get(i).getId());
+    public void onBindViewHolder(RouteViewHolder originHolder, int i) {
+
+        originHolder.nameText.setText(routeList.get(i).getName());
+        originHolder.idText.setText(routeList.get(i).getId());
 
         originHolder.setOnClickListeners();
     }//onBindViewHolder
 
     @Override
     public int getItemCount() {
-        return originList.size();
+        return routeList.size();
     }
 
     @Override

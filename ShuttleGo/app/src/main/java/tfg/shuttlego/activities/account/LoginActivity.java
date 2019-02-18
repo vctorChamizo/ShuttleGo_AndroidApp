@@ -20,10 +20,10 @@ import tfg.shuttlego.R;
 import tfg.shuttlego.activities.person.admin.AdminMain;
 import tfg.shuttlego.activities.person.driver.DriverMain;
 import tfg.shuttlego.activities.person.passenger.PassengerMain;
-import tfg.shuttlego.model.events.Event;
-import tfg.shuttlego.model.events.EventDispatcher;
-import tfg.shuttlego.model.transfers.person.Person;
-import tfg.shuttlego.model.transfers.person.TypePerson;
+import tfg.shuttlego.model.event.Event;
+import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.transfer.person.Person;
+import tfg.shuttlego.model.transfer.person.TypePerson;
 
 /**
  * Control the login of the application.

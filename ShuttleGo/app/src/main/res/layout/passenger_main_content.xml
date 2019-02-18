@@ -5,93 +5,104 @@
     android:layout_height="match_parent"
     xmlns:mapbox="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:gravity="center"
     android:background="@drawable/bg_degraded">
 
-    <android.support.design.widget.AppBarLayout
+    <LinearLayout
+        android:id="@+id/driver_main_content_progress"
+        style="@style/LinearProgress">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/ProgressBar" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-    </android.support.design.widget.AppBarLayout>
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
+
+        <ScrollView
+            android:id="@+id/driver_main_content_scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <RelativeLayout
-                android:id="@+id/passenger_main_content_realtive"
+                android:id="@+id/driver_main_content_relative"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@color/colorPrimaryTranslucent">
+                android:layout_height="match_parent">
 
-                <com.mapbox.mapboxsdk.maps.MapView
-                    android:id="@+id/passenger_main_content_map"
+                <RelativeLayout
+                    android:id="@+id/passenger_main_content_realtive"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    mapbox:mapbox_cameraTargetLat="38.9098"
-                    mapbox:mapbox_cameraTargetLng="-77.0295"
-                    mapbox:mapbox_cameraZoom="12" />
+                    android:layout_height="250dp"
+                    android:background="@color/colorPrimaryTranslucent">
 
-                <EditText
-                    android:id="@+id/passenger_main_content_destiny"
-                    style="@style/dataMap"
-                    android:hint="@string/introduceDestiny"
-                    android:theme="@style/ThemeData" />
+                    <com.mapbox.mapboxsdk.maps.MapView
+                        android:id="@+id/passenger_main_content_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        mapbox:mapbox_cameraTargetLat="38.9098"
+                        mapbox:mapbox_cameraTargetLng="-77.0295"
+                        mapbox:mapbox_cameraZoom="12" />
+
+                    <EditText
+                        android:id="@+id/passenger_main_content_destiny"
+                        style="@style/dataMap"
+                        android:hint="@string/introduceDestiny"
+                        android:theme="@style/ThemeData" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/driver_main_content_linear1"
+                    android:layout_below="@+id/passenger_main_content_realtive"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    style="@style/VerticalLinear">
+
+                    <TextView
+
+                        style="@style/SubTittleDriveMain"
+                        android:textAlignment="textStart"
+                        android:hint="@string/origin"
+                        android:text="@string/addOriginToRoute" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/driver_main_content_autoComplete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:hint="@string/origin"
+                        android:ems="10"
+                        style="@style/DataLogin"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/passenger_main_content_button"
+                    android:layout_below="@+id/driver_main_content_linear1"
+                    android:text="@string/searchRoute"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginHorizontal="20dp"
+                    style="@style/ButtonBigRound"/>
             </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/passenger_main_content_linear"
-                android:layout_below="@+id/driver_main_content_tittle"
-                android:layout_marginTop="40dp"
-                android:layout_marginHorizontal="20dp"
-                style="@style/VerticalLinear">
-
-                <TextView
-                    android:id="@+id/passenger_main_content_subtittle"
-                    style="@style/SubTittleDriveMain"
-                    android:textAlignment="textStart"
-                    android:hint="@string/origin"
-                    android:text="@string/addOriginToRoute" />
-
-                <SearchView
-                    android:id="@+id/passenger_main_content_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="0dp"
-                    android:layout_marginTop="10dp"
-                    android:iconifiedByDefault="false"
-                    style="@style/DataLogin">
-                </SearchView>
-
-                <ListView
-                    android:id="@+id/passenger_main_content_listview"
-                    android:layout_below="@+id/driver_main_content_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:visibility="gone"/>
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/passenger_main_content_button"
-                android:layout_below="@+id/driver_main_content_limitLinear"
-                android:text="@string/searchRoute"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginTop="70dp"
-                android:layout_marginHorizontal="20dp"
-                style="@style/ButtonBigRound"/>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>

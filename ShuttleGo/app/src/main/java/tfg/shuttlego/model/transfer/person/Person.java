@@ -1,4 +1,4 @@
-package tfg.shuttlego.model.transfers.person;
+package tfg.shuttlego.model.transfer.person;
 
 
 import java.io.Serializable;

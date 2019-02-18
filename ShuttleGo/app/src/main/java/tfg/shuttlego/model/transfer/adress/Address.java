@@ -1,4 +1,4 @@
-package tfg.shuttlego.model.transfers.adress;
+package tfg.shuttlego.model.transfer.adress;
 
 public class Address {
     private String fullDirection;

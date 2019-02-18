@@ -37,11 +37,10 @@ import java.util.Objects;
 
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.map.MapMain;
-import tfg.shuttlego.model.adapters.ListViewAdapterOrigin;
-import tfg.shuttlego.model.events.Event;
-import tfg.shuttlego.model.events.EventDispatcher;
-import tfg.shuttlego.model.transfers.origin.Origin;
-import tfg.shuttlego.model.transfers.person.Person;
+import tfg.shuttlego.model.event.Event;
+import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.transfer.origin.Origin;
+import tfg.shuttlego.model.transfer.person.Person;
 
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;

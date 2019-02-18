@@ -22,11 +22,11 @@ import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.origin.AddOrigin;
-import tfg.shuttlego.model.adapters.RecyclerViewAdapterOrigin;
-import tfg.shuttlego.model.events.Event;
-import tfg.shuttlego.model.events.EventDispatcher;
-import tfg.shuttlego.model.transfers.origin.Origin;
-import tfg.shuttlego.model.transfers.person.Person;
+import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
+import tfg.shuttlego.model.event.Event;
+import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.transfer.origin.Origin;
+import tfg.shuttlego.model.transfer.person.Person;
 
 /**
  *
