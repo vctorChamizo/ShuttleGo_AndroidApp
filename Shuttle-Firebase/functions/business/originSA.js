@@ -12,6 +12,16 @@ function getAllOrigins(){
     return originDAO.getAllOrigins();
 }
 
+
+function getOriginByName(name){
+    return originDAO.getOriginByName(name)
+    .then(origin=>{
+        if(origin == null) throw ERROR.originDoesntExists;
+        else return origin;
+    }
+    )
+}
+
 /**
  * Gets the origin data.
  * @param {string} id The origin id.
@@ -83,5 +93,6 @@ module.exports = {
     getOriginById:getOriginById,
     deleteOriginById:deleteOriginById,
     modifyOriginById:modifyOriginById,
-    createOrigin:createOrigin
+    createOrigin:createOrigin,
+    getOriginByName:getOriginByName
 }

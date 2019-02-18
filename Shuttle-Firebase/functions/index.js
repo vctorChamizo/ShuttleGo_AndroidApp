@@ -18,6 +18,7 @@ const routeSA = require("./business/routeSA");
       - SIGNUP: signup({user:{surname:"ramirez",number:123,email:"joos@gmil.com",password:"123",type:"driver",name:"jose"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** ORIGIN **
+      - GETORIGINBYID: getOriginByName({origin:{name:"nombre"}}, {headers: {Authorization: 'Bearer $token'}});
       - GETALLORIGINS: getAllOrigins({}, {headers: {Authorization: 'Bearer $token'}});
       - GETORIGINBYID: getOriginById({origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
       - DELETEORIGIN: deleteOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
@@ -116,6 +117,13 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>{return {created:true}},error=>error);
 })
 
+exports.getOriginByName = functions.https.onCall((data,context)=>{
+  return checkData(data)
+  .then(()=>checkData(data.origin))
+  .then(()=>checkData(data.origin.name))
+  .then(()=>originSA.getOriginByName(data.origin.name))
+  .then((origin)=>origin,error=>error);
+})
 /*---------------- ROUTE Functions ---------------*/
 /**
  * 
