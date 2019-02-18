@@ -1,12 +1,5 @@
 <resources>
 
-    <string name="close">Cerrar</string>
-    <string name="exit">Salida: </string>
-    <string name="arrive">LLegada: </string>
-    <string name="nameDriver">Conductor: </string>
-    <string name="phoneDriver">Teléfono: </string>
-    <string name="limitPassenger">Pasajeros máximos: </string>
-
     <!--*************************************************************************
     *********************************  Main  ************************************
     **************************************************************************-->

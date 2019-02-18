@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -41,7 +40,7 @@ import tfg.shuttlego.model.transfer.person.Person;
 public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ProgressBar driveMainProgress;
-    private LinearLayout driveMainLinear;
+    private ScrollView driveMainScroll;
     private NavigationView navigationView;
     private Person user;
     private EditText limitArea, limitPassengers;
@@ -49,7 +48,6 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     private Button createRoute;
     private ArrayList<String> originList;
     private ArrayList<HashMap<?, ?>> originMap;
-    private String idOrigin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +59,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         setProgressBar();
         setMenuDrawer();
         setCredencials();
-        throwEventGerAllOrigins();
+        throwEventGerAllOriigns();
         listeners();
     }//onCreate
 
@@ -71,7 +69,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     private void incializateView() {
 
         driveMainProgress = findViewById(R.id.progress);
-        driveMainLinear = findViewById(R.id.driver_main_content_linear4);
+        driveMainScroll = findViewById(R.id.driver_main_content_scroll);
         origin = findViewById(R.id.driver_main_content_autoComplete);
         limitArea = findViewById(R.id.driver_main_content_limit);
         limitPassengers = findViewById(R.id.driver_main_content_passengers);
@@ -84,7 +82,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     private void setProgressBar () {
 
         driveMainProgress.setVisibility(View.VISIBLE);
-        driveMainLinear.setVisibility(View.GONE);
+        driveMainScroll.setVisibility(View.GONE);
     }//setProgressBar
 
     /**
@@ -93,7 +91,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     private void removeProgressBar () {
 
         driveMainProgress.setVisibility(View.GONE);
-        driveMainLinear.setVisibility(View.VISIBLE);
+        driveMainScroll.setVisibility(View.VISIBLE);
     }//removeProgressBar
 
     /**
@@ -126,7 +124,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     /**
      *
      */
-    private void throwEventGerAllOrigins(){
+    private void throwEventGerAllOriigns(){
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.GETORIGINS, null)
@@ -150,7 +148,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 }//else
             }//onComplete
         });
-    }//throwEventGerAllOrigins
+    }//throwEventGerAllOriigns
 
     /**
      *
@@ -164,33 +162,9 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
     /**
      *
-     * @param origin
-     */
-    private void throwEventGetRouteByName(JSONObject origin) {
-
-        EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.GETORIGINBYNAME, origin )
-        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
-
-                if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
-                else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
-                else {
-
-                    idOrigin = task.getResult().get("id");
-                    throwEventCreteRoute(buildJson());
-                }//else
-            }//onComplete
-        });
-    }//throwEventCreteRoute
-
-
-    /**
-     *
      * @param route
      */
-    private void throwEventCreteRoute(JSONObject route) {
+    private void throwEventCreteRoute(JSONObject route ) {
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.CREATEROUTE, route )
@@ -202,7 +176,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
                 else {
 
-
+                    HashMap<?, ?> result = task.getResult();
 
                 }//else
             }//onComplete
@@ -221,13 +195,17 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
         try {
 
+            String origen = origin.getText().toString(); // NECESITO EL ID DEL ORIGEN ELEGIDO
             int codePostal = Integer.parseInt(limitArea.getText().toString());
             int passengers = Integer.parseInt(limitPassengers.getText().toString());
 
             userJson.put("email", user.getEmail());
             userJson.put("password", user.getPassword());
+            userJson.put("id", user.getId());
+
+
             routeJson.put("max", passengers);
-            routeJson.put("origin", idOrigin);
+            //routeJson.put("origin", passengers);
             routeJson.put("destination", codePostal);
 
             json.put("user", userJson);
@@ -290,8 +268,8 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 if (!empty) {
 
                     setProgressBar();
-                    try { throwEventGetRouteByName(new JSONObject().put("origin", new JSONObject().put("name", origin.getText().toString()))); }
-                    catch (JSONException e) { throwToast(R.string.err);}
+                    JSONObject route = buildJson();
+                    throwEventCreteRoute(route);
                 }
                 else throwToast(R.string.errDataEmpty);
                 break;

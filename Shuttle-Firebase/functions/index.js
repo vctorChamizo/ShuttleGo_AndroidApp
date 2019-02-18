@@ -18,7 +18,7 @@ const routeSA = require("./business/routeSA");
       - SIGNUP: signup({user:{surname:"ramirez",number:123,email:"joos@gmil.com",password:"123",type:"driver",name:"jose"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** ORIGIN **
-      - GETORIGINBYNAME: getOriginByName({origin:{name:"nombre"}}, {headers: {Authorization: 'Bearer $token'}});
+      - GETORIGINBYID: getOriginByName({origin:{name:"nombre"}}, {headers: {Authorization: 'Bearer $token'}});
       - GETALLORIGINS: getAllOrigins({}, {headers: {Authorization: 'Bearer $token'}});
       - GETORIGINBYID: getOriginById({origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
       - DELETEORIGIN: deleteOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
