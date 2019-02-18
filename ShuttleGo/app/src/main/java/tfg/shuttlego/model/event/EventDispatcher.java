@@ -32,12 +32,10 @@ public class EventDispatcher {
             ourInstance = new EventDispatcher();
             FirebaseApp.initializeApp(applicationContext);
             ourInstance.mFunctions = FirebaseFunctions.getInstance();
-
            //ourInstance.mFunctions.useFunctionsEmulator("http://10.0.2.2:8010");
         }
-
         return ourInstance;
-    }//getInstance
+    }
 
     /**
      *
@@ -50,118 +48,37 @@ public class EventDispatcher {
         switch(event){
 
             /* ACCOUNT */
-            case SIGNIN:
-                return this.mFunctions
-                        .getHttpsCallable("signin")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//signin
-
-            case SIGNUP:
-                return this.mFunctions
-                        .getHttpsCallable("signup")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//signin
-
-            case SIGNOUT:
-                break;
-
+            case SIGNIN: return throwEvent("signin", data);
+            case SIGNUP: return throwEvent("signup", data);
+            case SIGNOUT: break;
 
             /* ORIGIN */
-            case GETORIGINS:
-                return this.mFunctions
-                        .getHttpsCallable("getAllOrigins")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//getorigin
-
-            case CREATEORIGIN:
-                return this.mFunctions
-                        .getHttpsCallable("createOrigin")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//createOrigin
-
-            case GETORIGINBYID:
-                return this.mFunctions
-                        .getHttpsCallable("getOrigin")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//createOrigin
-
-            case DELETEORIGIN:
-                return this.mFunctions
-                        .getHttpsCallable("deleteOrigin")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//createOrigin
-
-            case MODIFYORIGIN:
-                break;
+            case GETORIGINS: return throwEvent("getAllOrigins", data);
+            case CREATEORIGIN: return throwEvent("createOrigin", data);
+            case GETORIGINBYID: return throwEvent("getOrigin", data);
+            case GETORIGINBYNAME: return throwEvent("getOriginByName", data);
+            case DELETEORIGIN: return throwEvent("deleteOrigin", data);
+            case MODIFYORIGIN: return throwEvent("modifyOrigin", data);
 
             /* ROUTE */
-            case CREATEROUTE:
-                return this.mFunctions
-                        .getHttpsCallable("createRoute")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//getorigin
-
-            case SEARCHROUTE:
-                return this.mFunctions
-                        .getHttpsCallable("searchRoute")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//getorigin
-
-            case ADDTOROUTE:
-                return this.mFunctions
-                        .getHttpsCallable("addRoute")
-                        .call(data)
-                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-                            @Override
-                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                                return  (HashMap<String,String>)task.getResult().getData();
-                            }
-                        });//getorigin
-
-            /* DEFAULT */
-            default: return null;
-        }//switch
+            case CREATEROUTE: return throwEvent("createRoute", data);
+            case SEARCHROUTE: return throwEvent("searchRoute", data);
+            case ADDTOROUTE: return throwEvent("addRoute", data);
+        }
 
         return null;
-    }//dispatchEvent
+    }
+
+    private Task<HashMap<String,String>> throwEvent(String nameFunction, JSONObject data){
+
+        return this.mFunctions
+        .getHttpsCallable(nameFunction).call(data)
+        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+
+            @Override
+            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                return  (HashMap<String,String>)task.getResult().getData();
+            }
+        });
+    }//throwEvent
 }
