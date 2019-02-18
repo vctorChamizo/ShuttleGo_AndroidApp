@@ -26,6 +26,7 @@ const routeSA = require("./business/routeSA");
       - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** Route **
+      - GETROUTEBYID: getRouteById({route:{id:"..."}}, {headers: {Authorization: 'Bearer $token'}});
       - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
       - SEARCHROUTE: searchRoute({route:{destination:"28008",origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
       - ADDTOROUTE: addToRoute({address:"passenger address",route:{id:"7ptW7eHRPqtoaHL4SWae"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
@@ -133,7 +134,7 @@ exports.createRoute = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkUser(data.user,"driver"))
   .then((fullUser)=>{data.route.driver=fullUser.id; return routeSA.createRoute(data.route);}) //the driver must be the user who created the route.
-  .then(()=>{return {created:true}},error=>error);
+  .then((id)=>{return {route:{id:id}}},error=>error);
 })
 
 /**
@@ -161,6 +162,13 @@ exports.addToRoute = functions.https.onCall((data,conext)=>{
   .then(()=>{return {added:true}},(error => error));
 });
 
+exports.getRouteById = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkData(data.route.id))
+  .then(()=>routeSA.getRouteById(data.route.id))
+  .then((route)=>route,error=>error);
+})
 /*---------------- PRIVATE Functions ---------------*/
 /**
  * @description Avoid internal null errors, it should be called at the first line of all exported functions.

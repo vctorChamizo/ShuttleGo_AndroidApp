@@ -20,10 +20,23 @@ function createRoute(route){
 }
 
 function getRouteById(id){
+    let routeFin;
+
     return routeDao.getRouteById(id)
     .then((route)=>{
         if(route == null) throw ERROR.routeDoesntExists;
-        else return route;
+        else{
+            routeFin = route;
+            return personDao.getUserById(route.driver);
+        }
+    })
+    .then((driver)=>{
+        routeFin.driver = driver;
+        return originDao.getOriginById(routeFin.origin);  
+    })
+    .then((origin)=>{
+        routeFin.origin = origin;
+        return routeFin;
     })
 }
 
