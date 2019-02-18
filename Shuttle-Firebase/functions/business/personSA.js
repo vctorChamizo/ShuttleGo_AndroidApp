@@ -58,6 +58,7 @@ function checkUser(user,userType = null){
     .then((result)=>{
         if(result == null ||(userType != null &&( result.type == null || result.type != userType)))
             throw ERROR.noPermissions;
+        else return result;
     });
 }//checkUser
 
