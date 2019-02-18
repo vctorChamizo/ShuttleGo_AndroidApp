@@ -261,7 +261,6 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         switch (v.getId()) {
 
             case R.id.driver_main_content_button:
-
                 if (origin.getText().toString().isEmpty()) empty = true;
                 if (limitArea.getText().toString().isEmpty()) empty = true;
                 if (limitPassengers.getText().toString().isEmpty()) empty = true;
@@ -274,8 +273,6 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 }
                 else throwToast(R.string.errDataEmpty);
                 break;
-
-            default: break;
-        }//switch
+        }
     }
 }

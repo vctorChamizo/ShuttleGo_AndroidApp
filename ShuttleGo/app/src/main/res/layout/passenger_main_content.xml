@@ -9,15 +9,15 @@
     android:background="@drawable/bg_degraded">
 
     <LinearLayout
-        android:id="@+id/driver_main_content_progress"
         style="@style/LinearProgress">
 
         <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/passenger_main_content_progress"
             style="@style/ProgressBar" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/passenger_main_content_linear1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -37,17 +37,17 @@
 
 
         <ScrollView
-            android:id="@+id/driver_main_content_scroll"
+            android:id="@+id/passenger_main_content_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <RelativeLayout
-                android:id="@+id/driver_main_content_relative"
+                android:id="@+id/passenger_main_content_relative1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <RelativeLayout
-                    android:id="@+id/passenger_main_content_realtive"
+                    android:id="@+id/passenger_main_content_realtive2"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:background="@color/colorPrimaryTranslucent">
@@ -68,21 +68,21 @@
                 </RelativeLayout>
 
                 <LinearLayout
-                    android:id="@+id/driver_main_content_linear1"
-                    android:layout_below="@+id/passenger_main_content_realtive"
+                    android:id="@+id/passenger_main_content_linear2"
+                    android:layout_below="@+id/passenger_main_content_realtive2"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="20dp"
                     style="@style/VerticalLinear">
 
                     <TextView
-
+                        android:id="@+id/passenger_main_content_text"
                         style="@style/SubTittleDriveMain"
                         android:textAlignment="textStart"
                         android:hint="@string/origin"
                         android:text="@string/addOriginToRoute" />
 
                     <AutoCompleteTextView
-                        android:id="@+id/driver_main_content_autoComplete"
+                        android:id="@+id/passenger_main_content_autocomplete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -91,12 +91,11 @@
                         android:hint="@string/origin"
                         android:ems="10"
                         style="@style/DataLogin"/>
-
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/passenger_main_content_button"
-                    android:layout_below="@+id/driver_main_content_linear1"
+                    android:layout_below="@+id/passenger_main_content_linear2"
                     android:text="@string/searchRoute"
                     android:textColor="@color/colorPrimary"
                     android:layout_marginTop="70dp"

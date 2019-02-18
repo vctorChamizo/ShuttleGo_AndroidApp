@@ -12,8 +12,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.SearchView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,124 +44,162 @@ import tfg.shuttlego.R;
 import tfg.shuttlego.activities.map.MapMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
-import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
-
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 
 /**
  *
  */
-public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, SearchView.OnQueryTextListener {
+public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, View.OnClickListener {
 
     private NavigationView navigationView;
     private Person user;
     private MapView mapView;
     private MapboxMap mapboxMap;
-    // for adding location layer
     private PermissionsManager permissionsManager;
     private LocationComponent locationComponent;
+    private ProgressBar passengerMainProgress;
+    private LinearLayout passengerMainLinear;
+    private EditText passengerMainDestiny;
+    private Button passengerMainButton;
+    private AutoCompleteTextView passengerMainOrigin;
+    private ArrayList<String> originList;
+    private ArrayList<HashMap<?, ?>> originMap;
 
-    private ListView list;
-    private ListViewAdapterOrigin adapter;
-    private SearchView editsearch;
-    private ArrayList<Origin> originList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         Mapbox.getInstance(this, getString(R.string.access_token));
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.passenger_main);
-
+        inicializateView();
+        setProgressBar();
+        mapView.onCreate(savedInstanceState);
         setMenuDrawer();
         setCredencials();
-        setSearchSpinner();
+        throwEventGerAllOrigins();
+        listeners();
+    }
+
+    /**
+     *
+     */
+    private void inicializateView() {
 
         mapView = findViewById(R.id.passenger_main_content_map);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
-    }
+        passengerMainProgress = findViewById(R.id.passenger_main_content_progress);
+        passengerMainLinear = findViewById(R.id.passenger_main_content_linear1);
+        passengerMainDestiny = findViewById(R.id.passenger_main_content_destiny);
+        passengerMainOrigin = findViewById(R.id.passenger_main_content_autocomplete);
+        passengerMainButton  = findViewById(R.id.passenger_main_content_button);
+    }//inicializateView
 
     /**
      *
      */
-    private void setSearchSpinner() {
+    private void setProgressBar () {
+
+        passengerMainProgress.setVisibility(View.VISIBLE);
+        passengerMainLinear.setVisibility(View.GONE);
+    }//setProgressBar
+
+    /**
+     *
+     */
+    private void removeProgressBar () {
+
+        passengerMainProgress.setVisibility(View.GONE);
+        passengerMainLinear.setVisibility(View.VISIBLE);
+    }//removeProgressBar
+
+    /**
+     *
+     */
+    private void setMenuDrawer() {
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        DrawerLayout drawer = findViewById(R.id.passenger_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }//setMenuDrawer
+
+    /**
+     *
+     */
+    private void setCredencials() {
+
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
+        TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
+        nav_name_text.setText(user.getName() + " " + user.getSurname());
+        nav_email_text.setText(user.getEmail());
+    }//setCredencials
+
+    /**
+     *
+     */
+    private void throwEventGerAllOrigins(){
 
         EventDispatcher.getInstance(getApplicationContext())
-                .dispatchEvent(Event.GETORIGINS, null)
-                .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-                    @Override
-                    public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+        .dispatchEvent(Event.GETORIGINS, null)
+        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+            @Override
+            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
-                        if (!task.isSuccessful() || task.getResult() == null) {
-                            //changeVisibility();
-                            throwToast("Error de conexion");
-                        } else if (task.getResult().containsKey("error")) {
+                if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
+                else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
+                else {
 
-                            switch (Objects.requireNonNull(task.getResult().get("error"))) {
-                                case "server":
-                                    throwToast("Error del servidor");
-                                    break;
+                    HashMap<?, ?> result = task.getResult();
+                    originMap = (ArrayList<HashMap<?, ?>>) result.get("origins");
+                    originList = new ArrayList<String>();
 
-                                default:
-                                    throwToast("Error desconocido: " + task.getResult().get("error"));
-                                    break;
-                            }//switch
-                        } else {
+                    for (HashMap<?, ?> l : originMap) originList.add((String) l.get("name"));
 
-                            HashMap<?, ?> result = task.getResult();
-                            ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("origins");
-                            originList = new ArrayList<>();
-
-                            assert list != null;
-                            for (int i = 0; i < list.size(); ++i) {
-                                Origin origin = new Origin();
-                                origin.setId((String) list.get(i).get("id"));
-                                origin.setName((String) list.get(i).get("name"));
-                                originList.add(origin);
-                            }//for
-
-                            createListView();
-                        }//else
-                    }//onComplete
-                });
-    }//getOriginList
+                    setAutoCompleteTextView();
+                    removeProgressBar();
+                }
+            }
+        });
+    }//throwEventGerAllOrigins
 
     /**
      *
      */
-    private void createListView() {
+    private void setAutoCompleteTextView() {
 
-        list = findViewById(R.id.passenger_main_content_listview);
-        adapter = new ListViewAdapterOrigin(this, originList);
-        editsearch = findViewById(R.id.passenger_main_content_search);
-        editsearch.setOnQueryTextListener(this);
-    }//createListView
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, originList);
+        passengerMainOrigin.setThreshold(1);
+        passengerMainOrigin.setAdapter(adapter);
+    }//setAutoCompleteTextView
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-
-        String text = newText;
-        list.setVisibility(View.VISIBLE);
-        list.setAdapter(adapter);
-        adapter.filter(text);
-
-        return false;
-    }
-
-    /*
-        ***********************************   Map Code   *******************************************
+    /**
+     *
+     * @return
      */
+    private JSONObject buildJson() {
+        return null;
+    }//buildJson
+
+    /**
+     *
+     */
+    private void listeners() {
+
+        mapView.getMapAsync(this);
+        passengerMainButton.setOnClickListener(this);
+    }//listeners
+
+    /**
+     *
+     * @param msg
+     */
+    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -177,15 +220,11 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     @SuppressLint("MissingPermission")
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
 
-        // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
 
-            // Activate the MapboxMap LocationComponent to show user location
-            // Adding in LocationComponentOptions is also an optional parameter
             locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
-            // Set the component's camera mode
             locationComponent.setCameraMode(CameraMode.TRACKING);
         }
         else {
@@ -207,14 +246,12 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onPermissionResult(boolean granted) {
-        if (granted) {
-            enableLocationComponent(mapboxMap.getStyle());
-        } else {
+        if (granted) enableLocationComponent(mapboxMap.getStyle());
+        else {
             Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
             finish();
         }
     }
-
 
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
@@ -224,48 +261,6 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
         return true;
     }
-
-    /*
-    *********************************************************************************************
-     */
-
-    /*
-     ***********************************   Menu Code   ******************************************
-     */
-
-    /**
-     *
-     */
-    private void setMenuDrawer() {
-
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        DrawerLayout drawer = findViewById(R.id.passenger_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-    }//setMenuDrawer
-
-    /**
-     *
-     */
-    @SuppressLint("SetTextI18n")
-    private void setCredencials() {
-
-        View hView =  navigationView.getHeaderView(0);
-        TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
-        TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
-        nav_name_text.setText(user.getName() + " " + user.getSurname());
-        nav_email_text.setText(user.getEmail());
-    }//setCredencials
-
-    /**
-     *
-     * @param msg
-     */
-    private void throwToast(String msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void onBackPressed() {
@@ -289,4 +284,25 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
         return true;
     }//onNavigationItemSelected
+
+    @Override
+    public void onClick(View v) {
+
+        boolean empty = false;
+
+        switch (v.getId()) {
+
+            case R.id.passenger_main_content_button:
+                if (passengerMainDestiny.getText().toString().isEmpty()) empty = true;
+                if (passengerMainOrigin.getText().toString().isEmpty()) empty = true;
+
+                if (!empty) {
+
+                    setProgressBar();
+                    JSONObject route = buildJson();
+                }
+                else throwToast(R.string.errDataEmpty);
+                break;
+        }
+    }
 }
