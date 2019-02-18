@@ -124,6 +124,39 @@ public class EventDispatcher {
             case MODIFYORIGIN:
                 break;
 
+            /* ROUTE */
+            case CREATEROUTE:
+                return this.mFunctions
+                        .getHttpsCallable("createRoute")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+                            @Override
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                                return  (HashMap<String,String>)task.getResult().getData();
+                            }
+                        });//getorigin
+
+            case SEARCHROUTE:
+                return this.mFunctions
+                        .getHttpsCallable("searchRoute")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+                            @Override
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                                return  (HashMap<String,String>)task.getResult().getData();
+                            }
+                        });//getorigin
+
+            case ADDTOROUTE:
+                return this.mFunctions
+                        .getHttpsCallable("addRoute")
+                        .call(data)
+                        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
+                            @Override
+                            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
+                                return  (HashMap<String,String>)task.getResult().getData();
+                            }
+                        });//getorigin
 
             /* DEFAULT */
             default: return null;

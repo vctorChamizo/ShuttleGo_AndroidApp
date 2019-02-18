@@ -11,6 +11,7 @@ public class Person implements Serializable {
     private String email;
     private String password;
     private TypePerson type;
+    private String id;
 
     public Person (String email, String password, String name, String surname, int phone, TypePerson type){
 
@@ -22,27 +23,40 @@ public class Person implements Serializable {
         this.type = type;
     }
 
+    public Person (String email, String password, String name, String surname, int phone, TypePerson type, String id){
+
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.type = type;
+        this.id = id;
+    }
+
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getSurname() {
-        return surname;
+        return this.surname;
     }
 
     public int getPhone() {
-        return phone;
+        return this.phone;
     }
 
-    public String getEmail() { return email; }
+    public String getEmail() { return this.email; }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public TypePerson getType() {
-        return type;
+        return this.type;
     }
+
+    public String getId() { return this.id; }
 
     public void setName(String name) {
         this.name = name;
@@ -67,4 +81,6 @@ public class Person implements Serializable {
     public void setType(TypePerson type) {
         this.type = type;
     }
+
+    public void setType(String id) { this.id = id; }
 }

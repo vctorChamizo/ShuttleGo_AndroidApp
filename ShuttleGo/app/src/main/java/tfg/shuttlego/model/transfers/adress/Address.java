@@ -1,4 +1,4 @@
-package tfg.shuttlego.model.maps;
+package tfg.shuttlego.model.transfers.adress;
 
 public class Address {
     private String fullDirection;
@@ -10,6 +10,14 @@ public class Address {
     }
     public Address(String fullDirection,int postalCode){
         this.fullDirection = fullDirection;
+        this.postalCode = postalCode;
+    }
+
+    public void setDirection(String direction){
+        this.fullDirection = direction;
+    }
+
+    public void setPostaCode(int postalCode){
         this.postalCode = postalCode;
     }
 

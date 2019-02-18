@@ -16,11 +16,12 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tfg.shuttlego.model.transfers.adress.Address;
 
 public class Maps {
 
     private static Maps ourInstance = null;
-    private static final String accessToken = "pk.eyJ1IjoiY2FybG9zY2hhcmxpZSIsImEiOiJjanB1YXVjYW0wNXQ4NDhsZndtcWFiYnF3In0.7ogR1zvHYQfdn-ldKf10mA";
+    private static final String accessToken = "pk.eyJ1Ijoic2h1dHRsZWdvdGZnIiwiYSI6ImNqczNnYTBkejBnN2k0M254bnV4MG5hNXYifQ.NoH-PJACPLpQWZ_2A1vvMg";
     public static Maps getInstance(Context applicationContext) {
 
         if(ourInstance == null) {

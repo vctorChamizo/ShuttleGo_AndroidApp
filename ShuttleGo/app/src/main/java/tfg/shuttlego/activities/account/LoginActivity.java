@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private int phone;
     private TypePerson typePerson;
     private Class nextClass;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,9 +135,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     surname = Objects.requireNonNull(p.get("surname")).toString();
                     type = Objects.requireNonNull(p.get("type")).toString();
                     phone = Integer.parseInt(Objects.requireNonNull(p.get("number")).toString());
+                    id = Objects.requireNonNull(p.get("id")).toString();
 
                     parserTypePerson();
-                    Person user = new Person(email, password, name, surname, phone, typePerson);
+                    Person user = new Person(email, password, name, surname, phone, typePerson, id);
 
                     Intent logIntent = new Intent(LoginActivity.this, nextClass);
                     logIntent.putExtra("user", user);
