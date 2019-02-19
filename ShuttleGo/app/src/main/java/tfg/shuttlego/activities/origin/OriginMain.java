@@ -23,22 +23,19 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
 
-public class EditOrigin extends AppCompatActivity implements View.OnClickListener {
+public class OriginMain extends AppCompatActivity implements View.OnClickListener {
 
     private RelativeLayout editOriginRelative;
     private ProgressBar editOriginProgress;
     private String id_origin;
     private TextView editOriginTextView;
-    private Button deleteOriginButton, editOriginButton;
+    private Button deleteOriginButton, editOriginButton, closeButton;
     private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_origin_edit);
-
-        id_origin = (String) getIntent().getExtras().get("origin");
-        user = (Person) getIntent().getExtras().get("user");
+        setContentView(R.layout.origin_card);
 
         inicializateView();
         listeners();
@@ -58,6 +55,7 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
         editOriginTextView = findViewById(R.id.name_origin_text);
         deleteOriginButton = findViewById(R.id.btn_delete_origin);
         editOriginButton = findViewById(R.id.btn_edit_origin);
+        closeButton = findViewById(R.id.btn_edit_origin);
     }//inicializateView
 
     /**
@@ -178,7 +176,7 @@ public class EditOrigin extends AppCompatActivity implements View.OnClickListene
                 }
                 else {
 
-                    Intent intent = new Intent(EditOrigin.this, AdminMain.class);
+                    Intent intent = new Intent(OriginMain.this, AdminMain.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
                 }

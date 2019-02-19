@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.origin.EditOrigin;
+import tfg.shuttlego.activities.origin.OriginMain;
 import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
 
@@ -42,8 +42,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
     public static class RouteViewHolder extends RecyclerView.ViewHolder {
 
         Context context;
-
-        CardView originCard;
+        CardView originRoute;
         Button nameText;
         TextView idText;
 
@@ -54,12 +53,10 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
         public RouteViewHolder(View v) {
 
             super(v);
-
             context = v.getContext();
-
-            nameText = v.findViewById(R.id.passenger_route_cardview_button);
-            originCard = v.findViewById(R.id.origin_card_view);
-            idText = v.findViewById(R.id.passenger_route_cardview_textview);
+            nameText = v.findViewById(R.id.route_cardview_button);
+            originRoute = v.findViewById(R.id.route_cardview_cardview);
+            idText = v.findViewById(R.id.route_cardview_textview);
         }//OriginViewHolder
 
         /**
@@ -71,7 +68,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(context, EditOrigin.class);
+                    Intent intent = new Intent(context, OriginMain.class);
                     intent.putExtra("origin", idText.getText());
                     intent.putExtra("user", user);
                     context.startActivity(intent);
@@ -82,7 +79,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
 
     @Override
     public RouteViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.admin_origin_cardiew, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.origin_cardview, viewGroup, false);
         RouteViewHolder vh = new RouteViewHolder(v);
         return vh;
     }//OriginViewHolder

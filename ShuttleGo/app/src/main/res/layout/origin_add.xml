@@ -8,16 +8,15 @@
     android:background="@drawable/bg_degraded">
 
     <LinearLayout
-
         style="@style/LinearProgress">
 
         <ProgressBar
-            android:id="@+id/admin_main_content_progress"
+            android:id="@+id/origin_add_progress"
             style="@style/ProgressBar" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/admin_main_content_linar1"
+        android:id="@+id/origin_add_linear1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -33,38 +32,41 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/admin"/>
+                app:title="Añadir Origen"/>
         </android.support.design.widget.AppBarLayout>
 
-        <TextView
-            android:id="@+id/driver_main_content_tittle"
-            style="@style/TittleWelcome"
-            android:textAlignment="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="Crea un nuevo origen" />
-
         <LinearLayout
-            android:id="@+id/driver_main_content_linear2"
-            android:layout_marginTop="30dp"
-            android:padding="20dp"
-            style="@style/VerticalLinear" >
+            android:id="@+id/origin_add_linear2"
+            android:layout_below="@+id/passenger_main_content_realtive2"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp"
+            style="@style/VerticalLinear">
+
+            <TextView
+                android:id="@+id/origin_add_textview"
+                style="@style/SubTittleDriveMain"
+                android:textAlignment="textStart"
+                android:hint="@string/origin"
+                android:text="@string/addOriginToRoute" />
 
             <EditText
-                android:id="@+id/admin_main_content_edittext"
-                style="@style/DataLogin"
+                android:id="@+id/origin_add_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:hint="@string/origin"
-                android:inputType="text"
-                android:theme="@style/ThemeData" />
+                android:ems="10"
+                style="@style/DataLogin"/>
         </LinearLayout>
 
-
         <Button
-            android:id="@+id/admin_main_content_button"
-            android:text="@string/addOrigin"
+            android:id="@+id/origin_add_button"
+            android:layout_below="@+id/passenger_main_content_linear2"
+            android:text="@string/searchRoute"
             android:textColor="@color/colorPrimary"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="320dp"
             android:layout_marginHorizontal="20dp"
             style="@style/ButtonBigRound"/>
     </LinearLayout>

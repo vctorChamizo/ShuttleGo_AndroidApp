@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.origin.EditOrigin;
+import tfg.shuttlego.activities.origin.OriginMain;
 import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
 
@@ -40,9 +40,8 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
     public static class OriginViewHolder extends RecyclerView.ViewHolder {
 
         Context context;
-
         CardView originCard;
-        Button nameText;
+        Button nameButton;
         TextView idText;
 
         /**
@@ -52,12 +51,10 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
         public OriginViewHolder(View v) {
 
             super(v);
-
             context = v.getContext();
-
-            nameText = v.findViewById(R.id.admin_origin_carview_button);
-            originCard = v.findViewById(R.id.origin_card_view);
-            idText = v.findViewById(R.id.admin_origin_carview_textview);
+            nameButton = v.findViewById(R.id.origin_cardview_button);
+            originCard = v.findViewById(R.id.origin_cardview_cardview);
+            idText = v.findViewById(R.id.origin_cardview_textview);
         }//OriginViewHolder
 
         /**
@@ -65,11 +62,11 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
          */
         public void setOnClickListeners() {
 
-            nameText.setOnClickListener(new View.OnClickListener() {
+            nameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(context, EditOrigin.class);
+                    Intent intent = new Intent(context, OriginMain.class);
                     intent.putExtra("origin", idText.getText());
                     intent.putExtra("user", user);
                     context.startActivity(intent);
@@ -80,14 +77,14 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public OriginViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.admin_origin_cardiew, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.origin_cardview, viewGroup, false);
         OriginViewHolder vh = new OriginViewHolder(v);
         return vh;
     }//OriginViewHolder
 
     @Override
     public void onBindViewHolder(OriginViewHolder originHolder, int i) {
-        originHolder.nameText.setText(originList.get(i).getName());
+        originHolder.nameButton.setText(originList.get(i).getName());
         originHolder.idText.setText(originList.get(i).getId());
 
         originHolder.setOnClickListeners();

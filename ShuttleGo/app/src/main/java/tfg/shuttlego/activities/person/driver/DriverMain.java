@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +31,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.origin.AddOrigin;
-import tfg.shuttlego.activities.person.admin.AdminMain;
 import tfg.shuttlego.activities.route.RouteMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
@@ -206,7 +203,10 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
                 else {
 
+
+                    String idRoute = task.getResult().get("route");
                     Intent logIntent = new Intent(DriverMain.this, RouteMain.class);
+                    logIntent.putExtra("route", idRoute);
                     startActivity(logIntent);
 
                 }//else

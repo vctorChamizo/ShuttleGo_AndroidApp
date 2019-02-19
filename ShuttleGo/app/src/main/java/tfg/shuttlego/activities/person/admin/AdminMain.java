@@ -13,15 +13,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.origin.AddOrigin;
+import tfg.shuttlego.activities.origin.OriginMain;
 import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
@@ -31,11 +39,15 @@ import tfg.shuttlego.model.transfer.person.Person;
 /**
  *
  */
-public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ArrayList<Origin> listOrigins;
     private NavigationView navigationView;
     private Person user;
+    private ProgressBar adminMainProgress;
+    private EditText adminMainEdit;
+    private Button adminMainButton;
+    private LinearLayout adminMainLinear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +55,25 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         setContentView(R.layout.admin_main);
 
         user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
-
+        incializateView();
+        setProgressBar();
         setMenuDrawer();
         setCredencials();
-        throwEvent();
+        removeProgressBar();
+        listeners();
+    }
+
+    private void listeners() {
+
+        adminMainButton.setOnClickListener(this);
+    }
+
+    private void incializateView() {
+
+        adminMainProgress = findViewById(R.id.admin_main_content_progress);
+        adminMainEdit = findViewById(R.id.admin_main_content_edittext);
+        adminMainButton = findViewById(R.id.admin_main_content_button);
+        adminMainLinear = findViewById(R.id.admin_main_content_linar1);
     }
 
     /**
@@ -79,59 +106,27 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     /**
      *
      */
-    private void throwEvent() {
+    private void setProgressBar () {
 
-        //Activar el progressBar aqui
+        adminMainProgress.setVisibility(View.VISIBLE);
+        adminMainLinear.setVisibility(View.GONE);
+    }//setProgressBar
 
-        EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.GETORIGINS, null)
-        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+    /**
+     *
+     */
+    private void removeProgressBar () {
 
-                if (!task.isSuccessful() || task.getResult() == null) {
-                    //changeVisibility();
-                    throwToast("Error de conexion");
-                } else if (task.getResult().containsKey("error")) {
-
-                    //changeVisibility();
-
-                    switch (Objects.requireNonNull(task.getResult().get("error"))) {
-                        case "server":
-                            throwToast("Error del servidor");
-                            break;
-
-                        default:
-                            throwToast("Error desconocido: " + task.getResult().get("error"));
-                            break;
-                    }//switch
-                } else {
-
-                    HashMap<?, ?> result = task.getResult();
-                    ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("origins");
-                    listOrigins = new ArrayList<>();
-
-                    assert list != null;
-                    for (int i = 0; i < list.size(); ++i) {
-                        Origin origin = new Origin();
-                        origin.setId((String) list.get(i).get("id"));
-                        origin.setName((String) list.get(i).get("name"));
-                        listOrigins.add(origin);
-                    }//for
-
-                    createListView();
-
-                }//else
-            }//onComplete
-        });
-    }//throwEvent
+        adminMainProgress.setVisibility(View.GONE);
+        adminMainLinear.setVisibility(View.VISIBLE);
+    }//removeProgressBar
 
     /**
      *
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.my_recycler_view);
+        RecyclerView recycler = findViewById(R.id.origin_cardview_cardview);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
         RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> adapter = new RecyclerViewAdapterOrigin(listOrigins, user);
@@ -142,20 +137,74 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     /**
      *
+     * @return
+     */
+    private JSONObject buildJson() {
+
+        JSONObject dataUser = new JSONObject();
+        JSONObject dataOrigin = new JSONObject();
+        JSONObject createOrigin = new JSONObject();
+
+        try {
+
+            dataUser.put("email", user.getEmail());
+            dataUser.put("password", user.getPassword());
+            dataOrigin.put("name", adminMainEdit.getText());
+            createOrigin.put("user", dataUser);
+            createOrigin.put("origin", dataOrigin);
+
+        } catch (JSONException e) { throwToast(R.string.err); }
+
+        return createOrigin;
+    }//buildJson
+
+    /**
+     *
+     * @param createOrigin
+     */
+    private void throwEventAddOrigin(JSONObject createOrigin) {
+
+        EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(Event.CREATEORIGIN, createOrigin)
+        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+            @Override
+            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+
+                if (!task.isSuccessful() || task.getResult() == null) {
+
+                    removeProgressBar();
+                    throwToast(R.string.errConexion);
+                } else if (task.getResult().containsKey("error")){
+
+                    removeProgressBar();
+
+                    switch (Objects.requireNonNull(task.getResult().get("error"))) {
+                        case "badRequestForm": throwToast(R.string.errBadFormat); break;
+                        case "originAlreadyExists": throwToast(R.string.errOriginExisit); break;
+                        case "server": throwToast(R.string.errServer); break;
+                    }
+                }
+                else {
+                    Intent logIntent = new Intent(AdminMain.this, OriginMain.class);
+                    startActivity(logIntent);
+                }
+            }
+        });
+    }//throwEvent
+
+    /**
+     *
      * @param msg
      */
-    private void throwToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-    }//throwToast
+    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = findViewById(R.id.admin_main);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
+        else super.onBackPressed();
+
     }//onBackPressed
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -166,10 +215,10 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         if (id == R.id.nav_add_origin) {
 
-            Intent logIntent = new Intent(AdminMain.this, AddOrigin.class);
+            /*Intent logIntent = new Intent(AdminMain.this, AddOrigin.class);
             logIntent.putExtra("user", user);
             startActivity(logIntent);
-            overridePendingTransition(R.anim.left_out, R.anim.left_in);
+            overridePendingTransition(R.anim.left_out, R.anim.left_in);*/
         }
         else if (id == R.id.nav_settings_admin) { }
         else if (id == R.id.nav_signout_admin) { }
@@ -179,4 +228,24 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         return true;
     }//onNavigationItemSelected
+
+    @Override
+    public void onClick(View v) {
+
+        boolean empty = false;
+
+        switch (v.getId()) {
+
+            case R.id.admin_main_content_button:
+                if (adminMainEdit.getText().toString().isEmpty()) empty = true;
+
+                if (!empty) {
+
+                    setProgressBar();
+                    throwEventAddOrigin(buildJson());
+                }
+                else throwToast(R.string.errDataEmpty);
+                break;
+        }
+    }
 }

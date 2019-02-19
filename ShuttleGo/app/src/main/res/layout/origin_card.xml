@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.origin.EditOrigin"
+    tools:context=".activities.origin.OriginMain"
     android:background="@drawable/bg_degraded"
-    android:padding="20dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -32,21 +31,25 @@
 
             <TextView
                 android:id="@+id/name_origin_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="40dp" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:textSize="40dp"
+                android:text="Origen Prueba"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/linear1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginHorizontal="20dp">
 
             <Button
                 android:id="@+id/btn_edit_origin"
                 style="@style/ButtonBigRound"
                 android:textColor="@color/colorPrimary"
+                android:layout_marginTop="230dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/editOrigin"/>
 
@@ -55,7 +58,16 @@
                 style="@style/ButtonDeleteOrigin"
                 android:textColor="@color/colorWhite"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/deleteOrigin"/>
+
+            <Button
+                android:id="@+id/btn_close_origin"
+                style="@style/ButtonBigRound"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/close"/>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

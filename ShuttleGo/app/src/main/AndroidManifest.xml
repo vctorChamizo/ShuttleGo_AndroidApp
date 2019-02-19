@@ -23,8 +23,7 @@
         <activity android:name=".activities.account.LoginActivity" />
         <activity android:name=".activities.account.RegisterActivity" />
         <activity android:name=".activities.person.admin.AdminMain" />
-        <activity android:name=".activities.origin.AddOrigin" />
-        <activity android:name=".activities.origin.EditOrigin" />
+        <activity android:name=".activities.origin.OriginMain" />
         <activity android:name=".activities.person.passenger.PassengerMain" />
         <activity android:name=".activities.person.driver.DriverMain" />
         <activity android:name=".activities.map.MapMain" />
