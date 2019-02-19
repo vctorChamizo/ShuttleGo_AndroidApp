@@ -134,7 +134,7 @@ exports.createRoute = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkUser(data.user,"driver"))
   .then((fullUser)=>{data.route.driver=fullUser.id; return routeSA.createRoute(data.route);}) //the driver must be the user who created the route.
-  .then((id)=>{return {route:{id:id}}},error=>error);
+  .then((id)=>{return {id:id}},error=>error);
 })
 
 /**

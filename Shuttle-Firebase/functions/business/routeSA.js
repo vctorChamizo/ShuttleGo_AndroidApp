@@ -31,11 +31,14 @@ function getRouteById(id){
         }
     })
     .then((driver)=>{
-        routeFin.driver = driver;
+        routeFin.driverName = driver.name;
+        routeFin.driverSurname = driver.surname;
+        routeFin.driverNumber = driver.number;
+        routeFin.driverEmail = driver.email;
         return originDao.getOriginById(routeFin.origin);  
     })
     .then((origin)=>{
-        routeFin.origin = origin;
+        routeFin.origin = origin.name;
         return routeFin;
     })
 }
