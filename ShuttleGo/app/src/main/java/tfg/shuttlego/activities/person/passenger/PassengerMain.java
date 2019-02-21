@@ -10,12 +10,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,12 +45,14 @@ import tfg.shuttlego.R;
 import tfg.shuttlego.activities.map.MapMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.map.Map;
+import tfg.shuttlego.model.transfer.adress.Address;
 import tfg.shuttlego.model.transfer.person.Person;
 
 /**
  *
  */
-public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, View.OnClickListener {
+public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, View.OnClickListener, TextWatcher {
 
     private NavigationView navigationView;
     private Person user;
@@ -59,11 +62,12 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     private LocationComponent locationComponent;
     private ProgressBar passengerMainProgress;
     private LinearLayout passengerMainLinear;
-    private EditText passengerMainDestiny;
+    private AutoCompleteTextView passengerMainDestiny;
     private Button passengerMainButton;
     private AutoCompleteTextView passengerMainOrigin;
     private ArrayList<String> originList;
     private ArrayList<HashMap<?, ?>> originMap;
+    private int numWords;
 
 
     @Override
@@ -90,9 +94,10 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         mapView = findViewById(R.id.passenger_main_content_map);
         passengerMainProgress = findViewById(R.id.passenger_main_content_progress);
         passengerMainLinear = findViewById(R.id.passenger_main_content_linear1);
-        passengerMainDestiny = findViewById(R.id.passenger_main_content_destiny);
+        passengerMainDestiny = findViewById(R.id.passenger_main_content_autocomplete2);
         passengerMainOrigin = findViewById(R.id.passenger_main_content_autocomplete);
         passengerMainButton  = findViewById(R.id.passenger_main_content_button);
+        numWords = 0;
     }//inicializateView
 
     /**
@@ -193,6 +198,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
         mapView.getMapAsync(this);
         passengerMainButton.setOnClickListener(this);
+        passengerMainDestiny.addTextChangedListener(this);
     }//listeners
 
     /**
@@ -303,6 +309,47 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
                 }
                 else throwToast(R.string.errDataEmpty);
                 break;
+        }
+    }
+
+
+
+    // Destiny search bar listener methods
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+        String value = s.toString();
+        PassengerMain aux = this;
+        int newNumWords = value.split(" ").length;
+
+        if(value.matches(".*\\s")) {
+            Map.getInstance(getApplicationContext()).getFullAddress(value).addOnCompleteListener(new OnCompleteListener<List<Address>>() {
+                @Override
+                public void onComplete(@NonNull Task<List<Address>> task) {
+                   List<Address> searchResult = task.getResult();
+                   ArrayList<String> fullAddresses = new ArrayList<String>();
+
+                   for(Address address:searchResult)
+                       fullAddresses.add(address.getAddress());
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(aux, android.R.layout.simple_list_item_1, fullAddresses);
+                    passengerMainDestiny.setThreshold(1);
+                    passengerMainDestiny.setAdapter(adapter);
+                    passengerMainDestiny.showDropDown();
+                }
+            });
+
+            numWords = newNumWords;
         }
     }
 }
