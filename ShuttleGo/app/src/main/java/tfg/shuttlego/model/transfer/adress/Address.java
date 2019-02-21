@@ -1,28 +1,28 @@
 package tfg.shuttlego.model.transfer.adress;
 
 public class Address {
-    private String fullDirection;
+    private String fullAddress;
     private int postalCode;
 
-    public Address(String fullDirection,String postalCode){
-        this.fullDirection = fullDirection;
+    public Address(String fullAddress,String postalCode){
+        this.fullAddress = fullAddress;
         this.postalCode = Integer.parseInt(postalCode);
     }
-    public Address(String fullDirection,int postalCode){
-        this.fullDirection = fullDirection;
+    public Address(String fullAddress,int postalCode){
+        this.fullAddress = fullAddress;
         this.postalCode = postalCode;
     }
 
-    public void setDirection(String direction){
-        this.fullDirection = direction;
+    public void setAddress(String Address){
+        this.fullAddress = Address;
     }
 
     public void setPostaCode(int postalCode){
         this.postalCode = postalCode;
     }
 
-    public String getDirection(){
-        return this.fullDirection;
+    public String getAddress(){
+        return this.fullAddress;
     }
 
     public int getPostalCode() {

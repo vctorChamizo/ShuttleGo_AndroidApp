@@ -61,11 +61,17 @@
                         mapbox:mapbox_cameraTargetLng="-77.0295"
                         mapbox:mapbox_cameraZoom="12" />
 
-                    <EditText
-                        android:id="@+id/passenger_main_content_destiny"
+                    <AutoCompleteTextView
+                        android:id="@+id/passenger_main_content_autocomplete2"
                         style="@style/dataMap"
-                        android:hint="@string/introduceDestiny"
-                        android:theme="@style/ThemeData" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:ems="10"
+                        android:hint="@string/origin"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp" />
+
                 </RelativeLayout>
 
                 <LinearLayout
