@@ -153,8 +153,8 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
 
             case R.id.route_card_close:
 
-                Intent logIntent = new Intent(RouteMain.this, DriverMain.class);
-                startActivity(logIntent);
+                //Intent logIntent = new Intent(RouteMain.this, DriverMain.class);
+                //startActivity(logIntent);
 
                 break;
 
