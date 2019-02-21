@@ -28,6 +28,7 @@ android {
 
 repositories {
     mavenCentral()
+    maven { url 'https://mapbox.bintray.com/mapbox' }
 }
 
 dependencies {
@@ -48,6 +49,8 @@ dependencies {
 
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.7.2'
     implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:4.1.1'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:7.1.2'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation-ui:0.28.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

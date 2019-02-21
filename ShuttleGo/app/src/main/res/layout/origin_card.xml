@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.origin.OriginMain"
+    android:background="@drawable/bg_degraded"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linear_progress"
+        style="@style/LinearProgress">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/ProgressBar" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_origin_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="40dp">
+
+            <TextView
+                android:id="@+id/name_origin_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:textSize="40dp"
+                android:text="Origen Prueba"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linear1"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="20dp">
+
+            <Button
+                android:id="@+id/btn_edit_origin"
+                style="@style/ButtonBigRound"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="230dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/editOrigin"/>
+
+            <Button
+                android:id="@+id/btn_delete_origin"
+                style="@style/ButtonDeleteOrigin"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/deleteOrigin"/>
+
+            <Button
+                android:id="@+id/btn_close_origin"
+                style="@style/ButtonBigRound"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/close"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,35 @@
+\babel@toc {spanish}{}
+\contentsline {chapter}{Resumen}{\es@scroman {v}}{chapter*.1}% 
+\contentsline {chapter}{\numberline {1}Introducci\'on}{1}{chapter.1}% 
+\contentsline {section}{\numberline {1.1}Introducci\'on}{1}{section.1.1}% 
+\contentsline {section}{Notas bibliogr\'aficas}{1}{section.1.1}% 
+\contentsline {section}{En el pr\'oximo cap\IeC {\'\i }tulo}{1}{section.1.1}% 
+\contentsline {chapter}{\numberline {2}Motivaci\'on}{3}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Introducci\'on}{3}{section.2.1}% 
+\contentsline {section}{Notas bibliogr\'aficas}{3}{section.2.1}% 
+\contentsline {section}{En el pr\'oximo cap\IeC {\'\i }tulo}{3}{section.2.1}% 
+\contentsline {chapter}{\numberline {3}Estado de arte}{5}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Introducci\'on}{5}{section.3.1}% 
+\contentsline {section}{Notas bibliogr\'aficas}{5}{section.3.1}% 
+\contentsline {section}{En el pr\'oximo cap\IeC {\'\i }tulo}{5}{section.3.1}% 
+\contentsline {chapter}{\numberline {4}Arquitectura}{7}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Introducci\'on}{7}{section.4.1}% 
+\contentsline {section}{\numberline {4.2}Arquitectura general de la aplicaci\'on}{7}{section.4.2}% 
+\contentsline {section}{\numberline {4.3}Arquitectura del cliente}{8}{section.4.3}% 
+\contentsline {section}{\numberline {4.4}Arquitectura del servidor}{8}{section.4.4}% 
+\contentsline {section}{Notas bibliogr\'aficas}{9}{Item.3}% 
+\contentsline {section}{En el pr\'oximo cap\IeC {\'\i }tulo}{9}{Item.3}% 
+\contentsline {chapter}{\numberline {5}Tecnolog\IeC {\'\i }a empleada}{11}{chapter.5}% 
+\contentsline {section}{\numberline {5.1}Introducci\'on}{11}{section.5.1}% 
+\contentsline {section}{\numberline {5.2}Cliente}{11}{section.5.2}% 
+\contentsline {section}{\numberline {5.3}Servidor}{11}{section.5.3}% 
+\contentsline {section}{Notas bibliogr\'aficas}{11}{section.5.3}% 
+\contentsline {section}{En el pr\'oximo cap\IeC {\'\i }tulo}{12}{section.5.3}% 
+\contentsline {chapter}{\numberline {6}Casos de Uso}{13}{chapter.6}% 
+\contentsline {section}{\numberline {6.1}introducci\'on}{13}{section.6.1}% 
+\contentsline {section}{Notas bibliogr\'aficas}{13}{section.6.1}% 
+\contentsline {section}{En el pr\'oximo cap\IeC {\'\i }tulo}{13}{section.6.1}% 
+\contentsline {part}{I\hspace {1em}Ap\'endices}{15}{part.1}% 
+\contentsline {chapter}{\numberline {A}As\IeC {\'\i } se hizo...}{17}{appendix.Alph1}% 
+\contentsline {section}{\numberline {A.1}Introducci\'on}{17}{section.Alph1.1}% 
+\contentsline {part}{Bibliograf\IeC {\'\i }a}{19}{appendix*.6}% 

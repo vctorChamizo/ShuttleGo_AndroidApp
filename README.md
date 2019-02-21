@@ -27,6 +27,7 @@
 
 ### Otros:
 ##### Turorial Markdown: https://markdown.es/
+##### Tutorial Latex: http://gaia.fdi.ucm.es/files/research/texis/nightlybuilds/TeXiS-Manual-NightlyBuild.pdf
 
 
 ## Guia de estilo

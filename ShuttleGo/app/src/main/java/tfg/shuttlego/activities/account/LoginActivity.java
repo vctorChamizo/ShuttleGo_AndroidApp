@@ -17,13 +17,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.admin.AdminMain;
-import tfg.shuttlego.activities.driver.DriverMain;
-import tfg.shuttlego.activities.passenger.PassengerMain;
-import tfg.shuttlego.model.events.Event;
-import tfg.shuttlego.model.events.EventDispatcher;
-import tfg.shuttlego.model.transfers.person.Person;
-import tfg.shuttlego.model.transfers.person.TypePerson;
+import tfg.shuttlego.activities.person.admin.AdminMain;
+import tfg.shuttlego.activities.person.driver.DriverMain;
+import tfg.shuttlego.activities.person.passenger.PassengerMain;
+import tfg.shuttlego.model.event.Event;
+import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.transfer.person.Person;
+import tfg.shuttlego.model.transfer.person.TypePerson;
 
 /**
  * Control the login of the application.
@@ -31,11 +31,11 @@ import tfg.shuttlego.model.transfers.person.TypePerson;
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ProgressBar pBar;
-    private RelativeLayout relFormLogin;
+    private ProgressBar loginProgress;
+    private RelativeLayout loginRelative;
     private EditText emailText, passwordText;
     private Button signupButton, signInButton;
-    private String email, name, surname, password, type;
+    private String email, name, surname, password, type, id;
     private int phone;
     private TypePerson typePerson;
     private Class nextClass;
@@ -43,25 +43,51 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_main);
+        setContentView(R.layout.main_login);
 
         inicializateView();
-
-        signupButton.setOnClickListener(this);
-        signInButton.setOnClickListener(this);
+        listeners();
     }
 
     /**
      *
      */
     private void inicializateView() {
-        relFormLogin = findViewById(R.id.relative_form_login);
-        pBar = findViewById(R.id.progress);
+
+        loginRelative = findViewById(R.id.relative_form_login);
+        loginProgress = findViewById(R.id.progress);
         emailText = findViewById(R.id.email_login);
         passwordText = findViewById(R.id.password_login);
         signupButton = findViewById(R.id.btn_signup_login);
         signInButton = findViewById(R.id.btn_signin_login);
     }//inicializateView
+
+    /**
+     *
+     */
+    private void listeners() {
+
+        signupButton.setOnClickListener(this);
+        signInButton.setOnClickListener(this);
+    }//listeners
+
+    /**
+     *
+     */
+    private void setProgressBar () {
+
+        loginProgress.setVisibility(View.VISIBLE);
+        loginRelative.setVisibility(View.GONE);
+    }//setProgressBar
+
+    /**
+     *
+     */
+    private void removeProgressBar () {
+
+        loginProgress.setVisibility(View.GONE);
+        loginRelative.setVisibility(View.VISIBLE);
+    }//removeProgressBar
 
     /**
      *
@@ -80,18 +106,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             json.put("password", password);
             user.put("user", json);
 
-        } catch (JSONException e) {
-            throwToast("ERROR. Vuelva a intentarlo");
-        }
+        } catch (JSONException e) { throwToast(R.string.err); }
 
         return user;
-    }//makeJson
+    }//buildJson
 
     /**
      *
      * @param data
      */
-    private void throwEvent(JSONObject data) {
+    private void throwEventLoginUser(JSONObject data) {
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.SIGNIN, data)
@@ -100,92 +124,73 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onComplete(@NonNull Task<HashMap<String, String>> task) {
 
                 if (!task.isSuccessful() || task.getResult() == null) {
-                    changeVisibility(pBar, relFormLogin);
-                    throwToast("Error de conexion");
+
+                    removeProgressBar();
+                    throwToast(R.string.errConexion);
                 }
                 else if (task.getResult().containsKey("error")) {
 
-                    changeVisibility(pBar, relFormLogin);
+                    removeProgressBar();
 
                     switch (Objects.requireNonNull(task.getResult().get("error"))) {
-
-                        case "incorrectSignin":
-                        case "userDoesntExists":
-                            throwToast("Usuario/contraseña incorrecto");
-                            break;
-
-                        case "server":
-                            throwToast("Error del servidor");
-                            break;
-
-                        default:
-                            throwToast("Error desconocido: " + task.getResult().get("error"));
-                            break;
-                    }//switch
-
-                }// else if
+                        case "incorrectSignin": throwToast(R.string.errIncorrectSignin); break;
+                        case "userDoesntExists": throwToast(R.string.errUserDontExist); break;
+                        case "server": throwToast(R.string.errServer);break;
+                    }
+                }
                 else {
 
-                    HashMap<String, ?> p = task.getResult();
-
-                    email = Objects.requireNonNull(p.get("email")).toString();
-                    password = Objects.requireNonNull(p.get("password")).toString();
-                    name = Objects.requireNonNull(p.get("name")).toString();
-                    surname = Objects.requireNonNull(p.get("surname")).toString();
-                    type = Objects.requireNonNull(p.get("type")).toString();
-                    phone = Integer.parseInt(Objects.requireNonNull(p.get("number")).toString());
-
-                    parserTypePerson();
-                    Person user = new Person(email, password, name, surname, phone, typePerson);
+                    Person user = parserTypePerson(task.getResult());
 
                     Intent logIntent = new Intent(LoginActivity.this, nextClass);
                     logIntent.putExtra("user", user);
                     startActivity(logIntent);
                 }
-            }//onComplete
-
-            /**
-             *
-             */
-            private void parserTypePerson() {
-
-                switch (type) {
-                    case "passenger":
-                        typePerson = TypePerson.USER;
-                        nextClass = PassengerMain.class;
-                        break;
-
-                    case "driver":
-                        typePerson = TypePerson.DRIVER;
-                        nextClass = DriverMain.class;
-                        break;
-
-                    default:
-                        typePerson = TypePerson.ADMIN;
-                        nextClass = AdminMain.class;
-                        break;
-                }//switch
             }
         });
-    }//throwEvent
+    }//throwEventLoginUser
 
     /**
      *
-     * @param vGone
-     * @param vVisible
+     * @param p
+     * @return
      */
-    private void changeVisibility(View vGone, View vVisible) {
-        vGone.setVisibility(View.GONE);
-        vVisible.setVisibility(View.VISIBLE);
-    }//changeVisibility
+    private Person parserTypePerson (HashMap<String, ?> p) {
+
+        email = Objects.requireNonNull(p.get("email")).toString();
+        password = Objects.requireNonNull(p.get("password")).toString();
+        name = Objects.requireNonNull(p.get("name")).toString();
+        surname = Objects.requireNonNull(p.get("surname")).toString();
+        type = Objects.requireNonNull(p.get("type")).toString();
+        phone = Integer.parseInt(Objects.requireNonNull(p.get("number")).toString());
+        id = Objects.requireNonNull(p.get("id")).toString();
+
+        switch (type) {
+
+            case "passenger":
+                typePerson = TypePerson.USER;
+                nextClass = PassengerMain.class;
+                break;
+
+            case "driver":
+                typePerson = TypePerson.DRIVER;
+                nextClass = DriverMain.class;
+                break;
+
+            default:
+                typePerson = TypePerson.ADMIN;
+                nextClass = AdminMain.class;
+                break;
+        }//switch
+
+        return new Person(email, password, name, surname, phone, typePerson, id);
+    }//parserTypePerson
 
     /**
      *
      * @param msg
      */
-    private void throwToast(String msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-    }//throwToast
+    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void onClick(View v) {
@@ -193,26 +198,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         boolean empty = false;
 
         switch (v.getId()) {
+
             case R.id.btn_signup_login:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 overridePendingTransition(R.anim.right_in, R.anim.right_out);
                 break;
 
             case R.id.btn_signin_login:
-
                 if (emailText.getText().toString().isEmpty()) empty = true;
                 if (passwordText.getText().toString().isEmpty()) empty = true;
 
                 if (!empty) {
-                    changeVisibility(relFormLogin, pBar);
-                    JSONObject user = buildJson();
-                    throwEvent(user);
-                }
-                else throwToast("Introduzca todos los datos");
-                break;
 
-            default:
+                    setProgressBar();
+                    JSONObject user = buildJson();
+                    throwEventLoginUser(user);
+                }
+                else throwToast(R.string.errDataEmpty);
+
                 break;
         }//switch
-    }//onClick
+    }
 }

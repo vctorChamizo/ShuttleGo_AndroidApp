@@ -12,11 +12,27 @@ const db = require("./database.js");
 function getUser(email){
     return db.collection("persons").where("email", "==", email).get()
     .then((snapshot) => {
-        if(snapshot.docs.length > 0) return snapshot.docs[0].data();
+        if(snapshot.docs.length > 0){
+            let result = snapshot.docs[0].data();
+            result.id = snapshot.docs[0].id;
+            return result;
+        }
         else return null;},
     (err)=>{throw ERROR.server })
 }//getUser
 
+function getUserById(id){
+    return db.collection("persons").doc(id).get()
+    .then((snapshot)=>{
+        if(!snapshot.exists)
+            return null;
+        else{
+            let user = snapshot.data();
+            user.id = snapshot.id;
+            return user;
+        };
+    },error=>{throw ERROR.server});
+}
 /**
  * @description Insert a new user in the database.
  * @param {Object} newUser  new user data
@@ -34,5 +50,6 @@ function insertUser(newUser){
 
 module.exports = {
     getUser: getUser,
-    insertUser: insertUser
+    insertUser: insertUser,
+    getUserById:getUserById
 }

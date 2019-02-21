@@ -7,20 +7,29 @@ const functions = require('firebase-functions');
 const personSA = require("./business/personSA");
 const originSA = require("./business/originSA");
 const ERROR = require("./errors");
+const routeSA = require("./business/routeSA");
 
 
 
-/* DATA IN EXAMPLES
+/* DATA EXAMPLES
     
     ** ACCOUNT **
       - SIGNIN: signin({user:{email:"jose@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
       - SIGNUP: signup({user:{surname:"ramirez",number:123,email:"joos@gmil.com",password:"123",type:"driver",name:"jose"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** ORIGIN **
+      - GETORIGINBYNAME: getOriginByName({origin:{name:"nombre"}}, {headers: {Authorization: 'Bearer $token'}});
+      - GETALLORIGINS: getAllOrigins({}, {headers: {Authorization: 'Bearer $token'}});
       - GETORIGINBYID: getOriginById({origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
       - DELETEORIGIN: deleteOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
       - CREATEORIGIN: createOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{name:"Barajas T5"}}, {headers: {Authorization: 'Bearer $token'}});
       - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
+    
+    ** Route **
+      - GETROUTEBYID: getRouteById({route:{id:"..."}}, {headers: {Authorization: 'Bearer $token'}});
+      - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
+      - SEARCHROUTE: searchRoute({route:{destination:"28008",origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
+      - ADDTOROUTE: addToRoute({address:"passenger address",route:{id:"7ptW7eHRPqtoaHL4SWae"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
 */
 
 
@@ -55,10 +64,10 @@ exports.signup = functions.https.onCall((data, context)=>{
 /*---------------- ORIGIN Functions ---------------*/
 /**
  * @description Get a list of id and name origins.
- * @returns {Promise} A promise that return a list of route names.
+ * @returns {Promise} A promise that return a list of origins.
  */
 exports.getAllOrigins = functions.https.onCall((data,context)=>{
-  return originSA.getAllOrigins()
+  return originSA.getAllOrigins() 
   .then(result=>{return {origins:result}},error=>error);
 })
 
@@ -109,14 +118,57 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>{return {created:true}},error=>error);
 })
 
+exports.getOriginByName = functions.https.onCall((data,context)=>{
+  return checkData(data)
+  .then(()=>checkData(data.origin))
+  .then(()=>checkData(data.origin.name))
+  .then(()=>originSA.getOriginByName(data.origin.name))
+  .then((origin)=>origin,error=>error);
+})
+/*---------------- ROUTE Functions ---------------*/
+/**
+ * 
+ */
 exports.createRoute = functions.https.onCall((data,conext)=>{
   return checkData(data)
+  .then(()=>checkData(data.route))
   .then(()=>checkUser(data.user,"driver"))
-  .then(()=>checkData(data.route)
-  .then(()=>
+  .then((fullUser)=>{data.route.driver=fullUser.id; return routeSA.createRoute(data.route);}) //the driver must be the user who created the route.
+  .then((id)=>{return {id:id}},error=>error);
 })
 
+/**
+ * 
+ */
+exports.searchRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkData(data.route.origin))
+  .then(()=>checkData(data.route.destination))
+  .then(()=>checkData(data.route.address))
+  .then(()=>routeSA.searchRoutes(data.route.origin,data.route.destination))
+  .then((routes)=>routes,(error)=>error);
+})
 
+/**
+ * 
+ */
+exports.addToRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkData(data.address))
+  .then(()=>checkUser(data.user))
+  .then(()=>routeSA.addToRoute(data.user,data.route,data.address))
+  .then(()=>{return {added:true}},(error => error));
+});
+
+exports.getRouteById = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkData(data.route.id))
+  .then(()=>routeSA.getRouteById(data.route.id))
+  .then((route)=>route,error=>error);
+})
 /*---------------- PRIVATE Functions ---------------*/
 /**
  * @description Avoid internal null errors, it should be called at the first line of all exported functions.
@@ -139,9 +191,6 @@ function checkOrigin(origin){
     else resolve();
   });
 }//checkOrigin
-
-
-
 
 /**
  * @description Checks if an user exists and the type if it is indicated.

@@ -24,7 +24,9 @@ const errors = {
     originAlreadyExists:{error:"originAlreadyExists"},      //The origin you are trying to register already exists in the db. (Checks the name)
 
     /* Routes */
-    routeDoesntExists:{error:"routeDoesntExists"}
+    routeDoesntExists:{error:"routeDoesntExists"},          //The route you are trying to get doesnt exists.
+    routeSoldOut:{error:"routeSoldOut"},                    //The bus is full.
+    userAlreadyAdded:{error:"userAlreadyAdded"}             //The user was already added to the route.
 }
 
 module.exports = errors;

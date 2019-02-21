@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:mapbox="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_degraded">
+
+    <LinearLayout
+        style="@style/LinearProgress">
+
+        <ProgressBar
+            android:id="@+id/passenger_main_content_progress"
+            style="@style/ProgressBar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/passenger_main_content_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="Pasajero"/>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <ScrollView
+            android:id="@+id/passenger_main_content_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/passenger_main_content_relative1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/passenger_main_content_realtive2"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@color/colorPrimaryTranslucent">
+
+                    <com.mapbox.mapboxsdk.maps.MapView
+                        android:id="@+id/passenger_main_content_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        mapbox:mapbox_cameraTargetLat="38.9098"
+                        mapbox:mapbox_cameraTargetLng="-77.0295"
+                        mapbox:mapbox_cameraZoom="12" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/passenger_main_content_autocomplete2"
+                        style="@style/dataMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:ems="10"
+                        android:hint="@string/origin"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/passenger_main_content_linear2"
+                    android:layout_below="@+id/passenger_main_content_realtive2"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="20dp"
+                    style="@style/VerticalLinear">
+
+                    <TextView
+                        android:id="@+id/passenger_main_content_text"
+                        style="@style/SubTittleDriveMain"
+                        android:textAlignment="textStart"
+                        android:hint="@string/origin"
+                        android:text="@string/addOriginToRoute" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/passenger_main_content_autocomplete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:hint="@string/origin"
+                        android:ems="10"
+                        style="@style/DataLogin"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/passenger_main_content_button"
+                    android:layout_below="@+id/passenger_main_content_linear2"
+                    android:text="@string/searchRoute"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginHorizontal="20dp"
+                    style="@style/ButtonBigRound"/>
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

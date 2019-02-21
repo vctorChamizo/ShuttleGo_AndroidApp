@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".activities.account.LoginActivity"
+    android:background="@drawable/bg_degraded" >
+
+    <!---<ImageView
+     android:id="@+id/login_bg"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:scaleType="centerCrop"
+     app:srcCompat="@drawable/background" /> -->
+
+    <LinearLayout
+        android:id="@+id/linear_progress"
+        style="@style/LinearProgress">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/ProgressBar" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_form_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tittle_login"
+            android:text="@string/app_name"
+            style="@style/TittleApp"/>
+
+        <TextView
+            android:id="@+id/subtittle_login"
+            android:layout_below="@+id/tittle_login"
+            android:text="@string/subTittle"
+            style="@style/SubTittleApp"/>
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_below="@+id/subtittle_login"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="15dp"
+            style="@style/VerticalLinear">
+
+            <EditText
+                android:id="@+id/email_login"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                style="@style/DataLogin"
+                android:theme="@style/ThemeData" />
+
+            <EditText
+                android:id="@+id/password_login"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                style="@style/DataLogin"
+                android:theme="@style/ThemeData" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            style="@style/VerticalLinear"
+            android:layout_below="@+id/linear1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="60dp">
+
+            <Button
+                android:id="@+id/btn_signin_login"
+                style="@style/ButtonBigRound"
+                android:text="@string/signin"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linear2"
+            android:layout_marginTop="30dp">
+
+            <Button
+                android:id="@+id/btn_signup_login"
+                style="@style/SecondaryButtonLogin"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/signup" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
