@@ -64,6 +64,7 @@ public class EventDispatcher {
             case CREATEROUTE: return throwEvent("createRoute", data);
             case SEARCHROUTE: return throwEvent("searchRoute", data);
             case ADDTOROUTE: return throwEvent("addRoute", data);
+            case GETROUTEBYID: return throwEvent("getRouteById", data);
         }
 
         return null;

@@ -18,5 +18,6 @@ public enum Event {
     /* ROUTE */
     CREATEROUTE,
     SEARCHROUTE,
-    ADDTOROUTE
+    ADDTOROUTE,
+    GETROUTEBYID
 }
