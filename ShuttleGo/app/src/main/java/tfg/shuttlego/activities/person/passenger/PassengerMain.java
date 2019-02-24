@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -27,6 +28,10 @@ import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.camera.CameraUpdate;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
@@ -46,13 +51,13 @@ import tfg.shuttlego.activities.map.MapMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.map.Map;
-import tfg.shuttlego.model.transfer.adress.Address;
+import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
 
 /**
  *
  */
-public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, View.OnClickListener, TextWatcher {
+public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, View.OnClickListener, TextWatcher, AdapterView.OnItemClickListener {
 
     private NavigationView navigationView;
     private Person user;
@@ -68,6 +73,8 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     private ArrayList<String> originList;
     private ArrayList<HashMap<?, ?>> originMap;
     private int numWords;
+    private boolean destinySelected;
+    private List<Address> searchResult;
 
 
     @Override
@@ -85,7 +92,41 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         throwEventGerAllOrigins();
         listeners();
     }
+    @Override
+    protected  void onStart(){
+        super.onStart();
+        mapView.onStart();
+    }
 
+    @Override
+    protected void onPause(){
+        mapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop(){
+        mapView.onStop();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy(){
+        mapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    protected void onResume(){
+        mapView.onResume();
+        super.onResume();
+    }
     /**
      *
      */
@@ -98,6 +139,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         passengerMainOrigin = findViewById(R.id.passenger_main_content_autocomplete);
         passengerMainButton  = findViewById(R.id.passenger_main_content_button);
         numWords = 0;
+        destinySelected = false;
     }//inicializateView
 
     /**
@@ -199,6 +241,8 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         mapView.getMapAsync(this);
         passengerMainButton.setOnClickListener(this);
         passengerMainDestiny.addTextChangedListener(this);
+        passengerMainDestiny.setOnClickListener(this);
+        passengerMainDestiny.setOnItemClickListener(this);
     }//listeners
 
     /**
@@ -312,6 +356,17 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         }
     }
 
+    private void moveMap(List<Double> coordinates) {
+        CameraPosition cp = new CameraPosition.Builder()
+                .target(new LatLng(coordinates.get(1), coordinates.get(0)))
+                .zoom(17)
+                .tilt(20)
+                .build();
+
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
+        this.mapboxMap.addMarker(new MarkerOptions()
+                .position(new LatLng(coordinates.get(1), coordinates.get(0))));
+    }
 
 
     // Destiny search bar listener methods
@@ -328,28 +383,44 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     @Override
     public void afterTextChanged(Editable s) {
 
-        String value = s.toString();
-        PassengerMain aux = this;
-        int newNumWords = value.split(" ").length;
+        if(destinySelected) destinySelected = false; //avoid an infinite loop.
+        else {
+            String value = s.toString();
+            PassengerMain aux = this;
+            int newNumWords = value.split(" ").length;
 
-        if(value.matches(".*\\s")) {
-            Map.getInstance(getApplicationContext()).getFullAddress(value).addOnCompleteListener(new OnCompleteListener<List<Address>>() {
-                @Override
-                public void onComplete(@NonNull Task<List<Address>> task) {
-                   List<Address> searchResult = task.getResult();
-                   ArrayList<String> fullAddresses = new ArrayList<String>();
+            if (value.matches(".*\\s")) {
+                Map.getInstance(getApplicationContext()).getFullAddress(value).addOnCompleteListener(new OnCompleteListener<List<Address>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<Address>> task) {
+                        searchResult = task.getResult();
+                        ArrayList<String> fullAddresses = new ArrayList<String>();
 
-                   for(Address address:searchResult)
-                       fullAddresses.add(address.getAddress());
+                        for (Address address : searchResult)
+                            fullAddresses.add(address.getAddress());
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(aux, android.R.layout.simple_list_item_1, fullAddresses);
-                    passengerMainDestiny.setThreshold(1);
-                    passengerMainDestiny.setAdapter(adapter);
-                    passengerMainDestiny.showDropDown();
-                }
-            });
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(aux, android.R.layout.simple_list_item_1, fullAddresses);
+                        passengerMainDestiny.setThreshold(1);
+                        passengerMainDestiny.setAdapter(adapter);
+                        passengerMainDestiny.showDropDown();
+                    }
+                });
 
-            numWords = newNumWords;
+                numWords = newNumWords;
+            }
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        destinySelected=true;
+
+        int i = 0;
+        String text = passengerMainDestiny.getText().toString();
+        while(i<searchResult.size() && !searchResult.get(i).getAddress().equals(text)) i++;
+
+        if(i>=searchResult.size()) throwToast(R.string.errDestinyNotExisit);
+        else moveMap(searchResult.get(i).getCoordinates());
+
     }
 }

@@ -26,6 +26,7 @@
     <string name="errBadFormat">Formato de datos incorrecto</string>
     <string name="errUserExisit">El usuario ya existe</string>
     <string name="errOriginExisit">El origen ya existe</string>
+    <string name="errDestinyNotExisit">El destino no existe</string>
 
 
     <!-- **************************  Drawer Menu  **************************** -->
@@ -89,6 +90,7 @@
     <!-- *********************  Admin Menu Drawer  *************************** -->
     <string name="origin">Origen</string>
     <string name="addOrigin">Añadir origen</string>
+
 
 
     <!--***********************************************************************-->

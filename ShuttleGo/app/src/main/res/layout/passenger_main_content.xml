@@ -85,7 +85,7 @@
                         android:id="@+id/passenger_main_content_text"
                         style="@style/SubTittleDriveMain"
                         android:textAlignment="textStart"
-                        android:hint="@string/origin"
+                        android:hint="@string/introduceDestiny"
                         android:text="@string/addOriginToRoute" />
 
                     <AutoCompleteTextView

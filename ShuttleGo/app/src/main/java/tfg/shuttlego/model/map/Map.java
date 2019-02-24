@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
-import com.mapbox.api.geocoding.v5.GeocodingCriteria;
 import com.mapbox.api.geocoding.v5.MapboxGeocoding;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
@@ -12,12 +11,13 @@ import com.mapbox.mapboxsdk.Mapbox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.transfer.adress.Address;
+import tfg.shuttlego.model.transfer.address.Address;
 
 public class Map {
 
@@ -47,7 +47,7 @@ public class Map {
         MapboxGeocoding query = MapboxGeocoding.builder()
                 .accessToken(Map.accessToken)
                 .query(address)
-                .geocodingTypes(GeocodingCriteria.TYPE_ADDRESS,GeocodingCriteria.TYPE_POSTCODE) //esto se puede cambiar
+                .languages("es")
                 .build();
 
         query.enqueueCall(new Callback<GeocodingResponse>() {
@@ -60,9 +60,9 @@ public class Map {
 
                 for(CarmenFeature result:results) {
                     postalCode="";
-                    for (int i = 0; postalCode.equals("") && i < result.context().size(); i++)
+                    for (int i = 0; postalCode.equals("") && result.context()!=null && i < result.context().size(); i++)
                         if (result.context().get(i).id().matches("postcode.*"))
-                            addresses.add(new Address(result.placeName(),result.context().get(i).text()));
+                            addresses.add(new Address(result.placeName(),result.context().get(i).text(),result.center()));
                 }
 
                 taskCompletionSource.setResult(addresses);
