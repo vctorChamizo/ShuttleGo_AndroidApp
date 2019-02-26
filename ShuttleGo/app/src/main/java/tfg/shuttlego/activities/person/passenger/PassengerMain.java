@@ -39,6 +39,8 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -53,6 +55,8 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.map.Map;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
+
+import static tfg.shuttlego.model.event.Event.SEARCHROUTE;
 
 /**
  *
@@ -75,6 +79,8 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     private int numWords;
     private boolean destinySelected;
     private List<Address> searchResult;
+    private HashMap<String,String> originIds;
+    private Address destination;
 
 
     @Override
@@ -205,8 +211,12 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
                     HashMap<?, ?> result = task.getResult();
                     originMap = (ArrayList<HashMap<?, ?>>) result.get("origins");
                     originList = new ArrayList<String>();
+                    originIds = new HashMap<String, String>();
+                    for (HashMap<?, ?> l : originMap){
+                        originList.add((String) l.get("name"));
+                        originIds.put((String)l.get("name"),(String)l.get("id"));
 
-                    for (HashMap<?, ?> l : originMap) originList.add((String) l.get("name"));
+                    }
 
                     setAutoCompleteTextView();
                     removeProgressBar();
@@ -229,8 +239,14 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
      *
      * @return
      */
-    private JSONObject buildJson() {
-        return null;
+    private JSONObject buildJson(String origin,String destiny) throws JSONException { ;
+        JSONObject route = new JSONObject();
+        route.put("origin",origin);
+        route.put("destination",destiny);
+
+        JSONObject r = new JSONObject();
+        r.put("route",route);
+        return r;
     }//buildJson
 
     /**
@@ -349,11 +365,36 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
                 if (!empty) {
 
                     setProgressBar();
-                    JSONObject route = buildJson();
+                    try {
+                        throwEventSearchRoute(buildJson(originIds.get(passengerMainOrigin.getText().toString()),destination.getPostalCode()));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else throwToast(R.string.errDataEmpty);
                 break;
         }
+    }
+
+    private void throwEventSearchRoute(JSONObject jsonObject) {
+        EventDispatcher.getInstance(getApplicationContext()).dispatchEvent(SEARCHROUTE,jsonObject).addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
+            @Override
+            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+                if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
+                else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
+                else {
+                    Intent logIntent = new Intent(PassengerMain.this, PassengerSearchResult.class);
+                    HashMap<?,?> result= task.getResult();
+                    ArrayList<?> list = (ArrayList<?>) result.get("routes");
+                    logIntent.putExtra("destination",destination);
+                    logIntent.putExtra("routes", list);
+
+                    startActivity(logIntent);
+
+                }//else
+            }
+        });
     }
 
     private void moveMap(List<Double> coordinates) {
@@ -420,7 +461,10 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         while(i<searchResult.size() && !searchResult.get(i).getAddress().equals(text)) i++;
 
         if(i>=searchResult.size()) throwToast(R.string.errDestinyNotExisit);
-        else moveMap(searchResult.get(i).getCoordinates());
+        else {
+            this.destination=searchResult.get(i);
+            moveMap(searchResult.get(i).getCoordinates());
+        }
 
     }
 }

@@ -2,19 +2,20 @@ package tfg.shuttlego.model.transfer.address;
 
 import com.mapbox.geojson.Point;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Address {
+public class Address implements Serializable {
     private String fullAddress;
-    private int postalCode;
+    private String postalCode;
     private Point point;
 
     public Address(String fullAddress, String postalCode, Point point){
         this.fullAddress = fullAddress;
-        this.postalCode = Integer.parseInt(postalCode);
+        this.postalCode = postalCode;
         this.point = point;
     }
-    public Address(String fullAddress,int postalCode){
+    public Address(String fullAddress,String postalCode){
         this.fullAddress = fullAddress;
         this.postalCode = postalCode;
     }
@@ -23,7 +24,7 @@ public class Address {
         this.fullAddress = Address;
     }
 
-    public void setPostaCode(int postalCode){
+    public void setPostalCode(String postalCode){
         this.postalCode = postalCode;
     }
 
@@ -31,7 +32,7 @@ public class Address {
         return this.fullAddress;
     }
 
-    public int getPostalCode() {
+    public String getPostalCode() {
         return postalCode;
     }
 
