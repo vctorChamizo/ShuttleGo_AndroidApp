@@ -1,6 +1,8 @@
 package tfg.shuttlego.model.transfer.route;
 
-public class Route {
+import java.io.Serializable;
+
+public class Route implements Serializable {
 
     private int destination, max;
     private String driver, origin;

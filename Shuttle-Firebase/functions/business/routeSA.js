@@ -44,6 +44,7 @@ function getRouteById(id){
 }
 
 function searchRoutes(origin,destination){
+    destination = Number(destination);
     return routeDao.getRoutesByOriginAndDestination(origin,destination);
 }
 

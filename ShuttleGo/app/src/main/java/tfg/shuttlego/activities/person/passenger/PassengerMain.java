@@ -55,6 +55,7 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.map.Map;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
+import tfg.shuttlego.model.transfer.route.Route;
 
 import static tfg.shuttlego.model.event.Event.SEARCHROUTE;
 
@@ -81,6 +82,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     private List<Address> searchResult;
     private HashMap<String,String> originIds;
     private Address destination;
+    private String originName;
 
 
     @Override
@@ -366,6 +368,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
                     setProgressBar();
                     try {
+                        this.originName = passengerMainOrigin.getText().toString();
                         throwEventSearchRoute(buildJson(originIds.get(passengerMainOrigin.getText().toString()),destination.getPostalCode()));
 
                     } catch (JSONException e) {
@@ -386,15 +389,27 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
                 else {
                     Intent logIntent = new Intent(PassengerMain.this, PassengerSearchResult.class);
                     HashMap<?,?> result= task.getResult();
-                    ArrayList<?> list = (ArrayList<?>) result.get("routes");
-                    logIntent.putExtra("destination",destination);
-                    logIntent.putExtra("routes", list);
+                    ArrayList<HashMap<?,?>> list = (ArrayList<HashMap<?,?>>) result.get("routes");
+                    ArrayList<Route> RouteList = routesParser(list);
+                    logIntent.putExtra("userAddress",destination);
+                    logIntent.putExtra("routes", RouteList);
+                    logIntent.putExtra("originName",originName);
 
                     startActivity(logIntent);
 
                 }//else
             }
         });
+    }
+
+    private ArrayList<Route> routesParser(ArrayList<HashMap<?,?>>routes){
+
+        ArrayList<Route> r = new ArrayList<Route>();
+
+        for(HashMap<?,?> route:routes)
+            r.add(new Route((String)route.get("origin"),(Integer) route.get("destination"),(String)route.get("driver"),(Integer)route.get("max")));
+
+        return r;
     }
 
     private void moveMap(List<Double> coordinates) {
