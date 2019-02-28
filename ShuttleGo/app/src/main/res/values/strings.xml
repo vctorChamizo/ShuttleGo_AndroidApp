@@ -102,6 +102,7 @@
     <!-- **********************  Passenger Main  **************************** -->
     <string name="introduceDestiny">Introduce un destino</string>
     <string name="searchRoute">Buscar trayecto</string>
+    <string name="destination">Destino</string>
     <!--***********************************************************************-->
 
     <!-- *******************  Passenger Menu Drawer  ************************* -->

@@ -6,6 +6,8 @@ public class Route implements Serializable {
 
     private int destination, max;
     private String driver, origin;
+    private int passengersNumber;
+    private String id;
 
     public Route (String origin, int destination, String driver, int max) {
 
@@ -14,6 +16,16 @@ public class Route implements Serializable {
         this.driver = driver;
         this.max = max;
 
+    }
+
+    public Route (String id,String origin, int destination, String driver, int max, int passengersNumber) {
+
+        this.origin = origin;
+        this.destination = destination;
+        this.driver = driver;
+        this.max = max;
+        this.passengersNumber = passengersNumber;
+        this.id = id;
     }
 
     public String getOrigin() {
@@ -43,4 +55,6 @@ public class Route implements Serializable {
     public void setPhone(int max) {
         this.max = max;
     }
+    
+    public int getPassengersNumber(){return this.passengersNumber;};
 }
