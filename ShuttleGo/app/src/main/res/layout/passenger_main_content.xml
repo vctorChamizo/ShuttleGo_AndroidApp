@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:ems="10"
-                        android:hint="@string/origin"
+                        android:hint="@string/destination"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp" />
 
@@ -85,7 +85,7 @@
                         android:id="@+id/passenger_main_content_text"
                         style="@style/SubTittleDriveMain"
                         android:textAlignment="textStart"
-                        android:hint="@string/origin"
+                        android:hint="@string/introduceDestiny"
                         android:text="@string/addOriginToRoute" />
 
                     <AutoCompleteTextView

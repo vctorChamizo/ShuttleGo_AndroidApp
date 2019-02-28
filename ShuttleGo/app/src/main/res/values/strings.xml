@@ -26,6 +26,7 @@
     <string name="errBadFormat">Formato de datos incorrecto</string>
     <string name="errUserExisit">El usuario ya existe</string>
     <string name="errOriginExisit">El origen ya existe</string>
+    <string name="errDestinyNotExisit">El destino no existe</string>
 
 
     <!-- **************************  Drawer Menu  **************************** -->
@@ -101,6 +102,7 @@
     <!-- **********************  Passenger Main  **************************** -->
     <string name="introduceDestiny">Introduce un destino</string>
     <string name="searchRoute">Buscar trayecto</string>
+    <string name="destination">Destino</string>
     <!--***********************************************************************-->
 
     <!-- *******************  Passenger Menu Drawer  ************************* -->

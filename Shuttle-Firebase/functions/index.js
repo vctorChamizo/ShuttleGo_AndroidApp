@@ -145,9 +145,8 @@ exports.searchRoute = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkData(data.route.origin))
   .then(()=>checkData(data.route.destination))
-  .then(()=>checkData(data.route.address))
   .then(()=>routeSA.searchRoutes(data.route.origin,data.route.destination))
-  .then((routes)=>routes,(error)=>error);
+  .then((routes)=>{return {routes:routes}},(error)=>error);
 })
 
 /**
