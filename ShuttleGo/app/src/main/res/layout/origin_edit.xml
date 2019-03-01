@@ -32,7 +32,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/editOrigin"/>
+                app:title="@string/edit"/>
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
@@ -44,7 +44,7 @@
                 style="@style/SubTittleDriveMain"
                 android:textAlignment="textStart"
                 android:hint="@string/origin"
-                android:text="@string/newOrigin" />
+                android:text="@string/introduceOrigin" />
 
             <EditText
                 android:id="@+id/origin_edit_name_text"

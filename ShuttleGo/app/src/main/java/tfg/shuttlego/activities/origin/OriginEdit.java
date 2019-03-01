@@ -144,7 +144,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
 
             case R.id.origin_edit_edit_btn:
                 if (originEditText.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
-                else if (originEditText.getText().toString().equals(originEditOriginObject.getName())) throwToast(R.string.mustNewOrigin);
+                else if (originEditText.getText().toString().equals(originEditOriginObject.getName())) throwToast(R.string.originAlreadyExists);
                 else {
 
                     setProgressBar();

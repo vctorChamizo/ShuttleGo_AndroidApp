@@ -1,45 +1,47 @@
 <resources>
 
-    <string name="close">Cerrar</string>
-    <string name="exit">Salida: </string>
-    <string name="arrive">LLegada: </string>
-    <string name="nameDriver">Conductor: </string>
-    <string name="phoneDriver">Teléfono: </string>
-    <string name="limitPassenger">Pasajeros máximos: </string>
-    <string name="deleteOriginSuccesful">Origen eliminado correctamente</string>
-    <string name="createOriginSuccesful">Origen creado correctamente</string>
-    <string name="listOrigins">Orígenes</string>
-    <string name="home">Inicio</string>
-    <string name="editOrigin">Editar Origen</string>
-    <string name="newOrigin">Introduce un nuevo punto de salida:</string>
-    <string name="edit">Editar</string>
-    <string name="cancel">Cancelar</string>
-    <string name="mustNewOrigin">Introduce un nuevo origen</string>
-    <string name="editOriginSuccesful">Origen editado correctamente</string>
-    <string name="originAlreadyExists">El origen ya exisite</string>
-
     <!--*************************************************************************
-    *********************************  Main  ************************************
+    *********************************  App  *************************************
     **************************************************************************-->
 
-    <!-- ******************************  App  ******************************* -->
     <string name="app_name">ShuttleGo</string>
     <string name="subTittle">Haz tu viaje más fácil</string>
+    <string name="close">Cerrar</string>
+    <string name="edit">Editar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Eliminar</string>
+    <string name="add">Añadir</string>
 
-    <!-- ******************************  Errors  ******************************* -->
+    <!--***********************************************************************-->
+
+
+    <!--*************************************************************************
+    *********************************  Errors  **********************************
+    **************************************************************************-->
+
     <string name="err">ERROR. Vuelva a intentarlo</string>
     <string name="errConexion">ERROR. Fallo en la conexión</string>
     <string name="errServer">ERROR. Fallo en el servidor</string>
     <string name="errDataEmpty">Hay campos vacios</string>
+    <string name="errBadFormat">Formato de datos incorrecto</string>
+
+    <!--*************************************************************************-->
+
+
+    <!-- **************************  Account Errors  *************************** -->
+
     <string name="errUserDontExist">El usuario no existe</string>
     <string name="errIncorrectSignin">Usuario o contraseña incorrectos</string>
     <string name="errPhoneNumber">Introduce un telefono correcto</string>
-    <string name="errBadFormat">Formato de datos incorrecto</string>
     <string name="errUserExisit">El usuario ya existe</string>
-    <string name="errOriginExisit">El origen ya existe</string>
+
+    <!--*************************************************************************-->
 
 
-    <!-- **************************  Drawer Menu  **************************** -->
+    <!--*************************************************************************
+    *********************************  Menu  ************************************
+    **************************************************************************-->
+
     <string name="nav_header_title">ShuttleGo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -47,13 +49,18 @@
     <string name="nav_account">Cuenta</string>
     <string name="action_settings">Ajustes</string>
     <string name="action_logout">Cerrar Sesion</string>
+    <string name="home">Inicio</string>
 
-    <!-- ****************************  Login  ********************************* -->
+    <!--*************************************************************************-->
+
+
+    <!--*************************************************************************
+    ******************************  Account  ************************************
+    **************************************************************************-->
+
     <string name="signin">Iniciar sesión</string>
     <string name="signup">Registrate</string>
     <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
-
-    <!-- **************************  Register  ********************************* -->
     <string name="tittleWelcome">Te damos la bienvenida a ShuttleGo</string>
     <string name="subtittleWelcome">Registrte con tu email</string>
     <string name="tittleDataRegister">Algunos datos más...</string>
@@ -62,7 +69,13 @@
     <string name="next">Siguiente</string>
     <string name="finish">Finalizar</string>
 
-    <!-- **************************  User  ********************************** -->
+    <!--*************************************************************************-->
+
+
+    <!--*************************************************************************
+    *********************************  User  ************************************
+    **************************************************************************-->
+
     <string name="name">Nombre</string>
     <string name="surname">Apellidos</string>
     <string name="phone">Telefono</string>
@@ -74,32 +87,30 @@
 
     <!--*************************************************************************-->
 
-    <!-- **************************  Map  ********************************** -->
+
+    <!--*************************************************************************
+    *********************************  Map  *************************************
+    **************************************************************************-->
+
     <string name="access_token">pk.eyJ1Ijoic2h1dHRsZWdvdGZnIiwiYSI6ImNqczNnYTBkejBnN2k0M254bnV4MG5hNXYifQ.NoH-PJACPLpQWZ_2A1vvMg</string>
     <string name="user_location_permission_explanation">La aplicación necesita permisos de geolocalización.</string>
     <string name="user_location_permission_not_granted">No tiene activos los permisos de geolocalización</string>
     <string name="confirmDestiny">Confirmar destino</string>
+
     <!--*************************************************************************-->
 
+
     <!--**************************************************************************
-    *******************************  Admin  **************************************
+    *******************************  Origin  *************************************
     ***************************************************************************-->
 
-    <!-- ****************************  Origin  ******************************* -->
-    <string name="addOriginToRoute">Introduce el punto de partida:</string>
-
-    <!--***********************************************************************-->
-
-    <!-- *************************  Edit Origin ****************************** -->
-    <string name="deleteOrigin">Eliminar</string>
-
-    <!-- *************************  Edit Origin ****************************** -->
-    <string name="add">Añadir</string>
-
-    <!-- *********************  Admin Menu Drawer  *************************** -->
     <string name="origin">Origen</string>
-    <string name="addOrigin">Añadir origen</string>
-
+    <string name="listOrigins">Orígenes</string>
+    <string name="introduceOrigin">Introduce un punto de partida:</string>
+    <string name="deleteOriginSuccesful">Origen eliminado correctamente</string>
+    <string name="createOriginSuccesful">Origen creado correctamente</string>
+    <string name="editOriginSuccesful">Origen editado correctamente</string>
+    <string name="originAlreadyExists">El origen ya exisite</string>
 
     <!--***********************************************************************-->
 
@@ -108,13 +119,6 @@
     *****************************  Passenger  ***********************************
     **************************************************************************-->
 
-    <!-- **********************  Passenger Main  **************************** -->
-    <string name="introduceDestiny">Introduce un destino</string>
-    <string name="searchRoute">Buscar trayecto</string>
-    <!--***********************************************************************-->
-
-    <!-- *******************  Passenger Menu Drawer  ************************* -->
-
     <!--***********************************************************************-->
 
 
@@ -122,11 +126,6 @@
     ******************************  Driver  *************************************
     **************************************************************************-->
 
-    <!-- *********************  Driver Menu Drawer  ************************** -->
-
-    <!--************************************************************************-->
-
-    <!-- ************************  Driver Main ******************************** -->
     <string name="createRoute">Crea un nuevo trayecto</string>
     <string name="addLimitArea">Delimita el area del servicio:</string>
     <string name="addLimitPassenger">¿Cúantos pasajeros puedes llevar?:</string>
@@ -135,4 +134,20 @@
     <string name="createRouteButton">Crear trayecto</string>
 
     <!--************************************************************************-->
+
+
+    <!--*************************************************************************
+    *******************************  Route  *************************************
+    **************************************************************************-->
+
+    <string name="introduceDestiny">Introduce un destino</string>
+    <string name="searchRoute">Buscar trayecto</string>
+    <string name="exit">Salida: </string>
+    <string name="arrive">LLegada: </string>
+    <string name="nameDriver">Conductor: </string>
+    <string name="phoneDriver">Teléfono: </string>
+    <string name="limitPassenger">Pasajeros máximos: </string>
+
+    <!--************************************************************************-->
+
 </resources>

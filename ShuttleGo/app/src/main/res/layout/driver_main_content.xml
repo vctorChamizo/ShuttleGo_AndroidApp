@@ -65,7 +65,7 @@
                         style="@style/SubTittleDriveMain"
                         android:textAlignment="textStart"
                         android:hint="@string/origin"
-                        android:text="@string/addOriginToRoute" />
+                        android:text="@string/introduceOrigin" />
 
                     <AutoCompleteTextView
                         android:id="@+id/driver_main_content_autoComplete"

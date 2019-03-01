@@ -58,7 +58,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp"
-            android:text="@string/deleteOrigin"/>
+            android:text="@string/delete"/>
 
         <Button
             android:id="@+id/origin_main_close_btn"

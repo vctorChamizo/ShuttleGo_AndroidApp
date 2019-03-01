@@ -156,7 +156,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
                 switch (Objects.requireNonNull(task.getResult().get("error"))) {
                     case "badRequestForm": throwToast(R.string.errBadFormat); break;
-                    case "originAlreadyExists": throwToast(R.string.errOriginExisit); break;
+                    case "originAlreadyExists": throwToast(R.string.originAlreadyExists); break;
                     case "server": throwToast(R.string.errServer); break;
                 }
             }
