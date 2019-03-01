@@ -8,8 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,23 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.origin.OriginList;
 import tfg.shuttlego.activities.origin.OriginMain;
-import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
-import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
 
 /**
@@ -49,7 +39,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     private EditText adminMainEdit;
     private Button adminMainButton;
     private LinearLayout adminMainLinear;
-    private String adminMainNameOrigin;
+    private DrawerLayout admiMainDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +53,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         setMenuDrawer();
         setCredencials();
         removeProgressBar();
-        listeners();
+
+        adminMainButton.setOnClickListener(this);
     }
 
     private void incializateView() {
@@ -72,6 +63,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         adminMainLinear = findViewById(R.id.admin_main_content_linar1);
         adminMainEdit = findViewById(R.id.admin_main_content_edittext);
         adminMainButton = findViewById(R.id.admin_main_content_button);
+        admiMainDrawer = findViewById(R.id.admin_main_drawer);
+
     }//incializateView
 
     /**
@@ -99,11 +92,10 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        DrawerLayout drawer = findViewById(R.id.admin_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, admiMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        admiMainDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }//setMenuDrawer
 
@@ -119,16 +111,11 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         nav_email_text.setText(user.getEmail());
     }//setCredencials
 
-    private void listeners() {
-
-        adminMainButton.setOnClickListener(this);
-    }//listeners
-
     /**
      *
      * @return
      */
-    private JSONObject buildJson() {
+    private JSONObject buildJson(String originName) {
 
         JSONObject dataUser = new JSONObject();
         JSONObject dataOrigin = new JSONObject();
@@ -138,7 +125,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
             dataUser.put("email", user.getEmail());
             dataUser.put("password", user.getPassword());
-            dataOrigin.put("name", adminMainNameOrigin);
+            dataOrigin.put("name", originName);
             createOrigin.put("user", dataUser);
             createOrigin.put("origin", dataOrigin);
 
@@ -162,7 +149,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
                 throwToast(R.string.errConexion);
 
             } else if (task.getResult().containsKey("error")){
-
                 removeProgressBar();
 
                 switch (Objects.requireNonNull(task.getResult().get("error"))) {
@@ -181,44 +167,39 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         });
     }//throwEvent
 
-    /**
-     *
-     * @param msg
-     */
     private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void onClick(View v) {
 
-        boolean empty = false;
+        if (adminMainEdit.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
+        else {
 
-        switch (v.getId()) {
-
-            case R.id.admin_main_content_button:
-                if (adminMainEdit.getText().toString().isEmpty()) empty = true;
-
-                if (!empty) {
-
-                    setProgressBar();
-                    adminMainNameOrigin = String.valueOf(adminMainEdit.getText());
-                    throwEventAddOrigin(buildJson());
-                } else throwToast(R.string.errDataEmpty);
-                break;
+            setProgressBar();
+            throwEventAddOrigin(buildJson(String.valueOf(adminMainEdit.getText())));
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        int id = menuItem.getItemId();
+        switch (menuItem.getItemId()) {
 
-        if (id == R.id.admin_drawer_home) startActivity(new Intent(AdminMain.this, AdminMain.class));
-        else if (id == R.id.admin_drawer_list) startActivity(new Intent(AdminMain.this, OriginList.class));
-        else if (id == R.id.nav_settings_admin) { }
-        else if (id == R.id.nav_signout_admin) { }
+            case R.id.admin_drawer_list:
+                startActivity(new Intent(AdminMain.this, OriginList.class));
+                break;
 
-        DrawerLayout drawer = findViewById(R.id.admin_main);
-        drawer.closeDrawer(GravityCompat.START);
+            case R.id.nav_settings_admin:
+                break;
+
+            case R.id.nav_signout_admin:
+                break;
+
+            default: break;
+        }
+
+
+        admiMainDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
@@ -226,9 +207,9 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void onBackPressed() {
 
-        DrawerLayout drawer = findViewById(R.id.admin_main);
-        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
-        else super.onBackPressed();
+        if (admiMainDrawer.isDrawerOpen(GravityCompat.START)) admiMainDrawer.closeDrawer(GravityCompat.START);
+        else {
 
-    }//onBackPressed
+        }
+    }
 }

@@ -10,6 +10,10 @@
     <string name="createOriginSuccesful">Origen creado correctamente</string>
     <string name="listOrigins">Orígenes</string>
     <string name="home">Inicio</string>
+    <string name="editOrigin">Editar Origen</string>
+    <string name="newOrigin">Introduce un nuevo punto de salida:</string>
+    <string name="edit">Editar</string>
+    <string name="cancel">Cancelar</string>
 
     <!--*************************************************************************
     *********************************  Main  ************************************
@@ -84,7 +88,6 @@
     <!--***********************************************************************-->
 
     <!-- *************************  Edit Origin ****************************** -->
-    <string name="editOrigin">Editar</string>
     <string name="deleteOrigin">Eliminar</string>
 
     <!-- *************************  Edit Origin ****************************** -->

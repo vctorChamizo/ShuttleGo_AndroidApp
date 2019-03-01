@@ -35,9 +35,9 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
 
             super(v);
             context = v.getContext();
-            originCard = v.findViewById(R.id.origin_cardview_cardview);
-            originNameButton = v.findViewById(R.id.origin_cardview_button);
-            originIdText = v.findViewById(R.id.origin_cardview_textview);
+            originCard = v.findViewById(R.id.origin_list_cardview_card);
+            originNameButton = v.findViewById(R.id.origin_list_cardview_btn);
+            originIdText = v.findViewById(R.id.origin_list_cardview_name_text);
         }
 
 
@@ -55,7 +55,7 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
     @NonNull
     @Override
     public OriginViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.origin_cardview, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.origin_list_cardview, viewGroup, false);
         return new OriginViewHolder(v);
     }
 

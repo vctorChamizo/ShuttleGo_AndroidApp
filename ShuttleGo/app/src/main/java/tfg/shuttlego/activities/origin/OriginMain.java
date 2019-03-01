@@ -31,7 +31,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.origin_card);
+        setContentView(R.layout.origin_main);
 
         originMainIdOrigin = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("origin");
 
@@ -46,12 +46,12 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
      */
     private void inicializateView() {
 
-        originMainLinear = findViewById(R.id.origin_card_linear1);
-        originMainProgress = findViewById(R.id.origin_card_progress);
-        originMainTextName = findViewById(R.id.origin_card_name_text);
-        originMainDelteButton = findViewById(R.id.origin_card_delete_btn);
-        originMainEditButton = findViewById(R.id.origin_card_edit_btn);
-        originMainCloseButton = findViewById(R.id.origin_card_close_btn);
+        originMainLinear = findViewById(R.id.origin_main_linear);
+        originMainProgress = findViewById(R.id.origin_main_progress);
+        originMainTextName = findViewById(R.id.origin_main_name_text);
+        originMainDelteButton = findViewById(R.id.origin_main_delete_btn);
+        originMainEditButton = findViewById(R.id.origin_main_edit_btn);
+        originMainCloseButton = findViewById(R.id.origin_main_close_btn);
     }//inicializateView
 
     /**
@@ -218,15 +218,15 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.origin_card_delete_btn:
+            case R.id.origin_main_delete_btn:
 
                 break;
 
-            case R.id.origin_card_edit_btn:
+            case R.id.origin_main_edit_btn:
 
                 break;
 
-            case R.id.origin_card_close_btn:
+            case R.id.origin_main_close_btn:
 
                 break;
         }
