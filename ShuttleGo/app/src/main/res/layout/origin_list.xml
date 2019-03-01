@@ -11,12 +11,12 @@
         style="@style/LinearProgress">
 
         <ProgressBar
-            android:id="@+id/origin_list_content_progress"
+            android:id="@+id/origin_list_progress"
             style="@style/ProgressBar" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/origin_list_content_linear"
+        android:id="@+id/origin_list_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -35,7 +35,10 @@
                 app:title="@string/admin"/>
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/origin_cardview"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/origin_list_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </LinearLayout>

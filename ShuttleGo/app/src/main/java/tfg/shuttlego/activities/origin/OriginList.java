@@ -29,7 +29,7 @@ public class OriginList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.origin_cardview);
+        setContentView(R.layout.origin_list);
 
         inicializateView();
         setProgressBar();
@@ -41,8 +41,8 @@ public class OriginList extends AppCompatActivity {
      */
     private void inicializateView() {
 
-        originListLinear = findViewById(R.id.origin_card_linear1);
-        originListProgress = findViewById(R.id.origin_card_progress);
+        originListLinear = findViewById(R.id.origin_list_linear);
+        originListProgress = findViewById(R.id.origin_list_progress);
     }//inicializateView
 
     /**
@@ -106,7 +106,7 @@ public class OriginList extends AppCompatActivity {
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.origin_cardview_cardview);
+        RecyclerView recycler = findViewById(R.id.origin_list_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
         RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> adapter = new RecyclerViewAdapterOrigin(listOrigins);
