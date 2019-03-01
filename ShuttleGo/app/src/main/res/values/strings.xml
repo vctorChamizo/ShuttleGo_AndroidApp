@@ -6,6 +6,8 @@
     <string name="nameDriver">Conductor: </string>
     <string name="phoneDriver">Teléfono: </string>
     <string name="limitPassenger">Pasajeros máximos: </string>
+    <string name="deleteOriginSuccesful">Origen eliminado correctamente</string>
+    <string name="createOriginSuccesful">Origen creado correctamente</string>
 
     <!--*************************************************************************
     *********************************  Main  ************************************

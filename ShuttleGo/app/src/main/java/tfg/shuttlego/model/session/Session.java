@@ -1,27 +1,26 @@
 package tfg.shuttlego.model.session;
 
-import org.json.JSONObject;
+import android.content.Context;
 
+import tfg.shuttlego.model.transfer.person.Person;
 
 /**
  * Authenticate user data while using the application.
  */
 public class Session{
 
-    private static final Session ourInstance = new Session();
-    private JSONObject user = null;
+    private static Session ourInstance = null;
+    private Person user = null;
 
     private Session() {}
 
-    static Session getInstance() {
+    public static Session getInstance(Context applicationContext) {
+
+        if(ourInstance == null) ourInstance = new Session();
+
         return ourInstance;
     }
 
-    public JSONObject getUser(){
-        return user;
-    }
-
-    public void setUser(JSONObject user) {
-        this.user = user;
-    }
+    public void setUser(Person user) {this.user = user; }
+    public Person getUser() { return this.user; }
 }

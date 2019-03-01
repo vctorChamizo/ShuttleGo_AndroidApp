@@ -22,6 +22,7 @@ import tfg.shuttlego.activities.person.driver.DriverMain;
 import tfg.shuttlego.activities.person.passenger.PassengerMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.person.TypePerson;
 
@@ -141,10 +142,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 else {
 
                     Person user = parserTypePerson(task.getResult());
-
-                    Intent logIntent = new Intent(LoginActivity.this, nextClass);
-                    logIntent.putExtra("user", user);
-                    startActivity(logIntent);
+                    Session.getInstance(getApplicationContext()).setUser(user);
+                    startActivity(new Intent(LoginActivity.this, nextClass));
                 }
             }
         });

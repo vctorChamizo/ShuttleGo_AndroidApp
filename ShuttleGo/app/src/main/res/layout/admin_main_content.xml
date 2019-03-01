@@ -8,7 +8,6 @@
     android:background="@drawable/bg_degraded">
 
     <LinearLayout
-
         style="@style/LinearProgress">
 
         <ProgressBar

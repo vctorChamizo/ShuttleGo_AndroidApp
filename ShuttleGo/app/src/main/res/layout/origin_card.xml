@@ -3,71 +3,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.origin.OriginMain"
     android:background="@drawable/bg_degraded"
     android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linear_progress"
         style="@style/LinearProgress">
 
         <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/origin_card_progress"
             style="@style/ProgressBar" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/relative_origin_edit"
+    <LinearLayout
+        android:id="@+id/origin_card_linear1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linear1"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="40dp">
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <TextView
-                android:id="@+id/name_origin_text"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:textSize="40dp"
-                android:text="Origen Prueba"/>
-        </LinearLayout>
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/origin"/>
+        </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/linear1"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="20dp">
+        <TextView
+            android:id="@+id/origin_card_name_text"
+            style="@style/TittleWelcome"
+            android:textAlignment="center"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:text="Origen Prueba"/>
+        <Button
+            android:id="@+id/origin_card_edit_btn"
+            style="@style/ButtonBigRound"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="200dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:text="@string/editOrigin"/>
 
-            <Button
-                android:id="@+id/btn_edit_origin"
-                style="@style/ButtonBigRound"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginTop="230dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/editOrigin"/>
+        <Button
+            android:id="@+id/origin_card_delete_btn"
+            style="@style/ButtonDeleteOrigin"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:text="@string/deleteOrigin"/>
 
-            <Button
-                android:id="@+id/btn_delete_origin"
-                style="@style/ButtonDeleteOrigin"
-                android:textColor="@color/colorWhite"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/deleteOrigin"/>
-
-            <Button
-                android:id="@+id/btn_close_origin"
-                style="@style/ButtonBigRound"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/close"/>
-        </LinearLayout>
-    </RelativeLayout>
+        <Button
+            android:id="@+id/origin_card_close_btn"
+            style="@style/ButtonBigRound"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:text="@string/close"/>
+    </LinearLayout>
 </LinearLayout>
