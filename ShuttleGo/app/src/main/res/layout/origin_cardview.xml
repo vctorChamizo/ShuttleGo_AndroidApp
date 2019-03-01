@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight"
+        android:background="@color/colorWhite"
         android:orientation="horizontal">
 
         <Button
@@ -20,7 +20,9 @@
             android:layout_height="wrap_content"
             android:background="@color/colorTransparent"
             android:padding="20dp"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:text="@string/origin"
+            android:textColor="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/origin_cardview_textview"

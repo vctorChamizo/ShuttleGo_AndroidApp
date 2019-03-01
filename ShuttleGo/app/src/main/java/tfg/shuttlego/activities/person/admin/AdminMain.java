@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.origin.OriginList;
 import tfg.shuttlego.activities.origin.OriginMain;
 import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
 import tfg.shuttlego.model.event.Event;
@@ -173,7 +174,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
             else {
 
                 Intent logIntent = new Intent(AdminMain.this, OriginMain.class);
-                logIntent.putExtra("origin", adminMainNameOrigin);
+                logIntent.putExtra("origin", task.getResult().get("id"));
                 throwToast(R.string.createOriginSuccesful);
                 startActivity(logIntent);
             }
@@ -185,37 +186,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
      * @param msg
      */
     private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
-
-    @Override
-    public void onBackPressed() {
-
-        DrawerLayout drawer = findViewById(R.id.admin_main);
-        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
-        else super.onBackPressed();
-
-    }//onBackPressed
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.nav_add_origin) {
-
-            /*Intent logIntent = new Intent(AdminMain.this, AddOrigin.class);
-            logIntent.putExtra("user", user);
-            startActivity(logIntent);
-            overridePendingTransition(R.anim.left_out, R.anim.left_in);*/
-        }
-        else if (id == R.id.nav_settings_admin) { }
-        else if (id == R.id.nav_signout_admin) { }
-
-        DrawerLayout drawer = findViewById(R.id.admin_main);
-        drawer.closeDrawer(GravityCompat.START);
-
-        return true;
-    }//onNavigationItemSelected
 
     @Override
     public void onClick(View v) {
@@ -236,4 +206,29 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
                 break;
         }
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        int id = menuItem.getItemId();
+
+        if (id == R.id.admin_drawer_home) startActivity(new Intent(AdminMain.this, AdminMain.class));
+        else if (id == R.id.admin_drawer_list) startActivity(new Intent(AdminMain.this, OriginList.class));
+        else if (id == R.id.nav_settings_admin) { }
+        else if (id == R.id.nav_signout_admin) { }
+
+        DrawerLayout drawer = findViewById(R.id.admin_main);
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        DrawerLayout drawer = findViewById(R.id.admin_main);
+        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
+        else super.onBackPressed();
+
+    }//onBackPressed
 }

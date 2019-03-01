@@ -23,8 +23,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
     private LinearLayout originMainLinear;
     private ProgressBar originMainProgress;
-    private String originMainNameOrigin;
-    //private String originMainIdOrigin;
+    private String originMainIdOrigin;
     private TextView originMainTextName;
     private Button originMainDelteButton, originMainEditButton, originMainCloseButton;
     private Origin orginMainOriginObject;
@@ -34,15 +33,13 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.origin_card);
 
-        originMainNameOrigin = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("origin");
-        //originMainIdOrigin = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("origin");
+        originMainIdOrigin = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("origin");
 
         inicializateView();
         setProgressBar();
         throwEventGetOrigin(buildGetOriginJson());
         listeners();
-
-    }//onCreate
+    }
 
     /**
      *
@@ -86,7 +83,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
         try {
 
-            id.put("name", originMainNameOrigin);
+            id.put("id", originMainIdOrigin);
             getOrigin.put("origin", id);
         }
         catch (JSONException e) { throwToast(R.string.err); }
@@ -101,7 +98,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
         //onComplete
         EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.GETORIGINBYNAME, origin)
+        .dispatchEvent(Event.GETORIGINBYID, origin)
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);

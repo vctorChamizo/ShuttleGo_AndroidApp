@@ -8,6 +8,8 @@
     <string name="limitPassenger">Pasajeros máximos: </string>
     <string name="deleteOriginSuccesful">Origen eliminado correctamente</string>
     <string name="createOriginSuccesful">Origen creado correctamente</string>
+    <string name="listOrigins">Orígenes</string>
+    <string name="home">Inicio</string>
 
     <!--*************************************************************************
     *********************************  Main  ************************************

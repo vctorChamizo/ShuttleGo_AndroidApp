@@ -2,6 +2,7 @@ package tfg.shuttlego.model.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,82 +14,57 @@ import java.util.ArrayList;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.origin.OriginMain;
 import tfg.shuttlego.model.transfer.origin.Origin;
-import tfg.shuttlego.model.transfer.person.Person;
 
-/**
- *
- */
 public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> {
 
     private ArrayList<Origin> originList;
-    private static Person user;
 
-    /**
-     *
-     * @param originList
-     * @param user
-     */
-    public RecyclerViewAdapterOrigin(ArrayList<Origin> originList, Person user) {
+    public RecyclerViewAdapterOrigin(ArrayList<Origin> originList) {
 
         this.originList = originList;
-        this.user = user;
-    }//RecyclerViewAdapterOrigin
+    }
 
-    /**
-     *
-     */
     public static class OriginViewHolder extends RecyclerView.ViewHolder {
 
         Context context;
         CardView originCard;
-        Button nameButton;
-        TextView idText;
+        Button originNameButton;
+        TextView originIdText;
 
-        /**
-         *
-         * @param v
-         */
-        public OriginViewHolder(View v) {
+        OriginViewHolder(View v) {
 
             super(v);
             context = v.getContext();
-            nameButton = v.findViewById(R.id.origin_cardview_button);
             originCard = v.findViewById(R.id.origin_cardview_cardview);
-            idText = v.findViewById(R.id.origin_cardview_textview);
-        }//OriginViewHolder
+            originNameButton = v.findViewById(R.id.origin_cardview_button);
+            originIdText = v.findViewById(R.id.origin_cardview_textview);
+        }
 
-        /**
-         *
-         */
-        public void setOnClickListeners() {
 
-            nameButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        void setOnClickListeners() {
 
-                    Intent intent = new Intent(context, OriginMain.class);
-                    intent.putExtra("origin", idText.getText());
-                    intent.putExtra("user", user);
-                    context.startActivity(intent);
-                }
+            originNameButton.setOnClickListener(v -> {
+
+                Intent intent = new Intent(context, OriginMain.class);
+                intent.putExtra("origin", originIdText.getText());
+                context.startActivity(intent);
             });
-        }//setOnClickListeners
+        }
     }//OriginViewHolder
 
+    @NonNull
     @Override
-    public OriginViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public OriginViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.origin_cardview, viewGroup, false);
-        OriginViewHolder vh = new OriginViewHolder(v);
-        return vh;
-    }//OriginViewHolder
+        return new OriginViewHolder(v);
+    }
 
     @Override
-    public void onBindViewHolder(OriginViewHolder originHolder, int i) {
-        originHolder.nameButton.setText(originList.get(i).getName());
-        originHolder.idText.setText(originList.get(i).getId());
-
+    public void onBindViewHolder(@NonNull OriginViewHolder originHolder, int i) {
+        originHolder.originNameButton.setText(originList.get(i).getName());
+        originHolder.originIdText.setText(originList.get(i).getId());
         originHolder.setOnClickListeners();
-    }//onBindViewHolder
+    }
 
     @Override
     public int getItemCount() {
@@ -96,7 +72,7 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-    }//onAttachedToRecyclerView
+    }
 }
