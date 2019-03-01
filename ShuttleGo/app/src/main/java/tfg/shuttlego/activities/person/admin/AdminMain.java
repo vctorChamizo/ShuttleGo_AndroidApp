@@ -28,9 +28,6 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.Person;
 
-/**
- *
- */
 public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private NavigationView navigationView;
@@ -57,6 +54,9 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         adminMainButton.setOnClickListener(this);
     }
 
+    /**
+     * Inicializate the componentes of this view
+     */
     private void incializateView() {
 
         adminMainProgress = findViewById(R.id.admin_main_content_progress);
@@ -64,29 +64,28 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         adminMainEdit = findViewById(R.id.admin_main_content_edittext);
         adminMainButton = findViewById(R.id.admin_main_content_button);
         admiMainDrawer = findViewById(R.id.admin_main_drawer);
-
-    }//incializateView
+    }
 
     /**
-     *
+     * Show the progress bar component visible and put invisble the rest of the view
      */
     private void setProgressBar () {
 
         adminMainProgress.setVisibility(View.VISIBLE);
         adminMainLinear.setVisibility(View.GONE);
-    }//setProgressBar
+    }
 
     /**
-     *
+     * Show the view visible and put invisble progress bar component
      */
     private void removeProgressBar () {
 
         adminMainProgress.setVisibility(View.GONE);
         adminMainLinear.setVisibility(View.VISIBLE);
-    }//removeProgressBar
+    }
 
     /**
-     *
+     * Inicializate the components to put the menu in the view
      */
     private void setMenuDrawer() {
 
@@ -97,10 +96,10 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, admiMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         admiMainDrawer.addDrawerListener(toggle);
         toggle.syncState();
-    }//setMenuDrawer
+    }
 
     /**
-     *
+     * Put the personal data about the current user
      */
     private void setCredencials() {
 
@@ -109,13 +108,16 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
         nav_name_text.setText(user.getName() + " " + user.getSurname());
         nav_email_text.setText(user.getEmail());
-    }//setCredencials
+    }
 
     /**
+     * Build a JSON for to allow make a create a new origin
      *
-     * @return
+     * @param nameOrigin Name to create a new origin
+     *
+     * @return JSON with information to create origin
      */
-    private JSONObject buildJson(String originName) {
+    private JSONObject buildJson(String nameOrigin) {
 
         JSONObject dataUser = new JSONObject();
         JSONObject dataOrigin = new JSONObject();
@@ -125,18 +127,19 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
             dataUser.put("email", user.getEmail());
             dataUser.put("password", user.getPassword());
-            dataOrigin.put("name", originName);
+            dataOrigin.put("name", nameOrigin);
             createOrigin.put("user", dataUser);
             createOrigin.put("origin", dataOrigin);
 
         } catch (JSONException e) { throwToast(R.string.err); }
 
         return createOrigin;
-    }//buildJson
+    }
 
     /**
+     * Throw the event that allow create a new origin
      *
-     * @param createOrigin
+     * @param createOrigin JSON with information to create a origin
      */
     private void throwEventAddOrigin(JSONObject createOrigin) {
 
@@ -165,7 +168,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
                 startActivity(logIntent);
             }
         });
-    }//throwEvent
+    }
 
     private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
@@ -185,19 +188,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         switch (menuItem.getItemId()) {
 
-            case R.id.admin_drawer_list:
-                startActivity(new Intent(AdminMain.this, OriginList.class));
-                break;
-
-            case R.id.nav_settings_admin:
-                break;
-
-            case R.id.nav_signout_admin:
-                break;
-
-            default: break;
+            case R.id.admin_drawer_list: startActivity(new Intent(AdminMain.this, OriginList.class));break;
         }
-
 
         admiMainDrawer.closeDrawer(GravityCompat.START);
 
@@ -206,10 +198,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public void onBackPressed() {
-
         if (admiMainDrawer.isDrawerOpen(GravityCompat.START)) admiMainDrawer.closeDrawer(GravityCompat.START);
-        else {
-
-        }
+        else finish();
     }
 }

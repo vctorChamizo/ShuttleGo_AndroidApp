@@ -17,10 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.person.admin.AdminMain;
 import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
@@ -36,6 +34,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
     private LinearLayout originListLinear;
     private ProgressBar originListProgress;
     private ArrayList<Origin> listOrigins;
+    private DrawerLayout originListDrawer;
     private Person user;
 
     @Override
@@ -53,49 +52,49 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
     }
 
     /**
-     *
+     * Inicializate the componentes of this view
      */
     private void inicializateView() {
 
         originListLinear = findViewById(R.id.origin_list_content_linear);
         originListProgress = findViewById(R.id.origin_list_content_progress);
-    }//inicializateView
+        originListDrawer = findViewById(R.id.origin_list_drawer);
+    }
 
     /**
-     *
+     * Show the progress bar component visible and put invisble the rest of the view
      */
     private void setProgressBar() {
 
         originListProgress.setVisibility(View.VISIBLE);
         originListLinear.setVisibility(View.GONE);
-    }//setProgressBar
+    }
 
     /**
-     *
+     * Show the view visible and put invisble progress bar component
      */
     private void removeProgressBar() {
 
         originListProgress.setVisibility(View.GONE);
         originListLinear.setVisibility(View.VISIBLE);
-    }//removeProgressBar
+    }
 
     /**
-     *
+     * Inicializate the components to put the menu in the view
      */
     private void setMenuDrawer() {
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        DrawerLayout drawer = findViewById(R.id.origin_list_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, originListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        originListDrawer.addDrawerListener(toggle);
         toggle.syncState();
-    }//setMenuDrawer
+    }
 
     /**
-     *
+     * Put the personal data about the current user
      */
     private void setCredencials() {
 
@@ -104,9 +103,10 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
         nav_name_text.setText(user.getName() + " " + user.getSurname());
         nav_email_text.setText(user.getEmail());
-    }//setCredencials
+    }
 
     /**
+     * Throw the event that allow to get a list of all origins in the server
      *
      */
     private void throwEventGetAllOrigins() {
@@ -142,10 +142,10 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
                 removeProgressBar();
             }
         });
-    }//throwEventGetAllOrigins
+    }
 
     /**
-     *
+     * Inicializate the componentes and the adapter to put the list of origins
      */
     private void createListView() {
 
@@ -167,26 +167,17 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(new Intent(OriginList.this, AdminMain.class));
                 break;
 
-            case R.id.nav_settings_admin:
-                break;
-
-            case R.id.nav_signout_admin:
-                break;
-
             default: break;
         }
 
-        DrawerLayout drawer = findViewById(R.id.origin_list_drawer);
-        drawer.closeDrawer(GravityCompat.START);
+        originListDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
     @Override
     public void onBackPressed() {
-
-        DrawerLayout drawer = findViewById(R.id.admin_main_drawer);
-        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
-        else super.onBackPressed();
+        if (originListDrawer.isDrawerOpen(GravityCompat.START)) originListDrawer.closeDrawer(GravityCompat.START);
+        else finish();
     }
 }

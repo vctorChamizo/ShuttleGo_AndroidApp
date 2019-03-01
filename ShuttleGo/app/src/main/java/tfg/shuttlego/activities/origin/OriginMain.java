@@ -17,6 +17,7 @@ import tfg.shuttlego.R;
 import tfg.shuttlego.activities.person.admin.AdminMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.origin.Origin;
 
 public class OriginMain extends AppCompatActivity implements View.OnClickListener {
@@ -42,7 +43,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     *
+     * Inicializate the componentes of this view
      */
     private void inicializateView() {
 
@@ -52,29 +53,30 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         originMainDelteButton = findViewById(R.id.origin_main_delete_btn);
         originMainEditButton = findViewById(R.id.origin_main_edit_btn);
         originMainCloseButton = findViewById(R.id.origin_main_close_btn);
-    }//inicializateView
+    }
 
     /**
-     *
+     * Show the progress bar component visible and put invisble the rest of the view
      */
     private void setProgressBar () {
 
         originMainProgress.setVisibility(View.VISIBLE);
         originMainLinear.setVisibility(View.GONE);
-    }//setProgressBar
+    }
 
     /**
-     *
+     * Show the view visible and put invisble progress bar component
      */
     private void removeProgressBar () {
 
         originMainProgress.setVisibility(View.GONE);
         originMainLinear.setVisibility(View.VISIBLE);
-    }//removeProgressBar
+    }
 
     /**
+     * Build a JSON to get a origin
      *
-     * @return JSON with information about origin to getOrigin
+     * @return JSON with information about the current origin
      */
     private JSONObject buildGetOriginJson() {
 
@@ -92,7 +94,9 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     }//buildGetOriginJson
 
     /**
+     * Throw the event that allow get a origin
      *
+     * @param origin JSON with information to get a origin
      */
     private void throwEventGetOrigin(JSONObject origin) {
 
@@ -112,21 +116,22 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
                 removeProgressBar();
             }
         });
-    }//throwEventGetOrigin
+    }
 
     /**
-     *
+     * Have the listeners to the action components in the view
      */
     private void listeners() {
 
         originMainDelteButton.setOnClickListener(this);
         originMainEditButton.setOnClickListener(this);
         originMainCloseButton.setOnClickListener(this);
-    }//listeners
+    }
 
     /**
+     * Build a JSON to delete the current origin
      *
-     * @return JSON with information about origin to deleteOrigin
+     * @return JSON with information about the current origin
      */
     private JSONObject buildDeleteOriginJson() {
 
@@ -136,8 +141,8 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
         try {
 
-            //dataUser.put("email", );
-            //dataUser.put("password", );
+            dataUser.put("email", Session.getInstance(getApplicationContext()).getUser().getEmail());
+            dataUser.put("password", Session.getInstance(getApplicationContext()).getUser().getPassword());
             dataOrigin.put("id", orginMainOriginObject.getId());
             deleteOrigin.put("user", dataUser);
             deleteOrigin.put("origin", dataOrigin);
@@ -145,40 +150,17 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         catch (JSONException e) { throwToast(R.string.err); }
 
         return deleteOrigin;
-    }//buildDeleteOriginJson
+    }
 
     /**
+     * Throw the event that allow delete the current origin
      *
-     * @return JSON with information about origin to editOrigin
+     * @param origin JSON with information about the current origin
      */
-    private JSONObject buildEditOriginJson() {
-
-        JSONObject dataUser = new JSONObject();
-        JSONObject dataOrigin = new JSONObject();
-        JSONObject editOrigin = new JSONObject();
-
-        try {
-
-            //dataUser.put("email", );
-            //dataUser.put("password", );
-            dataOrigin.put("id", orginMainOriginObject.getId());
-            dataOrigin.put("name", orginMainOriginObject.getName());
-            editOrigin.put("user", dataUser);
-            editOrigin.put("origin", dataOrigin);
-        }
-        catch (JSONException e) { throwToast(R.string.err); }
-
-        return editOrigin;
-
-    }//buildDeleteOriginJson*/
-
-    /**
-     *
-     */
-   private void throwEventDeleteOrigin(JSONObject data) {
+   private void throwEventDeleteOrigin(JSONObject origin) {
 
         EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.DELETEORIGIN, data)
+        .dispatchEvent(Event.DELETEORIGIN, origin)
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
@@ -195,40 +177,32 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
                 startActivity(new Intent(OriginMain.this, AdminMain.class));
             }
         });
-    }//throwEventDeleteOrigin
+    }
 
-    /**
-     *
-     */
-    private void throwEventEditOrigin() {
-
-        Intent intent = new Intent(OriginMain.this, AdminMain.class);
-        intent.putExtra("origin", orginMainOriginObject);
-        startActivity(intent);
-
-    }//throwEventEditOrigin
-
-    /**
-     *
-     * @param msg
-     */
     private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.origin_main_delete_btn:
 
+            case R.id.origin_main_delete_btn:
+                setProgressBar();
+                throwEventDeleteOrigin(buildDeleteOriginJson());
                 break;
 
             case R.id.origin_main_edit_btn:
-
+                Intent intent = new Intent(OriginMain.this, OriginEdit.class);
+                intent.putExtra("origin", orginMainOriginObject);
+                startActivity(intent);
                 break;
 
             case R.id.origin_main_close_btn:
-
+                startActivity(new Intent(OriginMain.this, AdminMain.class));
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() { startActivity(new Intent(OriginMain.this, AdminMain.class)); }
 }

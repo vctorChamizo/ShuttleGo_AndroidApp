@@ -19,10 +19,7 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
 
     private ArrayList<Origin> originList;
 
-    public RecyclerViewAdapterOrigin(ArrayList<Origin> originList) {
-
-        this.originList = originList;
-    }
+    public RecyclerViewAdapterOrigin(ArrayList<Origin> originList) { this.originList = originList; }
 
     public static class OriginViewHolder extends RecyclerView.ViewHolder {
 
@@ -40,7 +37,6 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
             originIdText = v.findViewById(R.id.origin_list_cardview_name_text);
         }
 
-
         void setOnClickListeners() {
 
             originNameButton.setOnClickListener(v -> {
@@ -50,7 +46,7 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
                 context.startActivity(intent);
             });
         }
-    }//OriginViewHolder
+    }
 
     @NonNull
     @Override
@@ -72,7 +68,5 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
     }
 
     @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) { super.onAttachedToRecyclerView(recyclerView); }
 }

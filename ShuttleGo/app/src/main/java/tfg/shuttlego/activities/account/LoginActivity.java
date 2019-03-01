@@ -144,6 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Person user = parserTypePerson(task.getResult());
                     Session.getInstance(getApplicationContext()).setUser(user);
                     startActivity(new Intent(LoginActivity.this, nextClass));
+                    finish();
                 }
             }
         });

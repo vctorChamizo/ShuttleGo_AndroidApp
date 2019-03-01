@@ -200,6 +200,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     Person user = parserTypePerson();
                     Session.getInstance(getApplicationContext()).setUser(user);
                     startActivity(new Intent(RegisterActivity.this, nextClass));
+                    finish();
                 }
             }
         });
