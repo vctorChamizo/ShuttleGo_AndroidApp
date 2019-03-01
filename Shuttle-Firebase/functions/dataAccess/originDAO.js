@@ -79,16 +79,16 @@ function modifyOriginById(id,newData){
  * Insert a new origin in the database.
  * @param {Object} newData the new origin.
  */
-function createOrigin(newData){
+function insertOrigin(newData){
     if(newData.id != "undefined") delete newData.id;
     return db.collection("origins").add(newData)
-    .then(()=>null,error=>{throw ERROR.server});
+    .then((result)=>result.id,error=>{throw ERROR.server});
 }
 module.exports={
     getAllOrigins:getAllOrigins,
     getOriginById:getOriginById,
     deleteOriginById:deleteOriginById,
     modifyOriginById:modifyOriginById,
-    createOrigin:createOrigin,
+    insertOrigin:insertOrigin,
     getOriginByName:getOriginByName
 }

@@ -70,7 +70,7 @@ function createOrigin(newOrigin){
     .then(()=>originDAO.getOriginByName(newOrigin.name))
     .then((origin)=>{
         if(origin != null) throw ERROR.originAlreadyExists;
-        else return originDAO.createOrigin(newOrigin);
+        else return originDAO.insertOrigin(newOrigin);
     })
 }
 

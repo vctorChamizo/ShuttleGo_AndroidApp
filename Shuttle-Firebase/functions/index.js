@@ -115,7 +115,7 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>checkUser(data.user,"admin"))
   .then(()=>checkOrigin(data.origin))
   .then(()=>originSA.createOrigin(data.origin))
-  .then(()=>{return {created:true}},error=>error);
+  .then((id)=>{return {id:id}},error=>error);
 })
 
 exports.getOriginByName = functions.https.onCall((data,context)=>{
