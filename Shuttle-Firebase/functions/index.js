@@ -91,7 +91,7 @@ exports.modifyOrigin = functions.https.onCall((data, context)=>{
   .then(()=>checkOrigin(data.origin))
   .then(()=>checkUser(data.user,"admin"))  //only admin can modify origins so I check it.
   .then(()=>originSA.modifyOriginById(data.origin.id,data.origin))
-  .then(()=>{return {modified:true}},error=>error);
+  .then((modified)=>{return {modified:modified}},error=>error);
 });
 
 /**

@@ -57,8 +57,9 @@ function modifyOriginById(id,newData){
     .then(()=>originDAO.getOriginById(id))
     .then((origin)=>{
         if(origin == null) throw ERROR.originDoesntExists;
+        else if(origin.name == newData.name) return false;
         else return originDAO.modifyOriginById(id,newData);
-    });
+    }).then((result)=>{return result != false});
 }
 
 /**
