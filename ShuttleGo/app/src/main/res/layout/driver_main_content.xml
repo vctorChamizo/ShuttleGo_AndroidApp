@@ -58,7 +58,9 @@
                     android:id="@+id/driver_main_content_linear1"
                     android:layout_below="@+id/driver_main_content_tittle"
                     android:layout_marginTop="20dp"
-                    style="@style/VerticalLinear">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
 
@@ -84,7 +86,9 @@
                     android:id="@+id/driver_main_content_linear2"
                     android:layout_below="@+id/driver_main_content_linear1"
                     android:layout_marginTop="30dp"
-                    style="@style/VerticalLinear" >
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/driver_main_content_subtittle2"
@@ -104,7 +108,9 @@
                 <LinearLayout
                     android:id="@+id/driver_main_content_linear3"
                     android:layout_below="@+id/driver_main_content_linear2"
-                    style="@style/VerticalLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_marginTop="30dp">
 
                     <TextView

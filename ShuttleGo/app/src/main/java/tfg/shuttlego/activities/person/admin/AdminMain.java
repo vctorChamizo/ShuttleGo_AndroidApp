@@ -30,13 +30,13 @@ import tfg.shuttlego.model.transfer.person.Person;
 
 public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    private NavigationView navigationView;
     private Person user;
     private ProgressBar adminMainProgress;
     private EditText adminMainEdit;
     private Button adminMainButton;
     private LinearLayout adminMainLinear;
     private DrawerLayout admiMainDrawer;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +59,10 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
      */
     private void incializateView() {
 
-        adminMainProgress = findViewById(R.id.admin_main_content_progress);
-        adminMainLinear = findViewById(R.id.admin_main_content_linar1);
-        adminMainEdit = findViewById(R.id.admin_main_content_edittext);
-        adminMainButton = findViewById(R.id.admin_main_content_button);
+        adminMainProgress = findViewById(R.id.admin_main_progress);
+        adminMainLinear = findViewById(R.id.admin_main_linear);
+        adminMainEdit = findViewById(R.id.admin_main_text);
+        adminMainButton = findViewById(R.id.admin_main_button);
         admiMainDrawer = findViewById(R.id.admin_main_drawer);
     }
 
@@ -89,9 +89,9 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.admin_main_nav);
         navigationView.setNavigationItemSelectedListener(this);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.admin_main_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, admiMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         admiMainDrawer.addDrawerListener(toggle);

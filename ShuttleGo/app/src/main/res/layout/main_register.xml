@@ -24,8 +24,9 @@
 
         <LinearLayout
             android:id="@+id/linear1_relative1_register"
-            android:layout_marginTop="30dp"
-            style="@style/VerticalLinear">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
 
             <TextView
                 android:id="@+id/tittle1_register"
@@ -41,8 +42,10 @@
         <LinearLayout
             android:id="@+id/linear2_relative1_register"
             android:layout_below="@+id/linear1_relative1_register"
-            style="@style/VerticalLinear"
-            android:layout_marginTop="30dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/et_email_register"
@@ -91,7 +94,9 @@
         <LinearLayout
             android:id="@+id/linear1_relative2_register"
             android:layout_marginTop="30dp"
-            style="@style/VerticalLinear">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tittle2_register"
@@ -102,7 +107,9 @@
         <LinearLayout
             android:id="@+id/linear2_relative2_register"
             android:layout_below="@+id/linear1_relative2_register"
-            style="@style/VerticalLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginTop="30dp">
 
             <EditText
@@ -146,7 +153,9 @@
         <LinearLayout
             android:id="@+id/linear1_relative3_register"
             android:layout_marginTop="30dp"
-            style="@style/VerticalLinear">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tittle3_register"
@@ -163,7 +172,9 @@
         <LinearLayout
             android:id="@+id/linear2_relative3_register"
             android:layout_below="@+id/linear1_relative3_register"
-            style="@style/VerticalLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginTop="30dp">
 
             <EditText

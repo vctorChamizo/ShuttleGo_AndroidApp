@@ -1,8 +1,15 @@
 package tfg.shuttlego.activities.origin;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,15 +26,19 @@ import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.origin.Origin;
+import tfg.shuttlego.model.transfer.person.Person;
 
-public class OriginMain extends AppCompatActivity implements View.OnClickListener {
+public class OriginMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
+    private Person user;
     private LinearLayout originMainLinear;
     private ProgressBar originMainProgress;
     private String originMainIdOrigin;
     private TextView originMainTextName;
     private Button originMainDelteButton, originMainEditButton, originMainCloseButton;
     private Origin orginMainOriginObject;
+    private DrawerLayout originMainDrawer;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +46,12 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.origin_main);
 
         originMainIdOrigin = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("origin");
+        user = Session.getInstance(getApplicationContext()).getUser();
 
         inicializateView();
         setProgressBar();
+        setMenuDrawer();
+        setCredencials();
         throwEventGetOrigin(buildGetOriginJson());
         listeners();
     }
@@ -49,10 +63,11 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
         originMainLinear = findViewById(R.id.origin_main_linear);
         originMainProgress = findViewById(R.id.origin_main_progress);
-        originMainTextName = findViewById(R.id.origin_main_name_text);
+        originMainTextName = findViewById(R.id.origin_main_text);
         originMainDelteButton = findViewById(R.id.origin_main_delete_btn);
         originMainEditButton = findViewById(R.id.origin_main_edit_btn);
         originMainCloseButton = findViewById(R.id.origin_main_close_btn);
+        originMainDrawer = findViewById(R.id.origin_main_drawer);
     }
 
     /**
@@ -71,6 +86,32 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
         originMainProgress.setVisibility(View.GONE);
         originMainLinear.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Inicializate the components to put the menu in the view
+     */
+    private void setMenuDrawer() {
+
+        navigationView = findViewById(R.id.origin_main_nav);
+        navigationView.setNavigationItemSelectedListener(this);
+        Toolbar toolbar = findViewById(R.id.origin_main_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, originMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        originMainDrawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    /**
+     * Put the personal data about the current user
+     */
+    private void setCredencials() {
+
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
+        TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
+        nav_name_text.setText(user.getName() + " " + user.getSurname());
+        nav_email_text.setText(user.getEmail());
     }
 
     /**
@@ -204,5 +245,23 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    public void onBackPressed() { startActivity(new Intent(OriginMain.this, AdminMain.class)); }
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
+
+            case R.id.admin_drawer_list: startActivity(new Intent(OriginMain.this, OriginList.class));break;
+            case R.id.admin_drawer_home: startActivity(new Intent(OriginMain.this, AdminMain.class));break;
+        }
+
+        originMainDrawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (originMainDrawer.isDrawerOpen(GravityCompat.START)) originMainDrawer.closeDrawer(GravityCompat.START);
+        else startActivity(new Intent(OriginMain.this, AdminMain.class));
+    }
 }

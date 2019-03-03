@@ -56,8 +56,8 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void inicializateView() {
 
-        originListLinear = findViewById(R.id.origin_list_content_linear);
-        originListProgress = findViewById(R.id.origin_list_content_progress);
+        originListLinear = findViewById(R.id.origin_list_linear);
+        originListProgress = findViewById(R.id.origin_list_progress);
         originListDrawer = findViewById(R.id.origin_list_drawer);
     }
 
@@ -84,9 +84,9 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.origin_list_nav);
         navigationView.setNavigationItemSelectedListener(this);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.origin_list_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, originListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         originListDrawer.addDrawerListener(toggle);
@@ -149,7 +149,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.origin_list_content_recycler);
+        RecyclerView recycler = findViewById(R.id.origin_list_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
         RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> adapter = new RecyclerViewAdapterOrigin(listOrigins);

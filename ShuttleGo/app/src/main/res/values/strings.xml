@@ -106,6 +106,7 @@
 
     <string name="origin">Origen</string>
     <string name="listOrigins">Orígenes</string>
+    <string name="editOrigin">Editar Origen</string>
     <string name="introduceOrigin">Introduce un punto de partida:</string>
     <string name="deleteOriginSuccesful">Origen eliminado correctamente</string>
     <string name="createOriginSuccesful">Origen creado correctamente</string>

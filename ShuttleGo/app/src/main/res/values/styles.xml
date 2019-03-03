@@ -1,9 +1,5 @@
 <resources>
 
-    <!--*************************************************************************
-    *********************************  Main  ************************************
-    **************************************************************************-->
-
     <!-- ******************************  App  ******************************* -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -13,19 +9,20 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
-
-    <!-- *************************  Drawer Menu  **************************** -->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="ThemeData" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+    </style>
 
-    <!-- *************************  Progress Bar  **************************** -->
     <style name="LinearProgress">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -40,14 +37,50 @@
         <item name="android:visibility">gone</item>
     </style>
 
-
-    <!-- ****************+******  Vertical Layout *************************** -->
-    <style name="VerticalLinear">
+    <style name="DrawerLayout">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 
+    <style name="NavigationView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppBarLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:theme">@style/AppTheme.AppBarOverlay</item>
+    </style>
+
+    <style name="AppToolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="TittleWelcome">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="DataLogin">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:background">@drawable/et_login</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
 
     <!-- *************************  Buttons App  **************************** -->
     <style name="ButtonBigRound">
@@ -56,10 +89,7 @@
         <item name="android:background">@drawable/btn_change_white</item>
     </style>
 
-    <style name="ThemeData" parent="Widget.AppCompat.EditText">
-        <item name="colorControlActivated">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorWhite</item>
-    </style>
+
 
 
     <!-- *****************************  Login ******************************* -->
@@ -81,15 +111,7 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="DataLogin">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="android:layout_marginTop">40dp</item>
-        <item name="android:background">@drawable/et_login</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingRight">15dp</item>
-        <item name="android:textColor">@color/colorWhite</item>
-    </style>
+
 
     <style name="SecondaryButtonLogin">
         <item name="android:layout_width">wrap_content</item>
@@ -106,14 +128,6 @@
     </style>
 
 
-    <style name="TittleWelcome">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">40dp</item>
-        <item name="android:textAlignment">viewStart</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textSize">30sp</item>
-    </style>
 
     <style name="SubTittleWelcome">
         <item name="android:layout_width">match_parent</item>

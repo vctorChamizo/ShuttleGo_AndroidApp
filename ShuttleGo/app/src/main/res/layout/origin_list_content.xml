@@ -9,32 +9,28 @@
     <LinearLayout
         style="@style/LinearProgress">
         <ProgressBar
-            android:id="@+id/origin_list_content_progress"
+            android:id="@+id/origin_list_progress"
             style="@style/ProgressBar"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/origin_list_content_linear"
+        android:id="@+id/origin_list_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            style="@style/AppBarLayout">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
+                android:id="@+id/origin_list_toolbar"
+                style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/admin"/>
+                app:title="@string/listOrigins"/>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/origin_list_content_recycler"
+            android:id="@+id/origin_list_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
