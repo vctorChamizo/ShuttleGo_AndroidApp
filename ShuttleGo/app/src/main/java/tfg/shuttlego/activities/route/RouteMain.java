@@ -150,7 +150,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
         boolean empty = false;
 
         switch (v.getId()) {
-            
+
         }
     }
 }
