@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -16,90 +17,64 @@ import tfg.shuttlego.R;
 import tfg.shuttlego.activities.origin.OriginMain;
 import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
+import tfg.shuttlego.model.transfer.route.Route;
 
-/**
- *
- */
 public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> {
 
-    private ArrayList<Origin> routeList;
+    private ArrayList<Route> routeList;
     private static Person user;
 
-    /**
-     *
-     * @param originList
-     * @param user
-     */
-    public RecyclerViewAdapterRoute(ArrayList<Origin> originList, Person user) {
+    public RecyclerViewAdapterRoute(ArrayList<Route> originList, Person user) {
 
         this.routeList = originList;
         this.user = user;
-    }//RecyclerViewAdapterOrigin
+    }
 
-    /**
-     *
-     */
     public static class RouteViewHolder extends RecyclerView.ViewHolder {
 
         Context context;
-        CardView originRoute;
-        Button nameText;
-        TextView idText;
+        CardView routeCard;
+        TextView originText, destinyText;
 
-        /**
-         *
-         * @param v
-         */
         public RouteViewHolder(View v) {
 
             super(v);
             context = v.getContext();
-            nameText = v.findViewById(R.id.route_cardview_button);
-            originRoute = v.findViewById(R.id.route_cardview_cardview);
-            idText = v.findViewById(R.id.route_cardview_textview);
-        }//OriginViewHolder
+            routeCard = v.findViewById(R.id.route_cardview_cardview);
+            originText = v.findViewById(R.id.route_list_cardview_origin);
+            destinyText = v.findViewById(R.id.route_list_cardview_destiny);
 
-        /**
-         *
-         */
+        }
+
         public void setOnClickListeners() {
 
-            nameText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            routeCard.setOnClickListener(view -> {
 
-                    Intent intent = new Intent(context, OriginMain.class);
-                    intent.putExtra("origin", idText.getText());
-                    intent.putExtra("user", user);
-                    context.startActivity(intent);
-                }
             });
-        }//setOnClickListeners
-    }//OriginViewHolder
+        }
+    }
 
     @Override
     public RouteViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.origin_list_cardview, viewGroup, false);
         RouteViewHolder vh = new RouteViewHolder(v);
         return vh;
-    }//OriginViewHolder
+    }
 
     @Override
     public void onBindViewHolder(RouteViewHolder originHolder, int i) {
 
-        originHolder.nameText.setText(routeList.get(i).getName());
-        originHolder.idText.setText(routeList.get(i).getId());
+        originHolder.originText.setText(originHolder.originText.getText() + " " + routeList.get(i).getOrigin());
+        originHolder.destinyText.setText(originHolder.destinyText.getText() + " " + routeList.get(i).getDestination());
 
         originHolder.setOnClickListeners();
-    }//onBindViewHolder
+    }
 
     @Override
-    public int getItemCount() {
-        return routeList.size();
-    }
+    public int getItemCount() { return routeList.size(); }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-    }//onAttachedToRecyclerView
+    }
 }

@@ -1,39 +1,141 @@
 package tfg.shuttlego.activities.person.passenger;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
-
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.transfer.address.Address;
-import tfg.shuttlego.model.transfer.route.Route;
+import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
+import tfg.shuttlego.model.session.Session;
+import tfg.shuttlego.model.transfer.origin.Origin;
+import tfg.shuttlego.model.transfer.person.Person;
 
-public class PassengerSearchResult extends AppCompatActivity {
+public class PassengerSearchResult extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView routeResults;
-    private ArrayList<Route> routes;
-    private Address userAddress;
-    private String originName;
-    private TextView title;
+    private NavigationView navigationView;
+    private LinearLayout routeListLinear;
+    private ProgressBar routeListProgress;
+    private ArrayList<Origin> listRoutes;
+    private DrawerLayout routeListDrawer;
+    private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.passenger_search_result);
+        setContentView(R.layout.route_list_passengers);
+
+        user = Session.getInstance(getApplicationContext()).getUser();
+
         inicializateView();
+        setProgressBar();
+        setMenuDrawer();
+        setCredencials();
+
+        // Debes rellenar listRoutes y el metodo siguiente se encargará de generar el adaptador que renderice la lista.
+        createListView();
     }
 
-    private void inicializateView(){
-        routeResults = findViewById(R.id.routeResults);
+    /**
+     * Inicializate the componentes of this view
+     */
+    private void inicializateView() {
+
+        routeListLinear = findViewById(R.id.origin_list_linear);
+        routeListProgress = findViewById(R.id.origin_list_progress);
+        routeListDrawer = findViewById(R.id.origin_list_drawer);
+    }
+
+    /**
+     * Show the progress bar component visible and put invisble the rest of the view
+     */
+    private void setProgressBar() {
+
+        routeListProgress.setVisibility(View.VISIBLE);
+        routeListLinear.setVisibility(View.GONE);
+    }
+
+    /**
+     * Show the view visible and put invisble progress bar component
+     */
+    private void removeProgressBar() {
+
+        routeListProgress.setVisibility(View.GONE);
+        routeListLinear.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Inicializate the components to put the menu in the view
+     */
+    private void setMenuDrawer() {
+
+        navigationView = findViewById(R.id.route_list_nav);
+        navigationView.setNavigationItemSelectedListener(this);
+        Toolbar toolbar = findViewById(R.id.route_list_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        routeListDrawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    /**
+     * Put the personal data about the current user
+     */
+    private void setCredencials() {
+
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
+        TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
+        nav_name_text.setText(user.getName() + " " + user.getSurname());
+        nav_email_text.setText(user.getEmail());
+    }
+
+    /**
+     * Inicializate the componentes and the adapter to put the list of routes
+     */
+    private void createListView() {
+
+        RecyclerView recycler = findViewById(R.id.origin_list_recycler);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recycler.setLayoutManager(layoutManager);
+        RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> adapter = new RecyclerViewAdapterOrigin(listRoutes);
+        recycler.setAdapter(adapter);
+    }
+
+    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
+
+            default: break;
+        }
+
+        routeListDrawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (routeListDrawer.isDrawerOpen(GravityCompat.START)) routeListDrawer.closeDrawer(GravityCompat.START);
+    }
+}
+
+ /*routeResults = findViewById(R.id.routeResults);
         this.title = findViewById(R.id.routeTitle);
 
         //Array de rutas
@@ -54,7 +156,4 @@ public class PassengerSearchResult extends AppCompatActivity {
         ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listStrings);
         routeResults.setAdapter(adapter);
 
-        this.title.setText("Origen: "+originName+"\n"+"Destino: "+userAddress.getAddress());
-
-    }
-}
+        this.title.setText("Origen: "+originName+"\n"+"Destino: "+userAddress.getAddress());*/

@@ -136,6 +136,7 @@
 
     <string name="route">Ruta</string>
     <string name="routes">Rutas</string>
+    <string name="destiny">Destino</string>
     <string name="introduceDestiny">Introduce un destino</string>
     <string name="searchRoute">Buscar trayecto</string>
     <string name="exit">Salida: </string>

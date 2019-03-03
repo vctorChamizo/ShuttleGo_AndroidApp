@@ -37,7 +37,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.route_card);
+        setContentView(R.layout.route_main);
 
         String route = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
         inicializateView();
@@ -49,15 +49,15 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
 
     private void inicializateView() {
 
-        routeMainLinear = findViewById(R.id.route_card_linear);
-        routeMainProgress = findViewById(R.id.route_card_progress);
-        routeMainRemoveButton = findViewById(R.id.route_card_remove);
-        routeMainCloseButton = findViewById(R.id.route_card_close);
-        routeMainExit = findViewById(R.id.route_card_exit);
-        routeMainArrive = findViewById(R.id.route_card_arrive);
-        routeMainPassenger = findViewById(R.id.route_card_passengers);
-        routeMainDriver = findViewById(R.id.route_card_driver);
-        routeMainPhone = findViewById(R.id.route_card_phone);
+        routeMainLinear = findViewById(R.id.route_main_linear);
+        routeMainProgress = findViewById(R.id.route_main_progress);
+        routeMainRemoveButton = findViewById(R.id.route_main_delete_btn);
+        routeMainCloseButton = findViewById(R.id.route_main_close_btn);
+        routeMainExit = findViewById(R.id.route_main_exit);
+        routeMainArrive = findViewById(R.id.route_main_arrive);
+        routeMainPassenger = findViewById(R.id.route_main_passengers);
+        routeMainDriver = findViewById(R.id.route_main_driver);
+        routeMainPhone = findViewById(R.id.route_main_phone);
     }
 
     /**
@@ -150,16 +150,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
         boolean empty = false;
 
         switch (v.getId()) {
-
-            case R.id.route_card_close:
-
-                //Intent logIntent = new Intent(RouteMain.this, DriverMain.class);
-                //startActivity(logIntent);
-
-                break;
-
-            case R.id.route_card_remove:
-                break;
+            
         }
     }
 }
