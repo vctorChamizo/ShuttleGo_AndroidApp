@@ -43,19 +43,34 @@ function deleteRouteById(id){
 function getRoutesByOriginAndDestination(origin,destination){
     return db.collection("routes").where("destination","==",destination).where("origin","==",origin).get()
     .then((snapshot) => {
-        if(snapshot.docs.length > 0) return snapshot.docs.map(element=>{return element.data()});
+        if(snapshot.docs.length > 0) 
+            return snapshot.docs.map(element=>{
+                let fin = element.data();
+                fin.id = element.id;
+                return fin;
+                }
+            );
         else return [];},
     (err)=>{throw ERROR.server })
 }
 
 function addToRoute(user,route,address){
 
-    return db.collection("check-in").add({
-        passenger:user,
-        route:route.id,
-        order:route.passengers.length,
-        address:address
-    }).then(()=>null,(err)=>{throw ERROR.server });
+    let oldPassengersNumber;
+
+    return db.collection("routes").doc(route.id).get()
+    .then((snapshot)=>{
+        oldPassengersNumber = snapshot.data().passengersNumber
+    })
+    .then(
+        db.collection("check-in").add({
+            passenger:user,
+            route:route.id,
+            order:route.passengers.length,
+            address:address
+    }))
+    .then(()=>db.collection("routes").doc(route.id).update({passengersNumber:oldPassengersNumber+1}))
+    .then(()=>null,(err)=>{console.log(err);throw ERROR.server });
 }
 
 module.exports = {

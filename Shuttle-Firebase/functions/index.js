@@ -91,7 +91,7 @@ exports.modifyOrigin = functions.https.onCall((data, context)=>{
   .then(()=>checkOrigin(data.origin))
   .then(()=>checkUser(data.user,"admin"))  //only admin can modify origins so I check it.
   .then(()=>originSA.modifyOriginById(data.origin.id,data.origin))
-  .then(()=>{return {modified:true}},error=>error);
+  .then((modified)=>{return {modified:modified}},error=>error);
 });
 
 /**
@@ -115,7 +115,7 @@ exports.createOrigin = functions.https.onCall((data,context)=>{
   .then(()=>checkUser(data.user,"admin"))
   .then(()=>checkOrigin(data.origin))
   .then(()=>originSA.createOrigin(data.origin))
-  .then(()=>{return {created:true}},error=>error);
+  .then((id)=>{return {id:id}},error=>error);
 })
 
 exports.getOriginByName = functions.https.onCall((data,context)=>{
@@ -145,9 +145,8 @@ exports.searchRoute = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkData(data.route.origin))
   .then(()=>checkData(data.route.destination))
-  .then(()=>checkData(data.route.address))
   .then(()=>routeSA.searchRoutes(data.route.origin,data.route.destination))
-  .then((routes)=>routes,(error)=>error);
+  .then((routes)=>{return {routes:routes}},(error)=>error);
 })
 
 /**

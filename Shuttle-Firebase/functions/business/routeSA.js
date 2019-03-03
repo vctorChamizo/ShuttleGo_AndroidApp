@@ -12,6 +12,7 @@ function createRoute(route){
         })
         .then((driver)=>{
             route.max=Number(route.max);
+            route.passengersNumber = 0;
             if(driver == null) throw ERROR.userDoesntExists;
             else if(driver.type != "driver") throw ERROR.noPermissions;
             else return routeDao.insertRoute(route);
@@ -44,6 +45,7 @@ function getRouteById(id){
 }
 
 function searchRoutes(origin,destination){
+    destination = Number(destination);
     return routeDao.getRoutesByOriginAndDestination(origin,destination);
 }
 

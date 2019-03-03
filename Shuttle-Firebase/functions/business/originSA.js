@@ -57,8 +57,9 @@ function modifyOriginById(id,newData){
     .then(()=>originDAO.getOriginById(id))
     .then((origin)=>{
         if(origin == null) throw ERROR.originDoesntExists;
+        else if(origin.name == newData.name) return false;
         else return originDAO.modifyOriginById(id,newData);
-    });
+    }).then((result)=>{return result != false});
 }
 
 /**
@@ -70,7 +71,7 @@ function createOrigin(newOrigin){
     .then(()=>originDAO.getOriginByName(newOrigin.name))
     .then((origin)=>{
         if(origin != null) throw ERROR.originAlreadyExists;
-        else return originDAO.createOrigin(newOrigin);
+        else return originDAO.insertOrigin(newOrigin);
     })
 }
 
