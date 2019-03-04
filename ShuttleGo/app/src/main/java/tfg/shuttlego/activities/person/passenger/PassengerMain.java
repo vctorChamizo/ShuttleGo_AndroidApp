@@ -53,6 +53,7 @@ import tfg.shuttlego.activities.map.MapMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.map.Map;
+import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.route.Route;
@@ -89,7 +90,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
 
         Mapbox.getInstance(this, getString(R.string.access_token));
-        user = (Person)Objects.requireNonNull(getIntent().getExtras()).getSerializable("user");
+        user = Session.getInstance(getApplicationContext()).getUser();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.passenger_main);
         inicializateView();

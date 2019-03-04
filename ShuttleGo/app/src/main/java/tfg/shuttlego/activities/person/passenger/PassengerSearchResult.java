@@ -19,16 +19,18 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
+import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
+import tfg.shuttlego.model.transfer.route.Route;
 
 public class PassengerSearchResult extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private LinearLayout routeListLinear;
     private ProgressBar routeListProgress;
-    private ArrayList<Origin> listRoutes;
+    private ArrayList<Route> listRoutes;
     private DrawerLayout routeListDrawer;
     private Person user;
 
@@ -45,6 +47,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
         setCredencials();
 
         // Debes rellenar listRoutes y el metodo siguiente se encargará de generar el adaptador que renderice la lista.
+        this.listRoutes =  (ArrayList<Route>)getIntent().getSerializableExtra("routes");
         createListView();
     }
 
@@ -110,7 +113,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
         RecyclerView recycler = findViewById(R.id.origin_list_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
-        RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> adapter = new RecyclerViewAdapterOrigin(listRoutes);
+        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes,Session.getInstance(getApplicationContext()).getUser());
         recycler.setAdapter(adapter);
     }
 
