@@ -56,9 +56,9 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
      */
     private void inicializateView() {
 
-        routeListLinear = findViewById(R.id.origin_list_linear);
-        routeListProgress = findViewById(R.id.origin_list_progress);
-        routeListDrawer = findViewById(R.id.origin_list_drawer);
+        routeListDrawer = findViewById(R.id.route_list_drawer);
+        routeListLinear = findViewById(R.id.route_list_linear);
+        routeListProgress = findViewById(R.id.route_list_progress);
     }
 
     /**
@@ -110,7 +110,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.origin_list_recycler);
+        RecyclerView recycler = findViewById(R.id.route_list_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
         RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes,Session.getInstance(getApplicationContext()).getUser());

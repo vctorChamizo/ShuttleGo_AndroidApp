@@ -174,7 +174,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.passenger_main_nav);
         navigationView.setNavigationItemSelectedListener(this);
         DrawerLayout drawer = findViewById(R.id.passenger_main);
         Toolbar toolbar = findViewById(R.id.toolbar);

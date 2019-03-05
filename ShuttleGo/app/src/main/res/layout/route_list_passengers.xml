@@ -6,7 +6,7 @@
     tools:openDrawer="start"
     style="@style/DrawerLayout">
 
-    <include layout="@layout/origin_list_content"/>
+    <include layout="@layout/route_list_passenger_content"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/route_list_nav"
