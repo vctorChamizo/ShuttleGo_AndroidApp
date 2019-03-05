@@ -1,7 +1,6 @@
 package tfg.shuttlego.activities.route;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,12 +17,10 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.driver.DriverMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 
@@ -37,7 +34,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.route_card);
+        setContentView(R.layout.route_main_driver);
 
         String route = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
         inicializateView();

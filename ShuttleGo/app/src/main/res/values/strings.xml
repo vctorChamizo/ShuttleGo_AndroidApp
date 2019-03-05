@@ -63,7 +63,7 @@
     <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
     <string name="tittleWelcome">Te damos la bienvenida a ShuttleGo</string>
     <string name="subtittleWelcome">Registrte con tu email</string>
-    <string name="tittleDataRegister">Algunos datos más...</string>
+    <string name="tittleDataRegister">Algunos datos más…</string>
     <string name="tittlePasswordRegister">Ya casi hemos terminado</string>
     <string name="subtittlePasswordRegister">Introduce una constraseña</string>
     <string name="next">Siguiente</string>
@@ -119,14 +119,6 @@
     <!--*************************************************************************
     *****************************  Passenger  ***********************************
     **************************************************************************-->
-
-    <!-- **********************  Passenger Main  **************************** -->
-    <string name="introduceDestiny">Introduce un destino</string>
-    <string name="searchRoute">Buscar trayecto</string>
-    <string name="destination">Destino</string>
-    <!--***********************************************************************-->
-
-    <!-- *******************  Passenger Menu Drawer  ************************* -->
 
     <!--***********************************************************************-->
 

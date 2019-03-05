@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.route.RouteMain"
-    android:padding="20dp"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_degraded"
     android:gravity="center"
-    android:background="@drawable/bg_degraded">
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linear_progress"
         style="@style/LinearProgress">
 
         <ProgressBar
-            android:id="@+id/route_card_progress"
+            android:id="@+id/origin_main_progress"
             style="@style/ProgressBar" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/route_card_linear"
+        android:id="@+id/route_main_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            style="@style/AppBarLayout">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/origin_main_toolbar"
+                style="@style/AppBarLayout"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/origin"/>
+        </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="25dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp">
 
             <ImageView
                 android:layout_width="35dp"
@@ -38,10 +46,10 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_card_exit"
+                android:id="@+id/route_main_driver_origin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/exit"
+                android:text="Origen: "
                 android:textSize="20sp"/>
 
         </LinearLayout>
@@ -50,7 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="25dp">
+            android:layout_marginBottom="25dp"
+            android:layout_marginHorizontal="20dp">
 
             <ImageView
                 android:layout_width="35dp"
@@ -59,10 +68,10 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_card_arrive"
+                android:id="@+id/route_main_driver_limit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/arrive"
+                android:text="Límite: "
                 android:textSize="20sp"/>
         </LinearLayout>
 
@@ -70,7 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="25dp">
+            android:layout_marginBottom="25dp"
+            android:layout_marginHorizontal="20dp">
 
             <ImageView
                 android:layout_width="35dp"
@@ -79,7 +89,7 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_card_passengers"
+                android:id="@+id/route_main_driver_passengers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/limitPassenger"
@@ -91,7 +101,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="25dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:layout_marginHorizontal="20dp">
 
             <ImageView
                 android:layout_width="35dp"
@@ -100,7 +111,7 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_card_driver"
+                android:id="@+id/route_main_driver_driver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/nameDriver"
@@ -110,7 +121,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="20dp">
 
             <ImageView
                 android:layout_width="35dp"
@@ -119,7 +131,7 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_card_phone"
+                android:id="@+id/route_main_driver_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/phoneDriver"
@@ -127,22 +139,30 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/route_card_remove"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/route_main_driver_edit_btn"
+            style="@style/ButtonBigRound"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:text="@string/edit"/>
+
+        <Button
+            android:id="@+id/route_main_driver_delete_btn"
             style="@style/ButtonDeleteOrigin"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="100dp"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
             android:text="@string/delete"/>
 
         <Button
-            android:id="@+id/route_card_close"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/route_main_driver_close_btn"
             style="@style/ButtonBigRound"
             android:textColor="@color/colorPrimary"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
             android:text="@string/close"/>
 
 
