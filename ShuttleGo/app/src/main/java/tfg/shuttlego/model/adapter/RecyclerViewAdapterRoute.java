@@ -75,7 +75,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
             // En mi opinion es mejor la segunda ya que solo hacemos una llamada al servidor, pero quizá tenga
             // problemas esta alternativa, no lo sé, valoralo tu.
 
-        routeHolder.freePlacesText.setText((this.routeList.get(i).getMax()-this.routeList.get(i).getPassengerNumber())+"/"+this.routeList.get(i).getMax());
+        routeHolder.freePlacesText.setText(""+(this.routeList.get(i).getMax()-this.routeList.get(i).getPassengerNumber()));
         routeHolder.hourText.setText("00:00");
 
         // Aqui se introducen los demas componentes de la cardview.
