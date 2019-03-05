@@ -9,12 +9,12 @@
     <LinearLayout
         style="@style/LinearProgress">
         <ProgressBar
-            android:id="@+id/route_list_progress"
+            android:id="@+id/route_list_passenger_progress"
             style="@style/ProgressBar"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/route_list_linear"
+        android:id="@+id/route_list_passenger_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -23,14 +23,14 @@
             style="@style/AppBarLayout">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/route_list_toolbar"
+                android:id="@+id/route_list_passenger_toolbar"
                 style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="@string/listOrigins"/>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/route_list_recycler"
+            android:id="@+id/route_list_passenger_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

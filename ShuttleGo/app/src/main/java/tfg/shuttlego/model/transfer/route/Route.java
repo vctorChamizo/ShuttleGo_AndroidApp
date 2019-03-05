@@ -18,7 +18,7 @@ public class Route implements Serializable {
 
     }
 
-    public Route (String id,String origin, int destination, String driver, int max, int passengersNumber) {
+    public Route (String id, String origin, int destination, String driver, int max, int passengersNumber) {
 
         this.origin = origin;
         this.destination = destination;
@@ -32,8 +32,6 @@ public class Route implements Serializable {
         return this.origin;
     }
 
-    public String getDriver() { return this.driver; }
-
     public int getDestination() {
         return this.destination;
     }
@@ -42,19 +40,27 @@ public class Route implements Serializable {
         return this.max;
     }
 
-    public void setName(String origin) {
+    public String getDriver() { return this.driver; }
+
+    public int getPassengerNumber() {
+        return this.passengersNumber;
+    }
+
+
+    public void setOrigin(String origin) {
         this.origin = origin;
     }
 
-    public void setSurname(int destination) {
+    public void setDestination(int destination) {
         this.destination = destination;
     }
 
-    public void setEmail(String driver) { this.driver = driver; }
+    public void setDriver(String driver) { this.driver = driver; }
 
-    public void setPhone(int max) {
+    public void setMax(int max) {
         this.max = max;
     }
-    
-    public int getPassengersNumber(){return this.passengersNumber;};
+
+    public void setPassengersNumber(int passengersNumber) { this.passengersNumber = passengersNumber; }
+
 }

@@ -1,5 +1,6 @@
 package tfg.shuttlego.activities.person.passenger;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -18,10 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
 import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
 import tfg.shuttlego.model.session.Session;
-import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.route.Route;
 
@@ -39,16 +38,15 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_list_passengers);
 
-        user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance(getApplicationContext()).getUser();
+        this.listRoutes =  (ArrayList<Route>)getIntent().getSerializableExtra("routes");
 
         inicializateView();
         setProgressBar();
         setMenuDrawer();
         setCredencials();
-
-        // Debes rellenar listRoutes y el metodo siguiente se encargará de generar el adaptador que renderice la lista.
-        this.listRoutes =  (ArrayList<Route>)getIntent().getSerializableExtra("routes");
         createListView();
+        removeProgressBar();
     }
 
     /**
@@ -56,9 +54,9 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
      */
     private void inicializateView() {
 
-        routeListDrawer = findViewById(R.id.route_list_drawer);
-        routeListLinear = findViewById(R.id.route_list_linear);
-        routeListProgress = findViewById(R.id.route_list_progress);
+        routeListDrawer = findViewById(R.id.route_list_passenger_drawer);
+        routeListLinear = findViewById(R.id.route_list_passenger_linear);
+        routeListProgress = findViewById(R.id.route_list_passenger_progress);
     }
 
     /**
@@ -84,9 +82,9 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.route_list_nav);
+        navigationView = findViewById(R.id.route_list_passenger_nav);
         navigationView.setNavigationItemSelectedListener(this);
-        Toolbar toolbar = findViewById(R.id.route_list_toolbar);
+        Toolbar toolbar = findViewById(R.id.route_list_passenger_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         routeListDrawer.addDrawerListener(toggle);
@@ -96,6 +94,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
     /**
      * Put the personal data about the current user
      */
+    @SuppressLint("SetTextI18n")
     private void setCredencials() {
 
         View hView =  navigationView.getHeaderView(0);
@@ -110,10 +109,10 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.route_list_recycler);
+        RecyclerView recycler = findViewById(R.id.route_list_passenger_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
-        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes,Session.getInstance(getApplicationContext()).getUser());
+        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes, this.user);
         recycler.setAdapter(adapter);
     }
 
@@ -137,26 +136,3 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
         if (routeListDrawer.isDrawerOpen(GravityCompat.START)) routeListDrawer.closeDrawer(GravityCompat.START);
     }
 }
-
- /*routeResults = findViewById(R.id.routeResults);
-        this.title = findViewById(R.id.routeTitle);
-
-        //Array de rutas
-        routes =  (ArrayList<Route>)getIntent().getSerializableExtra("routes");
-
-        //ruta del usuario
-        userAddress = (Address) getIntent().getSerializableExtra("userAddress");
-
-        //nombre del origen de la ruta (en Route solo viene el id)
-        originName = getIntent().getStringExtra("originName");
-
-        //Array de strings para meter en la lista
-        ArrayList<String> listStrings = new ArrayList<String>();
-
-        for(int i = 0; i<routes.size();i++) //ejemplo "Ruta 1 - Plazas libres 10/20
-            listStrings.add("Ruta "+(i+1)+" - Plazas libres: "+(routes.get(i).getMax()-routes.get(i).getPassengersNumber())+"/"+routes.get(i).getMax());
-
-        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listStrings);
-        routeResults.setAdapter(adapter);
-
-        this.title.setText("Origen: "+originName+"\n"+"Destino: "+userAddress.getAddress());*/

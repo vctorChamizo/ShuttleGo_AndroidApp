@@ -1,10 +1,10 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--*************************************************************************
     *********************************  App  *************************************
     **************************************************************************-->
 
-    <string name="app_name">ShuttleGo</string>
+    <string name="app_name" tools:ignore="PrivateResource">ShuttleGo</string>
     <string name="subTittle">Haz tu viaje más fácil</string>
     <string name="close">Cerrar</string>
     <string name="edit">Editar</string>
@@ -63,7 +63,7 @@
     <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
     <string name="tittleWelcome">Te damos la bienvenida a ShuttleGo</string>
     <string name="subtittleWelcome">Registrte con tu email</string>
-    <string name="tittleDataRegister">Algunos datos más...</string>
+    <string name="tittleDataRegister">Algunos datos más…</string>
     <string name="tittlePasswordRegister">Ya casi hemos terminado</string>
     <string name="subtittlePasswordRegister">Introduce una constraseña</string>
     <string name="next">Siguiente</string>
@@ -105,6 +105,7 @@
     ***************************************************************************-->
 
     <string name="origin">Origen</string>
+    <string name="originCardview">Origen: </string>
     <string name="listOrigins">Orígenes</string>
     <string name="editOrigin">Editar Origen</string>
     <string name="introduceOrigin">Introduce un punto de partida:</string>
@@ -137,10 +138,15 @@
     <string name="route">Ruta</string>
     <string name="routes">Rutas</string>
     <string name="destiny">Destino</string>
+    <string name="destinyCardview">Destino: </string>
+    <string name="hour">Hora</string>
+    <string name="hourCardview">Hora: </string>
+    <string name="freePlaces">Plazas libres</string>
+    <string name="freePlacesCardview">Plazas libres: </string>
+    <string name="ocupedPlaces">Plazas ocupadas</string>
+    <string name="ocupedPlacesCardview">Plazas ocupadas: </string>
     <string name="introduceDestiny">Introduce un destino</string>
     <string name="searchRoute">Buscar trayecto</string>
-    <string name="exit">Salida: </string>
-    <string name="arrive">LLegada: </string>
     <string name="nameDriver">Conductor: </string>
     <string name="phoneDriver">Teléfono: </string>
     <string name="limitPassenger">Pasajeros máximos: </string>
