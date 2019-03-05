@@ -19,51 +19,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp">
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_arrow_left_blue"
-                android:layout_marginRight="20dp"/>
-
-            <TextView
-                android:id="@+id/route_list_passenger_cardview_origin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/originCardview"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp">
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_arrow_right_blue"
-                android:layout_marginRight="20dp"/>
-
-            <TextView
-                android:id="@+id/route_list_passenger_cardview_destiny"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/destinyCardview"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp">
 

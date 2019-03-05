@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
 import tfg.shuttlego.model.session.Session;
+import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.route.Route;
 
@@ -32,6 +33,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
     private ArrayList<Route> listRoutes;
     private DrawerLayout routeListDrawer;
     private Person user;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
 
         navigationView = findViewById(R.id.route_list_passenger_nav);
         navigationView.setNavigationItemSelectedListener(this);
-        Toolbar toolbar = findViewById(R.id.route_list_passenger_toolbar);
+        this.toolbar = findViewById(R.id.route_list_passenger_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         routeListDrawer.addDrawerListener(toggle);
@@ -112,6 +114,13 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
         RecyclerView recycler = findViewById(R.id.route_list_passenger_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
+
+        String originName = getIntent().getStringExtra("originName");
+        Address userAddress = (Address) getIntent().getSerializableExtra("userAddress");
+        String shortAddress = userAddress.getAddress().split(",")[0];
+        this.toolbar.setTitle(originName);
+        this.toolbar.setSubtitle(shortAddress);
+        this.toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes, this.user);
         recycler.setAdapter(adapter);
     }

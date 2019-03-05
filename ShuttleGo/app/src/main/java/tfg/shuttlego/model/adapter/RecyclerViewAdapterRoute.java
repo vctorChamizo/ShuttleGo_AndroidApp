@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.route.Route;
@@ -28,16 +30,14 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
 
         Context context;
         CardView routeCard;
-        TextView originText, destinyText, frePlacesText, hourText;
+        TextView freePlacesText, hourText;
 
         RouteViewHolder(View v) {
 
             super(v);
             context = v.getContext();
             routeCard = v.findViewById(R.id.route_list_passenger_cardview_cardview);
-            originText = v.findViewById(R.id.route_list_passenger_cardview_origin);
-            destinyText = v.findViewById(R.id.route_list_passenger_cardview_destiny);
-            frePlacesText = v.findViewById(R.id.route_list_passenger_cardview_freeplaces);
+            freePlacesText = v.findViewById(R.id.route_list_passenger_cardview_freeplaces);
             hourText = v.findViewById(R.id.route_list_passenger_cardview_hour);
         }
 
@@ -75,13 +75,14 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
             // En mi opinion es mejor la segunda ya que solo hacemos una llamada al servidor, pero quizá tenga
             // problemas esta alternativa, no lo sé, valoralo tu.
 
-        routeHolder.originText.setText(routeHolder.originText.getText() + routeList.get(i).getOrigin());
+        routeHolder.freePlacesText.setText((this.routeList.get(i).getMax()-this.routeList.get(i).getPassengerNumber())+"/"+this.routeList.get(i).getMax());
+        routeHolder.hourText.setText("00:00");
 
         // Aqui se introducen los demas componentes de la cardview.
         // De primeras también veo dos problemas:
             // Hay objetos que vienen como int por tanto deberás convertirlos a string para que te deje renderizarlo.
             // El destino como tal, tiene demasiados datos (nombre, codigo postal, ciudad, numero, etc). Si lo metemos
-            // todo dentro del cardview va a quedar muy feo y apelotnado. Yo creo que los mas conveniente es cortarlo
+            // dentro del cardview va a quedar muy feo y apelotnado. Yo creo que los mas conveniente es cortarlo
             // mediante un splice() o algo por el estilo, para que solo quede reflejado el nombre del detino.
 
         routeHolder.setOnClickListeners();
