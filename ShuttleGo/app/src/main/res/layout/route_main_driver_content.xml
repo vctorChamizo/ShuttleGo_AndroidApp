@@ -11,12 +11,12 @@
         style="@style/LinearProgress">
 
         <ProgressBar
-            android:id="@+id/origin_main_progress"
+            android:id="@+id/route_main_driver_progress"
             style="@style/ProgressBar" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/route_main_linear"
+        android:id="@+id/route_main_driver_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -25,7 +25,7 @@
             style="@style/AppBarLayout">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/origin_main_toolbar"
+                android:id="@+id/route_main_driver_toolbar"
                 style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="@string/origin"/>
@@ -64,7 +64,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_arrow_back_black"
+                android:src="@drawable/ic_limit"
                 android:layout_marginRight="20dp"/>
 
             <TextView
