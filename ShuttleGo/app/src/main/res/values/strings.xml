@@ -156,6 +156,7 @@
     <string name="nameDriver">Conductor: </string>
     <string name="phoneDriver">Teléfono: </string>
     <string name="limitPassenger">Pasajeros máximos: </string>
+    <string name="errRuteNotFound">No se ha encontrado ninguna ruta</string>
 
     <!--************************************************************************-->
 
