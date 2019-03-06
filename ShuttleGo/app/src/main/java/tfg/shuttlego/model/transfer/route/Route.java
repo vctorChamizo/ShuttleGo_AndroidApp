@@ -63,4 +63,6 @@ public class Route implements Serializable {
 
     public void setPassengersNumber(int passengersNumber) { this.passengersNumber = passengersNumber; }
 
+    public String getId(){ return this.id; }
+
 }

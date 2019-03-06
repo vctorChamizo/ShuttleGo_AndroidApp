@@ -47,7 +47,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
 
     }
 
-    private void inicializateView() {
+    protected void inicializateView() {
 
         routeMainLinear = findViewById(R.id.route_main_linear);
         routeMainProgress = findViewById(R.id.route_main_progress);
@@ -132,7 +132,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
         });
     }
 
-    private void listeners() {
+    protected void listeners() {
 
         routeMainRemoveButton.setOnClickListener(this);
         routeMainCloseButton.setOnClickListener(this);
