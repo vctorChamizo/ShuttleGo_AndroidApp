@@ -108,7 +108,7 @@
     <string name="originCardview">Origen: </string>
     <string name="listOrigins">Orígenes</string>
     <string name="editOrigin">Editar Origen</string>
-    <string name="introduceOrigin">Introduce un punto de partida:</string>
+    <string name="introduceOrigin">Introduce un punto de partida</string>
     <string name="deleteOriginSuccesful">Origen eliminado correctamente</string>
     <string name="createOriginSuccesful">Origen creado correctamente</string>
     <string name="editOriginSuccesful">Origen editado correctamente</string>
@@ -157,6 +157,10 @@
     <string name="nameDriver">Conductor: </string>
     <string name="phoneDriver">Teléfono: </string>
     <string name="limitPassenger">Pasajeros máximos: </string>
+    <string name="successfullyAdded">Has sido añadido correctamente</string>
+    <string name="errSoldOut">No hay plazas disponibles</string>
+    <string name="book">Reservar plaza</string>
+    <string name="errUserAlreadyAdded">Ya habías reservado</string>
 
     <!--************************************************************************-->
 

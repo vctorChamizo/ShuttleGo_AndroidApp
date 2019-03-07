@@ -49,7 +49,7 @@ function searchRoutes(origin,destination){
     return routeDao.getRoutesByOriginAndDestination(origin,destination);
 }
 
-function addToRoute(user,route,address){
+function addToRoute(user,route,address,coordinates){
     let passenger;
     return personDao.getUser(user.email)
     .then((result)=>{
@@ -63,7 +63,7 @@ function addToRoute(user,route,address){
         if (!route) throw ERROR.routeDoesntExists;
         else  if (route.passengers.length >= route.max) throw ERROR.routeSoldOut;
         else if (route.passengers.indexOf(passenger.id) != -1) throw ERROR.userAlreadyAdded;
-        else return routeDao.addToRoute(passenger.id,route,address);
+        else return routeDao.addToRoute(passenger.id,route,address,coordinates);
     })
 }
 

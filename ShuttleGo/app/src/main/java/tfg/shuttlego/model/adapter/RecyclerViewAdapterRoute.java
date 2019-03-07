@@ -27,6 +27,7 @@ import tfg.shuttlego.activities.route.RouteMain;
 import tfg.shuttlego.activities.route.RouteMainPassenger;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.route.Route;
 
@@ -35,12 +36,15 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
     private ArrayList<Route> routeList;
     private Person user;
     private AppCompatActivity activity;
+    private Address userAddress;
+    private int index = -1;
 
-    public RecyclerViewAdapterRoute(ArrayList<Route> routeList, Person user, AppCompatActivity activity) {
+    public RecyclerViewAdapterRoute(ArrayList<Route> routeList, Person user, AppCompatActivity activity,Address userAddress) {
 
         this.routeList = routeList;
         this.user = user;
         this.activity = activity;
+        this.userAddress = userAddress;
     }
 
     public static class RouteViewHolder extends RecyclerView.ViewHolder {
@@ -50,16 +54,18 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
         TextView freePlacesText, hourText;
         String routeId;
         AppCompatActivity activity;
+        private Address userAddress;
 
-        RouteViewHolder(View v,String id,AppCompatActivity activity) {
+        RouteViewHolder(View v,String id,AppCompatActivity activity,Address userAddress) {
 
             super(v);
             context = v.getContext();
             routeCard = v.findViewById(R.id.route_list_passenger_cardview_cardview);
             freePlacesText = v.findViewById(R.id.route_list_passenger_cardview_freeplaces);
             hourText = v.findViewById(R.id.route_list_passenger_cardview_hour);
-            routeId = id;
+            this.routeId = id;
             this.activity = activity;
+            this.userAddress = userAddress;
         }
 
         void setOnClickListeners() {
@@ -69,6 +75,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
                // throwEventGetRoute(view.getContext().getApplicationContext(),buildJson(routeId));
                 Intent getRoute = new Intent(activityTmp,RouteMainPassenger.class);
                 getRoute.putExtra("route", this.routeId);
+                getRoute.putExtra("userAddress", this.userAddress);
                 this.activity.startActivity(getRoute);
             });
         }
@@ -99,33 +106,16 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
     @NonNull
     @Override
     public RouteViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        index++;
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.route_list_passenger_cardview, viewGroup, false);
-        return new RouteViewHolder(v,this.routeList.get(i).getId(), this.activity);
+        return new RouteViewHolder(v,this.routeList.get(index).getId(), this.activity,this.userAddress);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RouteViewHolder routeHolder, int i) {
 
-        //Este metodo introudce los datos que quieres renderizar en cada uno de los cardview.
-        //Los elementos están inicializados más arriba de eso no tienes que preocuparte.
-
-        //Hay un problema, la ruta muestra el id del origen, debe mostrar el nombre.
-            // Se me ocurren dos soluciones:
-                // 1. Hacer una llamada al servidor gtOriginByID por cada uno de los id´s que te entren.
-                // 2. Hacer una llamada a getAllOrigins en el constructor de esta clase y crear un objeto
-                //    HashMap desde el cual realices busquedas con el id que te propociona la ruta.
-            // En mi opinion es mejor la segunda ya que solo hacemos una llamada al servidor, pero quizá tenga
-            // problemas esta alternativa, no lo sé, valoralo tu.
-
         routeHolder.freePlacesText.setText(""+(this.routeList.get(i).getMax()-this.routeList.get(i).getPassengerNumber()));
         routeHolder.hourText.setText("00:00");
-
-        // Aqui se introducen los demas componentes de la cardview.
-        // De primeras también veo dos problemas:
-            // Hay objetos que vienen como int por tanto deberás convertirlos a string para que te deje renderizarlo.
-            // El destino como tal, tiene demasiados datos (nombre, codigo postal, ciudad, numero, etc). Si lo metemos
-            // dentro del cardview va a quedar muy feo y apelotnado. Yo creo que los mas conveniente es cortarlo
-            // mediante un splice() o algo por el estilo, para que solo quede reflejado el nombre del detino.
 
         routeHolder.setOnClickListeners();
     }

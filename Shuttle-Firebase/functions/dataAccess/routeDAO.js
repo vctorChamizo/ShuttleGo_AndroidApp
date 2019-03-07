@@ -54,7 +54,7 @@ function getRoutesByOriginAndDestination(origin,destination){
     (err)=>{throw ERROR.server })
 }
 
-function addToRoute(user,route,address){
+function addToRoute(user,route,address,coordinates){
 
     let oldPassengersNumber;
 
@@ -67,7 +67,8 @@ function addToRoute(user,route,address){
             passenger:user,
             route:route.id,
             order:route.passengers.length,
-            address:address
+            address:address,
+            coordinates:coordinates
     }))
     .then(()=>db.collection("routes").doc(route.id).update({passengersNumber:oldPassengersNumber+1}))
     .then(()=>null,(err)=>{console.log(err);throw ERROR.server });

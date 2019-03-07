@@ -21,6 +21,12 @@ public class Session{
         return ourInstance;
     }
 
+    public static Session getInstance() {
+        if(ourInstance == null) ourInstance = new Session();
+
+        return ourInstance;
+    }
+
     public void setUser(Person user) {this.user = user; }
 
     public Person getUser() { return this.user; }

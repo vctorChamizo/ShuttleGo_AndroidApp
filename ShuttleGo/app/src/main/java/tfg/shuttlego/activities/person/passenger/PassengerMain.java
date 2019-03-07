@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -149,6 +150,8 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         passengerMainButton  = findViewById(R.id.passenger_main_content_button);
         numWords = 0;
         destinySelected = false;
+        this.mapView.setClickable(false);
+
     }//inicializateView
 
     /**

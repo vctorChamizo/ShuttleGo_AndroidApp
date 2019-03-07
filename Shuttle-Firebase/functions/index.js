@@ -29,7 +29,7 @@ const routeSA = require("./business/routeSA");
       - GETROUTEBYID: getRouteById({route:{id:"..."}}, {headers: {Authorization: 'Bearer $token'}});
       - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
       - SEARCHROUTE: searchRoute({route:{destination:"28008",origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
-      - ADDTOROUTE: addToRoute({address:"passenger address",route:{id:"7ptW7eHRPqtoaHL4SWae"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
+      - ADDTOROUTE: addToRoute({address:"passenger address",coordinates:"",route:{id:"7ptW7eHRPqtoaHL4SWae"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
 */
 
 
@@ -157,7 +157,8 @@ exports.addToRoute = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkData(data.address))
   .then(()=>checkUser(data.user))
-  .then(()=>routeSA.addToRoute(data.user,data.route,data.address))
+  .then(()=>checkData(data.coordinates))
+  .then(()=>routeSA.addToRoute(data.user,data.route,data.address,data.coordinates))
   .then(()=>{return {added:true}},(error => error));
 });
 

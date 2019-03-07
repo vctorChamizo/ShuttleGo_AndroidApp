@@ -121,7 +121,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
         this.toolbar.setTitle(originName);
         this.toolbar.setSubtitle(shortAddress);
         this.toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes, this.user,this);
+        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes, this.user,this,userAddress);
         recycler.setAdapter(adapter);
     }
 

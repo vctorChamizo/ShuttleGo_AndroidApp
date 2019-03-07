@@ -33,84 +33,67 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="Pasajero"/>
+                app:title="Pasajero" />
         </android.support.design.widget.AppBarLayout>
 
-
-        <ScrollView
-            android:id="@+id/passenger_main_content_scroll"
+        <RelativeLayout
+            android:id="@+id/passenger_main_content_relative1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
 
-            <RelativeLayout
-                android:id="@+id/passenger_main_content_relative1"
+            <com.mapbox.mapboxsdk.maps.MapView
+                android:id="@+id/passenger_main_content_map"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                mapbox:mapbox_cameraTargetLat="38.9098"
+                mapbox:mapbox_cameraTargetLng="-77.0295"
+                mapbox:mapbox_cameraZoom="12">
 
-                <RelativeLayout
-                    android:id="@+id/passenger_main_content_realtive2"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:background="@color/colorPrimaryTranslucent">
+            </com.mapbox.mapboxsdk.maps.MapView>
 
-                    <com.mapbox.mapboxsdk.maps.MapView
-                        android:id="@+id/passenger_main_content_map"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        mapbox:mapbox_cameraTargetLat="38.9098"
-                        mapbox:mapbox_cameraTargetLng="-77.0295"
-                        mapbox:mapbox_cameraZoom="12" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0dp"
+                android:orientation="vertical">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/passenger_main_content_autocomplete2"
-                        style="@style/dataMap"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:ems="10"
-                        android:hint="@string/introduceDestiny"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp" />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/passenger_main_content_linear2"
-                    android:layout_below="@+id/passenger_main_content_realtive2"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginHorizontal="20dp"
+                <AutoCompleteTextView
+                    android:id="@+id/passenger_main_content_autocomplete"
+                    style="@style/dataMap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="@string/introduceOrigin"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp" />
 
-                    <TextView
-                        android:id="@+id/passenger_main_content_text"
-                        style="@style/SubTittleDriveMain"
-                        android:textAlignment="textStart"
-                        android:hint="@string/origin"
-                        android:text="@string/introduceOrigin" />
+                <AutoCompleteTextView
+                    android:id="@+id/passenger_main_content_autocomplete2"
+                    style="@style/dataMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="@string/introduceDestiny"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/passenger_main_content_autocomplete"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:hint="@string/origin"
-                        android:ems="10"
-                        style="@style/DataLogin"/>
-                </LinearLayout>
+            </LinearLayout>
 
-                <Button
-                    android:id="@+id/passenger_main_content_button"
-                    android:layout_below="@+id/passenger_main_content_linear2"
-                    android:text="@string/searchRoute"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginTop="70dp"
-                    android:layout_marginHorizontal="20dp"
-                    style="@style/ButtonBigRound"/>
-            </RelativeLayout>
-        </ScrollView>
+            <Button
+                android:id="@+id/passenger_main_content_button"
+                style="@style/ButtonBigRound"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@string/searchRoute"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:layout_marginHorizontal="@dimen/fab_margin"/>
+
+        </RelativeLayout>
+
+
     </LinearLayout>
 </LinearLayout>
