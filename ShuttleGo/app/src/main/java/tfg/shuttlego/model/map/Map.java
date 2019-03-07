@@ -4,14 +4,20 @@ import android.content.Context;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
+import com.mapbox.api.directions.v5.models.DirectionsResponse;
+import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.api.geocoding.v5.MapboxGeocoding;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
+import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import com.mapbox.geojson.Point;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,18 +29,53 @@ public class Map {
 
     private static Map ourInstance = null;
     private static String accessToken;
+    private static Context context;
     public static Map getInstance(Context applicationContext) {
 
         if(ourInstance == null) {
             Mapbox.getInstance(applicationContext, applicationContext.getString(R.string.access_token));
             accessToken =applicationContext.getString(R.string.access_token);
             ourInstance = new Map();
+            context = applicationContext;
         }
         return ourInstance;
     }
 
     private Map() {}
 
+    public Task<String> calculateRoute(Point origin, ArrayList<Point>waypoints, MapView mapView, MapboxMap mapboxMap){
+
+        TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<String>();
+
+        NavigationRoute.Builder builder = NavigationRoute.builder(this.context)
+                .accessToken(this.accessToken)
+                .origin(origin);
+
+        for(Point waypoint:waypoints) builder = builder.addWaypoint(waypoint);
+
+        builder.build().getRoute(new Callback<DirectionsResponse>() {
+            @Override
+            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                if (response.body() == null) {
+                    taskCompletionSource.setResult(Map.context.getString(R.string.errConexion));
+                } else if (response.body().routes().size() < 1) {
+                    taskCompletionSource.setResult(Map.context.getString(R.string.errRuteNotFound));
+                }else {
+                    DirectionsRoute route = response.body().routes().get(0);
+                    NavigationMapRoute nmr = new NavigationMapRoute(null, mapView, mapboxMap);
+                    nmr.addRoute(route);
+                    taskCompletionSource.setResult(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+                taskCompletionSource.setResult(Map.context.getString(R.string.errConexion));
+            }
+        });
+
+        return taskCompletionSource.getTask();
+    }
     /**
      * Return the full address with the postcode that have been found
      * @param address the address to search

@@ -161,6 +161,7 @@
     <string name="errSoldOut">No hay plazas disponibles</string>
     <string name="book">Reservar plaza</string>
     <string name="errUserAlreadyAdded">Ya habías reservado</string>
+    <string name="errRuteNotFound">No se ha encontrado ninguna ruta</string>
 
     <!--************************************************************************-->
 
