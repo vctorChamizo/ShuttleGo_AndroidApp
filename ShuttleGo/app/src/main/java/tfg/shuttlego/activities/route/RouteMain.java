@@ -1,45 +1,44 @@
 package tfg.shuttlego.activities.route;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.HashMap;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.driver.DriverMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.Person;
 
-public class RouteMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public abstract class RouteMain extends AppCompatActivity {
 
-    private Button routeMainRemoveButton, routeMainCloseButton, routeMainEditButton;
-    private TextView routeMainOrigin, routeMainLimit, routeMainPassenger, routeMainDriver, routeMainPhone;
+    protected Button routeMainRemoveButton, routeMainCloseButton;
+    protected TextView routeMainOrigin, routeMainLimit, routeMainPassenger, routeMainDriver, routeMainPhone;
+    protected ImageView routeMainImage;
+    protected NavigationView navigationView;
+    protected DrawerLayout routeDriverMainDrawer;
+
     private LinearLayout routeMainLinear;
     private ProgressBar routeMainProgress;
-    private NavigationView navigationView;
-    private DrawerLayout routeDriverMainDrawer;
     private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.route_main_driver);
+        setContentView(R.layout.route_main);
 
         String route = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
         user = Session.getInstance(getApplicationContext()).getUser();
@@ -50,9 +49,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
         setCredencials();
         throwEventGetRoute(buildJson(route));
 
-        routeMainRemoveButton.setOnClickListener(this);
-        routeMainCloseButton.setOnClickListener(this);
-        routeMainEditButton.setOnClickListener(this);
+        listeners();
     }
 
     /**
@@ -60,23 +57,24 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
      */
     private void inicializateView() {
 
-        routeMainLinear = findViewById(R.id.route_main_driver_linear);
-        routeMainProgress = findViewById(R.id.route_main_driver_progress);
-        routeMainRemoveButton = findViewById(R.id.route_main_driver_delete_btn);
-        routeMainCloseButton = findViewById(R.id.route_main_driver_close_btn);
-        routeMainEditButton = findViewById(R.id.route_main_driver_edit_btn);
-        routeMainOrigin = findViewById(R.id.route_main_driver_origin);
-        routeMainLimit = findViewById(R.id.route_main_driver_limit);
-        routeMainPassenger = findViewById(R.id.route_main_driver_passengers);
-        routeMainDriver = findViewById(R.id.route_main_driver_driver);
-        routeMainPhone = findViewById(R.id.route_main_driver_phone);
-        routeDriverMainDrawer = findViewById(R.id.route_main_driver_drawer);
+        routeMainLinear = findViewById(R.id.route_main_linear);
+        routeMainProgress = findViewById(R.id.route_main_progress);
+        routeMainRemoveButton = findViewById(R.id.route_main_delete_btn);
+        routeMainCloseButton = findViewById(R.id.route_main_close_btn);
+        routeMainOrigin = findViewById(R.id.route_main_origin);
+        routeMainLimit = findViewById(R.id.route_main_limit);
+        routeMainPassenger = findViewById(R.id.route_main_passengers);
+        routeMainDriver = findViewById(R.id.route_main_driver);
+        routeMainPhone = findViewById(R.id.route_main_phone);
+        routeDriverMainDrawer = findViewById(R.id.route_main_drawer);
+        navigationView = findViewById(R.id.route_main_nav);
+        routeMainImage = findViewById(R.id.route_main_ic_origin);
     }
 
     /**
      * Show the progress bar component visible and put invisble the rest of the view
      */
-    private void setProgressBar () {
+    protected void setProgressBar () {
 
         routeMainProgress.setVisibility(View.VISIBLE);
         routeMainLinear.setVisibility(View.GONE);
@@ -85,7 +83,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
     /**
      * Show the view visible and put invisble progress bar component
      */
-    private void removeProgressBar () {
+    protected void removeProgressBar () {
 
         routeMainProgress.setVisibility(View.GONE);
         routeMainLinear.setVisibility(View.VISIBLE);
@@ -96,9 +94,7 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.route_main_driver_nav);
-        navigationView.setNavigationItemSelectedListener(this);
-        Toolbar toolbar = findViewById(R.id.route_main_driver_toolbar);
+        Toolbar toolbar = findViewById(R.id.route_main_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeDriverMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         routeDriverMainDrawer.addDrawerListener(toggle);
@@ -118,6 +114,13 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
         nav_email_text.setText(user.getEmail());
     }
 
+    /**
+     * Build a JSON to get a route
+     *
+     * @param route necesary data to make the correct JSON
+     *
+     * @return JSON with information about the current origin
+     */
     private JSONObject buildJson(String route) {
 
         JSONObject json = new JSONObject();
@@ -133,63 +136,33 @@ public class RouteMain extends AppCompatActivity implements View.OnClickListener
         return json;
     }
 
+    /**
+     * Throw the event that allow to get a route
+     *
+     * @param route JSON with information to get origin
+     */
     private void throwEventGetRoute(JSONObject route) {
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.GETROUTEBYID, route)
         .addOnCompleteListener(task -> {
 
-            if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
-            else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
+            if (!task.isSuccessful() || task.getResult() == null || task.getResult().containsKey("error")) {
+
+                finish();
+                throwToast(R.string.err);
+            }
             else {
 
-                String origin = routeMainOrigin.getText() + " " + task.getResult().get("origin");
-                String limit = routeMainLimit.getText() + " " + String.valueOf(task.getResult().get("destination"));
-                String passengers = routeMainPassenger.getText() + " " + String.valueOf(task.getResult().get("max"));
-                String phone = routeMainPhone.getText() + " " + String.valueOf(task.getResult().get("driverNumber"));
-                String driverNameComplete = routeMainDriver.getText() + " " +
-                                            task.getResult().get("driverSurname") + " " +
-                                            task.getResult().get("driverName");
-
-                routeMainOrigin.setText(origin);
-                routeMainLimit.setText(limit);
-                routeMainPassenger.setText(passengers);
-                routeMainDriver.setText(driverNameComplete);
-                routeMainPhone.setText(phone);
-
+                setDataText(task.getResult());
                 removeProgressBar();
             }
         });
     }
 
-    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
+    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
-    @Override
-    public void onClick(View v) {
+    abstract protected void listeners();
 
-        switch (v.getId()){
-
-            case R.id.route_main_driver_delete_btn:
-                break;
-
-            case R.id.route_main_driver_close_btn:
-                break;
-
-            case R.id.route_main_driver_edit_btn:
-                startActivity(new Intent(RouteMain.this, DriverMain.class));
-                break;
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-        return false;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (routeDriverMainDrawer.isDrawerOpen(GravityCompat.START)) routeDriverMainDrawer.closeDrawer(GravityCompat.START);
-        else startActivity(new Intent(RouteMain.this, DriverMain.class));
-    }
+    abstract protected void setDataText(HashMap<?,?> resultEvent);
 }

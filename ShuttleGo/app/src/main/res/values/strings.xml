@@ -141,13 +141,15 @@
     *******************************  Route  *************************************
     **************************************************************************-->
 
+    <string name="route">Ruta</string>
     <string name="introduceDestiny">Introduce un destino</string>
     <string name="searchRoute">Buscar trayecto</string>
-    <string name="exit">Salida: </string>
-    <string name="arrive">LLegada: </string>
-    <string name="nameDriver">Conductor: </string>
-    <string name="phoneDriver">Teléfono: </string>
-    <string name="limitPassenger">Pasajeros máximos: </string>
+    <string name="exit">Salida:</string>
+    <string name="arrive">LLegada:</string>
+    <string name="nameDriver">Conductor:</string>
+    <string name="phoneDriver">Teléfono:</string>
+    <string name="limitPassenger">Pasajeros máximos:</string>
+    <string name="limitArea">Limite:</string>
 
     <!--************************************************************************-->
 

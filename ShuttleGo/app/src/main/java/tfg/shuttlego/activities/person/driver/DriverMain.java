@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.route.RouteMain;
+import tfg.shuttlego.activities.route.RouteMainDriver;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
@@ -197,7 +198,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
             }
             else {
 
-                Intent logIntent = new Intent(DriverMain.this, RouteMain.class);
+                Intent logIntent = new Intent(DriverMain.this, RouteMainDriver.class);
                 logIntent.putExtra("route", task.getResult().get("id"));
                 startActivity(logIntent);
             }

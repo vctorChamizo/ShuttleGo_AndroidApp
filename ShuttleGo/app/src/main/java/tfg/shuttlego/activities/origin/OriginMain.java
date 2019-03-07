@@ -199,7 +199,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
      *
      * @param origin JSON with information about the current origin
      */
-   private void throwEventDeleteOrigin(JSONObject origin) {
+    private void throwEventDeleteOrigin(JSONObject origin) {
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.DELETEORIGIN, origin)

@@ -11,12 +11,12 @@
         style="@style/LinearProgress">
 
         <ProgressBar
-            android:id="@+id/route_main_driver_progress"
+            android:id="@+id/route_main_progress"
             style="@style/ProgressBar" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/route_main_driver_linear"
+        android:id="@+id/route_main_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -25,10 +25,10 @@
             style="@style/AppBarLayout">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/route_main_driver_toolbar"
+                android:id="@+id/route_main_toolbar"
                 style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/origin"/>
+                app:title="@string/route"/>
         </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
@@ -46,7 +46,7 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_main_driver_origin"
+                android:id="@+id/route_main_origin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Origen: "
@@ -62,13 +62,14 @@
             android:layout_marginHorizontal="20dp">
 
             <ImageView
+                android:id="@+id/route_main_ic_origin"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:src="@drawable/ic_limit"
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_main_driver_limit"
+                android:id="@+id/route_main_limit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Límite: "
@@ -89,7 +90,7 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_main_driver_passengers"
+                android:id="@+id/route_main_passengers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/limitPassenger"
@@ -111,7 +112,7 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_main_driver_driver"
+                android:id="@+id/route_main_driver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/nameDriver"
@@ -131,7 +132,7 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_main_driver_phone"
+                android:id="@+id/route_main_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/phoneDriver"
@@ -139,25 +140,16 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/route_main_driver_edit_btn"
-            style="@style/ButtonBigRound"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="@string/edit"/>
-
-        <Button
-            android:id="@+id/route_main_driver_delete_btn"
+            android:id="@+id/route_main_delete_btn"
             style="@style/ButtonDeleteOrigin"
             android:textColor="@color/colorWhite"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="120dp"
             android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp"
             android:text="@string/delete"/>
 
         <Button
-            android:id="@+id/route_main_driver_close_btn"
+            android:id="@+id/route_main_close_btn"
             style="@style/ButtonBigRound"
             android:textColor="@color/colorPrimary"
             android:layout_marginTop="10dp"
