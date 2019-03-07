@@ -43,14 +43,13 @@ public class Map {
 
     private Map() {}
 
-    public Task<String> calculateRoute(Point origin, Point destination, ArrayList<Point>waypoints, MapView mapView, MapboxMap mapboxMap){
+    public Task<String> calculateRoute(Point origin, ArrayList<Point>waypoints, MapView mapView, MapboxMap mapboxMap){
 
         TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<String>();
 
         NavigationRoute.Builder builder = NavigationRoute.builder(this.context)
                 .accessToken(this.accessToken)
-                .origin(origin)
-                .destination(destination);
+                .origin(origin);
 
         for(Point waypoint:waypoints) builder = builder.addWaypoint(waypoint);
 
