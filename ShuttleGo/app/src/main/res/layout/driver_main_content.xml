@@ -8,46 +8,40 @@
     android:background="@drawable/bg_degraded">
 
     <LinearLayout
-        android:id="@+id/driver_main_content_progress"
         style="@style/LinearProgress">
 
         <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/driver_main_progress"
             style="@style/ProgressBar" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/driver_main_content_linear4"
+        android:id="@+id/driver_main_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            style="@style/AppBarLayout">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
+                android:id="@+id/driver_main_toolbar"
+                style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="@string/driver"/>
         </android.support.design.widget.AppBarLayout>
 
 
         <ScrollView
-            android:id="@+id/driver_main_content_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/driver_main_content_relative"
-                style="@style/RelativeMain">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/driver_main_content_tittle"
                     style="@style/TittleWelcome"
                     android:textAlignment="center"
                     android:layout_marginTop="20dp"
@@ -55,49 +49,43 @@
                     android:text="@string/createRoute" />
 
                 <LinearLayout
-                    android:id="@+id/driver_main_content_linear1"
-                    android:layout_below="@+id/driver_main_content_tittle"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
                     android:orientation="vertical">
 
                     <TextView
-
                         style="@style/SubTittleDriveMain"
                         android:textAlignment="textStart"
                         android:hint="@string/origin"
                         android:text="@string/introduceOrigin" />
 
                     <AutoCompleteTextView
-                        android:id="@+id/driver_main_content_autoComplete"
+                        android:id="@+id/driver_main_origin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:hint="@string/origin"
-                        android:ems="10"
                         style="@style/DataLogin"/>
-
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/driver_main_content_linear2"
-                    android:layout_below="@+id/driver_main_content_linear1"
                     android:layout_marginTop="30dp"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/driver_main_content_subtittle2"
                         style="@style/SubTittleDriveMain"
                         android:textAlignment="textStart"
                         android:text="@string/addLimitArea" />
 
                     <EditText
-                        android:id="@+id/driver_main_content_limit"
+                        android:id="@+id/driver_main_limit"
                         style="@style/DataLogin"
                         android:layout_marginTop="10dp"
                         android:hint="@string/postalCode"
@@ -106,21 +94,19 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/driver_main_content_linear3"
-                    android:layout_below="@+id/driver_main_content_linear2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="30dp">
+                    android:layout_marginTop="30dp"
+                    android:layout_marginHorizontal="20dp">
 
                     <TextView
-                        android:id="@+id/driver_main_content_subtittle3"
                         style="@style/SubTittleDriveMain"
                         android:textAlignment="textStart"
                         android:text="@string/addLimitPassenger" />
 
                     <EditText
-                        android:id="@+id/driver_main_content_passengers"
+                        android:id="@+id/driver_main_passenger"
                         android:hint="@string/numerPassengers"
                         android:inputType="number"
                         android:layout_marginTop="10dp"
@@ -129,13 +115,13 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/driver_main_content_button"
-                    android:layout_below="@+id/driver_main_content_linear3"
+                    android:id="@+id/driver_main_button"
                     android:text="@string/createRouteButton"
                     android:textColor="@color/colorPrimary"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginHorizontal="20dp"
                     style="@style/ButtonBigRound"/>
-            </RelativeLayout>
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </LinearLayout>

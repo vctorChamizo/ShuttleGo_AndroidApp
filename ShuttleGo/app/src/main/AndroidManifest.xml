@@ -27,7 +27,7 @@
         <activity android:name=".activities.person.passenger.PassengerMain" />
         <activity android:name=".activities.person.driver.DriverMain" />
         <activity android:name=".activities.map.MapMain" />
-        <activity android:name=".activities.route.RouteMain" />
+        <activity android:name=".activities.route.RouteMainDriver" />
         <activity android:name=".activities.origin.OriginList" />
         <activity android:name=".activities.route.RouteMainPassenger"/>
         <activity android:name=".activities.origin.OriginEdit"></activity>

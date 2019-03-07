@@ -31,7 +31,6 @@
                 app:title="@string/route"/>
         </android.support.design.widget.AppBarLayout>
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,10 +46,10 @@
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_main_exit"
+                android:id="@+id/route_main_origin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/origin"
+                android:text="Origen: "
                 android:textSize="20sp"/>
 
         </LinearLayout>
@@ -63,16 +62,17 @@
             android:layout_marginHorizontal="20dp">
 
             <ImageView
+                android:id="@+id/route_main_ic_origin"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_arrow_back_black"
+                android:src="@drawable/ic_limit"
                 android:layout_marginRight="20dp"/>
 
             <TextView
-                android:id="@+id/route_main_arrive"
+                android:id="@+id/route_main_limit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/destiny"
+                android:text="Límite: "
                 android:textSize="20sp"/>
         </LinearLayout>
 
@@ -141,21 +141,20 @@
 
         <Button
             android:id="@+id/route_main_delete_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/ButtonDeleteOrigin"
+            android:textColor="@color/colorWhite"
             android:layout_marginTop="120dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp"
             android:text="@string/delete"/>
 
         <Button
             android:id="@+id/route_main_close_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/ButtonBigRound"
             android:textColor="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
             android:text="@string/close"/>
 
     </LinearLayout>
