@@ -71,11 +71,18 @@ function addToRoute(user,route,address,coordinates){
             coordinates:coordinates
     }))
     .then(()=>db.collection("routes").doc(route.id).update({passengersNumber:oldPassengersNumber+1}))
-    .then(()=>null,(err)=>{console.log(err);throw ERROR.server });
+    .then(()=>null,(err)=>{throw ERROR.server });
 }
 
-function removePassengerFromRoute(passenger,route){
+function removePassengerFromRoute(passengerId,routeId){
+    return db.collection("check-in").where("passenger","==",passengerId).where("route","==",routeId).get()
+    .then(snapshot=>db.collection("check-in").doc(snapshot.docs[0].id).delete())
+    .then(()=>null,(error)=>{throw ERROR.server});
+}
 
+function removeRoute(routeId){
+    return db.collection("routes").doc(routeId).delete()
+    .then(()=>null,(error)=>{throw ERROR.server});
 }
 module.exports = {
     deleteRouteById:deleteRouteById,

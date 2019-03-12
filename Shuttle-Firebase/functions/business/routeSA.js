@@ -73,13 +73,14 @@ function removePassengerFromRoute(passenger,route){
     .then((route)=>{
         if(route == null) throw ERROR.routeDoesntExists;
         else{
-            fullRoute = route.id;
+            fullRoute = route;
             return personDao.getUser(passenger.email);
         }
     })
     .then((user)=>{
         if(user == null) throw ERROR.userDoesntExists;
-        return routeDao.removePassengerFromRoute(user,fullRoute);
+        else if(!fullRoute.passengers.some(pass=>pass==user.id)) throw ERROR.userNotAdded; 
+        return routeDao.removePassengerFromRoute(user.id,fullRoute.id);
     })
 }
 
@@ -95,6 +96,7 @@ function removeRoute(driver,route){
     })
     .then((route)=>{
         if(route.driver != driverId) throw ERROR.noPermissions;
+        else if (route.passengersNumber>0) throw ERROR.routeNotEmpty;
         else return routeDao.removeRoute(route.id);
     })
 }
