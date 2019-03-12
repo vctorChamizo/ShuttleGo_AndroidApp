@@ -169,6 +169,21 @@ exports.getRouteById = functions.https.onCall((data,conext)=>{
   .then(()=>routeSA.getRouteById(data.route.id))
   .then((route)=>route,error=>error);
 })
+
+
+exports.removePassengerFromRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkUser(data.user,"passenger"))
+  .then(()=>routeSA.removePassengerFromRoute(data.user,data.route));
+})
+
+exports.removeRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkUser(data.user,"driver"))
+  .then(()=>routeSA.removeRoute(data.user,data.route));
+})
 /*---------------- PRIVATE Functions ---------------*/
 /**
  * @description Avoid internal null errors, it should be called at the first line of all exported functions.

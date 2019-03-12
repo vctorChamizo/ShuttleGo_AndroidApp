@@ -67,7 +67,39 @@ function addToRoute(user,route,address,coordinates){
     })
 }
 
+function removePassengerFromRoute(passenger,route){
+    let fullRoute;
+    return routeDao.getRouteById(route.id)
+    .then((route)=>{
+        if(route == null) throw ERROR.routeDoesntExists;
+        else{
+            fullRoute = route.id;
+            return personDao.getUser(passenger.email);
+        }
+    })
+    .then((user)=>{
+        if(user == null) throw ERROR.userDoesntExists;
+        return routeDao.removePassengerFromRoute(user,fullRoute);
+    })
+}
 
+function removeRoute(driver,route){
+    let driverId;
+    return personDao.getUser(driver.email)
+    .then((driver)=>{
+        if(driver == null) throw ERROR.userDoesntExists;
+        else {
+            driverId = driver.id;
+            return routeDao.getRouteById(route.id);
+        }
+    })
+    .then((route)=>{
+        if(route.driver != driverId) throw ERROR.noPermissions;
+        else return routeDao.removeRoute(route.id);
+    })
+}
+
+//-----------------------------------Private functions-------------------------------------------
 function checkRequirements(route){
     return new Promise((resolve,reject)=>{
         if(route == null || route.driver == null || route.origin == null || route.destination == null ||
@@ -75,9 +107,12 @@ function checkRequirements(route){
         else resolve();
     });
 }
+
 module.exports = {
     createRoute:createRoute,
     getRouteById:getRouteById,
     searchRoutes:searchRoutes,
-    addToRoute:addToRoute
+    addToRoute:addToRoute,
+    removePassengerFromRoute:removePassengerFromRoute,
+    removeRoute:removeRoute
 }

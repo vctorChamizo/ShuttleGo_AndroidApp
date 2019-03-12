@@ -74,11 +74,16 @@ function addToRoute(user,route,address,coordinates){
     .then(()=>null,(err)=>{console.log(err);throw ERROR.server });
 }
 
+function removePassengerFromRoute(passenger,route){
+
+}
 module.exports = {
     deleteRouteById:deleteRouteById,
     insertRoute:insertRoute,
     getRouteById:getRouteById,
     getRoutesByOriginAndDestination:getRoutesByOriginAndDestination,
     addToRoute:addToRoute,
-    getPassengers:getPassengers
+    getPassengers:getPassengers,
+    removePassengerFromRoute:removePassengerFromRoute,
+    removeRoute:removeRoute
 }
