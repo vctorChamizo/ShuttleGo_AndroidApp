@@ -26,7 +26,7 @@
                 android:id="@+id/route_list_passenger_toolbar"
                 style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/listOrigins"/>
+                app:title="@string/routes"/>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView

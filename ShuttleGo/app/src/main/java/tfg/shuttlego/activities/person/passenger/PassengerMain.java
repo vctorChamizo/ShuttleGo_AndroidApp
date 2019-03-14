@@ -304,7 +304,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(this);
         }
-    }//enableLocationComponent
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

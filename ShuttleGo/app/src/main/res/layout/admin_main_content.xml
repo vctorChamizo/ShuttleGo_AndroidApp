@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:mapbox="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/bg_degraded">
@@ -31,24 +32,58 @@
                 app:title="@string/admin"/>
         </android.support.design.widget.AppBarLayout>
 
-        <TextView
-            style="@style/TittleWelcome"
-            android:textAlignment="center"
-            android:text="Crea un nuevo origen" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:fillViewport="true">
 
-        <EditText
-            android:id="@+id/admin_main_text"
-            style="@style/DataLogin"
-            android:hint="@string/origin"
-            android:inputType="text"
-            android:theme="@style/ThemeData"
-            android:layout_marginHorizontal="20dp"/>
+            <com.mapbox.mapboxsdk.maps.MapView
+                android:id="@+id/admin_main_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <AutoCompleteTextView
+                android:id="@+id/admin_main_autocomplete"
+                style="@style/dataMap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/introduceOrigin"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SubTittleDriveMain"
+                android:textAlignment="textStart"
+                android:hint="@string/origin"
+                android:text="@string/setNameOrigin" />
+
+            <AutoCompleteTextView
+                android:id="@+id/admin_main_origin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:hint="@string/origin"
+                style="@style/DataLogin"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/admin_main_button"
             android:text="@string/add"
             android:textColor="@color/colorPrimary"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="80dp"
             android:layout_marginHorizontal="20dp"
             style="@style/ButtonBigRound"/>
     </LinearLayout>

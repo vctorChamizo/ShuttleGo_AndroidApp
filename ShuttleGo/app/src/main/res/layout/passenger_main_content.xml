@@ -79,7 +79,6 @@
                     android:hint="@string/introduceDestiny"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp" />
-
             </LinearLayout>
 
             <Button
@@ -93,7 +92,5 @@
                 android:layout_marginHorizontal="@dimen/fab_margin"/>
 
         </RelativeLayout>
-
-
     </LinearLayout>
 </LinearLayout>

@@ -163,11 +163,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
 
         switch (menuItem.getItemId()) {
 
-            case R.id.admin_drawer_home:
-                startActivity(new Intent(OriginList.this, AdminMain.class));
-                break;
-
-            default: break;
+            case R.id.admin_drawer_home: startActivity(new Intent(OriginList.this, AdminMain.class)); break;
         }
 
         originListDrawer.closeDrawer(GravityCompat.START);
