@@ -3,17 +3,19 @@ package tfg.shuttlego.activities.person.admin;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,16 +24,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -44,24 +45,20 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.origin.OriginList;
 import tfg.shuttlego.activities.origin.OriginMain;
-import tfg.shuttlego.activities.person.passenger.PassengerMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.map.Map;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
-
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
@@ -81,6 +78,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     private ProgressBar adminMainProgress;
     private LinearLayout adminMainLinear;
+    private LinearLayout adminMainLinearAction;
+    private ScrollView adminMainScroll;
 
     private EditText adminMainOriginText;
     private AutoCompleteTextView adminMainOriginAutocomplete;
@@ -88,6 +87,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     private List<Address> adminMainSearchResult;
     private Address adminMainOrigin;
+    private Boolean adminMainDestinySelected;
 
     private MapView mapView;
     private MapboxMap mapboxMap;
@@ -114,7 +114,10 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
         adminMainButton.setOnClickListener(this);
         adminMainOriginAutocomplete.addTextChangedListener(this);
+        adminMainOriginAutocomplete.setOnItemClickListener(this);
         mapView.getMapAsync(this);
+
+        adminMainScroll.setEnabled(true);
     }
 
     /**
@@ -127,10 +130,14 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         adminMainProgress = findViewById(R.id.admin_main_progress);
         adminMainLinear = findViewById(R.id.admin_main_linear);
+        adminMainLinearAction = findViewById(R.id.admin_main_linear_action);
+        adminMainScroll = findViewById(R.id.admin_main_scroll);
 
         adminMainOriginText = findViewById(R.id.admin_main_origin);
         adminMainOriginAutocomplete = findViewById(R.id.admin_main_autocomplete);
         adminMainButton = findViewById(R.id.admin_main_button);
+
+        adminMainDestinySelected = false;
 
         mapView = findViewById(R.id.admin_main_map);
     }
@@ -250,22 +257,28 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void afterTextChanged(Editable s) {
 
-        if (s.toString().matches(".*\\s")) Map.getInstance(getApplicationContext()).getFullAddress(s.toString()).addOnCompleteListener(task-> {
+        if (adminMainDestinySelected) adminMainDestinySelected = false;
+        else {
 
-            adminMainSearchResult = task.getResult();
-            ArrayList<String> fullAddresses = new ArrayList<>();
+            if (s.toString().matches(".*\\s")) Map.getInstance(getApplicationContext()).getFullAddress(s.toString()).addOnCompleteListener(task-> {
 
-            for (Address address : adminMainSearchResult) fullAddresses.add(address.getAddress());
+                adminMainSearchResult = task.getResult();
+                ArrayList<String> fullAddresses = new ArrayList<>();
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(AdminMain.this, android.R.layout.simple_list_item_1, fullAddresses);
-            adminMainOriginAutocomplete.setThreshold(1);
-            adminMainOriginAutocomplete.setAdapter(adapter);
-            adminMainOriginAutocomplete.showDropDown();
-        });
+                for (Address address : adminMainSearchResult) fullAddresses.add(address.getAddress());
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(AdminMain.this, android.R.layout.simple_list_item_1, fullAddresses);
+                adminMainOriginAutocomplete.setThreshold(1);
+                adminMainOriginAutocomplete.setAdapter(adapter);
+                adminMainOriginAutocomplete.showDropDown();
+            });
+        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        adminMainDestinySelected = true;
 
         int i = 0;
         String text = adminMainOriginAutocomplete.getText().toString();
@@ -283,11 +296,11 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         CameraPosition cp = new CameraPosition.Builder()
                                 .target(new LatLng(coordinates.get(1), coordinates.get(0)))
-                                .zoom(17)
+                                .zoom(12)
                                 .tilt(20)
                                 .build();
 
-        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),2000);
         this.mapboxMap.addMarker(new MarkerOptions().position(new LatLng(coordinates.get(1), coordinates.get(0))));
     }
 
@@ -297,14 +310,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
 
         this.mapboxMap = mapboxMap;
-
-        mapboxMap.setStyle(Style.LIGHT, style-> {
-
-            enableLocationComponent(style);
-            addDestinationIconSymbolLayer(style);
-            mapboxMap.addOnMapClickListener(AdminMain.this);
-
-        });
+        mapboxMap.setStyle(Style.LIGHT);
     }
 
     @SuppressLint("MissingPermission")
@@ -333,19 +339,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     }
 
     @Override
-    public boolean onMapClick(@NonNull LatLng point) {
-
-        Point destinationPoint = Point.fromLngLat(point.getLongitude(), point.getLatitude());
-        @SuppressLint("MissingPermission")
-        Point originPoint = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(), locationComponent.getLastKnownLocation().getLatitude());
-        GeoJsonSource source = mapboxMap.getStyle().getSourceAs("destination-source-id");
-
-        if (source != null) {
-            source.setGeoJson(Feature.fromGeometry(destinationPoint));
-        }
-
-        return true;
-    }
+    public boolean onMapClick(@NonNull LatLng point) { return false; }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -365,12 +359,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
             Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
             finish();
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mapView.onStart();
     }
 
     @Override
