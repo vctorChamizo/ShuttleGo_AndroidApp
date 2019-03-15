@@ -217,6 +217,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
                 throwToast(R.string.deleteOriginSuccesful);
                 startActivity(new Intent(OriginMain.this, AdminMain.class));
+                finish();
             }
         });
     }
@@ -241,6 +242,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
             case R.id.origin_main_close_btn:
                 startActivity(new Intent(OriginMain.this, AdminMain.class));
+                finish();
                 break;
         }
     }
@@ -263,6 +265,6 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onBackPressed() {
         if (originMainDrawer.isDrawerOpen(GravityCompat.START)) originMainDrawer.closeDrawer(GravityCompat.START);
-        else startActivity(new Intent(OriginMain.this, AdminMain.class));
+        else { startActivity(new Intent(OriginMain.this, AdminMain.class)); finish(); }
     }
 }

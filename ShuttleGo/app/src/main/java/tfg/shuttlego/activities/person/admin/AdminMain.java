@@ -2,12 +2,10 @@ package tfg.shuttlego.activities.person.admin;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -24,15 +22,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
-import com.mapbox.geojson.Feature;
-import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -43,8 +37,6 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
-import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -59,13 +51,9 @@ import tfg.shuttlego.model.map.Map;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
 
 public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
                                                             View.OnClickListener,
-                                                            MapboxMap.OnMapClickListener,
                                                             OnMapReadyCallback,
                                                             PermissionsListener,
                                                             AdapterView.OnItemClickListener,
@@ -78,8 +66,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     private ProgressBar adminMainProgress;
     private LinearLayout adminMainLinear;
-    private LinearLayout adminMainLinearAction;
-    private ScrollView adminMainScroll;
 
     private EditText adminMainOriginText;
     private AutoCompleteTextView adminMainOriginAutocomplete;
@@ -92,7 +78,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     private MapView mapView;
     private MapboxMap mapboxMap;
     private PermissionsManager permissionsManager;
-    private LocationComponent locationComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,13 +96,12 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         setCredencials();
         removeProgressBar();
 
+        // Listeners
         navigationView.setNavigationItemSelectedListener(this);
-        adminMainButton.setOnClickListener(this);
+        mapView.getMapAsync(this);
         adminMainOriginAutocomplete.addTextChangedListener(this);
         adminMainOriginAutocomplete.setOnItemClickListener(this);
-        mapView.getMapAsync(this);
-
-        adminMainScroll.setEnabled(true);
+        adminMainButton.setOnClickListener(this);
     }
 
     /**
@@ -130,16 +114,15 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         adminMainProgress = findViewById(R.id.admin_main_progress);
         adminMainLinear = findViewById(R.id.admin_main_linear);
-        adminMainLinearAction = findViewById(R.id.admin_main_linear_action);
-        adminMainScroll = findViewById(R.id.admin_main_scroll);
 
         adminMainOriginText = findViewById(R.id.admin_main_origin);
         adminMainOriginAutocomplete = findViewById(R.id.admin_main_autocomplete);
         adminMainButton = findViewById(R.id.admin_main_button);
 
-        adminMainDestinySelected = false;
-
         mapView = findViewById(R.id.admin_main_map);
+
+        adminMainDestinySelected = false;
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     /**
@@ -195,7 +178,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
      *
      * @return JSON with information to create origin
      */
-    private JSONObject buildJson(String nameOrigin) {
+    private JSONObject buildJson(String nameOrigin, Address adress) {
 
         JSONObject dataUser = new JSONObject();
         JSONObject dataOrigin = new JSONObject();
@@ -206,6 +189,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
             dataUser.put("email", user.getEmail());
             dataUser.put("password", user.getPassword());
             dataOrigin.put("name", nameOrigin);
+            dataOrigin.put("coordAlt", adress.getCoordinates().get(0));
+            dataOrigin.put("coordLong", adress.getCoordinates().get(1));
             createOrigin.put("user", dataUser);
             createOrigin.put("origin", dataOrigin);
 
@@ -248,11 +233,10 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         });
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    /*********************************************************************************************************************
+    Bar to put the destiny into de map **/
 
     @Override
     public void afterTextChanged(Editable s) {
@@ -274,6 +258,10 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
             });
         }
     }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -292,19 +280,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         }
     }
 
-    private void moveMap(List<Double> coordinates) {
-
-        CameraPosition cp = new CameraPosition.Builder()
-                                .target(new LatLng(coordinates.get(1), coordinates.get(0)))
-                                .zoom(12)
-                                .tilt(20)
-                                .build();
-
-        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),2000);
-        this.mapboxMap.addMarker(new MarkerOptions().position(new LatLng(coordinates.get(1), coordinates.get(0))));
-    }
-
-    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
+    /*********************************************************************************************************************
+     MAPBOX **/
 
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -317,7 +294,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
 
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
-            locationComponent = mapboxMap.getLocationComponent();
+            LocationComponent locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
             locationComponent.setCameraMode(CameraMode.TRACKING);
@@ -327,19 +304,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
             permissionsManager.requestLocationPermissions(this);
         }
     }
-
-    private void addDestinationIconSymbolLayer(@NonNull Style loadedMapStyle) {
-
-        loadedMapStyle.addImage("destination-icon-id", BitmapFactory.decodeResource(this.getResources(), R.drawable.mapbox_marker_icon_default));
-        GeoJsonSource geoJsonSource = new GeoJsonSource("destination-source-id");
-        loadedMapStyle.addSource(geoJsonSource);
-        SymbolLayer destinationSymbolLayer = new SymbolLayer("destination-symbol-layer-id", "destination-source-id");
-        destinationSymbolLayer.withProperties(iconImage("destination-icon-id"), iconAllowOverlap(true), iconIgnorePlacement(true));
-        loadedMapStyle.addLayer(destinationSymbolLayer);
-    }
-
-    @Override
-    public boolean onMapClick(@NonNull LatLng point) { return false; }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -353,22 +317,37 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public void onPermissionResult(boolean granted) {
-
-        if (granted) enableLocationComponent(mapboxMap.getStyle());
-        else {
-            Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
-            finish();
-        }
+        if (granted) enableLocationComponent(Objects.requireNonNull(mapboxMap.getStyle()));
+        else { Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show(); finish(); }
     }
+
+    @SuppressWarnings("deprecation")
+    private void moveMap(List<Double> coordinates) {
+
+        CameraPosition cp = new CameraPosition.Builder()
+                                .target(new LatLng(coordinates.get(1), coordinates.get(0)))
+                                .zoom(17)
+                                .tilt(20)
+                                .build();
+
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),2000);
+        this.mapboxMap.addMarker(new MarkerOptions().position(new LatLng(coordinates.get(1), coordinates.get(0))));
+    }
+
+
+    /*********************************************************************************************************************
+    Activity´s action */
+
 
     @Override
     public void onClick(View v) {
 
-        if (adminMainOriginText.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
+        if (adminMainOriginText.getText().toString().isEmpty() ||
+            adminMainOrigin == null) throwToast(R.string.errDataEmpty);
         else {
 
             setProgressBar();
-            throwEventAddOrigin(buildJson(String.valueOf(adminMainOriginText.getText())));
+            throwEventAddOrigin(buildJson(String.valueOf(adminMainOriginText.getText()), adminMainOrigin));
         }
     }
 
@@ -388,6 +367,5 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void onBackPressed() {
         if (admiMainDrawer.isDrawerOpen(GravityCompat.START)) admiMainDrawer.closeDrawer(GravityCompat.START);
-        else finish();
     }
 }
