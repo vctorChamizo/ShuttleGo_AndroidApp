@@ -67,7 +67,41 @@ function addToRoute(user,route,address,coordinates){
     })
 }
 
+function removePassengerFromRoute(passenger,route){
+    let fullRoute;
+    return routeDao.getRouteById(route.id)
+    .then((route)=>{
+        if(route == null) throw ERROR.routeDoesntExists;
+        else{
+            fullRoute = route;
+            return personDao.getUser(passenger.email);
+        }
+    })
+    .then((user)=>{
+        if(user == null) throw ERROR.userDoesntExists;
+        else if(!fullRoute.passengers.some(pass=>pass==user.id)) throw ERROR.userNotAdded; 
+        return routeDao.removePassengerFromRoute(user.id,fullRoute.id);
+    })
+}
 
+function removeRoute(driver,route){
+    let driverId;
+    return personDao.getUser(driver.email)
+    .then((driver)=>{
+        if(driver == null) throw ERROR.userDoesntExists;
+        else {
+            driverId = driver.id;
+            return routeDao.getRouteById(route.id);
+        }
+    })
+    .then((route)=>{
+        if(route.driver != driverId) throw ERROR.noPermissions;
+        else if (route.passengersNumber>0) throw ERROR.routeNotEmpty;
+        else return routeDao.removeRoute(route.id);
+    })
+}
+
+//-----------------------------------Private functions-------------------------------------------
 function checkRequirements(route){
     return new Promise((resolve,reject)=>{
         if(route == null || route.driver == null || route.origin == null || route.destination == null ||
@@ -75,9 +109,12 @@ function checkRequirements(route){
         else resolve();
     });
 }
+
 module.exports = {
     createRoute:createRoute,
     getRouteById:getRouteById,
     searchRoutes:searchRoutes,
-    addToRoute:addToRoute
+    addToRoute:addToRoute,
+    removePassengerFromRoute:removePassengerFromRoute,
+    removeRoute:removeRoute
 }

@@ -30,6 +30,8 @@ const routeSA = require("./business/routeSA");
       - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
       - SEARCHROUTE: searchRoute({route:{destination:"28008",origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
       - ADDTOROUTE: addToRoute({address:"passenger address",coordinates:"",route:{id:"7ptW7eHRPqtoaHL4SWae"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
+      FOR DRIVER USE THIS: - REMOVEROUTE: removeRoute({user:{email:"driv@gmail.com",password:"123"},route:{id:"N6ObwG7HYLpelukKi5qL"}}, {headers: {Authorization: 'Bearer $token'}});
+      FOR PASSENGER USE THIS: -REMOVEPASSENGERFROMROUTE: removePassengerFromRoute({user:{email:"pass@gmail.com",password:"123"},route:{id:"N6ObwG7HYLpelukKi5qL"}}, {headers: {Authorization: 'Bearer $token'}});
 */
 
 
@@ -168,6 +170,23 @@ exports.getRouteById = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route.id))
   .then(()=>routeSA.getRouteById(data.route.id))
   .then((route)=>route,error=>error);
+})
+
+
+exports.removePassengerFromRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkUser(data.user,"passenger"))
+  .then(()=>routeSA.removePassengerFromRoute(data.user,data.route))
+  .then(()=>{return {removed:true}},error=>error);
+})
+
+exports.removeRoute = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkUser(data.user,"driver"))
+  .then(()=>routeSA.removeRoute(data.user,data.route))
+  .then(()=>{return {removed:true}},error=>error);
 })
 /*---------------- PRIVATE Functions ---------------*/
 /**
