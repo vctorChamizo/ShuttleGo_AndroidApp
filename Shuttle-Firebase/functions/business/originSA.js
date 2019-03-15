@@ -84,7 +84,7 @@ function createOrigin(newOrigin){
  */
 function checkRequirements(origin){
     return new Promise((resolve,reject)=>{
-        if(origin == null || origin.name == null || origin.name.length == 0) reject(ERROR.badRequestForm);
+        if(origin == null || origin.name == null || origin.name.length == 0 || origin.coordinates == null || origin.coordinates == "") reject(ERROR.badRequestForm); //origin.coordinates.test("(-?[0-9]*,-?[0-9]*)$")
         else resolve();
     })
 }

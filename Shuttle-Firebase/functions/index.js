@@ -22,7 +22,7 @@ const routeSA = require("./business/routeSA");
       - GETALLORIGINS: getAllOrigins({}, {headers: {Authorization: 'Bearer $token'}});
       - GETORIGINBYID: getOriginById({origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
       - DELETEORIGIN: deleteOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"nTREdQ19BRPRACy5JBiN"}}, {headers: {Authorization: 'Bearer $token'}});
-      - CREATEORIGIN: createOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{name:"Barajas T5"}}, {headers: {Authorization: 'Bearer $token'}});
+      - CREATEORIGIN: createOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{name:"Barajas T5",coordAlt:123,coordLong:234}}, {headers: {Authorization: 'Bearer $token'}});
       - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** Route **
@@ -115,8 +115,15 @@ exports.deleteOrigin = functions.https.onCall((data,context)=>{
 exports.createOrigin = functions.https.onCall((data,context)=>{
   return checkData(data)
   .then(()=>checkUser(data.user,"admin"))
-  .then(()=>checkOrigin(data.origin))
-  .then(()=>originSA.createOrigin(data.origin))
+  .then(()=>checkData(data.origin))
+  .then(()=>checkData(data.origin.coordAlt))
+  .then(()=>checkData(data.origin.coordLong))
+  .then(()=>{
+    data.origin.coordinates = String(data.origin.coordAlt)+","+String(data.origin.coordLong);
+    delete data.origin.coordAlt;
+    delete data.origin.coordLong;
+    return originSA.createOrigin(data.origin);
+  })
   .then((id)=>{return {id:id}},error=>error);
 })
 
