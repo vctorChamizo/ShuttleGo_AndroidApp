@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_degraded">
+
+    <LinearLayout
+        style="@style/LinearProgress">
+        <ProgressBar
+            android:id="@+id/route_choose_passenger_progress"
+            style="@style/ProgressBar"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/route_choose_passenger_linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            style="@style/AppBarLayout">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/route_choose_passenger_toolbar"
+                style="@style/AppBarLayout"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/routes"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/route_choose_passenger_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

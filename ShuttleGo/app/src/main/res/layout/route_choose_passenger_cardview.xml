@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/route_list_passenger_cardview_cardview"
+    android:id="@+id/route_choose_passenger_cardview_cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardUseCompatPadding="true"
@@ -28,7 +28,7 @@
                 android:src="@drawable/ic_hour_blue" />
 
             <TextView
-                android:id="@+id/route_list_passenger_cardview_hour"
+                android:id="@+id/route_choose_passenger_cardview_hour"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimary"
@@ -48,12 +48,11 @@
                 android:src="@drawable/ic_passengers_blue" />
 
             <TextView
-                android:id="@+id/route_list_passenger_cardview_freeplaces"
+                android:id="@+id/route_choose_passenger_cardview_freeplaces"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
         </LinearLayout>
-
     </LinearLayout>
 </android.support.v7.widget.CardView>

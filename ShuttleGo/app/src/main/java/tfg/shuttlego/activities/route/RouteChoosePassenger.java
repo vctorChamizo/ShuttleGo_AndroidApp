@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.person.passenger;
+package tfg.shuttlego.activities.route;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,16 +16,16 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
+import tfg.shuttlego.model.adapter.RecyclerViewAdapterChooseRoute;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.route.Route;
 
-public class PassengerSearchResult extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class RouteChoosePassenger extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private LinearLayout routeListLinear;
@@ -38,7 +38,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.route_list_passengers);
+        setContentView(R.layout.route_choose_passenger);
 
         this.user = Session.getInstance(getApplicationContext()).getUser();
         this.listRoutes =  (ArrayList<Route>)getIntent().getSerializableExtra("routes");
@@ -56,9 +56,9 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
      */
     private void inicializateView() {
 
-        routeListDrawer = findViewById(R.id.route_list_passenger_drawer);
-        routeListLinear = findViewById(R.id.route_list_passenger_linear);
-        routeListProgress = findViewById(R.id.route_list_passenger_progress);
+        routeListDrawer = findViewById(R.id.route_choose_passenger_drawer);
+        routeListLinear = findViewById(R.id.route_choose_passenger_linear);
+        routeListProgress = findViewById(R.id.route_choose_passenger_progress);
     }
 
     /**
@@ -84,9 +84,9 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.route_list_passenger_nav);
+        navigationView = findViewById(R.id.route_choose_passenger_nav);
         navigationView.setNavigationItemSelectedListener(this);
-        this.toolbar = findViewById(R.id.route_list_passenger_toolbar);
+        this.toolbar = findViewById(R.id.route_choose_passenger_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         routeListDrawer.addDrawerListener(toggle);
@@ -111,7 +111,7 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.route_list_passenger_recycler);
+        RecyclerView recycler = findViewById(R.id.route_choose_passenger_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(layoutManager);
 
@@ -121,11 +121,9 @@ public class PassengerSearchResult extends AppCompatActivity implements Navigati
         this.toolbar.setTitle(originName);
         this.toolbar.setSubtitle(shortAddress);
         this.toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes, this.user,this,userAddress);
+        RecyclerView.Adapter<RecyclerViewAdapterChooseRoute.RouteViewHolder> adapter = new RecyclerViewAdapterChooseRoute(this.listRoutes,this,userAddress);
         recycler.setAdapter(adapter);
     }
-
-    private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

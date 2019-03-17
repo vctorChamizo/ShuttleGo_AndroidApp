@@ -31,7 +31,7 @@
         <activity android:name=".activities.origin.OriginList" />
         <activity android:name=".activities.route.RouteMainPassenger"/>
         <activity android:name=".activities.origin.OriginEdit"></activity>
-        <activity android:name=".activities.person.passenger.PassengerSearchResult"></activity>
+        <activity android:name=".activities.route.RouteChoosePassenger"></activity>
     </application>
 
 </manifest>
