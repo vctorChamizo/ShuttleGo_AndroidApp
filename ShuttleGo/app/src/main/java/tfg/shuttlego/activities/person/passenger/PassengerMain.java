@@ -292,6 +292,9 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
         this.mapboxMap = mapboxMap;
 
+        this.mapboxMap.getUiSettings().setCompassEnabled(false);
+        this.mapboxMap.getUiSettings().setLogoEnabled(false);
+
         mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
 
             @Override
@@ -301,6 +304,14 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
                 mapboxMap.addOnMapClickListener(PassengerMain.this);
             }
         });
+
+
+        CameraPosition cp = new CameraPosition.Builder()
+                .zoom(25)
+                .tilt(20)
+                .build();
+
+        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
     }
 
     @SuppressLint("MissingPermission")
