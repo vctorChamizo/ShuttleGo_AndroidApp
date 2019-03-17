@@ -2,6 +2,8 @@ package tfg.shuttlego.activities.person.passenger;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,7 +30,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
+import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdate;
@@ -40,6 +46,10 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.style.layers.Layer;
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,6 +66,7 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.map.Map;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.address.Address;
+import tfg.shuttlego.model.transfer.origin.Origin;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.route.Route;
 
@@ -77,11 +88,11 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     private AutoCompleteTextView passengerMainDestiny;
     private Button passengerMainButton;
     private AutoCompleteTextView passengerMainOrigin;
-    private ArrayList<String> originList;
+    private ArrayList<Origin> originList;
     private ArrayList<HashMap<?, ?>> originMap;
     private int numWords;
     private boolean destinySelected;
-    private List<Address> searchResult;
+    private List<Address> destinySearchResult;
     private HashMap<String,String> originIds;
     private Address destination;
     private String originName;
@@ -216,10 +227,10 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
                     HashMap<?, ?> result = task.getResult();
                     originMap = (ArrayList<HashMap<?, ?>>) result.get("origins");
-                    originList = new ArrayList<String>();
+                    originList = new ArrayList<Origin>();
                     originIds = new HashMap<String, String>();
                     for (HashMap<?, ?> l : originMap){
-                        originList.add((String) l.get("name"));
+                        originList.add(new Origin((String)l.get("id"),(String) l.get("name"),(String) l.get("coordinates")));
                         originIds.put((String)l.get("name"),(String)l.get("id"));
 
                     }
@@ -235,8 +246,10 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
      *
      */
     private void setAutoCompleteTextView() {
+        ArrayList<String> originListNames = new ArrayList<>();
+        for(Origin origin:originList) originListNames.add(origin.getName());
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, originList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, originListNames);
         passengerMainOrigin.setThreshold(1);
         passengerMainOrigin.setAdapter(adapter);
     }//setAutoCompleteTextView
@@ -265,6 +278,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         passengerMainDestiny.addTextChangedListener(this);
         passengerMainDestiny.setOnClickListener(this);
         passengerMainDestiny.setOnItemClickListener(this);
+        passengerMainOrigin.setOnItemClickListener(this);
     }//listeners
 
     /**
@@ -327,10 +341,10 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
-
+    /*
         Intent logIntent = new Intent(PassengerMain.this, MapMain.class);
         startActivity(logIntent);
-
+    */
         return true;
     }
 
@@ -416,7 +430,8 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         return r;
     }
 
-    private void moveMap(List<Double> coordinates) {
+    private void moveMap(List<Double> coordinates,String type) {
+
         CameraPosition cp = new CameraPosition.Builder()
                 .target(new LatLng(coordinates.get(1), coordinates.get(0)))
                 .zoom(17)
@@ -424,8 +439,36 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
                 .build();
 
         this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
-        this.mapboxMap.addMarker(new MarkerOptions()
-                .position(new LatLng(coordinates.get(1), coordinates.get(0))));
+
+
+        ArrayList<Feature> point = new ArrayList<>();
+
+        point.add(Feature.fromGeometry(Point.fromLngLat(coordinates.get(0), coordinates.get(1))));
+
+        if(mapboxMap.getStyle().getImage(type)==null) {
+            Bitmap bitmap = null;
+            switch(type){
+                case "finish":
+                    bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.finish);
+                    break;
+                default:
+                    bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.start);
+                    break;
+            }
+            mapboxMap.getStyle().addImage(type, bitmap);
+        }
+
+        if(mapboxMap.getStyle().getLayer(type+"-layer")!=null)
+            mapboxMap.getStyle().removeLayer(type+"-layer");
+
+        if(mapboxMap.getStyle().getSource(type+"-source") != null)
+            mapboxMap.getStyle().removeSource(type+"-source");
+
+        mapboxMap.getStyle().addSource(new GeoJsonSource(type+"-source",
+                FeatureCollection.fromFeatures(point)));
+
+        mapboxMap.getStyle().addLayer(new SymbolLayer(type+"-layer", type+"-source")
+                .withProperties(PropertyFactory.iconImage(type)));
     }
 
 
@@ -443,8 +486,9 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     @Override
     public void afterTextChanged(Editable s) {
 
-        if(destinySelected) destinySelected = false; //avoid an infinite loop.
-        else {
+        if(destinySelected)
+            destinySelected = false; //avoid an infinite loop.
+        else if(getCurrentFocus() == this.passengerMainDestiny){
             String value = s.toString();
             PassengerMain aux = this;
             int newNumWords = value.split(" ").length;
@@ -453,10 +497,10 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
                 Map.getInstance(getApplicationContext()).getFullAddress(value).addOnCompleteListener(new OnCompleteListener<List<Address>>() {
                     @Override
                     public void onComplete(@NonNull Task<List<Address>> task) {
-                        searchResult = task.getResult();
+                        destinySearchResult = task.getResult();
                         ArrayList<String> fullAddresses = new ArrayList<String>();
 
-                        for (Address address : searchResult)
+                        for (Address address : destinySearchResult)
                             fullAddresses.add(address.getAddress());
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(aux, android.R.layout.simple_list_item_1, fullAddresses);
@@ -475,14 +519,27 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         destinySelected=true;
 
-        int i = 0;
-        String text = passengerMainDestiny.getText().toString();
-        while(i<searchResult.size() && !searchResult.get(i).getAddress().equals(text)) i++;
+        if(getCurrentFocus().getId() == this.passengerMainDestiny.getId()) {
+            int i = 0;
+            String text = passengerMainDestiny.getText().toString();
+            while (i < destinySearchResult.size() && !destinySearchResult.get(i).getAddress().equals(text))
+                i++;
 
-        if(i>=searchResult.size()) throwToast(R.string.errDestinyNotExisit);
-        else {
-            this.destination=searchResult.get(i);
-            moveMap(searchResult.get(i).getCoordinates());
+            if (i >= destinySearchResult.size()) throwToast(R.string.errDestinyNotExisit);
+            else {
+                this.destination = destinySearchResult.get(i);
+                moveMap(destinySearchResult.get(i).getCoordinates(),"finish");
+            }
+        }else{
+            int i = 0;
+            String text = passengerMainOrigin.getText().toString();
+            while (i < this.originList.size() && !originList.get(i).getName().equals(text))
+                i++;
+
+            if (i >= originList.size()) throwToast(R.string.errOriginNotExist);
+            else
+                moveMap(originList.get(i).getCoordinates(),"start");
+
         }
 
     }

@@ -14,7 +14,7 @@ function getAllOrigins(){
         
         let origins = [];
         snapshot.docs.forEach((doc)=>{
-            origins.push({name:doc.data().name,id:doc.id});
+            origins.push({name:doc.data().name,id:doc.id,coordinates:doc.data().coordinates});
         })
         return origins;
         

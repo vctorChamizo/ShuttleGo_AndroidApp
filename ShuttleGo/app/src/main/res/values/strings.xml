@@ -163,6 +163,7 @@
     <string name="book">Reservar plaza</string>
     <string name="errUserAlreadyAdded">Ya habías reservado</string>
     <string name="errRuteNotFound">No se ha encontrado ninguna ruta</string>
+    <string name="errOriginNotExist">No existe el origen</string>
 
     <!--************************************************************************-->
 
