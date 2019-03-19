@@ -101,11 +101,13 @@ function removeRoute(driver,route){
     })
 }
 
-function getRoutesByDriver(driver){
-    return personDao.getUser(driver.email)
-    .then((driv)=>{
-        if(driv == null) throw ERROR.userDoesntExists;
-        else return routeDao.getRoutesByDriver(driv.id);
+function getRoutesByUser(user){
+    return personDao.getUser(user.email)
+    .then((userFull)=>{
+        if(userFull == null) throw ERROR.userDoesntExists;
+        else if(userFull.type == "driver") return routeDao.getRoutesByDriver(userFull.id);
+        else if(userFull.type == "passenger") return routeDao.getRoutesByPassenger(userFull.id);
+        else throw ERROR.noPermissions;
     });
 }
 //-----------------------------------Private functions-------------------------------------------
@@ -124,5 +126,5 @@ module.exports = {
     addToRoute:addToRoute,
     removePassengerFromRoute:removePassengerFromRoute,
     removeRoute:removeRoute,
-    getRoutesByDriver:getRoutesByDriver
+    getRoutesByUser:getRoutesByUser
 }

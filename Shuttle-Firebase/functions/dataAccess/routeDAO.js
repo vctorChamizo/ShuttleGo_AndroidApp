@@ -94,6 +94,18 @@ function getRoutesByDriver(DriverId){
     }))
     .then((routes)=>routes,error =>{throw ERROR.server});
 }
+
+function getRoutesByPassenger(passengerId){
+    return db.collection("check-in").where("passenger","==",passengerId).get()
+    .then((snapshot)=>{
+        let routeIds = snapshot.docs.map(element=>element.data().route);
+        let promises = [];
+        routeIds.forEach(id=> promises.push(getRouteById(id)));
+        return Promise.all(promises);
+    })
+    .then((routes)=>routes,error =>{throw ERROR.server});
+}
+
 module.exports = {
     deleteRouteById:deleteRouteById,
     insertRoute:insertRoute,
@@ -103,5 +115,6 @@ module.exports = {
     getPassengers:getPassengers,
     removePassengerFromRoute:removePassengerFromRoute,
     removeRoute:removeRoute,
-    getRoutesByDriver:getRoutesByDriver
+    getRoutesByDriver:getRoutesByDriver,
+    getRoutesByPassenger:getRoutesByPassenger
 }
