@@ -106,6 +106,13 @@ function getRoutesByPassenger(passengerId){
     .then((routes)=>routes,error =>{throw ERROR.server});
 }
 
+function getRoutePoints(routeId){
+    return db.collection("check-in").where("route","==",routeId).get()
+    .then((snapshot)=>{
+        return snapshot.docs.map(element=>element.data());
+    })
+}
+
 module.exports = {
     deleteRouteById:deleteRouteById,
     insertRoute:insertRoute,
@@ -116,5 +123,6 @@ module.exports = {
     removePassengerFromRoute:removePassengerFromRoute,
     removeRoute:removeRoute,
     getRoutesByDriver:getRoutesByDriver,
-    getRoutesByPassenger:getRoutesByPassenger
+    getRoutesByPassenger:getRoutesByPassenger,
+    getRoutePoints:getRoutePoints
 }

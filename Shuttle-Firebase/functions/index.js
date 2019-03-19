@@ -26,6 +26,7 @@ const routeSA = require("./business/routeSA");
       - MODIFYORIGIN: modifyOrigin({user:{email:"admin@gmail.com",password:"123"},origin:{id:"...",name:"Barajas T6"}}, {headers: {Authorization: 'Bearer $token'}});
     
     ** Route **
+      - GETROUTEPOINTS: getRoutePoints({user:{email:"driv@gmail.com",password:"123"},route:{id:"CwCBCrWiW2Ty6KrLyIyG"}}, {headers: {Authorization: 'Bearer $token'}});
       - GETROUTESBYUSER: getRoutesByUser({user:{email:"driv@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
       - GETROUTEBYID: getRouteById({route:{id:"..."}}, {headers: {Authorization: 'Bearer $token'}});
       - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
@@ -202,6 +203,15 @@ exports.getRoutesByUser = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkUser(data.user))
   .then(()=>routeSA.getRoutesByUser(data.user))
+  .then((routes)=>{return {routes:routes}},error=>error);
+})
+
+
+exports.getRoutePoints = functions.https.onCall((data,conext)=>{
+  return checkData(data)
+  .then(()=>checkData(data.route))
+  .then(()=>checkUser(data.user,"driver"))
+  .then(()=>routeSA.getRoutePoints(data.route,data.user))
   .then((routes)=>{return {routes:routes}},error=>error);
 })
 

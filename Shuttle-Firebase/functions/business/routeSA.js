@@ -110,6 +110,20 @@ function getRoutesByUser(user){
         else throw ERROR.noPermissions;
     });
 }
+
+function getRoutePoints(route,driver){
+    let driverFull;
+    return personDao.getUser(driver.email)
+    .then((data)=>{
+        if(data == null) throw ERROR.userDoesntExists;
+        driverFull = data;
+        return routeDao.getRouteById(route.id);
+    })
+    .then((routeFull)=>{
+        if(driverFull.id == routeFull.id) throw ERROR.noPermissions;
+        else return routeDao.getRoutePoints(routeFull.id);
+    })
+}
 //-----------------------------------Private functions-------------------------------------------
 function checkRequirements(route){
     return new Promise((resolve,reject)=>{
@@ -126,5 +140,6 @@ module.exports = {
     addToRoute:addToRoute,
     removePassengerFromRoute:removePassengerFromRoute,
     removeRoute:removeRoute,
-    getRoutesByUser:getRoutesByUser
+    getRoutesByUser:getRoutesByUser,
+    getRoutePoints:getRoutePoints
 }
