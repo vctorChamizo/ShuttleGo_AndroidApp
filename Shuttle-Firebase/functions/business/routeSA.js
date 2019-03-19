@@ -94,10 +94,11 @@ function removeRoute(driver,route){
             return routeDao.getRouteById(route.id);
         }
     })
-    .then((route)=>{
-        if(route.driver != driverId) throw ERROR.noPermissions;
-        else if (route.passengersNumber>0) throw ERROR.routeNotEmpty;
-        else return routeDao.removeRoute(route.id);
+    .then((routeFull)=>{
+        if (routeFull == null) throw ERROR.routeDoesntExists;
+        else if(routeFull.driver != driverId) throw ERROR.noPermissions;
+        else if (routeFull.passengersNumber>0) throw ERROR.routeNotEmpty;
+        else return routeDao.deleteRouteById(routeFull.id);
     })
 }
 

@@ -35,10 +35,6 @@ function getPassengers(route){
         return snapshot.docs.map(element=>element.data().passenger);
     },error => {throw ERROR.server});
 }
-function deleteRouteById(id){
-    return db.collection("routes").doc(id).delete()
-    .then(()=>null,error=>{throw ERROR.server});
-}
 
 function getRoutesByOriginAndDestination(origin,destination){
     return db.collection("routes").where("destination","==",destination).where("origin","==",origin).get()
@@ -80,8 +76,14 @@ function removePassengerFromRoute(passengerId,routeId){
     .then(()=>null,(error)=>{throw ERROR.server});
 }
 
-function removeRoute(routeId){
+function deleteRouteById(routeId){
     return db.collection("routes").doc(routeId).delete()
+    .then(()=>db.collection("check-in").where("route","==",routeId).get())
+    .then((snapshot)=>{
+        let promises = [];
+        snapshot.docs.forEach(doc=>{console.log(doc);promises.push(db.collection("check-in").doc(doc.id).delete())});
+        return Promise.all(promises);
+    })
     .then(()=>null,(error)=>{throw ERROR.server});
 }
 
@@ -121,7 +123,6 @@ module.exports = {
     addToRoute:addToRoute,
     getPassengers:getPassengers,
     removePassengerFromRoute:removePassengerFromRoute,
-    removeRoute:removeRoute,
     getRoutesByDriver:getRoutesByDriver,
     getRoutesByPassenger:getRoutesByPassenger,
     getRoutePoints:getRoutePoints
