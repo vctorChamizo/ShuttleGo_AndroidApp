@@ -29,9 +29,10 @@
         <activity android:name=".activities.map.MapMain" />
         <activity android:name=".activities.route.RouteMainDriver" />
         <activity android:name=".activities.origin.OriginList" />
-        <activity android:name=".activities.route.RouteMainPassenger"/>
-        <activity android:name=".activities.origin.OriginEdit"></activity>
-        <activity android:name=".activities.person.passenger.PassengerSearchResult"></activity>
+        <activity android:name=".activities.route.RouteMainPassenger" />
+        <activity android:name=".activities.origin.OriginEdit" />
+        <activity android:name=".activities.person.passenger.PassengerSearchResult" />
+        <activity android:name=".activities.route.RouteCalculate"></activity>
     </application>
 
 </manifest>
