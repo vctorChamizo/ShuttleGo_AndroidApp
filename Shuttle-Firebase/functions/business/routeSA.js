@@ -101,6 +101,13 @@ function removeRoute(driver,route){
     })
 }
 
+function getRoutesByDriver(driver){
+    return personDao.getUser(driver.email)
+    .then((driv)=>{
+        if(driv == null) throw ERROR.userDoesntExists;
+        else return routeDao.getRoutesByDriver(driv.id);
+    });
+}
 //-----------------------------------Private functions-------------------------------------------
 function checkRequirements(route){
     return new Promise((resolve,reject)=>{
@@ -116,5 +123,6 @@ module.exports = {
     searchRoutes:searchRoutes,
     addToRoute:addToRoute,
     removePassengerFromRoute:removePassengerFromRoute,
-    removeRoute:removeRoute
+    removeRoute:removeRoute,
+    getRoutesByDriver:getRoutesByDriver
 }

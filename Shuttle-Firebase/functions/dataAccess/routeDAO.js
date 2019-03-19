@@ -84,6 +84,16 @@ function removeRoute(routeId){
     return db.collection("routes").doc(routeId).delete()
     .then(()=>null,(error)=>{throw ERROR.server});
 }
+
+function getRoutesByDriver(DriverId){
+    return db.collection("routes").where("driver","==",DriverId).get()
+    .then((snapshot)=>snapshot.docs.map(element=>{
+        let route = element.data();
+        route.id = element.id;
+        return route;
+    }))
+    .then((routes)=>routes,error =>{throw ERROR.server});
+}
 module.exports = {
     deleteRouteById:deleteRouteById,
     insertRoute:insertRoute,
@@ -92,5 +102,6 @@ module.exports = {
     addToRoute:addToRoute,
     getPassengers:getPassengers,
     removePassengerFromRoute:removePassengerFromRoute,
-    removeRoute:removeRoute
+    removeRoute:removeRoute,
+    getRoutesByDriver:getRoutesByDriver
 }
