@@ -24,6 +24,7 @@ public abstract class RouteList extends AppCompatActivity {
     protected ProgressBar routeListProgress;
     protected NavigationView routeListNavigation;
     protected DrawerLayout routeListDrawer;
+    protected RecyclerView routeListRecycler;
 
     protected ArrayList<Route> listRoutes;
 
@@ -43,8 +44,11 @@ public abstract class RouteList extends AppCompatActivity {
 
         routeListLinear = findViewById(R.id.route_list_linear);
         routeListProgress = findViewById(R.id.route_list_progress);
+
         routeListNavigation = findViewById(R.id.route_list_nav);
         routeListDrawer = findViewById(R.id.route_list_drawer);
+
+        routeListRecycler = findViewById(R.id.route_list_recycler);
     }
 
     /**

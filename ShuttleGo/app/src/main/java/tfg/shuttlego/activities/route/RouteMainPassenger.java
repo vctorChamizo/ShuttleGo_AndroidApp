@@ -4,17 +4,11 @@ import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.gson.JsonObject;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;

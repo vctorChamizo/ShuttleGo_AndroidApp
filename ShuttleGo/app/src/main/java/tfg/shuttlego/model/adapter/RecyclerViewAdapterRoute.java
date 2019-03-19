@@ -1,6 +1,7 @@
 package tfg.shuttlego.model.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,21 +11,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.route.RouteMain;
 import tfg.shuttlego.model.transfer.route.Route;
 
-public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewAdapterRoute.OriginViewHolder> {
+public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> {
 
     private ArrayList<Route> routeList;
 
     public RecyclerViewAdapterRoute(ArrayList<Route> routeList) { this.routeList = routeList; }
 
-    public static class OriginViewHolder extends RecyclerView.ViewHolder {
+    public static class RouteViewHolder extends RecyclerView.ViewHolder {
 
         Context context;
         CardView routeCard;
         TextView originText, destinyText, hourText, idText;
 
-        OriginViewHolder(View v) {
+        RouteViewHolder(View v) {
 
             super(v);
             context = v.getContext();
@@ -39,25 +41,27 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
 
             routeCard.setOnClickListener(v -> {
 
-                // Accion al pulsr sobre el cardview deseado
+                Intent intent = new Intent(context, RouteMain.class);
+                intent.putExtra("route", idText.getText());
+                context.startActivity(intent);
             });
         }
     }
 
     @NonNull
     @Override
-    public OriginViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.origin_list_cardview, viewGroup, false);
-        return new OriginViewHolder(v);
+    public RouteViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.route_list_cardview, viewGroup, false);
+        return new RouteViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OriginViewHolder originHolder, int i) {
-        originHolder.originText.setText(this.routeList.get(i).getOrigin());
-        originHolder.destinyText.setText(this.routeList.get(i).getDestination());
-        originHolder.hourText.setText(this.routeList.get(i).getHour());
-        originHolder.idText.setText(this.routeList.get(i).getId());
-        originHolder.setOnClickListeners();
+    public void onBindViewHolder(@NonNull RouteViewHolder routeHolder, int i) {
+        routeHolder.originText.setText(this.routeList.get(i).getOrigin());
+        routeHolder.destinyText.setText(this.routeList.get(i).getDestination());
+        routeHolder.hourText.setText(this.routeList.get(i).getHour());
+        routeHolder.idText.setText(this.routeList.get(i).getId());
+        routeHolder.setOnClickListeners();
     }
 
     @Override
