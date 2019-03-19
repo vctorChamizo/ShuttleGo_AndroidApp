@@ -212,7 +212,7 @@ exports.getRoutePoints = functions.https.onCall((data,conext)=>{
   .then(()=>checkData(data.route))
   .then(()=>checkUser(data.user,"driver"))
   .then(()=>routeSA.getRoutePoints(data.route,data.user))
-  .then((routes)=>{return {routes:routes}},error=>error);
+  .then((points)=>{return {points:points}},error=>error);
 })
 
 /*---------------- PRIVATE Functions ---------------*/

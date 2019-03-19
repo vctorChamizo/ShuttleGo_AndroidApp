@@ -114,15 +114,23 @@ function getRoutesByUser(user){
 
 function getRoutePoints(route,driver){
     let driverFull;
+    let routeFull;
+    let waypoints;
     return personDao.getUser(driver.email)
     .then((data)=>{
         if(data == null) throw ERROR.userDoesntExists;
         driverFull = data;
         return routeDao.getRouteById(route.id);
     })
-    .then((routeFull)=>{
+    .then((data)=>{
+        routeFull = data;
         if(driverFull.id == routeFull.id) throw ERROR.noPermissions;
         else return routeDao.getRoutePoints(routeFull.id);
+    }).then((data2)=>{
+        waypoints = data2;
+        return originDao.getOriginById(routeFull.origin);
+    }).then((origin)=>{
+        return {waypoints:waypoints,origin:origin};
     })
 }
 //-----------------------------------Private functions-------------------------------------------
