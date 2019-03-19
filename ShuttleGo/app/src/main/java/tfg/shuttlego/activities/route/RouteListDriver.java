@@ -15,59 +15,30 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.admin.AdminMain;
 import tfg.shuttlego.activities.person.driver.DriverMain;
 import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
-import tfg.shuttlego.model.session.Session;
-import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.route.Route;
 
 @SuppressLint("Registered")
 public class RouteListDriver extends RouteList implements NavigationView.OnNavigationItemSelectedListener {
 
-    Person user = Session.getInstance(getApplicationContext()).getUser();
-
-    @Override
-    protected void setMenuDrawer() {
-
-        routeListNavigation.setNavigationItemSelectedListener(this);
-        Toolbar toolbar = findViewById(R.id.route_list_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        routeListDrawer.addDrawerListener(toggle);
-        toggle.syncState();
-    }
-
-    @Override
-    protected void setCredencials() {
-
-        View hView =  routeListNavigation.getHeaderView(0);
-
-        TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
-        TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
-
-        String complete_name = user.getName() + " " + user.getSurname();
-        nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
-    }
-
     @Override
     protected void throwEventGetAllRoutes() {
 
-        EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.GETORIGINS, null)
+        /*EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(Event.GETALLROUTESBYUSERID, )
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
 
                 throwToast(R.string.errConexion);
-                startActivity(new Intent(RouteListDriver.this, AdminMain.class));
+                startActivity(new Intent(RouteListDriver.this, DriverMain.class));
             }
             else if (task.getResult().containsKey("error")) {
                 throwToast(R.string.errServer);
-                startActivity(new Intent(RouteListDriver.this, AdminMain.class));
+                startActivity(new Intent(RouteListDriver.this, DriverMain.class));
             }
             else {
 
@@ -77,28 +48,29 @@ public class RouteListDriver extends RouteList implements NavigationView.OnNavig
 
                 assert list != null;
                 for (int i = 0; i < list.size(); ++i) {
+
                     Route route = new Route();
+
                     route.setId((String) list.get(i).get("id"));
                     route.setOrigin((String) list.get(i).get("origin"));
                     route.setDestination(Integer.parseInt(String.valueOf(list.get(i).get("destination"))));
                     route.setHour((String) list.get(i).get("hour"));
                     route.setPassengersNumber(Integer.parseInt(String.valueOf(list.get(i).get("passengers"))));
+
                     listRoutes.add(route);
                 }
 
                 createListView();
-                removeProgressBar();
             }
-        });
+        });*/
+
+        removeProgressBar();
     }
 
     @Override
-    protected void createListView() {
+    protected void listeners() {
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        routeListRecycler.setLayoutManager(layoutManager);
-        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(listRoutes);
-        routeListRecycler.setAdapter(adapter);
+        routeListNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -119,5 +91,8 @@ public class RouteListDriver extends RouteList implements NavigationView.OnNavig
 
     @Override
     public void onBackPressed() {
+
+        if (routeListDrawer.isDrawerOpen(GravityCompat.START)) routeListDrawer.closeDrawer(GravityCompat.START);
+        else finish();
     }
 }

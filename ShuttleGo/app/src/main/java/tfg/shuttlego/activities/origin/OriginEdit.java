@@ -176,7 +176,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
                     throwToast(R.string.editOriginSuccesful);
                     finish();
                 }
-                else throwToast(R.string.originAlreadyExists);
+                else throwToast(R.string.errOriginAlreadyExists);
                 removeProgressBar();
             }
         });
@@ -191,7 +191,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
 
             case R.id.origin_edit_edit_btn:
                 if (originEditText.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
-                else if (originEditText.getText().toString().equals(originEditOriginObject.getName())) throwToast(R.string.originAlreadyExists);
+                else if (originEditText.getText().toString().equals(originEditOriginObject.getName())) throwToast(R.string.errOriginAlreadyExists);
                 else {
 
                     setProgressBar();
@@ -208,8 +208,15 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
 
         switch (menuItem.getItemId()) {
 
-            case R.id.admin_drawer_list: startActivity(new Intent(OriginEdit.this, OriginList.class));break;
-            case R.id.admin_drawer_home: startActivity(new Intent(OriginEdit.this, AdminMain.class));break;
+            case R.id.admin_drawer_list:
+                startActivity(new Intent(OriginEdit.this, OriginList.class));
+                finish();
+                break;
+                
+            case R.id.admin_drawer_home:
+                startActivity(new Intent(OriginEdit.this, AdminMain.class));
+                finish();
+                break;
         }
 
         originEditDrawer.closeDrawer(GravityCompat.START);

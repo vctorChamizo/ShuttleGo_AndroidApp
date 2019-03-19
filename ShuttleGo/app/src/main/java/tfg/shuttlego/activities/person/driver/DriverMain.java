@@ -24,8 +24,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.origin.OriginList;
-import tfg.shuttlego.activities.person.admin.AdminMain;
 import tfg.shuttlego.activities.route.RouteListDriver;
 import tfg.shuttlego.activities.route.RouteMainDriver;
 import tfg.shuttlego.model.event.Event;
@@ -255,10 +253,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
         switch (menuItem.getItemId()) {
 
-            case R.id.driver_drawer_list:
-                startActivity(new Intent(DriverMain.this, RouteListDriver.class));
-                finish();
-                break;
+            case R.id.driver_drawer_list: startActivity(new Intent(DriverMain.this, RouteListDriver.class)); break;
         }
 
         driverMainDrawer.closeDrawer(GravityCompat.START);

@@ -1,8 +1,10 @@
 package tfg.shuttlego.activities.route;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.MenuItem;
 import android.view.View;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -15,7 +17,7 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.address.Address;
 
-public class RouteMainPassenger extends RouteMain implements View.OnClickListener {
+public class RouteMainPassenger extends RouteMain implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
 
     private String routeId;
@@ -26,10 +28,14 @@ public class RouteMainPassenger extends RouteMain implements View.OnClickListene
 
         routeMainRemoveButton.setOnClickListener(this);
         routeMainCloseButton.setOnClickListener(this);
+        routeMainNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
     protected void setDataText(HashMap<?, ?> resultEvent) {
+
+        this.routeMainBeginButton.setVisibility(View.INVISIBLE);
+
         this.routeMainRemoveButton.setText(getText(R.string.book));
         this.routeId = (String) resultEvent.get("id");
         this.userAddress = (Address) getIntent().getSerializableExtra("userAddress");
@@ -116,5 +122,10 @@ public class RouteMainPassenger extends RouteMain implements View.OnClickListene
 
         System.out.println(data.toString());
         return data;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 }

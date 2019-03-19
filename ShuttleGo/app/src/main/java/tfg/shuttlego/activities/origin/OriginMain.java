@@ -252,8 +252,15 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
         switch (menuItem.getItemId()) {
 
-            case R.id.admin_drawer_list: startActivity(new Intent(OriginMain.this, OriginList.class));break;
-            case R.id.admin_drawer_home: startActivity(new Intent(OriginMain.this, AdminMain.class));break;
+            case R.id.admin_drawer_list:
+                startActivity(new Intent(OriginMain.this, OriginList.class));
+                finish();
+                break;
+
+            case R.id.admin_drawer_home:
+                startActivity(new Intent(OriginMain.this, AdminMain.class));
+                finish();
+                break;
         }
 
         originMainDrawer.closeDrawer(GravityCompat.START);

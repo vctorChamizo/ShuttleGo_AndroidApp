@@ -9,7 +9,15 @@
     <include layout="@layout/route_list_content"/>
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/route_list_nav"
+        android:id="@+id/route_list_nav_driver"
+        android:visibility="gone"
+        style="@style/NavigationView"
+        app:headerLayout="@layout/menu_nav_header"
+        app:menu="@menu/driver_drawer" />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/route_list_nav_passenger"
+        android:visibility="gone"
         style="@style/NavigationView"
         app:headerLayout="@layout/menu_nav_header"
         app:menu="@menu/driver_drawer" />

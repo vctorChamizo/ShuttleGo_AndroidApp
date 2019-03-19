@@ -9,6 +9,7 @@ import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.HttpsCallableResult;
 import org.json.JSONObject;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Access the business data to create the content of the view with respect to the returned data.
@@ -65,6 +66,8 @@ public class EventDispatcher {
             case SEARCHROUTE: return throwEvent("searchRoute", data);
             case ADDTOROUTE: return throwEvent("addToRoute", data);
             case GETROUTEBYID: return throwEvent("getRouteById", data);
+            case DELETEROUTEBYID: return throwEvent("removeRoute", data);
+            //case GETALLROUTESBYUSERID: return throwEvent("getRouteById", data);
         }
 
         return null;
@@ -74,12 +77,6 @@ public class EventDispatcher {
 
         return this.mFunctions
         .getHttpsCallable(nameFunction).call(data)
-        .continueWith(new Continuation<HttpsCallableResult, HashMap<String, String>>() {
-
-            @Override
-            public HashMap<String, String> then(@NonNull Task<HttpsCallableResult> task) {
-                return  (HashMap<String,String>)task.getResult().getData();
-            }
-        });
-    }//throwEvent
+        .continueWith(task-> (HashMap<String,String>)Objects.requireNonNull(task.getResult()).getData());
+    }
 }

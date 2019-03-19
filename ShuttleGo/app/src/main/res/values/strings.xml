@@ -110,10 +110,11 @@
     <string name="editOrigin">Editar Origen</string>
     <string name="introduceOrigin">Introduce un punto de partida</string>
     <string name="setNameOrigin">Pon un nombre al nuevo origen</string>
-    <string name="deleteOriginSuccesful">Origen eliminado correctamente</string>
-    <string name="createOriginSuccesful">Origen creado correctamente</string>
-    <string name="editOriginSuccesful">Origen editado correctamente</string>
-    <string name="originAlreadyExists">El origen ya exisite</string>
+    <string name="deleteOriginSuccesful">El origen ha sido eliminado correctamente</string>
+    <string name="createOriginSuccesful">El origen ha sido creado correctamente</string>
+    <string name="editOriginSuccesful">El origen ha sido editado correctamente</string>
+    <string name="errOriginAlreadyExists">El origen ya exisite</string>
+    <string name="errOriginNotExist">No existe el origen</string>
 
     <!--***********************************************************************-->
 
@@ -153,17 +154,20 @@
     <string name="freePlacesCardview">Plazas libres: </string>
     <string name="ocupedPlaces">Plazas ocupadas</string>
     <string name="ocupedPlacesCardview">Plazas ocupadas: </string>
-    <string name="introduceDestiny">Introduce un destino</string>
-    <string name="searchRoute">Buscar trayecto</string>
-    <string name="nameDriver">Conductor: </string>
-    <string name="phoneDriver">Teléfono: </string>
-    <string name="limitPassenger">Pasajeros máximos: </string>
+    <string name="nameDriver">Conductor</string>
+    <string name="nameDriverCardview">Conductor: </string>
+    <string name="phoneDriver">Teléfono</string>
+    <string name="phoneDriverCardview">Teléfono: </string>
+    <string name="limitPassenger">Pasajeros máximos</string>
+    <string name="limitPassengerCardview">Pasajeros máximos: </string>
     <string name="successfullyAdded">Has sido añadido correctamente</string>
     <string name="errSoldOut">No hay plazas disponibles</string>
     <string name="book">Reservar plaza</string>
     <string name="errUserAlreadyAdded">Ya habías reservado</string>
     <string name="errRuteNotFound">No se ha encontrado ninguna ruta</string>
-    <string name="errOriginNotExist">No existe el origen</string>
+    <string name="introduceDestiny">Introduce un destino</string>
+    <string name="searchRoute">Buscar trayecto</string>
+    <string name="deleteRouteSuccesful">La ruta ha sido eliminada correctamente</string>
 
     <!--************************************************************************-->
 

@@ -25,29 +25,31 @@ import tfg.shuttlego.model.transfer.person.Person;
 
 public abstract class RouteMain extends AppCompatActivity {
 
-    protected Button routeMainRemoveButton, routeMainCloseButton;
+    protected Button routeMainRemoveButton, routeMainCloseButton, routeMainBeginButton;
     protected TextView routeMainOrigin, routeMainLimit, routeMainPassenger, routeMainDriver, routeMainPhone;
     protected ImageView routeMainImage;
-    protected NavigationView navigationView;
-    protected DrawerLayout routeDriverMainDrawer;
+    protected NavigationView routeMainNavigation;
+    protected DrawerLayout routeMainDrawer;
 
     private LinearLayout routeMainLinear;
     private ProgressBar routeMainProgress;
-    private Person user;
+
+    protected String routeMainIdRoute;
+    protected Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_main);
 
-        String route = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
+        routeMainIdRoute = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
         user = Session.getInstance(getApplicationContext()).getUser();
 
         inicializateView();
         setProgressBar();
         setMenuDrawer();
         setCredencials();
-        throwEventGetRoute(buildJson(route));
+        throwEventGetRoute(buildJson(routeMainIdRoute));
 
         listeners();
     }
@@ -59,15 +61,20 @@ public abstract class RouteMain extends AppCompatActivity {
 
         routeMainLinear = findViewById(R.id.route_main_linear);
         routeMainProgress = findViewById(R.id.route_main_progress);
+
+        routeMainDrawer = findViewById(R.id.route_main_drawer);
+        routeMainNavigation = findViewById(R.id.route_main_nav);
+
         routeMainRemoveButton = findViewById(R.id.route_main_delete_btn);
         routeMainCloseButton = findViewById(R.id.route_main_close_btn);
+        routeMainBeginButton = findViewById(R.id.route_main_begin_btn);
+
         routeMainOrigin = findViewById(R.id.route_main_origin);
         routeMainLimit = findViewById(R.id.route_main_limit);
         routeMainPassenger = findViewById(R.id.route_main_passengers);
         routeMainDriver = findViewById(R.id.route_main_driver);
         routeMainPhone = findViewById(R.id.route_main_phone);
-        routeDriverMainDrawer = findViewById(R.id.route_main_drawer);
-        navigationView = findViewById(R.id.route_main_nav);
+
         routeMainImage = findViewById(R.id.route_main_ic_origin);
     }
 
@@ -96,8 +103,8 @@ public abstract class RouteMain extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.route_main_toolbar);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeDriverMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        routeDriverMainDrawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        routeMainDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -106,9 +113,11 @@ public abstract class RouteMain extends AppCompatActivity {
      */
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  routeMainNavigation.getHeaderView(0);
+
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
+
         String complete_name = user.getName() + " " + user.getSurname();
         nav_name_text.setText(complete_name);
         nav_email_text.setText(user.getEmail());
