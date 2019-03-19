@@ -140,10 +140,19 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/route_main_delete_btn"
+            android:id="@+id/route_main_begin_btn"
             style="@style/ButtonDeleteOrigin"
             android:textColor="@color/colorWhite"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:text="Comenzar"/>
+
+        <Button
+            android:id="@+id/route_main_delete_btn"
+            style="@style/ButtonBigRound"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp"
             android:text="@string/delete"/>

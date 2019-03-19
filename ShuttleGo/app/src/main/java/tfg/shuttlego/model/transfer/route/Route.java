@@ -80,4 +80,6 @@ public class Route implements Serializable {
     public void setPassengersNumber(int passengersNumber) { this.passengersNumber = passengersNumber; }
 
     public void setHour(String hour) { this.hour = hour; }
+
+    public void setId(String id) { this.id = id; }
 }
