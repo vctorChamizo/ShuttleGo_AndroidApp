@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
+import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -25,12 +26,14 @@ import com.mapbox.mapboxsdk.maps.Style;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
+import tfg.shuttlego.model.transfer.origin.Origin;
 
 public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
 
@@ -164,6 +167,20 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
                     else throwToast(R.string.errServer);
                 }
                 else {
+
+                    HashMap<?, ?> result = task.getResult();
+                    HashMap<?, ?> points = (HashMap<?, ?>) result.get("points");
+                    HashMap<?, ?> originHas = (HashMap<?, ?>)points.get("origin");
+
+                    Origin origin = new Origin();
+                    origin.setId((String) originHas.get("id"));
+                    origin.setName((String) originHas.get("name"));
+                    origin.setCoordinates((String) originHas.get("coordinates"));
+
+                    ArrayList<HashMap<?,?>>waypoints = (ArrayList<HashMap<?,?>>)points.get("waypoints");
+
+                    ArrayList<Point> pointsC = new ArrayList<>();
+                   // pointsC.add()
 
                     //calculateRute();
                     finish();

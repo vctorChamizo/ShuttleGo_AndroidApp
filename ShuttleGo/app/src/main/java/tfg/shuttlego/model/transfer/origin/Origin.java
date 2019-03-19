@@ -39,4 +39,10 @@ public class Origin implements Serializable {
     }
 
     public List<Double> getCoordinates() { return coordinates; }
+
+    public void setCoordinates(String coordinates) {
+
+        for(String coordinate:coordinates.split(","))
+            this.coordinates.add(Double.parseDouble(coordinate));
+    }
 }
