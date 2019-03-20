@@ -2,9 +2,11 @@ package tfg.shuttlego.activities.route;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,7 +17,11 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import tfg.shuttlego.R;
+import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
+import tfg.shuttlego.model.event.Event;
+import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.person.TypePerson;
@@ -48,7 +54,6 @@ public abstract class RouteList extends AppCompatActivity {
         setCredencials();
 
         buildJSON();
-
         throwEventGetAllRoutes();
 
         listeners();
@@ -134,20 +139,66 @@ public abstract class RouteList extends AppCompatActivity {
         catch (JSONException e) { throwToast(R.string.err); }
     }
 
-    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
+    /**
+     * Throw the event that allow to get a list of all routes in the server.
+     */
+    private void throwEventGetAllRoutes(){
+
+        EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(Event.GETALLROUTESBYUSER, this.getRoutes)
+        .addOnCompleteListener(task -> {
+
+            if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
+            else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
+            else {
+
+                HashMap<?, ?> result = task.getResult();
+                ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("routes");
+                this.listRoutes = new ArrayList<>();
+
+                assert list != null;
+                for (int i = 0; i < list.size(); ++i) {
+
+                    Route route = new Route();
+
+                    route.setId((String) list.get(i).get("id"));
+                    route.setOrigin((String) list.get(i).get("origin"));
+                    route.setDestination(Integer.parseInt(String.valueOf(list.get(i).get("destination"))));
+                    route.setHour((String) list.get(i).get("hour"));
+                    route.setPassengersNumber(Integer.parseInt(String.valueOf(list.get(i).get("passengersNumber"))));
+                    route.setMax(Integer.parseInt(String.valueOf(list.get(i).get("max"))));
+
+                    this.listRoutes.add(route);
+                }
+
+                createListView();
+                removeProgressBar();
+            }
+        });
+    }
 
     /**
      * Inicializate the componentes and the adapter to put the list of routes.
      */
-    abstract protected void createListView();
+    private void createListView(){
 
-    /**
-     * Throw the event that allow to get a list of all routes in the server.
-     */
-    abstract protected void throwEventGetAllRoutes();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        routeListRecycler.setLayoutManager(layoutManager);
+        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes);
+        routeListRecycler.setAdapter(adapter);
+    }
+
+    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     /**
      * Listen the action components of the view.
      */
     protected abstract void listeners();
+
+    @Override
+    public void onBackPressed() {
+
+        if (routeListDrawer.isDrawerOpen(GravityCompat.START)) routeListDrawer.closeDrawer(GravityCompat.START);
+        else finish();
+    }
 }
