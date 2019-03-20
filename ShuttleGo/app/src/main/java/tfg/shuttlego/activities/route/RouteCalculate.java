@@ -35,6 +35,8 @@ import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.origin.Origin;
+import tfg.shuttlego.model.transfer.person.Person;
+import tfg.shuttlego.model.transfer.person.TypePerson;
 
 public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
 
@@ -59,11 +61,15 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void listeners() {
+        mapView.getMapAsync(this);
     }
 
     private void inicializateView(){
         mapView = findViewById(R.id.route_calculate_map);
+
+        //quitar
         //routeId = getIntent().getExtras().getString("routeId");
+        Session.getInstance().setUser(new Person("driv@gmail.com","123","waw","waw2",1234,TypePerson.DRIVER));
         routeId = "rMZhyrwH6bxgkWA9yNZW";
     }
     @Override
@@ -125,7 +131,6 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
         this.mapboxMap = mapboxMap;
 
-        this.mapboxMap.getUiSettings().setCompassEnabled(false);
         this.mapboxMap.getUiSettings().setLogoEnabled(false);
 
         mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
@@ -195,7 +200,8 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
                    // pointsC.add()
 
                     //calculateRute();
-                    finish();
+                    //finish();
+
                 }
             }
         });
