@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.account.LoginActivity;
+import tfg.shuttlego.activities.route.RouteCalculate;
 
 /**
  * Initial activity of the application.
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable(){
             public void run(){
 
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, RouteCalculate.class);
                 startActivity(intent);
                 finish();
             };

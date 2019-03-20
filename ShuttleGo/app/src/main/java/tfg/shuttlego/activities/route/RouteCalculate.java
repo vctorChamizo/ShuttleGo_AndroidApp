@@ -54,7 +54,8 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
     private void inicializateView(){
         mapView = findViewById(R.id.route_calculate_map);
-        routeId = getIntent().getExtras().getString("routeId");
+        //routeId = getIntent().getExtras().getString("routeId");
+        routeId = "rMZhyrwH6bxgkWA9yNZW";
     }
     @Override
     protected  void onStart(){
