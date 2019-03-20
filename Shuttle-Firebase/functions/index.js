@@ -203,7 +203,7 @@ exports.getRoutesByUser = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkUser(data.user))
   .then(()=>routeSA.getRoutesByUser(data.user))
-  .then((routes)=>{return {routes:routes}},error=>error);
+  .then((routes)=>{return {routes:routes[0]}},error=>error);
 })
 
 
