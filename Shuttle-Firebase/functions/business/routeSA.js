@@ -123,6 +123,7 @@ function getRoutePoints(route,driver){
         return routeDao.getRouteById(route.id);
     })
     .then((data)=>{
+        if(data == null) throw ERROR.routeDoesntExists;
         routeFull = data;
         if(driverFull.id == routeFull.id) throw ERROR.noPermissions;
         else return routeDao.getRoutePoints(routeFull.id);
