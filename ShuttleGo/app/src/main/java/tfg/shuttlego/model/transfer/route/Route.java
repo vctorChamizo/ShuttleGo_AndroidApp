@@ -41,6 +41,16 @@ public class Route implements Serializable {
         this.hour = hour;
     }
 
+    public Route(String id, String origin, int destination, String driver, int max, int passengersNumber) {
+
+        this.origin = origin;
+        this.destination = String.valueOf(destination);
+        this.driver = driver;
+        this.max = max;
+        this.passengersNumber = passengersNumber;
+        this.id = id;
+    }
+
     public String getOrigin() {
         return this.origin;
     }
