@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,53 +12,50 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.route.RouteMainPassenger;
+import tfg.shuttlego.activities.route.RouteMainPassengerChoose;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.route.Route;
 
 public class RecyclerViewAdapterChooseRoute extends RecyclerView.Adapter<RecyclerViewAdapterChooseRoute.RouteViewHolder> {
 
     private ArrayList<Route> routeList;
-    private AppCompatActivity activity;
     private Address userAddress;
-    private int index = -1;
 
-    public RecyclerViewAdapterChooseRoute(ArrayList<Route> routeList, AppCompatActivity activity, Address userAddress) {
+    public RecyclerViewAdapterChooseRoute(ArrayList<Route> routeList, Address userAddress) {
 
         this.routeList = routeList;
-        this.activity = activity;
         this.userAddress = userAddress;
     }
 
     public static class RouteViewHolder extends RecyclerView.ViewHolder {
 
-        Context context;
-        CardView routeCard;
-        TextView freePlacesText, hourText;
-        String routeId;
-        AppCompatActivity activity;
         private Address userAddress;
 
-        RouteViewHolder(View v,String id,AppCompatActivity activity,Address userAddress) {
+        Context context;
+        CardView routeCard;
+        TextView freePlacesText, hourText, idText;
+
+        RouteViewHolder(View v, Address userAddress) {
 
             super(v);
+
+            this.userAddress = userAddress;
+
             context = v.getContext();
             routeCard = v.findViewById(R.id.route_choose_passenger_cardview_cardview);
             freePlacesText = v.findViewById(R.id.route_choose_passenger_cardview_freeplaces);
             hourText = v.findViewById(R.id.route_choose_passenger_cardview_hour);
-            this.routeId = id;
-            this.activity = activity;
-            this.userAddress = userAddress;
+            idText = v.findViewById(R.id.route_choose_passenger_cardview_id);
         }
 
         void setOnClickListeners() {
 
-            AppCompatActivity activityTmp = this.activity;
             routeCard.setOnClickListener(view -> {
-                Intent getRoute = new Intent(activityTmp,RouteMainPassenger.class);
-                getRoute.putExtra("route", this.routeId);
+
+                Intent getRoute = new Intent(context, RouteMainPassengerChoose.class);
+                getRoute.putExtra("route", idText.getText());
                 getRoute.putExtra("userAddress", this.userAddress);
-                this.activity.startActivity(getRoute);
+                context.startActivity(getRoute);
             });
         }
     }
@@ -67,9 +63,9 @@ public class RecyclerViewAdapterChooseRoute extends RecyclerView.Adapter<Recycle
     @NonNull
     @Override
     public RouteViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        index++;
+
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.route_choose_passenger_cardview, viewGroup, false);
-        return new RouteViewHolder(v,this.routeList.get(index).getId(), this.activity,this.userAddress);
+        return new RouteViewHolder(v, this.userAddress);
     }
 
     @SuppressLint("SetTextI18n")
@@ -78,6 +74,7 @@ public class RecyclerViewAdapterChooseRoute extends RecyclerView.Adapter<Recycle
 
         routeHolder.freePlacesText.setText("" + (this.routeList.get(i).getMax() - this.routeList.get(i).getPassengerNumber()));
         routeHolder.hourText.setText("00:00");
+        routeHolder.idText.setText(this.routeList.get(i).getId());
 
         routeHolder.setOnClickListeners();
     }

@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.adapter.RecyclerViewAdapterChooseRoute;
@@ -27,21 +26,30 @@ import tfg.shuttlego.model.transfer.route.Route;
 
 public class RouteChoosePassenger extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private NavigationView navigationView;
-    private LinearLayout routeListLinear;
-    private ProgressBar routeListProgress;
-    private ArrayList<Route> listRoutes;
-    private DrawerLayout routeListDrawer;
+    private NavigationView routeChoosePassengerNavigation;
+    private DrawerLayout routeChoosePassengerDrawer;
+    private Toolbar routeChoosePassengerToolbar;
+
+    private LinearLayout routeChoosePassengerLinear;
+    private ProgressBar routeChoosePassengerProgress;
+
+    private RecyclerView routeChoosePassengerRecycler;
+
+    private ArrayList<Route> routeChoosePassengerListRoutes;
+    private String routeChoosePassengerOrigin;
+    private Address routeChoosePassengerAdress;
     private Person user;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_choose_passenger);
 
         this.user = Session.getInstance(getApplicationContext()).getUser();
-        this.listRoutes =  (ArrayList<Route>)getIntent().getSerializableExtra("routes");
+        this.routeChoosePassengerListRoutes =  (ArrayList<Route>)getIntent().getSerializableExtra("routes");
+        this.routeChoosePassengerOrigin = (String) getIntent().getSerializableExtra("originName");
+        this.routeChoosePassengerAdress = (Address) getIntent().getSerializableExtra("userAddress");
 
         inicializateView();
         setProgressBar();
@@ -49,6 +57,8 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
         setCredencials();
         createListView();
         removeProgressBar();
+
+        routeChoosePassengerNavigation.setNavigationItemSelectedListener(this);
     }
 
     /**
@@ -56,9 +66,19 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
      */
     private void inicializateView() {
 
-        routeListDrawer = findViewById(R.id.route_choose_passenger_drawer);
-        routeListLinear = findViewById(R.id.route_choose_passenger_linear);
-        routeListProgress = findViewById(R.id.route_choose_passenger_progress);
+        this.routeChoosePassengerNavigation = findViewById(R.id.route_choose_passenger_nav);
+        this.routeChoosePassengerDrawer = findViewById(R.id.route_choose_passenger_drawer);
+        this.routeChoosePassengerToolbar = findViewById(R.id.route_choose_passenger_toolbar);
+
+        this.routeChoosePassengerRecycler = findViewById(R.id.route_choose_passenger_recycler);
+
+        this.routeChoosePassengerLinear = findViewById(R.id.route_choose_passenger_linear);
+        this.routeChoosePassengerProgress = findViewById(R.id.route_choose_passenger_progress);
+
+        String shortAddress = this.routeChoosePassengerAdress.getAddress().split(",")[0];
+        this.routeChoosePassengerToolbar.setTitle(routeChoosePassengerOrigin);
+        this.routeChoosePassengerToolbar.setSubtitle(shortAddress);
+        this.routeChoosePassengerToolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }
 
     /**
@@ -66,8 +86,8 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
      */
     private void setProgressBar() {
 
-        routeListProgress.setVisibility(View.VISIBLE);
-        routeListLinear.setVisibility(View.GONE);
+        this.routeChoosePassengerProgress.setVisibility(View.VISIBLE);
+        this.routeChoosePassengerLinear.setVisibility(View.GONE);
     }
 
     /**
@@ -75,8 +95,8 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
      */
     private void removeProgressBar() {
 
-        routeListProgress.setVisibility(View.GONE);
-        routeListLinear.setVisibility(View.VISIBLE);
+        this.routeChoosePassengerProgress.setVisibility(View.GONE);
+        this.routeChoosePassengerLinear.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -84,12 +104,9 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.route_choose_passenger_nav);
-        navigationView.setNavigationItemSelectedListener(this);
-        this.toolbar = findViewById(R.id.route_choose_passenger_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        routeListDrawer.addDrawerListener(toggle);
+        setSupportActionBar(routeChoosePassengerToolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeChoosePassengerDrawer, routeChoosePassengerToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        routeChoosePassengerDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -99,10 +116,13 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
     @SuppressLint("SetTextI18n")
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  routeChoosePassengerNavigation.getHeaderView(0);
+
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
-        nav_name_text.setText(user.getName() + " " + user.getSurname());
+
+        String complete_name = user.getName() + " " + user.getSurname();
+        nav_name_text.setText(complete_name);
         nav_email_text.setText(user.getEmail());
     }
 
@@ -111,35 +131,18 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.route_choose_passenger_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recycler.setLayoutManager(layoutManager);
-
-        String originName = getIntent().getStringExtra("originName");
-        Address userAddress = (Address) getIntent().getSerializableExtra("userAddress");
-        String shortAddress = userAddress.getAddress().split(",")[0];
-        this.toolbar.setTitle(originName);
-        this.toolbar.setSubtitle(shortAddress);
-        this.toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        RecyclerView.Adapter<RecyclerViewAdapterChooseRoute.RouteViewHolder> adapter = new RecyclerViewAdapterChooseRoute(this.listRoutes,this,userAddress);
-        recycler.setAdapter(adapter);
+        routeChoosePassengerRecycler.setLayoutManager(layoutManager);
+        RecyclerView.Adapter<RecyclerViewAdapterChooseRoute.RouteViewHolder> adapter = new RecyclerViewAdapterChooseRoute(this.routeChoosePassengerListRoutes, this.routeChoosePassengerAdress);
+        routeChoosePassengerRecycler.setAdapter(adapter);
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-        switch (menuItem.getItemId()) {
-
-            default: break;
-        }
-
-        routeListDrawer.closeDrawer(GravityCompat.START);
-
-        return true;
-    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) { return false; }
 
     @Override
     public void onBackPressed() {
-        if (routeListDrawer.isDrawerOpen(GravityCompat.START)) routeListDrawer.closeDrawer(GravityCompat.START);
+        if (routeChoosePassengerDrawer.isDrawerOpen(GravityCompat.START)) routeChoosePassengerDrawer.closeDrawer(GravityCompat.START);
+        else finish();
     }
 }
