@@ -94,7 +94,21 @@ function getRoutesByDriver(DriverId){
         route.id = element.id;
         return route;
     }))
-    .then((routes)=>routes,error =>{throw ERROR.server});
+    .then((routes)=>{
+        let promises = [];
+        let routesFull = [];
+        routes.forEach(route=>{
+            promises.push(db.collection("origins").doc(route.origin).get()
+                            .then((snapshot)=>{
+                                let routeFull = route;
+                                routeFull.originName = snapshot.data().name;
+                                routesFull.push(routeFull);
+                                return routesFull;
+                            }));
+        })
+
+        return Promise.all(promises);
+    },error =>{throw ERROR.server});
 }
 
 function getRoutesByPassenger(passengerId){
@@ -105,7 +119,22 @@ function getRoutesByPassenger(passengerId){
         routeIds.forEach(id=> promises.push(getRouteById(id)));
         return Promise.all(promises);
     })
-    .then((routes)=>routes,error =>{throw ERROR.server});
+    .then((routes=>{
+        let promises = [];
+        let routesFull = [];
+        routes.forEach(route=>{
+            promises.push(db.collection("origins").doc(route.origin).get()
+                            .then((snapshot)=>{
+                                let routeFull = route;
+                                routeFull.originName = snapshot.data().name;
+                                routesFull.push(routeFull);
+                                delete routeFull.passengers;
+                                return routesFull;
+                            }));
+        })
+        return Promise.all(promises);
+    }))
+    .then((routes)=>routes,error =>{console.log(error);throw ERROR.server});
 }
 
 function getRoutePoints(routeId){
