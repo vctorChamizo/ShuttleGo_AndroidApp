@@ -163,10 +163,12 @@ public abstract class RouteList extends AppCompatActivity {
 
                     route.setId((String) list.get(i).get("id"));
                     route.setOrigin((String) list.get(i).get("originName"));
-                    route.setDestination(Integer.parseInt(String.valueOf(list.get(i).get("destination"))));
                     route.setHour((String) list.get(i).get("hour"));
                     route.setPassengersNumber(Integer.parseInt(String.valueOf(list.get(i).get("passengersNumber"))));
                     route.setMax(Integer.parseInt(String.valueOf(list.get(i).get("max"))));
+
+                    if (this.user.getType() == TypePerson.DRIVER) route.setDestination(Integer.parseInt(String.valueOf(list.get(i).get("destinationName"))));
+                    else route.setDestination(Integer.parseInt(String.valueOf(list.get(i).get("destinyName"))));
 
                     this.listRoutes.add(route);
                 }
