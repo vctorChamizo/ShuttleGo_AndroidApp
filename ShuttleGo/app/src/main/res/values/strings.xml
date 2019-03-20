@@ -144,22 +144,25 @@
     *******************************  Route  *************************************
     **************************************************************************-->
 
+    <!-- *************************  Cardview  ******************************** -->
+    <string name="destinyCardview">Destino: </string>
+    <string name="limitCardview">Limite: </string>
+    <string name="hourCardview">Hora: </string>
+    <string name="nameDriverCardview">Conductor: </string>
+    <string name="phoneDriverCardview">Teléfono: </string>
+    <string name="limitPassengerCardview">Pasajeros máximos: </string>
+    <string name="ocupedPlacesCardview">Plazas ocupadas: </string>
+    <string name="freePlacesCardview">Plazas libres: </string>
+
     <string name="route">Ruta</string>
     <string name="routes">Rutas</string>
     <string name="destiny">Destino</string>
-    <string name="destinyCardview">Destino: </string>
     <string name="hour">Hora</string>
-    <string name="hourCardview">Hora: </string>
     <string name="freePlaces">Plazas libres</string>
-    <string name="freePlacesCardview">Plazas libres: </string>
     <string name="ocupedPlaces">Plazas ocupadas</string>
-    <string name="ocupedPlacesCardview">Plazas ocupadas: </string>
     <string name="nameDriver">Conductor</string>
-    <string name="nameDriverCardview">Conductor: </string>
     <string name="phoneDriver">Teléfono</string>
-    <string name="phoneDriverCardview">Teléfono: </string>
     <string name="limitPassenger">Pasajeros máximos</string>
-    <string name="limitPassengerCardview">Pasajeros máximos: </string>
     <string name="successfullyAdded">Has sido añadido correctamente</string>
     <string name="errSoldOut">No hay plazas disponibles</string>
     <string name="book">Reservar plaza</string>

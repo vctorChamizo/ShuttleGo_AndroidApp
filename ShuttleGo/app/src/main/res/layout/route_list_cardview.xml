@@ -48,11 +48,13 @@
             android:paddingBottom="10dp">
 
             <ImageView
+                android:id="@+id/route_list_cardview_image_destiny"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_arrow_left_blue" />
             <TextView
+                android:id="@+id/route_list_cardview_destiny_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimary"
@@ -95,6 +97,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/route_list_cardview_passenger_linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

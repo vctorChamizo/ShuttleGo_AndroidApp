@@ -8,12 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.route.RouteMain;
 import tfg.shuttlego.activities.route.RouteMainDriver;
-import tfg.shuttlego.activities.route.RouteMainPassenger;
+import tfg.shuttlego.activities.route.RouteMainPassengerInformation;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.TypePerson;
 import tfg.shuttlego.model.transfer.route.Route;
@@ -29,6 +30,9 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
         Context context;
         CardView routeCard;
         TextView originText, destinyText, hourText, idText, passengerText;
+        TextView destinyTittle;
+        ImageView destinyImage;
+        LinearLayout passengerLinear;
 
         RouteViewHolder(View v) {
 
@@ -39,6 +43,11 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
             destinyText = v.findViewById(R.id.route_list_cardview_destiny);
             hourText = v.findViewById(R.id.route_list_cardview_hour);
             passengerText = v.findViewById(R.id.route_list_cardview_passengers);
+
+            destinyTittle = v.findViewById(R.id.route_list_cardview_destiny_text);
+            destinyImage = v.findViewById(R.id.route_list_cardview_image_destiny);
+            passengerLinear = v.findViewById(R.id.route_list_cardview_passenger_linear);
+
             idText = v.findViewById(R.id.route_list_cardview_id);
         }
 
@@ -49,7 +58,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
                 Intent intent;
 
                 if (Session.getInstance().getUser().getType() == TypePerson.DRIVER) intent = new Intent(context, RouteMainDriver.class);
-                else intent = new Intent(context, RouteMainPassenger.class);
+                else intent = new Intent(context, RouteMainPassengerInformation.class);
                 intent.putExtra("route", idText.getText());
                 context.startActivity(intent);
             });
@@ -69,20 +78,27 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
         String origin = " " + this.routeList.get(i).getOrigin();
         String destiny = " " + String.valueOf(this.routeList.get(i).getDestination());
         String hour = " " + String.valueOf(this.routeList.get(i).getHour());
-        String passengers = " " + String.valueOf(this.routeList.get(i).getPassengerNumber()) + " / " + String.valueOf(this.routeList.get(i).getMax());
 
         routeHolder.originText.setText(origin);
         routeHolder.destinyText.setText(destiny);
         routeHolder.hourText.setText(hour);
-        routeHolder.passengerText.setText(passengers);
         routeHolder.idText.setText(this.routeList.get(i).getId());
+
+        if (Session.getInstance().getUser().getType() == TypePerson.DRIVER) {
+
+            routeHolder.destinyTittle.setText(routeHolder.context.getString(R.string.limitCardview));
+            routeHolder.destinyImage.setImageDrawable(routeHolder.context.getDrawable(R.drawable.ic_limit));
+
+            String passengers = " " + String.valueOf(this.routeList.get(i).getPassengerNumber()) + " / " + String.valueOf(this.routeList.get(i).getMax());
+            routeHolder.passengerText.setText(passengers);
+        }
+        else routeHolder.passengerLinear.setVisibility(View.GONE);
+
         routeHolder.setOnClickListeners();
     }
 
     @Override
-    public int getItemCount() {
-        return routeList.size();
-    }
+    public int getItemCount() { return routeList.size(); }
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) { super.onAttachedToRecyclerView(recyclerView); }

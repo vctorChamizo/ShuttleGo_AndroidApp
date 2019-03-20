@@ -51,6 +51,7 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
     @NonNull
     @Override
     public OriginViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.origin_list_cardview, viewGroup, false);
         return new OriginViewHolder(v);
     }
