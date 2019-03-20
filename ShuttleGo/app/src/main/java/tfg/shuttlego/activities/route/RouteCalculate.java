@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Point;
+import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -47,9 +48,17 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        Mapbox.getInstance(this, getString(R.string.access_token));
         setContentView(R.layout.route_calculate);
         inicializateView();
+        mapView.onCreate(savedInstanceState);
+        setProgressBar();
+        listeners();
+        super.onCreate(savedInstanceState);
+
+    }
+
+    private void listeners() {
     }
 
     private void inicializateView(){
@@ -140,18 +149,20 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
     }
 
     protected void setProgressBar () {
-
+    /*
         routeCalculateProgress.setVisibility(View.VISIBLE);
         routeCalculateLinear.setVisibility(View.GONE);
+        */
     }
 
     /**
      * Show the view visible and put invisble progress bar component
      */
     protected void removeProgressBar () {
-
+    /*
         routeCalculateProgress.setVisibility(View.GONE);
         routeCalculateLinear.setVisibility(View.VISIBLE);
+    */
     }
 
     private void throwEventGetPoints() {
