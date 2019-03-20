@@ -114,10 +114,18 @@ function getRoutesByDriver(DriverId){
 function getRoutesByPassenger(passengerId){
     return db.collection("check-in").where("passenger","==",passengerId).get()
     .then((snapshot)=>{
+        let destinationNames = snapshot.docs.map(element=>element.data().address);
         let routeIds = snapshot.docs.map(element=>element.data().route);
         let promises = [];
         routeIds.forEach(id=> promises.push(getRouteById(id)));
-        return Promise.all(promises);
+        return Promise.all(promises,(routes)=>{console.log(routes)})
+        .then((routes)=>{
+            return routes.map((route,i)=>{
+                let newRute = route;
+                newRute.destinationName = destinationNames[i];
+                return newRute;
+            })
+        })
     })
     .then((routes=>{
         let promises = [];
