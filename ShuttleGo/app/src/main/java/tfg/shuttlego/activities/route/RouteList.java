@@ -5,7 +5,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,9 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.Person;
 import tfg.shuttlego.model.transfer.person.TypePerson;
@@ -31,6 +31,7 @@ public abstract class RouteList extends AppCompatActivity {
     protected RecyclerView routeListRecycler;
 
     protected ArrayList<Route> listRoutes;
+    protected JSONObject getRoutes;
     protected Person user;
 
     @Override
@@ -45,6 +46,8 @@ public abstract class RouteList extends AppCompatActivity {
         setProgressBar();
         setMenuDrawer();
         setCredencials();
+
+        buildJSON();
 
         throwEventGetAllRoutes();
 
@@ -96,7 +99,7 @@ public abstract class RouteList extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         routeListDrawer.addDrawerListener(toggle);
         toggle.syncState();
-    };
+    }
 
     /**
      * Put the personal data about the current user.
@@ -111,20 +114,32 @@ public abstract class RouteList extends AppCompatActivity {
         String complete_name = user.getName() + " " + user.getSurname();
         nav_name_text.setText(complete_name);
         nav_email_text.setText(user.getEmail());
-    };
+    }
+
+    /**
+     * Build a JSON for to allow get all routes by current user.
+     */
+    private void buildJSON() {
+
+        JSONObject dataUser = new JSONObject();
+        this.getRoutes = new JSONObject();
+
+        try {
+
+            dataUser.put("email", Session.getInstance(getApplicationContext()).getUser().getEmail());
+            dataUser.put("password", Session.getInstance(getApplicationContext()).getUser().getPassword());
+            this.getRoutes.put("user", dataUser);
+
+        }
+        catch (JSONException e) { throwToast(R.string.err); }
+    }
+
+    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     /**
      * Inicializate the componentes and the adapter to put the list of routes.
      */
-    private void createListView() {
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        routeListRecycler.setLayoutManager(layoutManager);
-        RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(listRoutes);
-        routeListRecycler.setAdapter(adapter);
-    }
-
-    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
+    abstract protected void createListView();
 
     /**
      * Throw the event that allow to get a list of all routes in the server.

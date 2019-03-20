@@ -18,32 +18,6 @@ import tfg.shuttlego.model.event.EventDispatcher;
 @SuppressLint("Registered")
 public class RouteMainDriver extends RouteMain implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    /*private JSONObject buildJSONBeginRoute(String routeMainIdRoute) {
-
-        [...]
-    }*/
-
-    /* void throwEventBeginRoute(JSONObject route) {
-
-        EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(...)
-        .addOnCompleteListener(task -> {
-
-            if (!task.isSuccessful() || task.getResult() == null) {
-                removeProgressBar();
-                throwToast(R.string.errConexion);
-            }
-            else if (task.getResult().containsKey("error")) {
-                removeProgressBar();
-                throwToast(R.string.errServer);
-            }
-            else {
-
-                // Accion despues del resultado.
-            }
-        });
-    }*/
-
     private JSONObject buildJSONDeleteRoute(String routeMainIdRoute) {
 
         JSONObject dataUser = new JSONObject();
@@ -119,8 +93,8 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
         switch (v.getId()){
 
             case R.id.route_main_begin_btn:
-                //setProgressBar();
-                //throwEventBeginRoute(buildJSONBeginRoute(routeMainIdRoute));
+                //startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
+                //finish();
                 break;
 
             case R.id.route_main_delete_btn:

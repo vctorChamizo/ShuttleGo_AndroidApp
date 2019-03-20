@@ -240,7 +240,7 @@ function checkOrigin(origin){
 
 /**
  * @description Checks if an user exists and the type if it is indicated.
- * @param {Objct} user 
+ * @param {Object} user 
  * @param {string = null} userType 
  */
 function checkUser(user,userType = null){

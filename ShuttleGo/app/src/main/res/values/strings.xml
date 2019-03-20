@@ -168,6 +168,7 @@
     <string name="introduceDestiny">Introduce un destino</string>
     <string name="searchRoute">Buscar trayecto</string>
     <string name="deleteRouteSuccesful">La ruta ha sido eliminada correctamente</string>
+    <string name="passengers">Pasajeros: </string>
 
     <!--************************************************************************-->
 

@@ -201,6 +201,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 Intent logIntent = new Intent(DriverMain.this, RouteMainDriver.class);
                 logIntent.putExtra("route", task.getResult().get("id"));
                 startActivity(logIntent);
+                throwToast(R.string.createOriginSuccesful);
             }
 
         });

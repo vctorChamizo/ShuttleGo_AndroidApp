@@ -8,9 +8,13 @@ import android.view.MenuItem;
 @SuppressLint("Registered")
 public class RouteListPassenger extends RouteList implements NavigationView.OnNavigationItemSelectedListener {
 
-
     @Override
     protected void throwEventGetAllRoutes() {
+    }
+
+    @Override
+    protected void createListView() {
+
     }
 
     @Override

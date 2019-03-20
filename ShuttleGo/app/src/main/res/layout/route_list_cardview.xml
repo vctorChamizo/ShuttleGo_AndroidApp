@@ -27,12 +27,19 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_arrow_right_blue" />
             <TextView
-                android:id="@+id/route_list_cardview_origin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:text="@string/originCardview"/>
+            <TextView
+                android:id="@+id/route_list_cardview_origin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorPrimaryDark"
+                android:singleLine="true"
+                android:textSize="20sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -46,17 +53,25 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_arrow_left_blue" />
             <TextView
-                android:id="@+id/route_list_cardview_destiny"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:text="@string/destinyCardview"/>
+
+            <TextView
+                android:id="@+id/route_list_cardview_destiny"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorPrimaryDark"
+                android:singleLine="true"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -64,12 +79,47 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_hour_blue" />
             <TextView
-                android:id="@+id/route_list_cardview_hour"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:text="@string/hourCardview"/>
+
+            <TextView
+                android:id="@+id/route_list_cardview_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorPrimaryDark"
+                android:singleLine="true"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_passengers_blue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:text="@string/passengers"/>
+
+            <TextView
+                android:id="@+id/route_list_cardview_passengers"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorPrimaryDark"
+                android:singleLine="true"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <TextView

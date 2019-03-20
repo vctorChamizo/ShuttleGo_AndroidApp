@@ -12,6 +12,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.route.RouteMain;
+import tfg.shuttlego.activities.route.RouteMainDriver;
+import tfg.shuttlego.activities.route.RouteMainPassenger;
+import tfg.shuttlego.model.session.Session;
+import tfg.shuttlego.model.transfer.person.TypePerson;
 import tfg.shuttlego.model.transfer.route.Route;
 
 public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> {
@@ -24,7 +28,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
 
         Context context;
         CardView routeCard;
-        TextView originText, destinyText, hourText, idText;
+        TextView originText, destinyText, hourText, idText, passengerText;
 
         RouteViewHolder(View v) {
 
@@ -34,6 +38,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
             originText = v.findViewById(R.id.route_list_cardview_origin);
             destinyText = v.findViewById(R.id.route_list_cardview_destiny);
             hourText = v.findViewById(R.id.route_list_cardview_hour);
+            passengerText = v.findViewById(R.id.route_list_cardview_passengers);
             idText = v.findViewById(R.id.route_list_cardview_id);
         }
 
@@ -41,7 +46,10 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
 
             routeCard.setOnClickListener(v -> {
 
-                Intent intent = new Intent(context, RouteMain.class);
+                Intent intent;
+
+                if (Session.getInstance().getUser().getType() == TypePerson.DRIVER) intent = new Intent(context, RouteMainDriver.class);
+                else intent = new Intent(context, RouteMainPassenger.class);
                 intent.putExtra("route", idText.getText());
                 context.startActivity(intent);
             });
@@ -57,9 +65,16 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
 
     @Override
     public void onBindViewHolder(@NonNull RouteViewHolder routeHolder, int i) {
-        routeHolder.originText.setText(this.routeList.get(i).getOrigin());
-        routeHolder.destinyText.setText(this.routeList.get(i).getDestination());
-        routeHolder.hourText.setText(this.routeList.get(i).getHour());
+
+        String origin = " " + this.routeList.get(i).getOrigin();
+        String destiny = " " + String.valueOf(this.routeList.get(i).getDestination());
+        String hour = " " + String.valueOf(this.routeList.get(i).getHour());
+        String passengers = " " + String.valueOf(this.routeList.get(i).getPassengerNumber()) + " / " + String.valueOf(this.routeList.get(i).getMax());
+
+        routeHolder.originText.setText(origin);
+        routeHolder.destinyText.setText(destiny);
+        routeHolder.hourText.setText(hour);
+        routeHolder.passengerText.setText(passengers);
         routeHolder.idText.setText(this.routeList.get(i).getId());
         routeHolder.setOnClickListeners();
     }
