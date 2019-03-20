@@ -2,9 +2,9 @@ package tfg.shuttlego.activities.route;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
+import com.mapbox.geojson.BoundingBox;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
@@ -66,11 +69,7 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
     private void inicializateView(){
         mapView = findViewById(R.id.route_calculate_map);
-
-        //quitar
-        //routeId = getIntent().getExtras().getString("routeId");
-        Session.getInstance().setUser(new Person("driv@gmail.com","123","waw","waw2",1234,TypePerson.DRIVER));
-        routeId = "rMZhyrwH6bxgkWA9yNZW";
+        routeId = getIntent().getExtras().getString("routeId");
     }
     @Override
     protected  void onStart(){
@@ -194,17 +193,54 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
                     origin.setName((String) originHas.get("name"));
                     origin.setCoordinates((String) originHas.get("coordinates"));
 
-                    ArrayList<HashMap<?,?>>waypoints = (ArrayList<HashMap<?,?>>)points.get("waypoints");
+                    ArrayList<HashMap<?,?>>waypointsHas = (ArrayList<HashMap<?,?>>)points.get("waypoints");
 
-                    ArrayList<Point> pointsC = new ArrayList<>();
-                   // pointsC.add()
+                    if(waypointsHas.size()==0){
+                        throwToast(R.string.NoWaypoints);
+                        finish();
+                    }
+                    else {
+                        ArrayList<Point> waypoints = new ArrayList<>();
 
-                    //calculateRute();
-                    //finish();
+                        for (HashMap<?, ?> waypoint : waypointsHas) {
+                            String[] coordinatesString = ((String) waypoint.get("coordinates")).split(",");
+                            List<Double> coordinates = new ArrayList<Double>();
+                            coordinates.add(Double.parseDouble(coordinatesString[1]));
+                            coordinates.add(Double.parseDouble(coordinatesString[0]));
+                            waypoints.add(createPoint(coordinates));
+                        }
+
+                        Point originPoint = createPoint(origin.getCoordinates());
+
+                        tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap);
+                    }
 
                 }
             }
         });
+    }
+
+    private Point createPoint(List<Double>coordinates) {
+
+        return new Point() {
+            @NonNull
+            @Override
+            public String type() {
+                return "Point";
+            }
+
+            @Nullable
+            @Override
+            public BoundingBox bbox() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public List<Double> coordinates() {
+                return coordinates;
+            }
+        };
     }
 
     private JSONObject buildJson() {

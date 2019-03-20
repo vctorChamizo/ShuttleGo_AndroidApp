@@ -165,6 +165,7 @@
     <string name="errRuteNotFound">No se ha encontrado ninguna ruta</string>
     <string name="errOriginNotExist">No existe el origen</string>
     <string name="start">Comenzar</string>
+    <string name="NoWaypoints">No hay suficientes puntos.</string>
 
     <!--************************************************************************-->
 
