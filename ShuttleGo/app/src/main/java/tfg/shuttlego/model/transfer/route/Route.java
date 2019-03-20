@@ -4,14 +4,15 @@ import java.io.Serializable;
 
 public class Route implements Serializable {
 
-    private int destination, max;
+    private String destination;
+    private int max;
     private String driver, origin;
     private int passengersNumber;
     private String id, hour;
 
     public Route () {}
 
-    public Route (String origin, int destination, String driver, int max) {
+    public Route (String origin, String destination, String driver, int max) {
 
         this.origin = origin;
         this.destination = destination;
@@ -19,7 +20,7 @@ public class Route implements Serializable {
         this.max = max;
     }
 
-    public Route (String id, String origin, int destination, String driver, int max, int passengersNumber) {
+    public Route (String id, String origin, String destination, String driver, int max, int passengersNumber) {
 
         this.origin = origin;
         this.destination = destination;
@@ -29,7 +30,7 @@ public class Route implements Serializable {
         this.id = id;
     }
 
-    public Route (String id, String origin, int destination, String driver, int max, int passengersNumber, String hour) {
+    public Route (String id, String origin, String destination, String driver, int max, int passengersNumber, String hour) {
 
         this.origin = origin;
         this.destination = destination;
@@ -44,7 +45,7 @@ public class Route implements Serializable {
         return this.origin;
     }
 
-    public int getDestination() {
+    public String getDestination() {
         return this.destination;
     }
 
@@ -67,9 +68,11 @@ public class Route implements Serializable {
         this.origin = origin;
     }
 
-    public void setDestination(int destination) {
+    public void setDestination(String destination) {
         this.destination = destination;
     }
+
+    public void setDestination(int destination){this.destination = String.valueOf(destination);};
 
     public void setDriver(String driver) { this.driver = driver; }
 
