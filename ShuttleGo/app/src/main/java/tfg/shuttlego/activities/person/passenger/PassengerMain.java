@@ -24,9 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.Feature;
@@ -45,16 +42,16 @@ import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.route.RouteChoosePassenger;
+import tfg.shuttlego.activities.route.RouteListPassenger;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.map.Map;
@@ -66,220 +63,305 @@ import tfg.shuttlego.model.transfer.route.Route;
 
 import static tfg.shuttlego.model.event.Event.SEARCHROUTE;
 
-/**
- *
- */
 public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, View.OnClickListener, TextWatcher, AdapterView.OnItemClickListener {
 
-    private NavigationView navigationView;
-    private Person user;
-    private MapView mapView;
-    private MapboxMap mapboxMap;
-    private PermissionsManager permissionsManager;
-    private LocationComponent locationComponent;
+    private NavigationView passengerMainNavigtion;
+    private DrawerLayout passengerMainDrawer;
+
     private ProgressBar passengerMainProgress;
     private LinearLayout passengerMainLinear;
+
+    private AutoCompleteTextView passengerMainOrigin;
     private AutoCompleteTextView passengerMainDestiny;
     private Button passengerMainButton;
-    private AutoCompleteTextView passengerMainOrigin;
+
+    /** Mapbox **/
+    private MapboxMap mapboxMap;
+    private MapView mapView;
+    private PermissionsManager permissionsManager;
+
     private ArrayList<Origin> originList;
-    private ArrayList<HashMap<?, ?>> originMap;
-    private int numWords;
-    private boolean destinySelected;
-    private List<Address> destinySearchResult;
     private HashMap<String,String> originIds;
+    private ArrayList<HashMap<?, ?>> originMap;
+    private List<Address> destinySearchResult;
+
+    private boolean destinySelected;
     private Address destination;
     private String originName;
-
+    private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         Mapbox.getInstance(this, getString(R.string.access_token));
-        user = Session.getInstance(getApplicationContext()).getUser();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.passenger_main);
+
+        user = Session.getInstance(getApplicationContext()).getUser();
+
         inicializateView();
         setProgressBar();
-        mapView.onCreate(savedInstanceState);
         setMenuDrawer();
         setCredencials();
+
+        mapView.onCreate(savedInstanceState);
+
         throwEventGerAllOrigins();
+
         listeners();
     }
-    @Override
-    protected  void onStart(){
-        super.onStart();
-        mapView.onStart();
-    }
 
-    @Override
-    protected void onPause(){
-        mapView.onPause();
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop(){
-        mapView.onStop();
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy(){
-        mapView.onDestroy();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-
-    @Override
-    protected void onResume(){
-        mapView.onResume();
-        super.onResume();
-    }
-    /**
-     *
-     */
     private void inicializateView() {
 
-        mapView = findViewById(R.id.passenger_main_content_map);
-        passengerMainProgress = findViewById(R.id.passenger_main_content_progress);
-        passengerMainLinear = findViewById(R.id.passenger_main_content_linear1);
-        passengerMainDestiny = findViewById(R.id.passenger_main_content_autocomplete2);
-        passengerMainOrigin = findViewById(R.id.passenger_main_content_autocomplete);
-        passengerMainButton  = findViewById(R.id.passenger_main_content_button);
-        numWords = 0;
-        destinySelected = false;
-        this.mapView.setClickable(false);
+        this.passengerMainNavigtion = findViewById(R.id.passenger_main_nav);
+        this.passengerMainDrawer = findViewById(R.id.passenger_main_drawer);
 
-    }//inicializateView
+        this.passengerMainProgress = findViewById(R.id.passenger_main_progress);
+        this.passengerMainLinear = findViewById(R.id.passenger_main_linear);
+
+        mapView = findViewById(R.id.passenger_main_map);
+
+        passengerMainDestiny = findViewById(R.id.passenger_main_autocomplete_destiny);
+        passengerMainOrigin = findViewById(R.id.passenger_main_autocomplete_origin);
+        passengerMainButton  = findViewById(R.id.passenger_main_button);
+        destinySelected = false;
+    }
 
     /**
-     *
+     * Show the progress bar component visible and put invisble the rest of the view
      */
     private void setProgressBar () {
 
         passengerMainProgress.setVisibility(View.VISIBLE);
         passengerMainLinear.setVisibility(View.GONE);
-    }//setProgressBar
+    }
 
     /**
-     *
+     * Show the view visible and put invisble progress bar component
      */
     private void removeProgressBar () {
 
         passengerMainProgress.setVisibility(View.GONE);
         passengerMainLinear.setVisibility(View.VISIBLE);
-    }//removeProgressBar
+    }
 
     /**
-     *
+     * Inicializate the components to put the menu in the view
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.passenger_main_nav);
-        navigationView.setNavigationItemSelectedListener(this);
-        DrawerLayout drawer = findViewById(R.id.passenger_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.passenger_main_toolbar);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, passengerMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        passengerMainDrawer.addDrawerListener(toggle);
         toggle.syncState();
-    }//setMenuDrawer
+    }
 
     /**
-     *
+     * Put the personal data about the current user
      */
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  passengerMainNavigtion.getHeaderView(0);
+
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
-        nav_name_text.setText(user.getName() + " " + user.getSurname());
-        nav_email_text.setText(user.getEmail());
-    }//setCredencials
 
-    /**
-     *
-     */
+        String complete_name = user.getName() + " " + user.getSurname();
+        nav_name_text.setText(complete_name);
+        nav_email_text.setText(user.getEmail());
+    }
+
+    private JSONObject buildJson(String origin,String destiny) {
+
+        JSONObject route = new JSONObject();
+        JSONObject  chooseRoute = new JSONObject();
+
+        try {
+
+            route.put("origin",origin);
+            route.put("destination",destiny);
+            chooseRoute.put("route",route);
+
+        } catch (JSONException e) { throwToast(R.string.err); }
+
+        return chooseRoute;
+    }
+
     private void throwEventGerAllOrigins(){
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.GETORIGINS, null)
-        .addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+        .addOnCompleteListener(task-> {
 
-                if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
-                else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
-                else {
+            if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
+            else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
+            else {
 
-                    HashMap<?, ?> result = task.getResult();
-                    originMap = (ArrayList<HashMap<?, ?>>) result.get("origins");
-                    originList = new ArrayList<Origin>();
-                    originIds = new HashMap<String, String>();
-                    for (HashMap<?, ?> l : originMap){
-                        originList.add(new Origin((String)l.get("id"),(String) l.get("name"),(String) l.get("coordinates")));
-                        originIds.put((String)l.get("name"),(String)l.get("id"));
+                HashMap<?, ?> result = task.getResult();
+                originMap = (ArrayList<HashMap<?, ?>>) result.get("origins");
+                originList = new ArrayList<>();
+                originIds = new HashMap<>();
 
-                    }
+                for (HashMap<?, ?> l : originMap){
 
-                    setAutoCompleteTextView();
-                    removeProgressBar();
+                    originList.add(new Origin((String)l.get("id"),(String) l.get("name"),(String)Objects.requireNonNull(l.get("coordinates"))));
+                    originIds.put((String)l.get("name"),(String)l.get("id"));
                 }
+
+                setAutoCompleteTextView();
+                removeProgressBar();
             }
         });
-    }//throwEventGerAllOrigins
+    }
 
-    /**
-     *
-     */
     private void setAutoCompleteTextView() {
+
         ArrayList<String> originListNames = new ArrayList<>();
         for(Origin origin:originList) originListNames.add(origin.getName());
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, originListNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, originListNames);
         passengerMainOrigin.setThreshold(1);
         passengerMainOrigin.setAdapter(adapter);
-    }//setAutoCompleteTextView
+    }
 
-    /**
-     *
-     * @return
-     */
-    private JSONObject buildJson(String origin,String destiny) throws JSONException { ;
-        JSONObject route = new JSONObject();
-        route.put("origin",origin);
-        route.put("destination",destiny);
-
-        JSONObject r = new JSONObject();
-        r.put("route",route);
-        return r;
-    }//buildJson
-
-    /**
-     *
-     */
     private void listeners() {
+
+        passengerMainNavigtion.setNavigationItemSelectedListener(this);
 
         mapView.getMapAsync(this);
         passengerMainButton.setOnClickListener(this);
         passengerMainDestiny.addTextChangedListener(this);
-        passengerMainDestiny.setOnClickListener(this);
         passengerMainDestiny.setOnItemClickListener(this);
         passengerMainOrigin.setOnItemClickListener(this);
-    }//listeners
+    }
 
-    /**
-     *
-     * @param msg
-     */
     private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
+
+    @Override
+    public void onClick(View v) {
+
+        if (passengerMainDestiny.getText().toString().isEmpty() ||
+        passengerMainOrigin.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
+        else {
+
+            setProgressBar();
+
+            this.originName = passengerMainOrigin.getText().toString();
+
+            throwEventSearchRoute(buildJson(originIds.get(passengerMainOrigin.getText().toString()),destination.getPostalCode()));
+        }
+    }
+
+    private void throwEventSearchRoute(JSONObject jsonObject) {
+
+        EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(SEARCHROUTE,jsonObject)
+        .addOnCompleteListener(task ->  {
+
+            if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
+            else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
+            else {
+
+                HashMap<?,?> result= task.getResult();
+                ArrayList<HashMap<?,?>> list = (ArrayList<HashMap<?,?>>) result.get("routes");
+                assert list != null;
+                ArrayList<Route> RouteList = routesParser(list);
+
+                Intent logIntent = new Intent(PassengerMain.this, RouteChoosePassenger.class);
+                logIntent.putExtra("userAddress",destination);
+                logIntent.putExtra("routes", RouteList);
+                logIntent.putExtra("originName",originName);
+                startActivity(logIntent);
+
+            }
+        });
+    }
+
+    private ArrayList<Route> routesParser(ArrayList<HashMap<?,?>>routes){
+
+        ArrayList<Route> r = new ArrayList<>();
+
+        for(HashMap<?,?> route:routes) r.add(new Route((String)route.get("id"),(String)route.get("origin"),(Integer) route.get("destination"),(String)route.get("driver"),(Integer)route.get("max"),(Integer)route.get("passengersNumber")));
+
+        return r;
+    }
+
+
+    /********************************************************************************************************************************/
+
+
+    /** AUTOCOMPLETE TEXT VIEW TO FIND THE DETINY **/
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    @Override
+    public void afterTextChanged(Editable s) {
+
+        if(destinySelected) destinySelected = false;
+        else if(getCurrentFocus() == this.passengerMainDestiny){
+
+            String value = s.toString();
+            PassengerMain aux = this;
+
+            if (value.matches(".*\\s")) {
+
+                Map.getInstance(getApplicationContext()).getFullAddress(value).addOnCompleteListener(task ->  {
+
+                    destinySearchResult = task.getResult();
+                    ArrayList<String> fullAddresses = new ArrayList<>();
+
+                    for (Address address : destinySearchResult) fullAddresses.add(address.getAddress());
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(aux, android.R.layout.simple_list_item_1, fullAddresses);
+                    passengerMainDestiny.setThreshold(1);
+                    passengerMainDestiny.setAdapter(adapter);
+                    passengerMainDestiny.showDropDown();
+                });
+            }
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        destinySelected=true;
+
+        if(Objects.requireNonNull(getCurrentFocus()).getId() == this.passengerMainDestiny.getId()) {
+
+            int i = 0;
+            String text = passengerMainDestiny.getText().toString();
+
+            while (i < destinySearchResult.size() && !destinySearchResult.get(i).getAddress().equals(text)) i++;
+
+            if (i >= destinySearchResult.size()) throwToast(R.string.errDestinyNotExisit);
+            else {
+
+                this.destination = destinySearchResult.get(i);
+                moveMap(destinySearchResult.get(i).getCoordinates(),"finish");
+            }
+        }
+        else{
+
+            int i = 0;
+            String text = passengerMainOrigin.getText().toString();
+
+            while (i < this.originList.size() && !originList.get(i).getName().equals(text)) i++;
+
+            if (i >= originList.size()) throwToast(R.string.errOriginNotExist);
+            else moveMap(originList.get(i).getCoordinates(),"start");
+
+        }
+
+    }
+
+
+    /********************************************************************************************************************************/
+
+
+    /** MAPBOX **/
 
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
@@ -289,22 +371,13 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         this.mapboxMap.getUiSettings().setCompassEnabled(false);
         this.mapboxMap.getUiSettings().setLogoEnabled(false);
 
-        mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
+        mapboxMap.setStyle(Style.LIGHT, style ->  {
 
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-
-                enableLocationComponent(style);
-                mapboxMap.addOnMapClickListener(PassengerMain.this);
-            }
+            enableLocationComponent(style);
+            mapboxMap.addOnMapClickListener(PassengerMain.this);
         });
 
-
-        CameraPosition cp = new CameraPosition.Builder()
-                .zoom(25)
-                .tilt(20)
-                .build();
-
+        CameraPosition cp = new CameraPosition.Builder().zoom(25).tilt(20).build();
         mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
     }
 
@@ -313,7 +386,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
 
-            locationComponent = mapboxMap.getLocationComponent();
+            LocationComponent locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
             locationComponent.setCameraMode(CameraMode.TRACKING);
@@ -345,95 +418,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     }
 
     @Override
-    public boolean onMapClick(@NonNull LatLng point) {
-    /*
-        Intent logIntent = new Intent(PassengerMain.this, MapMain.class);
-        startActivity(logIntent);
-    */
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        DrawerLayout drawer = findViewById(R.id.passenger_main);
-        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
-        else super.onBackPressed();
-    }//onBackPressed
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.nav_settings_admin) { }
-        else if (id == R.id.nav_signout_admin) { }
-
-        DrawerLayout drawer = findViewById(R.id.passenger_main);
-        drawer.closeDrawer(GravityCompat.START);
-
-        return true;
-    }//onNavigationItemSelected
-
-    @Override
-    public void onClick(View v) {
-
-        boolean empty = false;
-
-        switch (v.getId()) {
-
-            case R.id.passenger_main_content_button:
-                if (passengerMainDestiny.getText().toString().isEmpty()) empty = true;
-                if (passengerMainOrigin.getText().toString().isEmpty()) empty = true;
-
-                if (!empty) {
-
-                    setProgressBar();
-                    try {
-                        this.originName = passengerMainOrigin.getText().toString();
-                        throwEventSearchRoute(buildJson(originIds.get(passengerMainOrigin.getText().toString()),destination.getPostalCode()));
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else throwToast(R.string.errDataEmpty);
-                break;
-        }
-    }
-
-    private void throwEventSearchRoute(JSONObject jsonObject) {
-        EventDispatcher.getInstance(getApplicationContext()).dispatchEvent(SEARCHROUTE,jsonObject).addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
-                if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
-                else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
-                else {
-                    Intent logIntent = new Intent(PassengerMain.this, RouteChoosePassenger.class);
-                    HashMap<?,?> result= task.getResult();
-                    ArrayList<HashMap<?,?>> list = (ArrayList<HashMap<?,?>>) result.get("routes");
-                    ArrayList<Route> RouteList = routesParser(list);
-                    logIntent.putExtra("userAddress",destination);
-                    logIntent.putExtra("routes", RouteList);
-                    logIntent.putExtra("originName",originName);
-
-                    startActivity(logIntent);
-
-                }//else
-            }
-        });
-    }
-
-    private ArrayList<Route> routesParser(ArrayList<HashMap<?,?>>routes){
-
-        ArrayList<Route> r = new ArrayList<Route>();
-
-        for(HashMap<?,?> route:routes)
-            r.add(new Route((String)route.get("id"),(String)route.get("origin"),(Integer) route.get("destination"),(String)route.get("driver"),(Integer)route.get("max"),(Integer)route.get("passengersNumber")));
-
-        return r;
-    }
+    public boolean onMapClick(@NonNull LatLng point) { return false; }
 
     private void moveMap(List<Double> coordinates,String type) {
 
@@ -477,75 +462,29 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     }
 
 
-    // Destiny search bar listener methods
+    /********************************************************************************************************************************/
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-    }
+        switch (menuItem.getItemId()) {
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-        if(destinySelected)
-            destinySelected = false; //avoid an infinite loop.
-        else if(getCurrentFocus() == this.passengerMainDestiny){
-            String value = s.toString();
-            PassengerMain aux = this;
-            int newNumWords = value.split(" ").length;
-
-            if (value.matches(".*\\s")) {
-                Map.getInstance(getApplicationContext()).getFullAddress(value).addOnCompleteListener(new OnCompleteListener<List<Address>>() {
-                    @Override
-                    public void onComplete(@NonNull Task<List<Address>> task) {
-                        destinySearchResult = task.getResult();
-                        ArrayList<String> fullAddresses = new ArrayList<String>();
-
-                        for (Address address : destinySearchResult)
-                            fullAddresses.add(address.getAddress());
-
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(aux, android.R.layout.simple_list_item_1, fullAddresses);
-                        passengerMainDestiny.setThreshold(1);
-                        passengerMainDestiny.setAdapter(adapter);
-                        passengerMainDestiny.showDropDown();
-                    }
-                });
-
-                numWords = newNumWords;
-            }
-        }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        destinySelected=true;
-
-        if(getCurrentFocus().getId() == this.passengerMainDestiny.getId()) {
-            int i = 0;
-            String text = passengerMainDestiny.getText().toString();
-            while (i < destinySearchResult.size() && !destinySearchResult.get(i).getAddress().equals(text))
-                i++;
-
-            if (i >= destinySearchResult.size()) throwToast(R.string.errDestinyNotExisit);
-            else {
-                this.destination = destinySearchResult.get(i);
-                moveMap(destinySearchResult.get(i).getCoordinates(),"finish");
-            }
-        }else{
-            int i = 0;
-            String text = passengerMainOrigin.getText().toString();
-            while (i < this.originList.size() && !originList.get(i).getName().equals(text))
-                i++;
-
-            if (i >= originList.size()) throwToast(R.string.errOriginNotExist);
-            else
-                moveMap(originList.get(i).getCoordinates(),"start");
-
+            case R.id.passenger_drawer_list:
+                startActivity(new Intent(PassengerMain.this, RouteListPassenger.class));
+                break;
         }
 
+        passengerMainDrawer.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (passengerMainDrawer.isDrawerOpen(GravityCompat.START)) passengerMainDrawer.closeDrawer(GravityCompat.START);
+        else finish();
     }
 }

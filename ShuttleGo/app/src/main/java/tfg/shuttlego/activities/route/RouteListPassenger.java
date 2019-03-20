@@ -16,12 +16,11 @@ public class RouteListPassenger extends RouteList implements NavigationView.OnNa
     @Override
     protected void listeners() {
 
-        routeListNavigation.setNavigationItemSelectedListener(this);
+        this.routeListNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
 
         switch (menuItem.getItemId()) {
 
@@ -31,7 +30,7 @@ public class RouteListPassenger extends RouteList implements NavigationView.OnNa
                 break;
         }
 
-        routeListDrawer.closeDrawer(GravityCompat.START);
+        this.routeListDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }

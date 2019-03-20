@@ -64,16 +64,16 @@ public abstract class RouteList extends AppCompatActivity {
      */
     private void inicializateView() {
 
-        routeListLinear = findViewById(R.id.route_list_linear);
-        routeListProgress = findViewById(R.id.route_list_progress);
+        this.routeListLinear = findViewById(R.id.route_list_linear);
+        this.routeListProgress = findViewById(R.id.route_list_progress);
 
-        if (user.getType() == TypePerson.DRIVER) routeListNavigation = findViewById(R.id.route_list_nav_driver);
-        else routeListNavigation = findViewById(R.id.route_list_nav_passenger);
+        if (user.getType() == TypePerson.DRIVER) this.routeListNavigation = findViewById(R.id.route_list_nav_driver);
+        else this.routeListNavigation = findViewById(R.id.route_list_nav_passenger);
 
-        routeListNavigation.setVisibility(View.VISIBLE);
-        routeListDrawer = findViewById(R.id.route_list_drawer);
+        this.routeListNavigation.setVisibility(View.VISIBLE);
+        this.routeListDrawer = findViewById(R.id.route_list_drawer);
 
-        routeListRecycler = findViewById(R.id.route_list_recycler);
+        this.routeListRecycler = findViewById(R.id.route_list_recycler);
     }
 
     /**
@@ -81,8 +81,8 @@ public abstract class RouteList extends AppCompatActivity {
      */
     protected void setProgressBar () {
 
-        routeListProgress.setVisibility(View.VISIBLE);
-        routeListLinear.setVisibility(View.GONE);
+        this.routeListProgress.setVisibility(View.VISIBLE);
+        this.routeListLinear.setVisibility(View.GONE);
     }
 
     /**
@@ -90,8 +90,8 @@ public abstract class RouteList extends AppCompatActivity {
      */
     protected void removeProgressBar () {
 
-        routeListProgress.setVisibility(View.GONE);
-        routeListLinear.setVisibility(View.VISIBLE);
+        this.routeListProgress.setVisibility(View.GONE);
+        this.routeListLinear.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -101,8 +101,8 @@ public abstract class RouteList extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.route_list_toolbar);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        routeListDrawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, this.routeListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        this.routeListDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -162,7 +162,7 @@ public abstract class RouteList extends AppCompatActivity {
                     Route route = new Route();
 
                     route.setId((String) list.get(i).get("id"));
-                    route.setOrigin((String) list.get(i).get("origin"));
+                    route.setOrigin((String) list.get(i).get("originName"));
                     route.setDestination(Integer.parseInt(String.valueOf(list.get(i).get("destination"))));
                     route.setHour((String) list.get(i).get("hour"));
                     route.setPassengersNumber(Integer.parseInt(String.valueOf(list.get(i).get("passengersNumber"))));
@@ -183,9 +183,9 @@ public abstract class RouteList extends AppCompatActivity {
     private void createListView(){
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        routeListRecycler.setLayoutManager(layoutManager);
+        this.routeListRecycler.setLayoutManager(layoutManager);
         RecyclerView.Adapter<RecyclerViewAdapterRoute.RouteViewHolder> adapter = new RecyclerViewAdapterRoute(this.listRoutes);
-        routeListRecycler.setAdapter(adapter);
+        this.routeListRecycler.setAdapter(adapter);
     }
 
     protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
@@ -198,7 +198,7 @@ public abstract class RouteList extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (routeListDrawer.isDrawerOpen(GravityCompat.START)) routeListDrawer.closeDrawer(GravityCompat.START);
+        if (this.routeListDrawer.isDrawerOpen(GravityCompat.START)) this.routeListDrawer.closeDrawer(GravityCompat.START);
         else finish();
     }
 }

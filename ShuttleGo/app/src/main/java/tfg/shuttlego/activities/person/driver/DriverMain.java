@@ -112,8 +112,10 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     private void setCredencials() {
 
         View hView =  navigationView.getHeaderView(0);
+
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
+
         String complete_name = user.getName() + " " + user.getSurname();
         nav_name_text.setText(complete_name);
         nav_email_text.setText(user.getEmail());

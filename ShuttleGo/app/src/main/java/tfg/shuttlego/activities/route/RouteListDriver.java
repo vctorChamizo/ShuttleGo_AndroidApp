@@ -15,7 +15,7 @@ public class RouteListDriver extends RouteList implements NavigationView.OnNavig
     @Override
     protected void listeners() {
 
-        routeListNavigation.setNavigationItemSelectedListener(this);
+        this.routeListNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class RouteListDriver extends RouteList implements NavigationView.OnNavig
                 break;
         }
 
-        routeListDrawer.closeDrawer(GravityCompat.START);
+        this.routeListDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
