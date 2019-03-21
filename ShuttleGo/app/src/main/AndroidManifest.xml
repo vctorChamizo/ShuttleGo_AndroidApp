@@ -33,12 +33,13 @@
 
         <activity android:name=".activities.map.MapMain" />
 
-        <activity android:name=".activities.route.RouteMainDriver" />
-        <activity android:name=".activities.route.RouteMainPassengerInformation"/>
-        <activity android:name=".activities.route.RouteMainPassengerChoose"/>
-        <activity android:name=".activities.route.RouteListDriver"/>
-        <activity android:name=".activities.route.RouteListPassenger"/>
+        <activity android:name=".activities.route.routeMain.RouteMainDriver" />
+        <activity android:name=".activities.route.routeMain.RouteMainPassengerInformation"/>
+        <activity android:name=".activities.route.routeMain.RouteMainPassengerChoose"/>
+        <activity android:name=".activities.route.routeList.RouteListDriver"/>
+        <activity android:name=".activities.route.routeList.RouteListPassenger"/>
         <activity android:name=".activities.route.RouteChoosePassenger" />
+        <activity android:name=".activities.route.RouteCalculate" />
 
     </application>
 </manifest>

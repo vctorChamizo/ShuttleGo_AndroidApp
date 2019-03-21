@@ -9,12 +9,4 @@
     <color name="colorAccent">#e65100</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorTransparent">#00000000</color>
-
-    <!--
-    <color name="colorSecondary">#004d40</color>
-    <color name="colorSecondaryLight">#39796b</color>
-    <color name="colorPrimaryText">#000000</color>
-    <color name="colorSecondaryText">#ffffff</color>
-    -->
-
 </resources>

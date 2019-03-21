@@ -12,5 +12,5 @@
         android:id="@+id/route_main_nav"
         style="@style/NavigationView"
         app:headerLayout="@layout/menu_nav_header"
-        app:menu="@menu/driver_drawer" /> <!-- Deberás ver como insertar el 'passenger_drawer' -->
+        app:menu="@menu/driver_drawer" />
 </android.support.v4.widget.DrawerLayout>

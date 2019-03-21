@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.route;
+package tfg.shuttlego.activities.route.routeMain;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.person.driver.DriverMain;
+import tfg.shuttlego.activities.route.RouteCalculate;
+import tfg.shuttlego.activities.route.routeList.RouteListDriver;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 
@@ -96,8 +98,11 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
         switch (v.getId()){
 
             case R.id.route_main_begin_btn:
-                //startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
-                //finish();
+
+                Intent intent = new Intent(RouteMainDriver.this, RouteCalculate.class);
+                intent.putExtra("routeId", this.routeMainIdRoute);
+                startActivity(intent);
+                finish();
                 break;
 
             case R.id.route_main_delete_btn:

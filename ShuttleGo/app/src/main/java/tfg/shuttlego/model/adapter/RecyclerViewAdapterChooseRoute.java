@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.route.RouteMainPassengerChoose;
+import tfg.shuttlego.activities.route.routeMain.RouteMainPassengerChoose;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.route.Route;
 

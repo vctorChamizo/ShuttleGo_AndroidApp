@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.route;
+package tfg.shuttlego.activities.route.routeMain;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.person.passenger.PassengerMain;
+import tfg.shuttlego.activities.route.routeList.RouteListPassenger;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 

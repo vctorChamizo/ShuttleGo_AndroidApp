@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.route;
+package tfg.shuttlego.activities.route.routeList;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,12 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
-
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.person.passenger.PassengerMain;
+import tfg.shuttlego.activities.person.driver.DriverMain;
 
 @SuppressLint("Registered")
-public class RouteListPassenger extends RouteList implements NavigationView.OnNavigationItemSelectedListener {
+public class RouteListDriver extends RouteList implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void listeners() {
@@ -25,7 +24,7 @@ public class RouteListPassenger extends RouteList implements NavigationView.OnNa
         switch (menuItem.getItemId()) {
 
             case R.id.driver_drawer_home:
-                startActivity(new Intent(RouteListPassenger.this, PassengerMain.class));
+                startActivity(new Intent(RouteListDriver.this, DriverMain.class));
                 finish();
                 break;
         }

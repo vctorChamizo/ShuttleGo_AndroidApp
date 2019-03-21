@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.account.LoginActivity;
-import tfg.shuttlego.activities.route.RouteCalculate;
 
 /**
  * Initial activity of the application.

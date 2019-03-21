@@ -51,7 +51,7 @@ import java.util.Objects;
 
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.route.RouteChoosePassenger;
-import tfg.shuttlego.activities.route.RouteListPassenger;
+import tfg.shuttlego.activities.route.routeList.RouteListPassenger;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.map.Map;

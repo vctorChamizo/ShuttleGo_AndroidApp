@@ -76,7 +76,7 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
         this.routeChoosePassengerProgress = findViewById(R.id.route_choose_passenger_progress);
 
         String shortAddress = this.routeChoosePassengerAdress.getAddress().split(",")[0];
-        this.routeChoosePassengerToolbar.setTitle(routeChoosePassengerOrigin);
+        this.routeChoosePassengerToolbar.setTitle(this.routeChoosePassengerOrigin);
         this.routeChoosePassengerToolbar.setSubtitle(shortAddress);
         this.routeChoosePassengerToolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }

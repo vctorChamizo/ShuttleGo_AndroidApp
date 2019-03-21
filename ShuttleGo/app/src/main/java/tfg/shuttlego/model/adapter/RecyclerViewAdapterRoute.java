@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.route.RouteMainDriver;
-import tfg.shuttlego.activities.route.RouteMainPassengerInformation;
+import tfg.shuttlego.activities.route.routeMain.RouteMainDriver;
+import tfg.shuttlego.activities.route.routeMain.RouteMainPassengerInformation;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.TypePerson;
 import tfg.shuttlego.model.transfer.route.Route;
@@ -87,7 +87,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
         if (Session.getInstance().getUser().getType() == TypePerson.DRIVER) {
 
             routeHolder.destinyTittle.setText(routeHolder.context.getString(R.string.limitCardview));
-            routeHolder.destinyImage.setImageDrawable(routeHolder.context.getDrawable(R.drawable.ic_limit));
+            routeHolder.destinyImage.setImageDrawable(routeHolder.context.getDrawable(R.drawable.ic_limit_blue));
 
             String passengers = " " + String.valueOf(this.routeList.get(i).getPassengerNumber()) + " / " + String.valueOf(this.routeList.get(i).getMax());
             routeHolder.passengerText.setText(passengers);

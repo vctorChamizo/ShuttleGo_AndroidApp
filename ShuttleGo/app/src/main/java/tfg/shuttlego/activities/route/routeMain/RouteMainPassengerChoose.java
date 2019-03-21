@@ -1,4 +1,4 @@
-package tfg.shuttlego.activities.route;
+package tfg.shuttlego.activities.route.routeMain;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
