@@ -136,17 +136,23 @@ public abstract class RouteMain extends AppCompatActivity {
      */
     private JSONObject buildJson(String route) {
 
-        JSONObject json = new JSONObject();
-        JSONObject routeJson = new JSONObject();
+        JSONObject getRouteJSON = new JSONObject();
+        JSONObject userJSON = new JSONObject();
+        JSONObject routeJSON = new JSONObject();
 
         try {
 
-            routeJson.put("id", route);
-            json.put("route", routeJson);
+            userJSON.put("email", this.user.getEmail());
+            userJSON.put("password", this.user.getPassword());
+            routeJSON.put("id", route);
+
+            getRouteJSON.put("user", userJSON);
+            getRouteJSON.put("route", routeJSON);
+
 
         } catch (JSONException e) { throwToast(R.string.err);}
 
-        return json;
+        return getRouteJSON;
     }
 
     /**

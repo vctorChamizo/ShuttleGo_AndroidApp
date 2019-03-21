@@ -75,16 +75,17 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
     @Override
     public void onBindViewHolder(@NonNull RouteViewHolder routeHolder, int i) {
 
-        String origin = " " + this.routeList.get(i).getOrigin();
-        String destiny = " " + String.valueOf(this.routeList.get(i).getDestination());
-        String hour = " " + String.valueOf(this.routeList.get(i).getHour());
+        String destiny;
 
+        String origin = " " + this.routeList.get(i).getOrigin();
         routeHolder.originText.setText(origin);
-        routeHolder.destinyText.setText(destiny);
+
+        String hour = " " + String.valueOf(this.routeList.get(i).getHour());
         routeHolder.hourText.setText(hour);
-        routeHolder.idText.setText(this.routeList.get(i).getId());
 
         if (Session.getInstance().getUser().getType() == TypePerson.DRIVER) {
+
+            destiny = " " + String.valueOf(this.routeList.get(i).getDestination());
 
             routeHolder.destinyTittle.setText(routeHolder.context.getString(R.string.limitCardview));
             routeHolder.destinyImage.setImageDrawable(routeHolder.context.getDrawable(R.drawable.ic_limit_blue));
@@ -92,7 +93,15 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
             String passengers = " " + String.valueOf(this.routeList.get(i).getPassengerNumber()) + " / " + String.valueOf(this.routeList.get(i).getMax());
             routeHolder.passengerText.setText(passengers);
         }
-        else routeHolder.passengerLinear.setVisibility(View.GONE);
+        else {
+
+            destiny = " " + String.valueOf(this.routeList.get(i).getDestination()).split(",")[0];
+
+            routeHolder.passengerLinear.setVisibility(View.GONE);
+        }
+
+        routeHolder.destinyText.setText(destiny);
+        routeHolder.idText.setText(this.routeList.get(i).getId());
 
         routeHolder.setOnClickListeners();
     }
