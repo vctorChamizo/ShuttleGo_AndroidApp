@@ -6,39 +6,42 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.view.MenuItem;
 import android.view.View;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
-
+import java.util.Objects;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.person.passenger.PassengerMain;
 import tfg.shuttlego.activities.route.routeList.RouteListPassenger;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
+import tfg.shuttlego.model.transfer.address.Address;
 
 public class RouteMainPassengerChoose extends RouteMain implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    private JSONObject buildJson(String route) {
+    private JSONObject buildJson(String idRoute) {
 
-        JSONObject dataUser = new JSONObject();
-        JSONObject dataRoute = new JSONObject();
-        JSONObject deleteRoute = new JSONObject();
+        Address address = (Address)Objects.requireNonNull(getIntent().getExtras()).getSerializable("userAddress");
+
+        JSONObject addToRoute = new JSONObject();
+        JSONObject route = new JSONObject();
+        JSONObject user = new JSONObject();
 
         try {
 
-            dataUser.put("email", this.user.getEmail());
-            dataUser.put("password", this.user.getPassword());
+            route.put("id", idRoute);
 
-            dataRoute.put("id", route);
+            user.put("email", this.user.getEmail());
+            user.put("password", this.user.getPassword());
 
-            deleteRoute.put("user", dataUser);
-            deleteRoute.put("route", dataRoute);
-        }
-        catch (JSONException e) { throwToast(R.string.err); }
+            addToRoute.put("user", user);
+            addToRoute.put("route", route);
+            addToRoute.put("address", address.getAddress());
+            addToRoute.put("coordinates", address.getCoordinates().get(0) + "," + address.getCoordinates().get(1));
 
-        return deleteRoute;
+        } catch (JSONException e) { throwToast(R.string.err); }
+
+        return addToRoute;
     }
 
     private void throwEventAddToRoute(JSONObject route) {
@@ -93,7 +96,11 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
     }
 
     @Override
-    public void onClick(View v) { throwEventAddToRoute(buildJson(routeMainIdRoute)); }
+    public void onClick(View v) {
+
+        setProgressBar();
+        throwEventAddToRoute(buildJson(this.routeMainIdRoute));
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
