@@ -376,9 +376,6 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
             enableLocationComponent(style);
             mapboxMap.addOnMapClickListener(PassengerMain.this);
         });
-
-        CameraPosition cp = new CameraPosition.Builder().zoom(25).tilt(20).build();
-        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
     }
 
     @SuppressLint("MissingPermission")
@@ -389,7 +386,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
             LocationComponent locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
-            locationComponent.setCameraMode(CameraMode.TRACKING);
+            locationComponent.setCameraMode(CameraMode.NONE);
         }
         else {
 
