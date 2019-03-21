@@ -180,4 +180,6 @@
 
     <!--************************************************************************-->
 
+    <string name="addHour">¿A que hora quieres salir?</string>
+
 </resources>

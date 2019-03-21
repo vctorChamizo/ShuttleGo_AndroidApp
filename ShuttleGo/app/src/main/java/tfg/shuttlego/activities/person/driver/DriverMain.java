@@ -35,7 +35,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
     private ProgressBar driverMainProgress;
     private LinearLayout driverMainLinear;
-    private EditText driverMainLimit, driverMainPassenger;
+    private EditText driverMainLimit, driverMainPassenger, driverMainHour;
     private AutoCompleteTextView driverMainOrigin;
     private Button driverMainButton;
     private NavigationView navigationView;
@@ -58,6 +58,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         throwEventGerAllOrigins();
 
         driverMainButton.setOnClickListener(this);
+        driverMainHour.setOnClickListener(this);
     }
 
     /**
@@ -69,6 +70,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         driverMainLinear = findViewById(R.id.driver_main_linear);
         driverMainLimit = findViewById(R.id.driver_main_limit);
         driverMainPassenger = findViewById(R.id.driver_main_passenger);
+        driverMainHour = findViewById(R.id.driver_main_hour);
         driverMainOrigin = findViewById(R.id.driver_main_origin);
         driverMainButton = findViewById(R.id.driver_main_button);
         driverMainDrawer = findViewById(R.id.driver_main_drawer);
@@ -225,6 +227,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
             routeJson.put("max", passengers);
             routeJson.put("origin", idOrigin);
             routeJson.put("destination", codePostal);
+            routeJson.put("hour", driverMainHour.getText());
 
             json.put("user", userJson);
             json.put("route", routeJson);
@@ -241,8 +244,9 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     public void onClick(View v) {
 
         if (driverMainOrigin.getText().toString().isEmpty() ||
-            driverMainLimit.getText().toString().isEmpty() ||
-            driverMainPassenger.getText().toString().isEmpty())  throwToast(R.string.errDataEmpty);
+                driverMainLimit.getText().toString().isEmpty() ||
+                driverMainPassenger.getText().toString().isEmpty() ||
+                driverMainHour.getText().toString().isEmpty())  throwToast(R.string.errDataEmpty);
         else {
 
             setProgressBar();

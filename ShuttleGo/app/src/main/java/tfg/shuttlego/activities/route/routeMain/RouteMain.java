@@ -22,6 +22,7 @@ import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.Person;
+import tfg.shuttlego.model.transfer.person.TypePerson;
 
 public abstract class RouteMain extends AppCompatActivity {
 
@@ -142,13 +143,16 @@ public abstract class RouteMain extends AppCompatActivity {
 
         try {
 
-            userJSON.put("email", this.user.getEmail());
-            userJSON.put("password", this.user.getPassword());
             routeJSON.put("id", route);
 
-            getRouteJSON.put("user", userJSON);
-            getRouteJSON.put("route", routeJSON);
+            if (this.user.getType() != TypePerson.DRIVER) {
 
+                userJSON.put("email", this.user.getEmail());
+                userJSON.put("password", this.user.getPassword());
+                getRouteJSON.put("user", userJSON);
+            }
+
+            getRouteJSON.put("route", routeJSON);
 
         } catch (JSONException e) { throwToast(R.string.err);}
 
