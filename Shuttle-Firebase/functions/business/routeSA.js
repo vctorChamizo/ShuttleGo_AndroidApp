@@ -20,7 +20,7 @@ function createRoute(route){
 
 }
 
-function getRouteById(id){
+function getRouteById(id,user){
     let routeFin;
 
     return routeDao.getRouteById(id)
@@ -40,7 +40,17 @@ function getRouteById(id){
     })
     .then((origin)=>{
         routeFin.origin = origin.name;
-        return routeFin;
+        if(user==null) return routeFin;
+        else 
+            return personDao.getUser(user.email)
+            .then((userFull)=>{
+                if(userFull == null) throw ERROR.userDoesntExists;
+                return routeDao.getDestination(routeFin.id,userFull.id)})
+            .then((destination)=>{
+                if(destination == null) throw ERROR.userNotAdded;
+                routeFin.destinationName = destination;
+                return routeFin;
+            })
     })
 }
 

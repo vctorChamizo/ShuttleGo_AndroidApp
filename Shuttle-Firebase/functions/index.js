@@ -28,7 +28,7 @@ const routeSA = require("./business/routeSA");
     ** Route **
       - GETROUTEPOINTS: getRoutePoints({user:{email:"driv@gmail.com",password:"123"},route:{id:"CwCBCrWiW2Ty6KrLyIyG"}}, {headers: {Authorization: 'Bearer $token'}});
       - GETROUTESBYUSER: getRoutesByUser({user:{email:"driv@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
-      - GETROUTEBYID: getRouteById({route:{id:"..."}}, {headers: {Authorization: 'Bearer $token'}});
+      - GETROUTEBYID: getRouteById({user:{email:"admin@gmail.com",password:"123"},{route:{id:"..."}}, {headers: {Authorization: 'Bearer $token'}});
       - CREATEROUTE: createRoute({user:{email:"driv@gmail.com",password:"123"},route:{max:2,origin:"i9BQCi6ovzC1pdBGoRYm(elOrigenDelId)",destination:"1234(codigoPostal)"}}, {headers: {Authorization: 'Bearer $token'}});
       - SEARCHROUTE: searchRoute({route:{destination:"28008",origin:"loquesea"}}, {headers: {Authorization: 'Bearer $token'}});})
       - ADDTOROUTE: addToRoute({address:"passenger address",coordinates:"",route:{id:"7ptW7eHRPqtoaHL4SWae"},user:{email:"pass@gmail.com",password:"123"}}, {headers: {Authorization: 'Bearer $token'}});
@@ -177,7 +177,11 @@ exports.getRouteById = functions.https.onCall((data,conext)=>{
   return checkData(data)
   .then(()=>checkData(data.route))
   .then(()=>checkData(data.route.id))
-  .then(()=>routeSA.getRouteById(data.route.id))
+  .then(()=>{
+    if(data.user!=undefined && data.user!=null) return checkUser(data.user);
+    else return null;
+  })
+  .then(()=>routeSA.getRouteById(data.route.id,data.user!=undefined && data.user!=null ? data.user : null ))
   .then((route)=>route,error=>error);
 })
 

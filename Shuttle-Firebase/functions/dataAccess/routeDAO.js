@@ -152,6 +152,13 @@ function getRoutePoints(routeId){
     })
 }
 
+function getDestination(routeId,passengerId){
+    console.log(routeId);
+    console.log(passengerId);
+    return db.collection("check-in").where("route","==",routeId).where("passenger","==",passengerId).get()
+    .then((snapshot)=>{ return snapshot.docs.length == 0 ? null: snapshot.docs[0].data().address});
+}
+
 module.exports = {
     deleteRouteById:deleteRouteById,
     insertRoute:insertRoute,
@@ -162,5 +169,6 @@ module.exports = {
     removePassengerFromRoute:removePassengerFromRoute,
     getRoutesByDriver:getRoutesByDriver,
     getRoutesByPassenger:getRoutesByPassenger,
-    getRoutePoints:getRoutePoints
+    getRoutePoints:getRoutePoints,
+    getDestination:getDestination
 }
