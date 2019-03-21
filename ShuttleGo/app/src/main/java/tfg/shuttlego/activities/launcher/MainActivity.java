@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable(){
             public void run(){
 
-                Intent intent = new Intent(MainActivity.this, RouteCalculate.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             };
