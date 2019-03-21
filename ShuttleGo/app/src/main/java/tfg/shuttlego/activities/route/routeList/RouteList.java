@@ -156,8 +156,7 @@ public abstract class RouteList extends AppCompatActivity {
                 ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("routes");
                 this.listRoutes = new ArrayList<>();
 
-                assert list != null;
-                for (int i = 0; i < list.size(); ++i) {
+                if (list != null) for (int i = 0; i < list.size(); ++i) {
 
                     Route route = new Route();
 

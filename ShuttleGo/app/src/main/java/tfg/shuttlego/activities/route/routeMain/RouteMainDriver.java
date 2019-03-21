@@ -67,8 +67,8 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
     @Override
     protected void listeners() {
 
-        routeMainRemoveButton.setOnClickListener(this);
-        routeMainCloseButton.setOnClickListener(this);
+        routeMainMainButton.setOnClickListener(this);
+        routeMainSecondaryButton.setOnClickListener(this);
         routeMainNavigation.setNavigationItemSelectedListener(this);
     }
 
@@ -97,7 +97,7 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
 
         switch (v.getId()){
 
-            case R.id.route_main_begin_btn:
+            case R.id.route_main_main_btn:
 
                 Intent intent = new Intent(RouteMainDriver.this, RouteCalculate.class);
                 intent.putExtra("routeId", this.routeMainIdRoute);
@@ -105,14 +105,9 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
                 finish();
                 break;
 
-            case R.id.route_main_delete_btn:
+            case R.id.route_main_secondary_btn:
                 setProgressBar();
                 throwEventDeleteRoute(buildJSONDeleteRoute(routeMainIdRoute));
-                break;
-
-            case R.id.route_main_close_btn:
-                startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
-                finish();
                 break;
         }
     }

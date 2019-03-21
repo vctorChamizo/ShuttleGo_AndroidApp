@@ -38,7 +38,7 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         return deleteRoute;
     }
 
-    private void throwDeleteRoute(JSONObject route) {
+    private void throwEventDeleteRoute(JSONObject route) {
 
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.REMOVEPASSENGERFROMROUTE, route)
@@ -64,63 +64,44 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
     @Override
     protected void listeners() {
 
-        routeMainRemoveButton.setOnClickListener(this);
-        routeMainCloseButton.setOnClickListener(this);
+        this.routeMainMainButton.setOnClickListener(this);
         routeMainNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
     protected void setDataText(HashMap<?, ?> resultEvent) {
 
-        this.routeMainRemoveButton.setVisibility(View.GONE);
+        this.routeMainSecondaryButton.setVisibility(View.INVISIBLE);
+        this.routeMainMainButton.setText(getString(R.string.cancelRoute));
 
-        this.routeMainBeginButton.setText(getString(R.string.cancelRoute));
+        String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
+        this.routeMainOrigin.setText(origin);
 
-        String origin = routeMainOrigin.getText() + " " + resultEvent.get("origin");
-        String limit = routeMainLimit.getText() + " " + String.valueOf(resultEvent.get("destinationName"));
+        String limit = this.routeMainLimit.getText() + " " + String.valueOf(resultEvent.get("destinationName"));
+        this.routeMainLimit.setText(limit);
 
         String passengersMax = this.routeMainPassengerMax.getText() + " " + String.valueOf(resultEvent.get("max"));
-        String passengersCurrent = this.routeMainPassengerCurrent.getText() + " " + String.valueOf(resultEvent.get("passengersNumber"));
-
-        String phone = routeMainPhone.getText() + " " + String.valueOf(resultEvent.get("driverNumber"));
-        String driverNameComplete = routeMainDriver.getText() + " " +
-                resultEvent.get("driverSurname") + " " +
-                resultEvent.get("driverName");
-
-        routeMainOrigin.setText(origin);
-        routeMainLimit.setText(limit);
         this.routeMainPassengerMax.setText(passengersMax);
+
+        String passengersCurrent = this.routeMainPassengerCurrent.getText() + " " + String.valueOf(resultEvent.get("passengersNumber"));
         this.routeMainPassengerCurrent.setText(passengersCurrent);
-        routeMainDriver.setText(driverNameComplete);
-        routeMainPhone.setText(phone);
+
+        String phone = this.routeMainPhone.getText() + " " + String.valueOf(resultEvent.get("driverNumber"));
+        this.routeMainPhone.setText(phone);
+
+        String driverNameComplete = this.routeMainDriver.getText() + " " + resultEvent.get("driverSurname") + " " + resultEvent.get("driverName");
+        this.routeMainDriver.setText(driverNameComplete);
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-
-            case R.id.route_main_delete_btn:
-                throwDeleteRoute(buildJson(routeMainIdRoute));
-                break;
-
-            case R.id.route_main_close_btn: finish(); break;
-        }
-    }
+    public void onClick(View v) { throwEventDeleteRoute(buildJson(routeMainIdRoute)); }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-
-            case R.id.passenger_drawer_list:
-                startActivity(new Intent(RouteMainPassengerInformation.this, RouteListPassenger.class));
-                finish();
-                break;
-
-            case R.id.passenger_drawer_home:
-                startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class));
-                finish();
-                break;
+            case R.id.passenger_drawer_list: startActivity(new Intent(RouteMainPassengerInformation.this, RouteListPassenger.class)); finish(); break;
+            case R.id.passenger_drawer_home: startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class)); finish(); break;
         }
 
         routeMainDrawer.closeDrawer(GravityCompat.START);
@@ -135,34 +116,3 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         else finish();
     }
 }
-
-/*
-
-this.routeMainBeginButton.setVisibility(View.INVISIBLE);
-
-        this.routeMainRemoveButton.setText(getText(R.string.book));
-        this.routeId = (String) resultEvent.get("id");
-        this.userAddress = (Address) getIntent().getSerializableExtra("userAddress");
-        String origin = routeMainOrigin.getText() + " " + resultEvent.get("origin");
-        String limit = getString(R.string.destiny) + ": " + userAddress.getAddress().split(",")[0];
-
-        int freePlaces = ((Integer)resultEvent.get("max"))-((Integer)resultEvent.get("passengersNumber"));
-        Spanned  passengers;
-
-        if(freePlaces == 0){
-            passengers = Html.fromHtml(getText(R.string.freePlaces)+": <font color='#EE0000'>"+0+"</font>");
-        }
-        else passengers =  Html.fromHtml(getText(R.string.freePlaces)+": "+freePlaces);
-
-        String phone = routeMainPhone.getText() + " " + String.valueOf(resultEvent.get("driverNumber"));
-        String driverNameComplete = routeMainDriver.getText() + " " +
-                resultEvent.get("driverSurname") + " " +
-                resultEvent.get("driverName");
-
-        routeMainOrigin.setText(origin);
-        routeMainLimit.setText(limit);
-        routeMainPassenger.setText(passengers);
-        routeMainDriver.setText(driverNameComplete);
-        routeMainPhone.setText(phone);
-
-*/

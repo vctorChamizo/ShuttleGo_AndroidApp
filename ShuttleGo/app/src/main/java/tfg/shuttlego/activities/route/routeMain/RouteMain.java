@@ -26,7 +26,7 @@ import tfg.shuttlego.model.transfer.person.Person;
 public abstract class RouteMain extends AppCompatActivity {
 
     protected LinearLayout routeMainLinearDriver, routeMainLinearPhone;
-    protected Button routeMainRemoveButton, routeMainCloseButton, routeMainBeginButton;
+    protected Button routeMainMainButton, routeMainSecondaryButton;
     protected TextView routeMainOrigin, routeMainLimit, routeMainPassengerMax, routeMainPassengerCurrent, routeMainDriver, routeMainPhone;
     protected ImageView routeMainImage;
     protected NavigationView routeMainNavigation;
@@ -43,8 +43,8 @@ public abstract class RouteMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_main);
 
-        routeMainIdRoute = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
-        user = Session.getInstance(getApplicationContext()).getUser();
+        this.routeMainIdRoute = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
+        this.user = Session.getInstance(getApplicationContext()).getUser();
 
         inicializateView();
         setProgressBar();
@@ -60,27 +60,26 @@ public abstract class RouteMain extends AppCompatActivity {
      */
     private void inicializateView() {
 
-        routeMainLinear = findViewById(R.id.route_main_linear);
-        routeMainProgress = findViewById(R.id.route_main_progress);
+        this.routeMainLinear = findViewById(R.id.route_main_linear);
+        this.routeMainProgress = findViewById(R.id.route_main_progress);
 
-        routeMainDrawer = findViewById(R.id.route_main_drawer);
-        routeMainNavigation = findViewById(R.id.route_main_nav);
+        this.routeMainDrawer = findViewById(R.id.route_main_drawer);
+        this.routeMainNavigation = findViewById(R.id.route_main_nav);
 
-        routeMainRemoveButton = findViewById(R.id.route_main_delete_btn);
-        routeMainCloseButton = findViewById(R.id.route_main_close_btn);
-        routeMainBeginButton = findViewById(R.id.route_main_begin_btn);
+        this.routeMainMainButton = findViewById(R.id.route_main_main_btn);
+        this.routeMainSecondaryButton = findViewById(R.id.route_main_secondary_btn);
 
-        routeMainOrigin = findViewById(R.id.route_main_origin);
-        routeMainLimit = findViewById(R.id.route_main_limit);
-        routeMainPassengerMax = findViewById(R.id.route_main_passengers_max);
-        routeMainPassengerCurrent = findViewById(R.id.route_main_passengers);
-        routeMainDriver = findViewById(R.id.route_main_driver);
-        routeMainPhone = findViewById(R.id.route_main_phone);
+        this.routeMainOrigin = findViewById(R.id.route_main_origin);
+        this.routeMainLimit = findViewById(R.id.route_main_limit);
+        this.routeMainPassengerMax = findViewById(R.id.route_main_passengers_max);
+        this.routeMainPassengerCurrent = findViewById(R.id.route_main_passengers);
+        this.routeMainDriver = findViewById(R.id.route_main_driver);
+        this.routeMainPhone = findViewById(R.id.route_main_phone);
 
-        routeMainLinearDriver = findViewById(R.id.route_main_linear_driver);
-        routeMainLinearPhone = findViewById(R.id.route_main_linear_phone);
+        this.routeMainLinearDriver = findViewById(R.id.route_main_linear_driver);
+        this.routeMainLinearPhone = findViewById(R.id.route_main_linear_phone);
 
-        routeMainImage = findViewById(R.id.route_main_ic_destiny);
+        this.routeMainImage = findViewById(R.id.route_main_ic_destiny);
     }
 
     /**
