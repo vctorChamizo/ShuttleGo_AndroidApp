@@ -62,17 +62,17 @@
             android:layout_marginHorizontal="20dp">
 
             <ImageView
-                android:id="@+id/route_main_ic_origin"
+                android:id="@+id/route_main_ic_destiny"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_limit"
+                android:src="@drawable/ic_arrow_back_black"
                 android:layout_marginRight="20dp"/>
 
             <TextView
                 android:id="@+id/route_main_limit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Límite: "
+                android:text="@string/destinyCardview"
                 android:textSize="20sp"/>
         </LinearLayout>
 
@@ -93,7 +93,7 @@
                 android:id="@+id/route_main_passengers_max"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/limitPassenger"
+                android:text="@string/limitPassengerCardview"
                 android:textSize="20sp"/>
         </LinearLayout>
 
@@ -114,11 +114,12 @@
                 android:id="@+id/route_main_passengers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/passengers"
+                android:text="@string/currentPassengerCardview"
                 android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/route_main_linear_driver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -135,11 +136,12 @@
                 android:id="@+id/route_main_driver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/nameDriver"
+                android:text="@string/nameDriverCardview"
                 android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/route_main_linear_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -155,7 +157,7 @@
                 android:id="@+id/route_main_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/phoneDriver"
+                android:text="@string/phoneDriverCardview"
                 android:textSize="20sp"/>
         </LinearLayout>
 

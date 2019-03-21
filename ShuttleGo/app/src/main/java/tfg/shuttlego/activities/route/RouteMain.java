@@ -1,6 +1,5 @@
 package tfg.shuttlego.activities.route;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -26,8 +25,9 @@ import tfg.shuttlego.model.transfer.person.Person;
 
 public abstract class RouteMain extends AppCompatActivity {
 
+    protected LinearLayout routeMainLinearDriver, routeMainLinearPhone;
     protected Button routeMainRemoveButton, routeMainCloseButton, routeMainBeginButton;
-    protected TextView routeMainOrigin, routeMainLimit, routeMainPassenger, routeMainDriver, routeMainPhone;
+    protected TextView routeMainOrigin, routeMainLimit, routeMainPassengerMax, routeMainPassengerCurrent, routeMainDriver, routeMainPhone;
     protected ImageView routeMainImage;
     protected NavigationView routeMainNavigation;
     protected DrawerLayout routeMainDrawer;
@@ -72,11 +72,15 @@ public abstract class RouteMain extends AppCompatActivity {
 
         routeMainOrigin = findViewById(R.id.route_main_origin);
         routeMainLimit = findViewById(R.id.route_main_limit);
-        routeMainPassenger = findViewById(R.id.route_main_passengers);
+        routeMainPassengerMax = findViewById(R.id.route_main_passengers_max);
+        routeMainPassengerCurrent = findViewById(R.id.route_main_passengers);
         routeMainDriver = findViewById(R.id.route_main_driver);
         routeMainPhone = findViewById(R.id.route_main_phone);
 
-        routeMainImage = findViewById(R.id.route_main_ic_origin);
+        routeMainLinearDriver = findViewById(R.id.route_main_linear_driver);
+        routeMainLinearPhone = findViewById(R.id.route_main_linear_phone);
+
+        routeMainImage = findViewById(R.id.route_main_ic_destiny);
     }
 
     /**

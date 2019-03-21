@@ -71,11 +71,16 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
     @Override
     protected void setDataText(HashMap<?, ?> resultEvent) {
 
-        this.routeMainBeginButton.setVisibility(View.INVISIBLE);
+        this.routeMainRemoveButton.setVisibility(View.GONE);
+
+        this.routeMainBeginButton.setText(getString(R.string.cancelRoute));
 
         String origin = routeMainOrigin.getText() + " " + resultEvent.get("origin");
-        String limit = routeMainLimit.getText() + " " + String.valueOf(resultEvent.get("destination"));
-        String passengers = routeMainPassenger.getText() + " " + String.valueOf(resultEvent.get("max"));
+        String limit = routeMainLimit.getText() + " " + String.valueOf(resultEvent.get("destinationName"));
+
+        String passengersMax = this.routeMainPassengerMax.getText() + " " + String.valueOf(resultEvent.get("max"));
+        String passengersCurrent = this.routeMainPassengerCurrent.getText() + " " + String.valueOf(resultEvent.get("passengersNumber"));
+
         String phone = routeMainPhone.getText() + " " + String.valueOf(resultEvent.get("driverNumber"));
         String driverNameComplete = routeMainDriver.getText() + " " +
                 resultEvent.get("driverSurname") + " " +
@@ -83,7 +88,8 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
 
         routeMainOrigin.setText(origin);
         routeMainLimit.setText(limit);
-        routeMainPassenger.setText(passengers);
+        this.routeMainPassengerMax.setText(passengersMax);
+        this.routeMainPassengerCurrent.setText(passengersCurrent);
         routeMainDriver.setText(driverNameComplete);
         routeMainPhone.setText(phone);
     }

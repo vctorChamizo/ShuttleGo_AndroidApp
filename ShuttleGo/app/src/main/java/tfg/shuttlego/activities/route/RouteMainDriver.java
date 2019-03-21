@@ -73,19 +73,21 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
     @Override
     protected void setDataText(HashMap<?,?> resultEvent) {
 
-        String origin = routeMainOrigin.getText() + " " + resultEvent.get("origin");
-        String limit = routeMainLimit.getText() + " " + String.valueOf(resultEvent.get("destination"));
-        String passengers = routeMainPassenger.getText() + " " + String.valueOf(resultEvent.get("max"));
-        String phone = routeMainPhone.getText() + " " + String.valueOf(resultEvent.get("driverNumber"));
-        String driverNameComplete = routeMainDriver.getText() + " " +
-                                    resultEvent.get("driverSurname") + " " +
-                                    resultEvent.get("driverName");
+        this.routeMainLinearDriver.setVisibility(View.INVISIBLE);
+        this.routeMainLinearPhone.setVisibility(View.INVISIBLE);
 
-        routeMainOrigin.setText(origin);
-        routeMainLimit.setText(limit);
-        routeMainPassenger.setText(passengers);
-        routeMainDriver.setText(driverNameComplete);
-        routeMainPhone.setText(phone);
+        String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
+
+        this.routeMainImage.setImageDrawable(getDrawable(R.drawable.ic_limit));
+        String limit = getString(R.string.limitCardview) + " " + String.valueOf(resultEvent.get("destination"));
+
+        String passengersMax = this.routeMainPassengerMax.getText() + " " + String.valueOf(resultEvent.get("max"));
+        String passengersCurrent = this.routeMainPassengerCurrent.getText() + " " + String.valueOf(resultEvent.get("passengersNumber"));
+
+        this.routeMainOrigin.setText(origin);
+        this.routeMainLimit.setText(limit);
+        this.routeMainPassengerMax.setText(passengersMax);
+        this.routeMainPassengerCurrent.setText(passengersCurrent);
     }
 
     @Override

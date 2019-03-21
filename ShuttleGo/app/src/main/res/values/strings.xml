@@ -151,6 +151,7 @@
     <string name="nameDriverCardview">Conductor: </string>
     <string name="phoneDriverCardview">Teléfono: </string>
     <string name="limitPassengerCardview">Pasajeros máximos: </string>
+    <string name="currentPassengerCardview">Pasajeros actuales: </string>
     <string name="ocupedPlacesCardview">Plazas ocupadas: </string>
     <string name="freePlacesCardview">Plazas libres: </string>
 
@@ -172,6 +173,8 @@
     <string name="searchRoute">Buscar trayecto</string>
     <string name="deleteRouteSuccesful">La ruta ha sido eliminada correctamente</string>
     <string name="passengers">Pasajeros: </string>
+
+    <string name="cancelRoute">Cancelar ruta</string>
 
     <!--************************************************************************-->
 

@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Route implements Serializable {
 
-    private int destination, max;
-    private String driver, origin;
+    private int max;
+    private String driver, origin, destination;
     private int passengersNumber;
     private String id, hour;
 
@@ -14,7 +14,7 @@ public class Route implements Serializable {
     public Route (String origin, int destination, String driver, int max) {
 
         this.origin = origin;
-        this.destination = destination;
+        this.destination = String.valueOf(destination);
         this.driver = driver;
         this.max = max;
     }
@@ -22,7 +22,7 @@ public class Route implements Serializable {
     public Route (String id, String origin, int destination, String driver, int max, int passengersNumber) {
 
         this.origin = origin;
-        this.destination = destination;
+        this.destination = String.valueOf(destination);
         this.driver = driver;
         this.max = max;
         this.passengersNumber = passengersNumber;
@@ -32,7 +32,7 @@ public class Route implements Serializable {
     public Route (String id, String origin, int destination, String driver, int max, int passengersNumber, String hour) {
 
         this.origin = origin;
-        this.destination = destination;
+        this.destination = String.valueOf(destination);
         this.driver = driver;
         this.max = max;
         this.passengersNumber = passengersNumber;
@@ -44,7 +44,7 @@ public class Route implements Serializable {
         return this.origin;
     }
 
-    public int getDestination() {
+    public String getDestination() {
         return this.destination;
     }
 
@@ -67,9 +67,9 @@ public class Route implements Serializable {
         this.origin = origin;
     }
 
-    public void setDestination(int destination) {
-        this.destination = destination;
-    }
+    public void setDestination(int destination) { this.destination = String.valueOf(destination); }
+
+    public void setDestination(String destination) { this.destination = destination; }
 
     public void setDriver(String driver) { this.driver = driver; }
 
