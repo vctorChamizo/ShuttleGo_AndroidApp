@@ -177,6 +177,9 @@
     <string name="cancelRoute">Cancelar ruta</string>
     <string name="start">Comenzar</string>
     <string name="NoWaypoints">No hay suficientes puntos.</string>
+    <string name="gettingPoints">Obteniendo puntos</string>
+    <string name="loadingMap">Cargando mapa</string>
+    <string name="calculatingRoute">Calculando ruta</string>
 
     <!--************************************************************************-->
 
