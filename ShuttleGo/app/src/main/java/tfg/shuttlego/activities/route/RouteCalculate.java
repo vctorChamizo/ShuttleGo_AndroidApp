@@ -275,7 +275,7 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
             locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
-            locationComponent.setCameraMode(CameraMode.TRACKING);
+            locationComponent.setCameraMode(CameraMode.TRACKING_GPS_NORTH);
         }
         else {
 
