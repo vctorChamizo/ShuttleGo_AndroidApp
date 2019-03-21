@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +45,10 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
     private PermissionsManager permissionsManager;
     private String routeId;
     private LinearLayout routeCalculateLinear;
-    private ProgressBar routeCalculateProgress;
+    private LinearLayout routeCalculateProgress;
+    private Point originPoint;
+    private ArrayList<Point> waypoints;
+    private TextView textLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +56,23 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         setContentView(R.layout.route_calculate);
         inicializateView();
         mapView.onCreate(savedInstanceState);
-        setProgressBar();
+        textLoading.setText(R.string.loadingMap);
         listeners();
         super.onCreate(savedInstanceState);
 
     }
 
     private void listeners() {
-        mapView.getMapAsync(this);
+        mapView.getMapAsync(RouteCalculate.this);
     }
 
     private void inicializateView(){
+
+        this.routeCalculateLinear = findViewById(R.id.route_calculate_content_linear1);
+        this.textLoading = findViewById(R.id.loading_text);
         mapView = findViewById(R.id.route_calculate_map);
         routeId = getIntent().getExtras().getString("routeId");
+        this.routeCalculateProgress = findViewById(R.id.route_calculate_progress);
     }
     @Override
     protected  void onStart(){
@@ -122,6 +131,8 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
 
+        setProgressBar();
+        
         this.mapboxMap = mapboxMap;
 
         this.mapboxMap.getUiSettings().setLogoEnabled(false);
@@ -133,9 +144,9 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
                 enableLocationComponent(style);
                 mapboxMap.addOnMapClickListener(RouteCalculate.this);
+                throwEventGetPoints();
             }
         });
-
 
         CameraPosition cp = new CameraPosition.Builder()
                 .zoom(25)
@@ -143,31 +154,40 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
                 .build();
 
         mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
-        throwEventGetPoints();
     }
 
+    private void throwCalculateRoute(){
+
+        textLoading.setText(R.string.calculatingRoute);
+
+        tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap).addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                removeProgressBar();
+            }
+        });
+
+    };
+
     protected void setProgressBar () {
-    /*
         routeCalculateProgress.setVisibility(View.VISIBLE);
         routeCalculateLinear.setVisibility(View.GONE);
-        */
+
     }
 
     /**
      * Show the view visible and put invisble progress bar component
      */
     protected void removeProgressBar () {
-    /*
         routeCalculateProgress.setVisibility(View.GONE);
         routeCalculateLinear.setVisibility(View.VISIBLE);
-    */
     }
 
     private void throwEventGetPoints() {
+        this.textLoading.setText(R.string.gettingPoints);
         EventDispatcher.getInstance(getApplicationContext()).dispatchEvent(Event.GETROUTEPOINTS,buildJson()).addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
             @Override
             public void onComplete(@NonNull Task<HashMap<String, String>> task) {
-                removeProgressBar();
 
                 if (!task.isSuccessful() || task.getResult() == null) {
                     throwToast(R.string.errConexion);
@@ -194,19 +214,18 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
                         finish();
                     }
                     else {
-                        ArrayList<Point> waypoints = new ArrayList<>();
+                        waypoints = new ArrayList<>();
 
                         for (HashMap<?, ?> waypoint : waypointsHas) {
                             String[] coordinatesString = ((String) waypoint.get("coordinates")).split(",");
                             List<Double> coordinates = new ArrayList<Double>();
-                            coordinates.add(Double.parseDouble(coordinatesString[1]));
                             coordinates.add(Double.parseDouble(coordinatesString[0]));
+                            coordinates.add(Double.parseDouble(coordinatesString[1]));
                             waypoints.add(createPoint(coordinates));
                         }
 
-                        Point originPoint = createPoint(origin.getCoordinates());
-
-                        tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap);
+                        originPoint = createPoint(origin.getCoordinates());
+                        throwCalculateRoute();
                     }
 
                 }
