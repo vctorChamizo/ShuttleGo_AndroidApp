@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mapbox="http://schemas.android.com/tools"
+    android:id="@+id/route_calculate"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_degraded"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/LinearProgress">
+
+        <ProgressBar
+            android:id="@+id/passenger_main_content_progress"
+            style="@style/ProgressBar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/passenger_main_content_linear1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/driver" />
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:id="@+id/passenger_main_content_relative1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
+
+            <com.mapbox.mapboxsdk.maps.MapView
+                android:id="@+id/route_calculate_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                mapbox:mapbox_cameraTargetLat="38.9098"
+                mapbox:mapbox_cameraTargetLng="-77.0295"
+                mapbox:mapbox_cameraZoom="12">
+
+            </com.mapbox.mapboxsdk.maps.MapView>
+
+            <Button
+                android:id="@+id/route_calculate_start"
+                style="@style/ButtonBigRound"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginHorizontal="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:text="@string/start"
+                android:textColor="@color/colorPrimary" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

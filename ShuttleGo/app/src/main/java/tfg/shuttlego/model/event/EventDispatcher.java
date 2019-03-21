@@ -69,6 +69,7 @@ public class EventDispatcher {
             case DELETEROUTEBYID: return throwEvent("removeRoute", data);
             case REMOVEPASSENGERFROMROUTE: return throwEvent("removePassengerFromRoute", data);
             case GETALLROUTESBYUSER: return throwEvent("getRoutesByUser", data);
+            case GETROUTEPOINTS: return throwEvent("getRoutePoints",data);
         }
 
         return null;

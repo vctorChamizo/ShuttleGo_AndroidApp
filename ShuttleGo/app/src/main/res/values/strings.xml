@@ -175,6 +175,9 @@
     <string name="passengers">Pasajeros: </string>
 
     <string name="cancelRoute">Cancelar ruta</string>
+    <string name="errOriginNotExist">No existe el origen</string>
+    <string name="start">Comenzar</string>
+    <string name="NoWaypoints">No hay suficientes puntos.</string>
 
     <!--************************************************************************-->
 
