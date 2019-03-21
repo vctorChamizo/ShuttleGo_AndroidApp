@@ -77,8 +77,9 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
         this.routeMainOrigin.setText(origin);
 
-        String limit = this.routeMainLimit.getText() + " " + String.valueOf(resultEvent.get("destinationName"));
-        this.routeMainLimit.setText(limit);
+        String[] destinyShort = String.valueOf(resultEvent.get("destinationName")).split(",");
+        String destiny = this.routeMainLimit.getText() + " " + destinyShort[0];
+        this.routeMainLimit.setText(destiny);
 
         String passengersMax = this.routeMainPassengerMax.getText() + " " + String.valueOf(resultEvent.get("max"));
         this.routeMainPassengerMax.setText(passengersMax);
