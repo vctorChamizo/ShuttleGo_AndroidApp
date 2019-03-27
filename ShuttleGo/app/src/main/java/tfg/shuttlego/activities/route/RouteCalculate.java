@@ -47,9 +47,6 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.origin.Origin;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
-
 public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener, View.OnClickListener {
 
     MapView mapView;
@@ -64,6 +61,7 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
     private TextView textLoading;
     private Button start;
     private final double MAX_DISTANCE = 100;
+    private boolean started = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -325,24 +323,35 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onClick(View v) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+        if (!this.started) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+
+            started = true;
+            locationComponent.setCameraMode(CameraMode.TRACKING_COMPASS);
+
+            Location a = new Location("");
+            Location b = new Location("");
+
+            a.setLatitude(locationComponent.getLastKnownLocation().getLatitude());
+            a.setLongitude(locationComponent.getLastKnownLocation().getLongitude());
+
+            b.setLatitude(originPoint.latitude());
+            b.setLongitude(originPoint.longitude());
+
+            double distance = a.distanceTo(b);
+
+            if (distance > MAX_DISTANCE) throwToast(R.string.tooFar);
+
+            this.start.setText(R.string.cancel);
+
+        }else{
+            started = false;
+            this.start.setText(R.string.start);
+            locationComponent.setCameraMode(CameraMode.NONE);
+            moveMap(originPoint.coordinates());
         }
-        locationComponent.setCameraMode(CameraMode.TRACKING_COMPASS);
-
-        Location a = new Location("");
-        Location b = new Location("");
-
-        a.setLatitude(locationComponent.getLastKnownLocation().getLatitude());
-        a.setLongitude(locationComponent.getLastKnownLocation().getLongitude());
-
-        b.setLatitude(originPoint.latitude());
-        b.setLongitude(originPoint.longitude());
-
-        double distance = a.distanceTo(b);
-
-        if (distance>MAX_DISTANCE) throwToast(R.string.tooFar);
-
 
     }
 }
