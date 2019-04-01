@@ -12,12 +12,7 @@
     <string name="delete">Eliminar</string>
     <string name="add">Añadir</string>
 
-    <!--***********************************************************************-->
-
-
-    <!--*************************************************************************
-    *********************************  Errors  **********************************
-    **************************************************************************-->
+    <!-- ****************************** Errors  ****************************** -->
 
     <string name="err">ERROR. Vuelva a intentarlo</string>
     <string name="errConexion">ERROR. Fallo en la conexión</string>
@@ -28,6 +23,24 @@
     <!--*************************************************************************-->
 
 
+    <!--*************************************************************************
+    ******************************  Account  ************************************
+    **************************************************************************-->
+
+    <string name="signin">Iniciar sesión</string>
+    <string name="signup">Registrate</string>
+    <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
+    <string name="tittleWelcome">Te damos la bienvenida a ShuttleGo</string>
+    <string name="introduceEmailRegister">Introduce tu email:</string>
+    <string name="introducePasswordRegister">Introduce una constraseña:</string>
+    <string name="introduceTypeUserRegister">¿Que tipo de usuario eres?:</string>
+    <string name="tittleDataRegister">Algunos datos más y terminamos</string>
+    <string name="introduceNameRegister">Introduce tu nombre:</string>
+    <string name="introduceSurnameRegister">Introduce tus apellidos:</string>
+    <string name="introducePhoneRegister">Introduce un teléfono de contanto:</string>
+    <string name="next">Siguiente</string>
+    <string name="finish">Finalizar</string>
+
     <!-- **************************  Account Errors  *************************** -->
 
     <string name="errUserDontExist">El usuario no existe</string>
@@ -36,6 +49,8 @@
     <string name="errUserExisit">El usuario ya existe</string>
     <string name="errOriginExisit">El origen ya existe</string>
     <string name="errDestinyNotExisit">El destino no existe</string>
+
+    <!--*************************************************************************-->
 
 
     <!--*************************************************************************
@@ -53,23 +68,10 @@
 
     <!--*************************************************************************-->
 
+    <!-- Refactorizado, optimizado y revisado hasta aqui - NO TOCAR - -->
 
-    <!--*************************************************************************
-    ******************************  Account  ************************************
-    **************************************************************************-->
 
-    <string name="signin">Iniciar sesión</string>
-    <string name="signup">Registrate</string>
-    <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
-    <string name="tittleWelcome">Te damos la bienvenida a ShuttleGo</string>
-    <string name="subtittleWelcome">Registrte con tu email</string>
-    <string name="tittleDataRegister">Algunos datos más…</string>
-    <string name="tittlePasswordRegister">Ya casi hemos terminado</string>
-    <string name="subtittlePasswordRegister">Introduce una constraseña</string>
-    <string name="next">Siguiente</string>
-    <string name="finish">Finalizar</string>
 
-    <!--*************************************************************************-->
 
 
     <!--*************************************************************************

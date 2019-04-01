@@ -1,15 +1,18 @@
 <resources>
 
-    <!-- ******************************  App  *************************** -->
-    <!-- **************************************************************** -->
+    <!--*************************************************************************
+    *******************************  APP  ****************************************
+    **************************************************************************-->
 
-    <!-- ***********************  Theme App  **************************** -->
+    <!-- *************************  Theme App  ****************************** -->
+
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -26,7 +29,8 @@
         <item name="colorControlNormal">@color/colorWhite</item>
     </style>
 
-    <!-- ***********************  Progress App  ************************** -->
+
+    <!-- ***********************  Progress App  ****************************** -->
     <style name="LinearProgress">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -69,6 +73,7 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+
     <!-- ***********************  Edit Text App  **************************** -->
     <style name="MainEditText">
         <item name="android:layout_width">match_parent</item>
@@ -87,6 +92,17 @@
         <item name="android:background">@drawable/et_login</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+
+
+    <!-- ************************** Text App  ******************************* -->
+    <style name="TittleEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 
     <!-- *************************  Buttons App  **************************** -->
     <style name="ButtonRoundWhite">
@@ -107,9 +123,12 @@
         <item name="android:layout_marginRight">20dp</item>
     </style>
 
+    <!--***********************************************************************-->
 
-    <!-- ***************************  Login ****************************** -->
-    <!-- **************************************************************** -->
+
+    <!--*************************************************************************
+    *******************************  Account  ***********************************
+    **************************************************************************-->
     <style name="TittleApp">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -135,7 +154,6 @@
         <item name="android:textColor">@drawable/btn_register</item>
     </style>
 
-    <!-- ***************************  Register ****************************** -->
     <style name="TittleWelcome">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -145,31 +163,25 @@
         <item name="android:textSize">30sp</item>
     </style>
 
-    <style name="relativeForm">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_margin">10dp</item>
-    </style>
-
-
-
-    <style name="SubTittleWelcome">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAlignment">viewStart</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="DataRegister">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingRight">15dp</item>
-        <item name="android:textColor">@color/colorWhite</item>
-    </style>
-
     <!--***********************************************************************-->
+
+    <!-- Refactorizado, optimizado y revisado hasta aqui - NO TOCAR - -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <!--*************************************************************************
@@ -224,7 +236,7 @@
         <item name="android:layout_marginRight">20dp</item>
     </style>
 
-    <style name="SubTittleDriveMain">
+    <style name="SubTittleDriveMain"> <!-- Provisional, se estan haciendo optimizaciones en los estilos de las vistas -->
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAlignment">textStart</item>

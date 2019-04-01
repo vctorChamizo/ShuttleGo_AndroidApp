@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,75 +15,92 @@
             style="@style/ProgressBar" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/main_login_relative"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tittle_login"
-            android:text="@string/app_name"
-            style="@style/TittleApp"/>
-
-        <TextView
-            android:id="@+id/subtittle_login"
-            android:layout_below="@+id/tittle_login"
-            android:text="@string/subTittle"
-            style="@style/SubTittleApp"/>
-
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:layout_below="@+id/subtittle_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="15dp">
-
-            <EditText
-                android:id="@+id/main_login_email"
-                android:theme="@style/ThemeData"
-                style="@style/MainEditText"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="45dp"/>
-
-            <EditText
-                android:id="@+id/main_login_password"
-                android:theme="@style/ThemeData"
-                style="@style/MainEditText"
-                android:hint="@string/password"
-                android:inputType="textEmailAddress"
-                android:layout_marginTop="45dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linear2"
-            android:layout_below="@+id/linear1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="80dp">
-
-            <Button
-                android:id="@+id/main_login_signin_btn"
-                style="@style/ButtonRoundWhite"
-                android:text="@string/signin" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/relative1"
+        <ScrollView
+            android:id="@+id/main_login_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/linear2">
+            tools:ignore="UselessParent">
 
-            <Button
-                android:id="@+id/main_login_register_btn"
-                style="@style/SecondaryButtonLogin"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:text="@string/signup" />
-        </RelativeLayout>
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="ScrollViewSize">
+
+                <TextView
+                    android:id="@+id/tittle_login"
+                    android:text="@string/app_name"
+                    style="@style/TittleApp"
+                    tools:ignore="PrivateResource" />
+
+                <TextView
+                    android:id="@+id/subtittle_login"
+                    android:layout_below="@+id/tittle_login"
+                    android:text="@string/subTittle"
+                    style="@style/SubTittleApp"/>
+
+                <LinearLayout
+                    android:id="@+id/linear1"
+                    android:layout_below="@+id/subtittle_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginHorizontal="10dp"
+                    tools:ignore="UnusedAttribute">
+
+                    <EditText
+                        android:id="@+id/main_login_email"
+                        android:theme="@style/ThemeData"
+                        style="@style/MainEditText"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:layout_marginTop="45dp"
+                        tools:ignore="Autofill" />
+
+                    <EditText
+                        android:id="@+id/main_login_password"
+                        android:theme="@style/ThemeData"
+                        style="@style/MainEditText"
+                        android:hint="@string/password"
+                        android:inputType="textEmailAddress"
+                        android:layout_marginTop="45dp"
+                        tools:ignore="Autofill,TextFields" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear2"
+                    android:layout_below="@+id/linear1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="80dp"
+                    tools:ignore="UnusedAttribute">
+
+                    <Button
+                        android:id="@+id/main_login_signin_btn"
+                        style="@style/ButtonRoundWhite"
+                        android:text="@string/signin" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relative1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/linear2">
+
+                    <Button
+                        android:id="@+id/main_login_register_btn"
+                        style="@style/SecondaryButtonLogin"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/signup" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>
