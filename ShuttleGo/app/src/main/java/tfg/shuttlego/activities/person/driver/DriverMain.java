@@ -270,7 +270,6 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        if (driverMainDrawer.isDrawerOpen(GravityCompat.START)) driverMainDrawer.closeDrawer(GravityCompat.START);
-        else finish();
+        finish();
     }
 }

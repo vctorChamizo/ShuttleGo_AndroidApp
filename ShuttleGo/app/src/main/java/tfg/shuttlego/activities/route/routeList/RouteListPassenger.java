@@ -34,4 +34,9 @@ public class RouteListPassenger extends RouteList implements NavigationView.OnNa
 
         return true;
     }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+    }
 }

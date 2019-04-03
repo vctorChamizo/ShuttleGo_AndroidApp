@@ -142,7 +142,7 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
 
     @Override
     public void onBackPressed() {
-        if (routeChoosePassengerDrawer.isDrawerOpen(GravityCompat.START)) routeChoosePassengerDrawer.closeDrawer(GravityCompat.START);
-        else finish();
+//        if (routeChoosePassengerDrawer.isDrawerOpen(GravityCompat.START)) routeChoosePassengerDrawer.closeDrawer(GravityCompat.START);
+        finish();
     }
 }

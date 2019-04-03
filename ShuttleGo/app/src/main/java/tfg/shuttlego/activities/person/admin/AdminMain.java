@@ -366,6 +366,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public void onBackPressed() {
-        if (admiMainDrawer.isDrawerOpen(GravityCompat.START)) admiMainDrawer.closeDrawer(GravityCompat.START);
+        finish();
     }
 }

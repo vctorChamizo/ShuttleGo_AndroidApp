@@ -91,6 +91,12 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     private Person user;
 
     @Override
+    protected void onRestart(){
+        mapView.onStart();
+        removeProgressBar();
+        super.onRestart();
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         Mapbox.getInstance(this, getString(R.string.access_token));
@@ -480,8 +486,6 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onBackPressed() {
-
-        if (passengerMainDrawer.isDrawerOpen(GravityCompat.START)) passengerMainDrawer.closeDrawer(GravityCompat.START);
-        else finish();
+        finish();
     }
 }

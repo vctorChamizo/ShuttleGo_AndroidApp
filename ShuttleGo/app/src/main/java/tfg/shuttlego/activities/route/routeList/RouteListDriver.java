@@ -25,7 +25,6 @@ public class RouteListDriver extends RouteList implements NavigationView.OnNavig
 
             case R.id.driver_drawer_home:
                 startActivity(new Intent(RouteListDriver.this, DriverMain.class));
-                finish();
                 break;
         }
 

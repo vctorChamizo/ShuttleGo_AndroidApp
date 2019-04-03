@@ -43,6 +43,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Class nextClass;
 
     @Override
+    protected void onRestart(){
+        removeProgressBar();
+        super.onRestart();
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_login);
@@ -145,7 +150,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Person user = parserTypePerson(task.getResult());
                     Session.getInstance(getApplicationContext()).setUser(user);
                     startActivity(new Intent(LoginActivity.this, nextClass));
-                    finish();
                 }
             }
         });

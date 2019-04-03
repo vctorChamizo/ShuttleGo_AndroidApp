@@ -198,8 +198,6 @@ public abstract class RouteList extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        if (this.routeListDrawer.isDrawerOpen(GravityCompat.START)) this.routeListDrawer.closeDrawer(GravityCompat.START);
-        else finish();
+        finish();
     }
 }

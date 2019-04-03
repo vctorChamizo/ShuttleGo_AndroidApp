@@ -135,11 +135,6 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
 
     @Override
     public void onBackPressed() {
-
-        if (routeMainDrawer.isDrawerOpen(GravityCompat.START)) routeMainDrawer.closeDrawer(GravityCompat.START);
-        else {
-            startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
             finish();
         }
-    }
 }
