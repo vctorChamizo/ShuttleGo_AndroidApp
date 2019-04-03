@@ -20,8 +20,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.account.LoginActivity" />
-        <activity android:name=".activities.account.RegisterActivity" />
+        <activity android:name=".activities.account.LoginMain" />
+        <activity android:name=".activities.account.RegisterMain" />
 
         <activity android:name=".activities.person.admin.AdminMain" />
         <activity android:name=".activities.person.passenger.PassengerMain" />

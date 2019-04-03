@@ -73,7 +73,7 @@ public class RecyclerViewAdapterChooseRoute extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(@NonNull RouteViewHolder routeHolder, int i) {
 
         routeHolder.freePlacesText.setText("" + (this.routeList.get(i).getMax() - this.routeList.get(i).getPassengerNumber()));
-        routeHolder.hourText.setText("00:00");
+        routeHolder.hourText.setText(this.routeList.get(i).getHour());
         routeHolder.idText.setText(this.routeList.get(i).getId());
 
         routeHolder.setOnClickListeners();
