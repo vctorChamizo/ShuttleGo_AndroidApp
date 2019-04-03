@@ -33,6 +33,12 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
     private Class loginMainNextClass;
 
     @Override
+    protected void onRestart(){
+        removeProgressBar();
+        super.onRestart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -130,7 +136,6 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
                 Person user = parserTypePerson(task.getResult());
                 Session.getInstance(getApplicationContext()).setUser(user);
                 startActivity(new Intent(LoginMain.this, this.loginMainNextClass));
-                finish();
             }
         });
     }
