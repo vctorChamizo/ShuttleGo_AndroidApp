@@ -288,7 +288,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
         ArrayList<Route> r = new ArrayList<>();
 
-        for(HashMap<?,?> route:routes) r.add(new Route((String)route.get("id"),(String)route.get("origin"),(Integer) route.get("destination"),(String)route.get("driver"),(Integer)route.get("max"),(Integer)route.get("passengersNumber")));
+        for(HashMap<?,?> route:routes) r.add(new Route((String)route.get("id"),(String)route.get("origin"),(Integer) route.get("destination"),(String)route.get("driver"),(Integer)route.get("max"),(Integer)route.get("passengersNumber"),(String)route.get("hour")));
 
         return r;
     }

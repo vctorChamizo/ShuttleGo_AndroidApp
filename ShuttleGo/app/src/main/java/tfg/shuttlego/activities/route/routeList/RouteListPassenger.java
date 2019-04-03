@@ -15,7 +15,6 @@ public class RouteListPassenger extends RouteList implements NavigationView.OnNa
 
     @Override
     protected void listeners() {
-
         this.routeListNavigation.setNavigationItemSelectedListener(this);
     }
 
