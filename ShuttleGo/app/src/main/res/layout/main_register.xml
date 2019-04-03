@@ -23,8 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:ignore="ScrollViewSize">
+            android:orientation="vertical" >
 
             <TextView
                 style="@style/TittleWelcome"
@@ -37,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="50dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="20dp"
                 tools:ignore="UnusedAttribute">
 
                 <TextView
@@ -75,8 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="30dp"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginHorizontal="20dp"
                 tools:ignore="UnusedAttribute">
 
                 <TextView
@@ -109,7 +108,7 @@
 
             <Button
                 android:id="@+id/main_register_next_btn"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="90dp"
                 android:text="@string/next"
                 android:textColor="@color/colorPrimary"
                 style="@style/ButtonBigRound"/>
@@ -125,11 +124,9 @@
         android:visibility="gone">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:ignore="ScrollViewSize">
+            android:orientation="vertical">
 
             <TextView
                 style="@style/TittleWelcome"
@@ -141,8 +138,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="50dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginHorizontal="20dp"
                 tools:ignore="UnusedAttribute">
 
                 <TextView
@@ -192,7 +189,7 @@
 
             <Button
                 android:id="@+id/main_register_finish_btn"
-                android:layout_marginTop="75dp"
+                android:layout_marginTop="100dp"
                 android:text="@string/finish"
                 android:textColor="@color/colorPrimary"
                 style="@style/ButtonBigRound"/>

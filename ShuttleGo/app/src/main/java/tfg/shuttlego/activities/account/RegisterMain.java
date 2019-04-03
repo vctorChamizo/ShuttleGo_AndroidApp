@@ -186,7 +186,6 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
                 try {
                     Session.getInstance(getApplicationContext()).setUser(parserTypePerson(data));
                     startActivity(new Intent(RegisterMain.this, this.registerMainNextClass));
-                    overridePendingTransition(R.anim.left_in, R.anim.left_out);
                     finish();
                 }
                 catch (JSONException e) {

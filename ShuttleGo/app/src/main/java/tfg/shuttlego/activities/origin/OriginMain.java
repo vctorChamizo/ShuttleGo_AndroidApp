@@ -35,7 +35,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     private ProgressBar originMainProgress;
     private String originMainIdOrigin;
     private TextView originMainTextName;
-    private Button originMainDelteButton, originMainEditButton, originMainCloseButton;
+    private Button originMainDelteButton, originMainEditButton;
     private Origin orginMainOriginObject;
     private DrawerLayout originMainDrawer;
     private NavigationView navigationView;
@@ -53,7 +53,9 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         setMenuDrawer();
         setCredencials();
         throwEventGetOrigin(buildGetOriginJson());
-        listeners();
+
+        originMainDelteButton.setOnClickListener(this);
+        originMainEditButton.setOnClickListener(this);
     }
 
     /**
@@ -66,7 +68,6 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         originMainTextName = findViewById(R.id.origin_main_text);
         originMainDelteButton = findViewById(R.id.origin_main_delete_btn);
         originMainEditButton = findViewById(R.id.origin_main_edit_btn);
-        originMainCloseButton = findViewById(R.id.origin_main_close_btn);
         originMainDrawer = findViewById(R.id.origin_main_drawer);
     }
 
@@ -161,16 +162,6 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     * Have the listeners to the action components in the view
-     */
-    private void listeners() {
-
-        originMainDelteButton.setOnClickListener(this);
-        originMainEditButton.setOnClickListener(this);
-        originMainCloseButton.setOnClickListener(this);
-    }
-
-    /**
      * Build a JSON to delete the current origin
      *
      * @return JSON with information about the current origin
@@ -238,11 +229,6 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
                 Intent intent = new Intent(OriginMain.this, OriginEdit.class);
                 intent.putExtra("origin", orginMainOriginObject);
                 startActivity(intent);
-                break;
-
-            case R.id.origin_main_close_btn:
-                startActivity(new Intent(OriginMain.this, AdminMain.class));
-                finish();
                 break;
         }
     }

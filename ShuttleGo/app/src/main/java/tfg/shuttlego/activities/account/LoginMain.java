@@ -3,13 +3,12 @@ package tfg.shuttlego.activities.account;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +27,7 @@ import tfg.shuttlego.model.transfer.person.TypePerson;
 public class LoginMain extends AppCompatActivity implements View.OnClickListener {
 
     private ProgressBar loginMainProgress;
-    private ScrollView loginMainScroll;
+    private LinearLayout loginMainLinear;
     private EditText loginMainTextEmail, loginMainTextPassword;
     private Button loginMainButtonSignin, loginMainButtonRegister;
     private Class loginMainNextClass;
@@ -50,7 +49,7 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
      */
     private void inicializateView() {
 
-        this.loginMainScroll = findViewById(R.id.main_login_scroll);
+        this.loginMainLinear = findViewById(R.id.main_login_linear);
         this.loginMainProgress = findViewById(R.id.main_login_progress);
         this.loginMainTextEmail = findViewById(R.id.main_login_email);
         this.loginMainTextPassword = findViewById(R.id.main_login_password);
@@ -66,7 +65,7 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
      */
     private void setProgressBar () {
         this.loginMainProgress.setVisibility(View.VISIBLE);
-        this.loginMainScroll.setVisibility(View.GONE);
+        this.loginMainLinear.setVisibility(View.GONE);
     }
 
     /**
@@ -74,7 +73,7 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
      */
     private void removeProgressBar () {
         this.loginMainProgress.setVisibility(View.GONE);
-        this.loginMainScroll.setVisibility(View.VISIBLE);
+        this.loginMainLinear.setVisibility(View.VISIBLE);
     }
 
     /**
