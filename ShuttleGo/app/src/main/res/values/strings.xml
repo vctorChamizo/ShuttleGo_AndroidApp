@@ -3,7 +3,6 @@
     <!--*************************************************************************
     *********************************  App  *************************************
     **************************************************************************-->
-
     <string name="app_name" tools:ignore="PrivateResource">ShuttleGo</string>
     <string name="subTittle">Haz tu viaje más fácil</string>
     <string name="close">Cerrar</string>
@@ -13,7 +12,6 @@
     <string name="add">Añadir</string>
 
     <!-- ****************************** Errors  ****************************** -->
-
     <string name="err">ERROR. Vuelva a intentarlo</string>
     <string name="errConexion">ERROR. Fallo en la conexión</string>
     <string name="errServer">ERROR. Fallo en el servidor</string>
@@ -26,7 +24,6 @@
     <!--*************************************************************************
     ******************************  Account  ************************************
     **************************************************************************-->
-
     <string name="signin">Iniciar sesión</string>
     <string name="signup">Registrate</string>
     <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
@@ -42,13 +39,25 @@
     <string name="finish">Finalizar</string>
 
     <!-- **************************  Account Errors  *************************** -->
+    <!-- Login -->
+    <string name="errEmailLoginEmpty">Debes introducir tu email</string>
+    <string name="errPasswordLoginEmpty">Debes introducir tu contraseña</string>
+    <string name="errDataLoginEmpty">Debes introducir tus credenciales para iniciar sesión</string>
 
     <string name="errUserDontExist">El usuario no existe</string>
     <string name="errIncorrectSignin">Usuario o contraseña incorrectos</string>
+
+    <!-- Register -->
+    <string name="errEmailRegisterEmpty">Debes introducir un email</string>
+    <string name="errPasswordRegisterEmpty">Debes introducir una contraseña</string>
+    <string name="errTypeRegisterEmpty">Debes seleccionar el tipo de pasajero que eres</string>
+    <string name="errNameRegisterEmpty">Debes introducir tu nombre</string>
+    <string name="errSurnameRegisterEmpty">Debes introducir tus apellidos</string>
+    <string name="errPhoneRegisterEmpty">Debes introducir un teléfono</string>
+    <string name="errDataRegisterEmpty">Debes introducir los datos para completar el registro</string>
+
     <string name="errPhoneNumber">Introduce un telefono correcto</string>
     <string name="errUserExisit">El usuario ya existe</string>
-    <string name="errOriginExisit">El origen ya existe</string>
-    <string name="errDestinyNotExisit">El destino no existe</string>
 
     <!--*************************************************************************-->
 
@@ -56,7 +65,6 @@
     <!--*************************************************************************
     *********************************  Menu  ************************************
     **************************************************************************-->
-
     <string name="nav_header_title">ShuttleGo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -68,10 +76,53 @@
 
     <!--*************************************************************************-->
 
+
+    <!--*************************************************************************
+   ***********************************  Admin  **********************************
+   ****************************************************************************-->
+    <string name="addOriginAdmin">Añadir origen</string>
+    <string name="introduceAddresOrigin">Introduce una dirección para el origen</string>
+    <string name="setNameOriginAdmin">Pon un nombre al nuevo origen:</string>
+
+    <!-- **************************  Admin Errors  *************************** -->
+    <string name="errDataOriginEmpty">Debes introducir los datos para crear un origen</string>
+    <string name="errNameOriginEmpty">Debes introducir un nombre para el origen</string>
+    <string name="errAddressOriginEmpty">Debes introducir una dirección para el origen</string>
+
+    <!--*************************************************************************-->
+
+    <!--*************************************************************************
+   ***********************************  Origin  **********************************
+   ****************************************************************************-->
+    <string name="origin">Origen</string>
+    <string name="originCardview">Origen: </string>
+    <string name="listOrigins">Orígenes</string>
+    <string name="editOrigin">Editar Origen</string>
+    <string name="deleteOriginSuccesful">El origen ha sido eliminado correctamente</string>
+    <string name="createOriginSuccesful">El origen ha sido creado correctamente</string>
+    <string name="editOriginSuccesful">El origen ha sido editado correctamente</string>
+
+    <!-- **************************  Origin Errors  *************************** -->
+    <string name="errOriginAlreadyExists">El origen ya exisite</string>
+    <string name="errOriginNotExist">El origen no existe</string>
+
+    <!--*************************************************************************-->
+
+
+
+
+
+
+
+
+
+
+
     <!-- Refactorizado, optimizado y revisado hasta aqui - NO TOCAR - -->
 
 
 
+    <string name="errDestinyNotExisit">El destino no existe</string>
 
 
     <!--*************************************************************************
@@ -106,17 +157,10 @@
     *******************************  Origin  *************************************
     ***************************************************************************-->
 
-    <string name="origin">Origen</string>
-    <string name="originCardview">Origen: </string>
-    <string name="listOrigins">Orígenes</string>
-    <string name="editOrigin">Editar Origen</string>
     <string name="introduceOrigin">Introduce un punto de partida</string>
-    <string name="setNameOrigin">Pon un nombre al nuevo origen</string>
-    <string name="deleteOriginSuccesful">El origen ha sido eliminado correctamente</string>
-    <string name="createOriginSuccesful">El origen ha sido creado correctamente</string>
-    <string name="editOriginSuccesful">El origen ha sido editado correctamente</string>
-    <string name="errOriginAlreadyExists">El origen ya exisite</string>
-    <string name="errOriginNotExist">No existe el origen</string>
+
+
+
 
     <!--***********************************************************************-->
 

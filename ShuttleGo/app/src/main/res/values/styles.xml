@@ -84,6 +84,20 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+    <style name="MapEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:background">@drawable/et_map</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:inputType">text</item>
+    </style>
+
     <style name="DataLogin"> <!-- Provisional, se estan haciendo optimizaciones en los estilos de las vistas -->
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
@@ -199,18 +213,7 @@
     <!--*************************************************************************
     *******************************  Passenger  *********************************
     **************************************************************************-->
-    <style name="dataMap">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:layout_marginRight">5dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:background">@drawable/et_map</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textColorHint">@color/colorPrimary</item>
-        <item name="android:inputType">text</item>
-    </style>
+
 
     <!--***********************************************************************-->
 

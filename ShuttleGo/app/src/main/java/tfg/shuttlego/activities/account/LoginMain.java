@@ -196,8 +196,9 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
 
             case R.id.main_login_signin_btn:
 
-                if (this.loginMainTextEmail.getText().toString().isEmpty() ||
-                    this.loginMainTextPassword.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
+                if (this.loginMainTextEmail.getText().toString().isEmpty() && this.loginMainTextPassword.getText().toString().isEmpty()) throwToast(R.string.errDataLoginEmpty);
+                else if (this.loginMainTextEmail.getText().toString().isEmpty()) throwToast(R.string.errEmailLoginEmpty);
+                else if (this.loginMainTextPassword.getText().toString().isEmpty()) throwToast(R.string.errPasswordLoginEmpty);
                 else {
                     setProgressBar();
                     throwEventLoginUser(buildJson());

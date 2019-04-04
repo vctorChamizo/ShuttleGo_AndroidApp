@@ -29,10 +29,13 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
 
     private ProgressBar registerMainProgress;
     private LinearLayout registerMainLinear1, registerMainLinear2;
+
     private EditText registerMainTextEmail, registerMainTextPassword, registerMainTextName, registerMainTextSurname, registerMainTextPhone;
     private RadioButton registerMainRBDriver, registerMainRBPassenger;
     private Button registerMainButtonNext, registerMainButtonFinish;
+
     private Class registerMainNextClass;
+
     private Animation registerMainAnimationLeftIn, registerMainAnimationLeftOut, registerMainAnimationRightIn, registerMainAnimationRightOut;
 
     @Override
@@ -239,21 +242,21 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
 
             case R.id.main_register_next_btn:
 
-                if (this.registerMainTextEmail.getText().toString().isEmpty() ||
-                    this.registerMainTextPassword.getText().toString().isEmpty() ||
-                    (!this.registerMainRBDriver.isChecked() && !this.registerMainRBPassenger.isChecked())) throwToast(R.string.errDataEmpty);
-                else {
+                startLeftAnimation(this.registerMainLinear1, this.registerMainLinear2);
+                setGone(registerMainLinear1);
+                setVisible(registerMainLinear2);
 
-                    startLeftAnimation(this.registerMainLinear1, this.registerMainLinear2);
-                    setGone(registerMainLinear1);
-                    setVisible(registerMainLinear2);
-                }
                 break;
 
             case R.id.main_register_finish_btn:
-                if (this.registerMainTextName.getText().toString().isEmpty() ||
-                    this.registerMainTextSurname.getText().toString().isEmpty() ||
-                    this.registerMainTextPhone.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
+
+                if (this.registerMainTextEmail.getText().toString().isEmpty() && this.registerMainTextPassword.getText().toString().isEmpty() && (!this.registerMainRBDriver.isChecked() && !this.registerMainRBPassenger.isChecked()) && this.registerMainTextName.getText().toString().isEmpty() && this.registerMainTextSurname.getText().toString().isEmpty() && this.registerMainTextPhone.getText().toString().isEmpty()) throwToast(R.string.errDataRegisterEmpty);
+                else if (this.registerMainTextEmail.getText().toString().isEmpty()) throwToast(R.string.errEmailRegisterEmpty);
+                else if (this.registerMainTextPassword.getText().toString().isEmpty()) throwToast(R.string.errPasswordRegisterEmpty);
+                else if (!this.registerMainRBDriver.isChecked() && !this.registerMainRBPassenger.isChecked()) throwToast(R.string.errTypeRegisterEmpty);
+                else if (this.registerMainTextName.getText().toString().isEmpty()) throwToast(R.string.errNameRegisterEmpty);
+                else if (this.registerMainTextSurname.getText().toString().isEmpty()) throwToast(R.string.errSurnameRegisterEmpty);
+                else if (this.registerMainTextPhone.getText().toString().isEmpty()) throwToast(R.string.errPhoneRegisterEmpty);
                 else {
 
                     setProgressBar();

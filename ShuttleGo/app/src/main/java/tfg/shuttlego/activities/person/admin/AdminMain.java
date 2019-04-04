@@ -15,6 +15,8 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -43,6 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.account.RegisterMain;
 import tfg.shuttlego.activities.origin.OriginList;
 import tfg.shuttlego.activities.origin.OriginMain;
 import tfg.shuttlego.model.event.Event;
@@ -67,6 +70,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     private ProgressBar adminMainProgress;
     private LinearLayout adminMainLinear;
 
+    private Animation adminMainAnimationLeftIn, adminMainAnimationLeftOut;
+
     private EditText adminMainOriginText;
     private AutoCompleteTextView adminMainOriginAutocomplete;
     private Button adminMainButton;
@@ -87,21 +92,22 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_main);
 
-        user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance(getApplicationContext()).getUser();
 
         incializateView();
         setProgressBar();
-        mapView.onCreate(savedInstanceState);
+        this.mapView.onCreate(savedInstanceState);
         setMenuDrawer();
         setCredencials();
+
+        startLeftAnimation(this.adminMainProgress, this.adminMainLinear);
         removeProgressBar();
 
-        // Listeners
-        navigationView.setNavigationItemSelectedListener(this);
-        mapView.getMapAsync(this);
-        adminMainOriginAutocomplete.addTextChangedListener(this);
-        adminMainOriginAutocomplete.setOnItemClickListener(this);
-        adminMainButton.setOnClickListener(this);
+        this.navigationView.setNavigationItemSelectedListener(this);
+        this.mapView.getMapAsync(this);
+        this.adminMainOriginAutocomplete.addTextChangedListener(this);
+        this.adminMainOriginAutocomplete.setOnItemClickListener(this);
+        this.adminMainButton.setOnClickListener(this);
     }
 
     /**
@@ -109,19 +115,23 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
      */
     private void incializateView() {
 
-        admiMainDrawer = findViewById(R.id.admin_main_drawer);
-        navigationView = findViewById(R.id.admin_main_nav);
+        this.admiMainDrawer = findViewById(R.id.admin_main_drawer);
+        this.navigationView = findViewById(R.id.admin_main_nav);
 
-        adminMainProgress = findViewById(R.id.admin_main_progress);
-        adminMainLinear = findViewById(R.id.admin_main_linear);
+        this.adminMainProgress = findViewById(R.id.admin_main_progress);
+        this.adminMainLinear = findViewById(R.id.admin_main_linear);
 
-        adminMainOriginText = findViewById(R.id.admin_main_origin);
-        adminMainOriginAutocomplete = findViewById(R.id.admin_main_autocomplete);
-        adminMainButton = findViewById(R.id.admin_main_button);
+        this.adminMainOriginText = findViewById(R.id.admin_main_origin);
+        this.adminMainOriginAutocomplete = findViewById(R.id.admin_main_autocomplete);
+        this.adminMainButton = findViewById(R.id.admin_main_button);
 
-        mapView = findViewById(R.id.admin_main_map);
+        this.mapView = findViewById(R.id.admin_main_map);
 
-        adminMainDestinySelected = false;
+        this.adminMainDestinySelected = false;
+
+        this.adminMainAnimationLeftIn = AnimationUtils.loadAnimation(AdminMain.this, R.anim.left_in);
+        this.adminMainAnimationLeftOut = AnimationUtils.loadAnimation(AdminMain.this, R.anim.left_out);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
@@ -129,18 +139,16 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
      * Show the progress bar component visible and put invisble the rest of the view
      */
     private void setProgressBar () {
-
-        adminMainProgress.setVisibility(View.VISIBLE);
-        adminMainLinear.setVisibility(View.GONE);
+        this.adminMainProgress.setVisibility(View.VISIBLE);
+        this.adminMainLinear.setVisibility(View.GONE);
     }
 
     /**
      * Show the view visible and put invisble progress bar component
      */
     private void removeProgressBar () {
-
-        adminMainProgress.setVisibility(View.GONE);
-        adminMainLinear.setVisibility(View.VISIBLE);
+        this.adminMainProgress.setVisibility(View.GONE);
+        this.adminMainLinear.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -151,8 +159,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         Toolbar toolbar = findViewById(R.id.admin_main_toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, admiMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        admiMainDrawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, this.admiMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        this.admiMainDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -161,14 +169,23 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
      */
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  this.navigationView.getHeaderView(0);
 
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
+    }
+
+    /**
+     * Start the animation between with layouts that enters as a parameter.
+     */
+    private void startLeftAnimation(View rOut, View rIn) {
+
+        rOut.startAnimation(this.adminMainAnimationLeftOut);
+        rIn.startAnimation(this.adminMainAnimationLeftIn);
     }
 
     /**
@@ -186,8 +203,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         try {
 
-            dataUser.put("email", user.getEmail());
-            dataUser.put("password", user.getPassword());
+            dataUser.put("email", this.user.getEmail());
+            dataUser.put("password", this.user.getPassword());
             dataOrigin.put("name", nameOrigin);
             dataOrigin.put("coordAlt", adress.getCoordinates().get(0));
             dataOrigin.put("coordLong", adress.getCoordinates().get(1));
@@ -241,20 +258,20 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void afterTextChanged(Editable s) {
 
-        if (adminMainDestinySelected) adminMainDestinySelected = false;
+        if (this.adminMainDestinySelected) this.adminMainDestinySelected = false;
         else {
 
             if (s.toString().matches(".*\\s")) Map.getInstance(getApplicationContext()).getFullAddress(s.toString()).addOnCompleteListener(task-> {
 
-                adminMainSearchResult = task.getResult();
+                this.adminMainSearchResult = task.getResult();
                 ArrayList<String> fullAddresses = new ArrayList<>();
 
-                for (Address address : adminMainSearchResult) fullAddresses.add(address.getAddress());
+                for (Address address : this.adminMainSearchResult) fullAddresses.add(address.getAddress());
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(AdminMain.this, android.R.layout.simple_list_item_1, fullAddresses);
-                adminMainOriginAutocomplete.setThreshold(1);
-                adminMainOriginAutocomplete.setAdapter(adapter);
-                adminMainOriginAutocomplete.showDropDown();
+                this.adminMainOriginAutocomplete.setThreshold(1);
+                this.adminMainOriginAutocomplete.setAdapter(adapter);
+                this.adminMainOriginAutocomplete.showDropDown();
             });
         }
     }
@@ -266,17 +283,20 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        adminMainDestinySelected = true;
+        this.adminMainDestinySelected = true;
 
         int i = 0;
-        String text = adminMainOriginAutocomplete.getText().toString();
+        String text = this.adminMainOriginAutocomplete.getText().toString();
 
-        while(i < adminMainSearchResult.size() && !adminMainSearchResult.get(i).getAddress().equals(text)) i++;
+        while(i < this.adminMainSearchResult.size() && !adminMainSearchResult.get(i).getAddress().equals(text)) i++;
 
-        if(i >= adminMainSearchResult.size()) throwToast(R.string.errDestinyNotExisit);
+        if(i >= this.adminMainSearchResult.size()) throwToast(R.string.errDestinyNotExisit);
         else {
-            adminMainOrigin = adminMainSearchResult.get(i);
-            moveMap(adminMainSearchResult.get(i).getCoordinates());
+
+            this.adminMainOriginAutocomplete.setSelection(0);
+
+            this.adminMainOrigin = this.adminMainSearchResult.get(i);
+            moveMap(this.adminMainSearchResult.get(i).getCoordinates());
         }
     }
 
@@ -287,27 +307,35 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
 
         this.mapboxMap = mapboxMap;
-        mapboxMap.setStyle(Style.LIGHT);
+        mapboxMap.setStyle(Style.OUTDOORS);
+
+        CameraPosition cp = new CameraPosition.Builder()
+                .target(new LatLng(40.0000000, -4.0000000))
+                .zoom(4)
+                .tilt(20)
+                .build();
+
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),3000);
     }
 
     @SuppressLint("MissingPermission")
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
 
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
-            LocationComponent locationComponent = mapboxMap.getLocationComponent();
+            LocationComponent locationComponent = this.mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
             locationComponent.setCameraMode(CameraMode.TRACKING);
         }
         else {
-            permissionsManager = new PermissionsManager(this);
-            permissionsManager.requestLocationPermissions(this);
+            this.permissionsManager = new PermissionsManager(this);
+            this.permissionsManager.requestLocationPermissions(this);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        this.permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -317,7 +345,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public void onPermissionResult(boolean granted) {
-        if (granted) enableLocationComponent(Objects.requireNonNull(mapboxMap.getStyle()));
+        if (granted) enableLocationComponent(Objects.requireNonNull(this.mapboxMap.getStyle()));
         else { Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show(); finish(); }
     }
 
@@ -326,11 +354,11 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         CameraPosition cp = new CameraPosition.Builder()
                                 .target(new LatLng(coordinates.get(1), coordinates.get(0)))
-                                .zoom(17)
+                                .zoom(15)
                                 .tilt(20)
                                 .build();
 
-        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),2000);
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),3000);
         this.mapboxMap.addMarker(new MarkerOptions().position(new LatLng(coordinates.get(1), coordinates.get(0))));
     }
 
@@ -342,12 +370,13 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void onClick(View v) {
 
-        if (adminMainOriginText.getText().toString().isEmpty() ||
-            adminMainOrigin == null) throwToast(R.string.errDataEmpty);
+        if (this.adminMainOriginText.getText().toString().isEmpty() && (this.adminMainOrigin == null || this.adminMainOriginAutocomplete.getText().toString().isEmpty())) throwToast(R.string.errDataOriginEmpty);
+        else if (this.adminMainOriginText.getText().toString().isEmpty()) throwToast(R.string.errNameOriginEmpty);
+        else if (this.adminMainOrigin == null || this.adminMainOriginAutocomplete.getText().toString().isEmpty()) throwToast(R.string.errAddressOriginEmpty);
         else {
 
             setProgressBar();
-            throwEventAddOrigin(buildJson(String.valueOf(adminMainOriginText.getText()), adminMainOrigin));
+            throwEventAddOrigin(buildJson(String.valueOf(this.adminMainOriginText.getText()), this.adminMainOrigin));
         }
     }
 
@@ -359,13 +388,11 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
             case R.id.admin_drawer_list: startActivity(new Intent(AdminMain.this, OriginList.class));break;
         }
 
-        admiMainDrawer.closeDrawer(GravityCompat.START);
+        this.admiMainDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
     @Override
-    public void onBackPressed() {
-        finish();
-    }
+    public void onBackPressed() { finish(); }
 }
