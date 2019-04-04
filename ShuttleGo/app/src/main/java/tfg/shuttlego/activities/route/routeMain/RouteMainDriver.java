@@ -80,7 +80,7 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
 
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
 
-        this.routeMainImage.setImageDrawable(getDrawable(R.drawable.ic_limit));
+        this.routeMainImage.setImageDrawable(getDrawable(R.drawable.ic_limit_black));
         String limit = getString(R.string.limitCardview) + " " + String.valueOf(resultEvent.get("destination"));
 
         String passengersMax = this.routeMainPassengerMax.getText() + " " + String.valueOf(resultEvent.get("max"));

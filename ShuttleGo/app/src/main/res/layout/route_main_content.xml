@@ -42,7 +42,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_arrow_forward_black_"
+                android:src="@drawable/ic_arrow_right_black_"
                 android:layout_marginRight="20dp"/>
 
             <TextView
@@ -65,7 +65,7 @@
                 android:id="@+id/route_main_ic_destiny"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_arrow_back_black"
+                android:src="@drawable/ic_arrow_left_black"
                 android:layout_marginRight="20dp"/>
 
             <TextView
@@ -86,7 +86,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_passengers_bus"
+                android:src="@drawable/ic_passengers_bus_black"
                 android:layout_marginRight="20dp"/>
 
             <TextView
@@ -129,7 +129,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_driver"
+                android:src="@drawable/ic_driver_black"
                 android:layout_marginRight="20dp"/>
 
             <TextView
@@ -150,7 +150,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/ic_phone"
+                android:src="@drawable/ic_phone_black"
                 android:layout_marginRight="20dp"/>
 
             <TextView
