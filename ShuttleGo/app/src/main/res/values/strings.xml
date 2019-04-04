@@ -43,12 +43,25 @@
 
     <!-- **************************  Account Errors  *************************** -->
 
+    <!-- Login -->
+    <string name="errEmailLoginEmpty">Debes introducir tu email</string>
+    <string name="errPasswordLoginEmpty">Debes introducir tu contraseña</string>
+    <string name="errDataLoginEmpty">Debes introducir tus credenciales para iniciar sesión</string>
+
     <string name="errUserDontExist">El usuario no existe</string>
     <string name="errIncorrectSignin">Usuario o contraseña incorrectos</string>
+
+    <!-- Register -->
+    <string name="errEmailRegisterEmpty">Debes introducir un email</string>
+    <string name="errPasswordRegisterEmpty">Debes introducir una contraseña</string>
+    <string name="errTypeEmpty">Debes seleccionar el tipo de pasajero que eres</string>
+    <string name="errNameEmpty">Debes introducir tu nombre</string>
+    <string name="errSurnameEmpty">Debes introducir tus apellidos</string>
+    <string name="errPhoneEmpty">Debes introducir un teléfono</string>
+    <string name="errDataRegisterEmpty">Debes introducir los datos para completar el registro</string>
+
     <string name="errPhoneNumber">Introduce un telefono correcto</string>
     <string name="errUserExisit">El usuario ya existe</string>
-    <string name="errOriginExisit">El origen ya existe</string>
-    <string name="errDestinyNotExisit">El destino no existe</string>
 
     <!--*************************************************************************-->
 
@@ -71,7 +84,8 @@
     <!-- Refactorizado, optimizado y revisado hasta aqui - NO TOCAR - -->
 
 
-
+    <string name="errOriginExisit">El origen ya existe</string>
+    <string name="errDestinyNotExisit">El destino no existe</string>
 
 
     <!--*************************************************************************
