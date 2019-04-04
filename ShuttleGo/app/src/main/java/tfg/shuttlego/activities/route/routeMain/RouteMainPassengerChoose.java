@@ -24,12 +24,11 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         this.searching = true;
         this.address = (Address)Objects.requireNonNull(getIntent().getExtras()).getSerializable("userAddress");
 
         super.onCreate(savedInstanceState);
-
-
     }
 
     private JSONObject buildJson(String idRoute) {
@@ -87,8 +86,8 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
     @Override
     protected void setDataText(HashMap<?, ?> resultEvent) {
 
-        this.routeMainSecondaryButton.setVisibility(View.INVISIBLE);
         this.routeMainMainButton.setText(getString(R.string.add));
+        this.routeMainSecondaryButton.setVisibility(View.INVISIBLE);
 
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
         this.routeMainOrigin.setText(origin);
