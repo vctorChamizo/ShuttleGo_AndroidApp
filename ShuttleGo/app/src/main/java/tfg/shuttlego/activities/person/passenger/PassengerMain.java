@@ -64,7 +64,7 @@ import tfg.shuttlego.model.transfer.route.Route;
 
 import static tfg.shuttlego.model.event.Event.SEARCHROUTE;
 
-public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, View.OnClickListener, TextWatcher, AdapterView.OnItemClickListener {
+public class PassengerMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener, View.OnClickListener, TextWatcher, AdapterView.OnItemClickListener, View.OnFocusChangeListener {
 
     private NavigationView passengerMainNavigtion;
     private DrawerLayout passengerMainDrawer;
@@ -240,6 +240,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         passengerMainButton.setOnClickListener(this);
         passengerMainDestiny.addTextChangedListener(this);
         passengerMainDestiny.setOnItemClickListener(this);
+        passengerMainOrigin.setOnFocusChangeListener(this);
         passengerMainOrigin.setOnItemClickListener(this);
     }
 
@@ -248,7 +249,8 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     @Override
     public void onClick(View v) {
 
-        if (passengerMainDestiny.getText().toString().isEmpty() ||
+        if(getCurrentFocus() == this.passengerMainOrigin) this.passengerMainOrigin.showDropDown();
+        else if (passengerMainDestiny.getText().toString().isEmpty() ||
         passengerMainOrigin.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
         else {
 
@@ -491,5 +493,10 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         startActivity(intent);
         finish();
 
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(getCurrentFocus() == this.passengerMainOrigin) this.passengerMainOrigin.showDropDown();
     }
 }
