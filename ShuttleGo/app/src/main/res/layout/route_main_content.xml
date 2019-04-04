@@ -60,7 +60,7 @@
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_arrow_forward_black_" />
+                                android:src="@drawable/ic_arrow_right_black_" />
 
                             <TextView
                                 android:id="@+id/route_main_origin"
@@ -83,7 +83,7 @@
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_arrow_back_black" />
+                                android:src="@drawable/ic_arrow_left_black" />
 
                             <TextView
                                 android:id="@+id/route_main_limit"
@@ -104,7 +104,7 @@
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_passengers_bus" />
+                                android:src="@drawable/ic_passengers_black" />
 
                             <TextView
                                 android:id="@+id/route_main_passengers_max"
@@ -147,7 +147,7 @@
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_driver" />
+                                android:src="@drawable/ic_driver_black" />
 
                             <TextView
                                 android:id="@+id/route_main_driver"
@@ -168,7 +168,7 @@
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:layout_marginRight="20dp"
-                                android:src="@drawable/ic_phone" />
+                                android:src="@drawable/ic_phone_black" />
 
                             <TextView
                                 android:id="@+id/route_main_phone"
