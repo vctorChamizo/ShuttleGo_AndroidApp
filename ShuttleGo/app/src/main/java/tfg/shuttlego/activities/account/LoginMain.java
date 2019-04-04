@@ -206,5 +206,9 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
     }
 
     @Override
-    public void onBackPressed() { finish(); }
+    public void onBackPressed() {
+        finishAffinity();
+        finish();
+        System.exit(0);
+    }
 }
