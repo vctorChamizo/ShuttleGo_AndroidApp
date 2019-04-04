@@ -9,9 +9,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.ScrollView;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +28,7 @@ import tfg.shuttlego.model.transfer.person.TypePerson;
 public class RegisterMain extends AppCompatActivity implements View.OnClickListener {
 
     private ProgressBar registerMainProgress;
-    private ScrollView registerMainScroll1, registerMainScroll2;
+    private LinearLayout registerMainLinear1, registerMainLinear2;
     private EditText registerMainTextEmail, registerMainTextPassword, registerMainTextName, registerMainTextSurname, registerMainTextPhone;
     private RadioButton registerMainRBDriver, registerMainRBPassenger;
     private Button registerMainButtonNext, registerMainButtonFinish;
@@ -53,8 +53,8 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
     private void inicializateView() {
 
         this.registerMainProgress = findViewById(R.id.main_register_progress);
-        this.registerMainScroll1 = findViewById(R.id.main_register_scroll_1);
-        this.registerMainScroll2 = findViewById(R.id.main_register_scroll_2);
+        this.registerMainLinear1 = findViewById(R.id.main_register_linear1);
+        this.registerMainLinear2 = findViewById(R.id.main_register_linear2);
 
         this.registerMainButtonNext = findViewById(R.id.main_register_next_btn);
         this.registerMainButtonFinish = findViewById(R.id.main_register_finish_btn);
@@ -81,7 +81,7 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
      */
     private void setProgressBar () {
         this.registerMainProgress.setVisibility(View.VISIBLE);
-        this.registerMainScroll2.setVisibility(View.GONE);
+        this.registerMainLinear2.setVisibility(View.GONE);
     }
 
     /**
@@ -89,7 +89,7 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
      */
     private void removeProgressBar () {
         this.registerMainProgress.setVisibility(View.GONE);
-        this.registerMainScroll2.setVisibility(View.VISIBLE);
+        this.registerMainLinear2.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -238,9 +238,9 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
                     (!this.registerMainRBDriver.isChecked() && !this.registerMainRBPassenger.isChecked())) throwToast(R.string.errDataEmpty);
                 else {
 
-                    startLeftAnimation(this.registerMainScroll1, this.registerMainScroll2);
-                    setGone(registerMainScroll1);
-                    setVisible(registerMainScroll2);
+                    startLeftAnimation(this.registerMainLinear1, this.registerMainLinear2);
+                    setGone(registerMainLinear1);
+                    setVisible(registerMainLinear2);
                 }
                 break;
 
@@ -261,11 +261,11 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
 
-        if (this.registerMainScroll2.getVisibility() == View.VISIBLE) {
+        if (this.registerMainLinear2.getVisibility() == View.VISIBLE) {
 
-            startRightAnimation(this.registerMainScroll2, this.registerMainScroll1);
-            setGone(registerMainScroll2);
-            setVisible(registerMainScroll1);
+            startRightAnimation(this.registerMainLinear2, this.registerMainLinear1);
+            setGone(registerMainLinear2);
+            setVisible(registerMainLinear1);
         }
         else {
             finish();
