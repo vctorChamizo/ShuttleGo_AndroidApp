@@ -153,15 +153,11 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
         this.mapboxMap.getUiSettings().setLogoEnabled(false);
 
-        mapboxMap.setStyle(Style.OUTDOORS, new Style.OnStyleLoaded() {
+        mapboxMap.setStyle(Style.OUTDOORS, style -> {
 
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-
-                enableLocationComponent(style);
-                mapboxMap.addOnMapClickListener(RouteCalculate.this);
-                throwEventGetPoints();
-            }
+            enableLocationComponent(style);
+            this.mapboxMap.addOnMapClickListener(RouteCalculate.this);
+            throwEventGetPoints();
         });
     }
 

@@ -29,10 +29,13 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
 
     private ProgressBar registerMainProgress;
     private LinearLayout registerMainLinear1, registerMainLinear2;
+
     private EditText registerMainTextEmail, registerMainTextPassword, registerMainTextName, registerMainTextSurname, registerMainTextPhone;
     private RadioButton registerMainRBDriver, registerMainRBPassenger;
     private Button registerMainButtonNext, registerMainButtonFinish;
+
     private Class registerMainNextClass;
+
     private Animation registerMainAnimationLeftIn, registerMainAnimationLeftOut, registerMainAnimationRightIn, registerMainAnimationRightOut;
 
     @Override
@@ -244,10 +247,10 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
                 if (this.registerMainTextEmail.getText().toString().isEmpty() && this.registerMainTextPassword.getText().toString().isEmpty() && (!this.registerMainRBDriver.isChecked() && !this.registerMainRBPassenger.isChecked()) && this.registerMainTextName.getText().toString().isEmpty() && this.registerMainTextSurname.getText().toString().isEmpty() && this.registerMainTextPhone.getText().toString().isEmpty()) throwToast(R.string.errDataRegisterEmpty);
                 else if (this.registerMainTextEmail.getText().toString().isEmpty()) throwToast(R.string.errEmailRegisterEmpty);
                 else if (this.registerMainTextPassword.getText().toString().isEmpty()) throwToast(R.string.errPasswordRegisterEmpty);
-                else if (!this.registerMainRBDriver.isChecked() && !this.registerMainRBPassenger.isChecked()) throwToast(R.string.errTypeEmpty);
-                else if (this.registerMainTextName.getText().toString().isEmpty()) throwToast(R.string.errNameEmpty);
-                else if (this.registerMainTextSurname.getText().toString().isEmpty()) throwToast(R.string.errSurnameEmpty);
-                else if (this.registerMainTextPhone.getText().toString().isEmpty()) throwToast(R.string.errPhoneEmpty);
+                else if (!this.registerMainRBDriver.isChecked() && !this.registerMainRBPassenger.isChecked()) throwToast(R.string.errTypeRegisterEmpty);
+                else if (this.registerMainTextName.getText().toString().isEmpty()) throwToast(R.string.errNameRegisterEmpty);
+                else if (this.registerMainTextSurname.getText().toString().isEmpty()) throwToast(R.string.errSurnameRegisterEmpty);
+                else if (this.registerMainTextPhone.getText().toString().isEmpty()) throwToast(R.string.errPhoneRegisterEmpty);
                 else {
 
                     setProgressBar();

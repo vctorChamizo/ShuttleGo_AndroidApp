@@ -32,19 +32,17 @@
                 app:title="@string/admin"/>
         </android.support.design.widget.AppBarLayout>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <RelativeLayout
+                    android:id="@+id/relative_map"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:fillViewport="true">
+                    android:fillViewport="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/mapbox_blue">
 
                     <com.mapbox.mapboxsdk.maps.MapView
                         android:id="@+id/admin_main_map"
@@ -53,55 +51,40 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/admin_main_autocomplete"
-                        style="@style/dataMap"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:ems="10"
-                        android:hint="@string/introduceOrigin"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:paddingEnd="10dp"/>
+                        style="@style/MapEditText"
+                        android:hint="@string/introduceAddresOrigin"/>
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relative_map"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="40dp"
+                    tools:targetApi="o">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="30dp"
-                        android:orientation="vertical">
+                    <TextView
+                        style="@style/TittleEditText"
+                        android:text="@string/setNameOriginAdmin"
+                        android:layout_marginStart="15dp"/>
 
-                        <TextView
-                            style="@style/SubTittleDriveMain"
-                            android:textAlignment="textStart"
-                            android:hint="@string/origin"
-                            android:text="@string/setNameOrigin" />
-
-                        <EditText
-                            android:id="@+id/admin_main_origin"
-                            android:hint="@string/origin"
-                            android:inputType="text"
-                            style="@style/DataLogin"
-                            android:layout_marginTop="10dp"
-                            android:theme="@style/ThemeData" />
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/admin_main_button"
-                        android:text="@string/add"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_marginTop="80dp"
-                        android:layout_marginHorizontal="20dp"
-                        style="@style/ButtonBigRound"
-                        tools:targetApi="o" />
-
+                    <EditText
+                        android:id="@+id/admin_main_origin"
+                        android:theme="@style/ThemeData"
+                        style="@style/MainEditText"
+                        android:hint="@string/origin"
+                        android:inputType="text"
+                        android:layout_marginTop="10dp"
+                        tools:ignore="Autofill,TextFields" />
                 </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
+
+                <Button
+                    android:id="@+id/admin_main_button"
+                    style="@style/ButtonRoundWhite"
+                    android:text="@string/addOriginAdmin"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="70dp"/>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

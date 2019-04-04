@@ -50,7 +50,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/passenger_main_autocomplete_origin"
-                    style="@style/dataMap"
+                    style="@style/MapEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -59,7 +59,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/passenger_main_autocomplete_destiny"
-                    style="@style/dataMap"
+                    style="@style/MapEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
