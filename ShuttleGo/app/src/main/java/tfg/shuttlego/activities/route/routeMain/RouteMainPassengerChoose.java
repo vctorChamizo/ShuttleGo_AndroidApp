@@ -69,7 +69,6 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
                 throwToast(R.string.errServer);
             }
             else {
-
                 startActivity(new Intent(RouteMainPassengerChoose.this, PassengerMain.class));
                 throwToast(R.string.successfullyAdded);
             }
@@ -87,7 +86,7 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
     protected void setDataText(HashMap<?, ?> resultEvent) {
 
         this.routeMainMainButton.setText(getString(R.string.add));
-        this.routeMainSecondaryButton.setVisibility(View.INVISIBLE);
+        this.routeMainSecondaryButton.setVisibility(View.GONE);
 
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
         this.routeMainOrigin.setText(origin);
@@ -127,8 +126,6 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-
-        if (routeMainDrawer.isDrawerOpen(GravityCompat.START)) routeMainDrawer.closeDrawer(GravityCompat.START);
-        else finish();
+        finish();
     }
 }

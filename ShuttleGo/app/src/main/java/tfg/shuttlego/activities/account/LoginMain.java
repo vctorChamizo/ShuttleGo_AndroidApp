@@ -48,6 +48,7 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
 
         this.loginMainButtonRegister.setOnClickListener(this);
         this.loginMainButtonSignin .setOnClickListener(this);
+        Session.getInstance().setLogin(this);
     }
 
     /**

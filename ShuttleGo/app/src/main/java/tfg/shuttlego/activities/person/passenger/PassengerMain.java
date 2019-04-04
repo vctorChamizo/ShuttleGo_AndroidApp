@@ -377,7 +377,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         this.mapboxMap.getUiSettings().setCompassEnabled(false);
         this.mapboxMap.getUiSettings().setLogoEnabled(false);
 
-        mapboxMap.setStyle(Style.LIGHT, style ->  {
+        mapboxMap.setStyle(Style.OUTDOORS, style ->  {
 
             enableLocationComponent(style);
             mapboxMap.addOnMapClickListener(PassengerMain.this);
@@ -487,5 +487,6 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     @Override
     public void onBackPressed() {
         finish();
+
     }
 }

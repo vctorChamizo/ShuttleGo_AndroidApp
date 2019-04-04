@@ -72,7 +72,7 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
     @Override
     protected void setDataText(HashMap<?, ?> resultEvent) {
 
-        this.routeMainSecondaryButton.setVisibility(View.INVISIBLE);
+        this.routeMainSecondaryButton.setVisibility(View.GONE);
         this.routeMainMainButton.setText(getString(R.string.cancelRoute));
 
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");

@@ -7,8 +7,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
-        style="@style/LinearProgress">
+    <LinearLayout style="@style/LinearProgress">
 
         <ProgressBar
             android:id="@+id/route_main_progress"
@@ -21,161 +20,194 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
-            style="@style/AppBarLayout">
+        <android.support.design.widget.AppBarLayout style="@style/AppBarLayout">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/route_main_toolbar"
                 style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/route"/>
+                app:title="@string/route" />
+
         </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="20dp">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_arrow_forward_black_"
-                android:layout_marginRight="20dp"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/route_main_origin"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="25dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_arrow_forward_black_" />
+
+                            <TextView
+                                android:id="@+id/route_main_origin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Origen: "
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginBottom="25dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/route_main_ic_destiny"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_arrow_back_black" />
+
+                            <TextView
+                                android:id="@+id/route_main_limit"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/destinyCardview"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginBottom="25dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_passengers_bus" />
+
+                            <TextView
+                                android:id="@+id/route_main_passengers_max"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/limitPassengerCardview"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginBottom="25dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_passengers_black" />
+
+                            <TextView
+                                android:id="@+id/route_main_passengers"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/currentPassengerCardview"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/route_main_linear_driver"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginBottom="25dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_driver" />
+
+                            <TextView
+                                android:id="@+id/route_main_driver"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/nameDriverCardview"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/route_main_linear_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginRight="20dp"
+                                android:src="@drawable/ic_phone" />
+
+                            <TextView
+                                android:id="@+id/route_main_phone"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/phoneDriverCardview"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Origen: "
-                android:textSize="20sp"/>
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/route_main_main_btn"
+                    style="@style/ButtonDeleteOrigin"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/fab_margin_bottom"
+                    android:text="Comenzar"
+                    android:textColor="@color/colorWhite" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="20dp">
+                <Button
+                    android:id="@+id/route_main_secondary_btn"
+                    style="@style/ButtonBigRound"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/fab_margin_bottom"
+                    android:text="@string/delete"
+                    android:textColor="@color/colorPrimary" />
+            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/route_main_ic_destiny"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_arrow_back_black"
-                android:layout_marginRight="20dp"/>
-
-            <TextView
-                android:id="@+id/route_main_limit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/destinyCardview"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="20dp">
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_passengers_bus"
-                android:layout_marginRight="20dp"/>
-
-            <TextView
-                android:id="@+id/route_main_passengers_max"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/limitPassengerCardview"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="25dp">
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_passengers_black"
-                android:layout_marginRight="20dp"/>
-
-            <TextView
-                android:id="@+id/route_main_passengers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/currentPassengerCardview"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/route_main_linear_driver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="25dp"
-            android:layout_marginHorizontal="20dp">
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_driver"
-                android:layout_marginRight="20dp"/>
-
-            <TextView
-                android:id="@+id/route_main_driver"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/nameDriverCardview"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/route_main_linear_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="20dp">
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_phone"
-                android:layout_marginRight="20dp"/>
-
-            <TextView
-                android:id="@+id/route_main_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/phoneDriverCardview"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/route_main_secondary_btn"
-            style="@style/ButtonBigRound"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="@string/delete"/>
-
-        <Button
-            android:id="@+id/route_main_main_btn"
-            style="@style/ButtonDeleteOrigin"
-            android:textColor="@color/colorWhite"
-            android:layout_marginHorizontal="20dp"
-            android:text="Comenzar"/>
+        </RelativeLayout>
 
     </LinearLayout>
+
 </LinearLayout>

@@ -73,6 +73,8 @@ function addToRoute(user,route,address,coordinates){
 function removePassengerFromRoute(passengerId,routeId){
     return db.collection("check-in").where("passenger","==",passengerId).where("route","==",routeId).get()
     .then(snapshot=>db.collection("check-in").doc(snapshot.docs[0].id).delete())
+    .then(()=>db.collection("routes").doc(routeId).get())
+    .then((snapshot)=>db.collection("routes").doc(routeId).update({passengersNumber:snapshot.data().passengersNumber-1}))
     .then(()=>null,(error)=>{throw ERROR.server});
 }
 
