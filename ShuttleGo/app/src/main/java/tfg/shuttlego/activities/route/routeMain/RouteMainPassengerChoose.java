@@ -66,7 +66,9 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
             }
             else if (task.getResult().containsKey("error")) {
                 removeProgressBar();
-                throwToast(R.string.errServer);
+                if(task.getResult().get("error").equals("userAlreadyAdded"))
+                    throwToast(R.string.errUserAlreadyAdded);
+                else throwToast(R.string.errServer);
             }
             else {
                 startActivity(new Intent(RouteMainPassengerChoose.this, PassengerMain.class));

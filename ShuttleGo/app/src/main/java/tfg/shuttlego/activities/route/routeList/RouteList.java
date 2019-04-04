@@ -41,6 +41,12 @@ public abstract class RouteList extends AppCompatActivity {
     protected Person user;
 
     @Override
+    protected void onRestart(){
+        setProgressBar();
+        throwEventGetAllRoutes();
+        super.onRestart();
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);

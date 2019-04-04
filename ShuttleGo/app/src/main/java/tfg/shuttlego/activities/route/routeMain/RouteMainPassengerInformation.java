@@ -56,7 +56,6 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
             else {
 
                 throwToast(R.string.deleteRouteSuccesful);
-                startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class));
                 finish();
             }
         });

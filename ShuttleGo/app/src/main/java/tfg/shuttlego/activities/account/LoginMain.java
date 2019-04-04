@@ -210,6 +210,6 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
     public void onBackPressed() {
         finishAffinity();
         finish();
-        System.exit(0);
+       // System.exit(0);
     }
 }
