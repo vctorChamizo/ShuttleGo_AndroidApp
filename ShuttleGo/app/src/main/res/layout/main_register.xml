@@ -16,13 +16,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/main_register_linear1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,74 +125,95 @@
     <!-- ************************************************************************************************ -->
 
     <LinearLayout
+        android:id="@+id/main_register_linear2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            style="@style/TittleWelcome"
-            android:text="@string/tittleDataRegister"
-            android:layout_marginHorizontal="20dp"
-            tools:ignore="UnusedAttribute" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="70dp"
-            android:layout_marginHorizontal="20dp"
-            tools:ignore="UnusedAttribute">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
 
-            <TextView
-                style="@style/TittleEditText"
-                android:text="@string/introduceNameRegister"
-                android:layout_marginStart="15dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="70dp">
 
-            <EditText
-                android:id="@+id/main_register_name"
-                android:theme="@style/ThemeData"
-                style="@style/MainEditText"
-                android:hint="@string/name"
-                android:inputType="textPersonName"
-                android:layout_marginTop="10dp"
-                tools:ignore="Autofill" />
+                <TextView
+                    style="@style/TittleWelcome"
+                    android:text="@string/tittleDataRegister"
+                    android:layout_marginHorizontal="20dp"
+                    tools:ignore="UnusedAttribute" />
+            </LinearLayout>
 
-            <TextView
-                style="@style/TittleEditText"
-                android:text="@string/introduceSurnameRegister"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="30dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="20dp"
+                android:layout_centerInParent="true"
+                tools:ignore="UnusedAttribute">
 
-            <EditText
-                android:id="@+id/main_register_surname"
-                android:theme="@style/ThemeData"
-                style="@style/MainEditText"
-                android:hint="@string/surname"
-                android:inputType="textPersonName"
-                android:layout_marginTop="10dp"
-                tools:ignore="Autofill" />
+                <TextView
+                    style="@style/TittleEditText"
+                    android:text="@string/introduceNameRegister"
+                    android:layout_marginStart="15dp"/>
 
-            <TextView
-                style="@style/TittleEditText"
-                android:text="@string/introducePhoneRegister"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="30dp"/>
+                <EditText
+                    android:id="@+id/main_register_name"
+                    android:theme="@style/ThemeData"
+                    style="@style/MainEditText"
+                    android:hint="@string/name"
+                    android:inputType="textPersonName"
+                    android:layout_marginTop="10dp"
+                    tools:ignore="Autofill" />
 
-            <EditText
-                android:id="@+id/main_register_phone"
-                android:theme="@style/ThemeData"
-                style="@style/MainEditText"
-                android:hint="@string/phone"
-                android:inputType="phone"
-                android:layout_marginTop="10dp"
-                tools:ignore="Autofill" />
-        </LinearLayout>
+                <TextView
+                    style="@style/TittleEditText"
+                    android:text="@string/introduceSurnameRegister"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="30dp"/>
 
-        <Button
-            android:id="@+id/main_register_finish_btn"
-            android:layout_marginTop="100dp"
-            android:text="@string/finish"
-            android:textColor="@color/colorPrimary"
-            style="@style/ButtonBigRound"/>
+                <EditText
+                    android:id="@+id/main_register_surname"
+                    android:theme="@style/ThemeData"
+                    style="@style/MainEditText"
+                    android:hint="@string/surname"
+                    android:inputType="textPersonName"
+                    android:layout_marginTop="10dp"
+                    tools:ignore="Autofill" />
+
+                <TextView
+                    style="@style/TittleEditText"
+                    android:text="@string/introducePhoneRegister"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="30dp"/>
+
+                <EditText
+                    android:id="@+id/main_register_phone"
+                    android:theme="@style/ThemeData"
+                    style="@style/MainEditText"
+                    android:hint="@string/phone"
+                    android:inputType="phone"
+                    android:layout_marginTop="10dp"
+                    tools:ignore="Autofill" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="80dp">
+
+                <Button
+                    android:id="@+id/main_register_finish_btn"
+                    android:text="@string/finish"
+                    android:textColor="@color/colorPrimary"
+                    style="@style/ButtonBigRound"/>
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
