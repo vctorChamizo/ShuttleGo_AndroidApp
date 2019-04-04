@@ -1,6 +1,7 @@
 package tfg.shuttlego.activities.route.routeMain;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,9 +20,19 @@ import tfg.shuttlego.model.transfer.address.Address;
 
 public class RouteMainPassengerChoose extends RouteMain implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    private JSONObject buildJson(String idRoute) {
+    private Address address;
 
-        Address address = (Address)Objects.requireNonNull(getIntent().getExtras()).getSerializable("userAddress");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        this.searching = true;
+        this.address = (Address)Objects.requireNonNull(getIntent().getExtras()).getSerializable("userAddress");
+
+        super.onCreate(savedInstanceState);
+
+
+    }
+
+    private JSONObject buildJson(String idRoute) {
 
         JSONObject addToRoute = new JSONObject();
         JSONObject route = new JSONObject();
@@ -82,7 +93,7 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
         this.routeMainOrigin.setText(origin);
 
-        String limit = this.routeMainLimit.getText() + " " + String.valueOf(resultEvent.get("destinationName"));
+        String limit = this.routeMainLimit.getText() + " " + this.address.getAddress().split(",")[0];
         this.routeMainLimit.setText(limit);
 
         String passengersMax = this.routeMainPassengerMax.getText() + " " + String.valueOf(resultEvent.get("max"));

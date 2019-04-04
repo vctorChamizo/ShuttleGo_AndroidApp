@@ -38,6 +38,7 @@ public abstract class RouteMain extends AppCompatActivity {
 
     protected String routeMainIdRoute;
     protected Person user;
+    protected boolean searching = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +146,7 @@ public abstract class RouteMain extends AppCompatActivity {
 
             routeJSON.put("id", route);
 
-            if (this.user.getType() != TypePerson.DRIVER) {
+            if (this.user.getType() != TypePerson.DRIVER && !searching) {
 
                 userJSON.put("email", this.user.getEmail());
                 userJSON.put("password", this.user.getPassword());
