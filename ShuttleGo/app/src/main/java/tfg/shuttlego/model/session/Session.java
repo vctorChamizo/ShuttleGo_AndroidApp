@@ -12,7 +12,6 @@ public class Session{
 
     private static Session ourInstance = null;
     private Person user = null;
-    private LoginMain login;
 
     private Session() {}
 
@@ -33,11 +32,4 @@ public class Session{
 
     public Person getUser() { return this.user; }
 
-    public void setLogin(LoginMain loginMain) {
-        this.login = loginMain;
-    }
-
-    public LoginMain getLogin() {
-        return  this.login;
-    }
 }

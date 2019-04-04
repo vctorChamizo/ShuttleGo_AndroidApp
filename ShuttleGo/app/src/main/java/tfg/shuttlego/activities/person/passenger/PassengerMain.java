@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Objects;
 
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.account.LoginMain;
 import tfg.shuttlego.activities.route.RouteChoosePassenger;
 import tfg.shuttlego.activities.route.routeList.RouteListPassenger;
 import tfg.shuttlego.model.event.Event;
@@ -486,6 +487,8 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(PassengerMain.this,LoginMain.class);
+        startActivity(intent);
         finish();
 
     }
