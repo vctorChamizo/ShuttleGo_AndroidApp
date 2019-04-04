@@ -36,6 +36,12 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
     private Animation registerMainAnimationLeftIn, registerMainAnimationLeftOut, registerMainAnimationRightIn, registerMainAnimationRightOut;
 
     @Override
+    protected void onRestart(){
+        removeProgressBar();
+        super.onRestart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
