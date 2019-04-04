@@ -22,29 +22,36 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="fill_parent">
 
-            <TextView
-                android:id="@+id/tittle_login"
-                android:text="@string/app_name"
-                style="@style/TittleApp"
-                tools:ignore="PrivateResource" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true">
 
-            <TextView
-                android:id="@+id/subtittle_login"
-                android:layout_below="@+id/tittle_login"
-                android:text="@string/subTittle"
-                style="@style/SubTittleApp"/>
+                <TextView
+                    android:id="@+id/tittle_login"
+                    android:text="@string/app_name"
+                    style="@style/TittleApp"
+                    tools:ignore="PrivateResource" />
+
+                <TextView
+                    android:id="@+id/subtittle_login"
+                    android:layout_below="@+id/tittle_login"
+                    android:text="@string/subTittle"
+                    style="@style/SubTittleApp"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linear1"
-                android:layout_below="@+id/subtittle_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="50dp"
                 android:layout_marginHorizontal="20dp"
-                tools:ignore="UnusedAttribute">
+                android:layout_centerInParent="true">
 
                 <EditText
                     android:id="@+id/main_login_email"
@@ -66,34 +73,24 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linear2"
-                android:layout_below="@+id/linear1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="150dp"
-                tools:ignore="UnusedAttribute">
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="50dp"
+                android:gravity="center">
 
                 <Button
                     android:id="@+id/main_login_signin_btn"
                     style="@style/ButtonRoundWhite"
                     android:text="@string/signin" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/relative1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/linear2">
 
                 <Button
                     android:id="@+id/main_login_register_btn"
                     style="@style/SecondaryButtonLogin"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
                     android:text="@string/signup" />
-            </RelativeLayout>
+
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
