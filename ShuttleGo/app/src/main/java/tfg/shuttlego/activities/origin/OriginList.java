@@ -30,15 +30,21 @@ import tfg.shuttlego.model.transfer.person.Person;
 
 public class OriginList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private NavigationView navigationView;
+    private NavigationView originListNavigation;
+    private DrawerLayout originListDrawer;
+
     private LinearLayout originListLinear;
     private ProgressBar originListProgress;
+
     private ArrayList<Origin> listOrigins;
-    private DrawerLayout originListDrawer;
+
+    private RecyclerView originListRecycler;
+
     private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.origin_list);
 
@@ -49,6 +55,8 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
         setMenuDrawer();
         setCredencials();
         throwEventGetAllOrigins();
+
+        this.originListNavigation.setNavigationItemSelectedListener(this);
     }
 
     /**
@@ -56,16 +64,19 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void inicializateView() {
 
-        originListLinear = findViewById(R.id.origin_list_linear);
-        originListProgress = findViewById(R.id.origin_list_progress);
-        originListDrawer = findViewById(R.id.origin_list_drawer);
+        this.originListNavigation = findViewById(R.id.origin_list_nav);
+        this.originListDrawer = findViewById(R.id.origin_list_drawer);
+
+        this.originListLinear = findViewById(R.id.origin_list_linear);
+        this.originListProgress = findViewById(R.id.origin_list_progress);
+
+        this.originListRecycler = findViewById(R.id.origin_list_recycler);
     }
 
     /**
      * Show the progress bar component visible and put invisble the rest of the view
      */
     private void setProgressBar() {
-
         originListProgress.setVisibility(View.VISIBLE);
         originListLinear.setVisibility(View.GONE);
     }
@@ -74,7 +85,6 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      * Show the view visible and put invisble progress bar component
      */
     private void removeProgressBar() {
-
         originListProgress.setVisibility(View.GONE);
         originListLinear.setVisibility(View.VISIBLE);
     }
@@ -84,12 +94,11 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.origin_list_nav);
-        navigationView.setNavigationItemSelectedListener(this);
         Toolbar toolbar = findViewById(R.id.origin_list_toolbar);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, originListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        originListDrawer.addDrawerListener(toggle);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, this.originListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        this.originListDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -98,7 +107,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  this.originListNavigation.getHeaderView(0);
 
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
@@ -124,6 +133,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(new Intent(OriginList.this, AdminMain.class));
             }
             else if (task.getResult().containsKey("error")) {
+
                 throwToast(R.string.errServer);
                 startActivity(new Intent(OriginList.this, AdminMain.class));
             }
@@ -131,7 +141,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
 
                 HashMap<?, ?> result = task.getResult();
                 ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("origins");
-                listOrigins = new ArrayList<>();
+                this.listOrigins = new ArrayList<>();
 
                 assert list != null;
                 for (int i = 0; i < list.size(); ++i) {
@@ -152,11 +162,10 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.origin_list_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recycler.setLayoutManager(layoutManager);
+        this.originListRecycler.setLayoutManager(layoutManager);
         RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> adapter = new RecyclerViewAdapterOrigin(listOrigins);
-        recycler.setAdapter(adapter);
+        this.originListRecycler.setAdapter(adapter);
     }
 
     private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
