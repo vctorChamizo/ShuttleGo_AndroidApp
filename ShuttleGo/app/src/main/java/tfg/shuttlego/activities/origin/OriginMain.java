@@ -134,7 +134,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         catch (JSONException e) { throwToast(R.string.err); }
 
         return getOrigin;
-    }//buildGetOriginJson
+    }
 
     /**
      * Throw the event that allow get a origin
@@ -143,7 +143,6 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
      */
     private void throwEventGetOrigin(JSONObject origin) {
 
-        //onComplete
         EventDispatcher.getInstance(getApplicationContext())
         .dispatchEvent(Event.GETORIGINBYID, origin)
         .addOnCompleteListener(task -> {
@@ -153,7 +152,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
             else {
 
                 HashMap<?, ?> hm_origin = task.getResult();
-                orginMainOriginObject = new Origin((String)hm_origin.get("id"), (String)hm_origin.get("name"));
+                orginMainOriginObject = new Origin((String)hm_origin.get("id"), (String)hm_origin.get("name"), (String)Objects.requireNonNull(hm_origin.get("coordinates")));
                 originMainTextName.setText(orginMainOriginObject.getName());
 
                 removeProgressBar();

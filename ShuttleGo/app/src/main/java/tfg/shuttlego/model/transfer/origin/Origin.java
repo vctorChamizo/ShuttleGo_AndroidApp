@@ -19,7 +19,7 @@ public class Origin implements Serializable {
         this.name = name;
     }
 
-    public Origin (String id, String name,String coordinates){
+    public Origin (String id, String name, String coordinates){
 
         this.id = id;
         this.name = name;

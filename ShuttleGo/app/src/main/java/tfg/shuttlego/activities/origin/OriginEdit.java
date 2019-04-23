@@ -123,11 +123,11 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
     /**
      * Build a JSON for to allow make a modify in the current origin
      *
-     * @param nameOrigin New name to modigy current origin
+     * @param newNameOrigin New name to modigy current origin
      *
      * @return JSON with information to modify origin
      */
-    private JSONObject buildJson(CharSequence nameOrigin) {
+    private JSONObject buildJson(CharSequence newNameOrigin) {
 
         JSONObject dataUser = new JSONObject();
         JSONObject dataOrigin = new JSONObject();
@@ -138,7 +138,11 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
             dataUser.put("email", Session.getInstance(getApplicationContext()).getUser().getEmail());
             dataUser.put("password", Session.getInstance(getApplicationContext()).getUser().getPassword());
             dataOrigin.put("id", originEditOriginObject.getId());
-            dataOrigin.put("name", nameOrigin);
+            dataOrigin.put("name", newNameOrigin);
+
+            String coordinates = originEditOriginObject.getCoordinates().get(0).toString() + "," + originEditOriginObject.getCoordinates().get(1).toString();
+            dataOrigin.put("coordinates", coordinates);
+
             editOrigin.put("user", dataUser);
             editOrigin.put("origin", dataOrigin);
 
@@ -160,21 +164,33 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
         .dispatchEvent(Event.MODIFYORIGIN, origin)
         .addOnCompleteListener(task -> {
 
-            if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
-            else if (task.getResult().containsKey("error")) throwToast(R.string.errServer);
+            if (!task.isSuccessful() || task.getResult() == null) {
+
+                removeProgressBar();
+                throwToast(R.string.errConexion);
+            }
+            else if (task.getResult().containsKey("error")) {
+
+                removeProgressBar();
+                throwToast(R.string.errServer);
+            }
             else {
 
                 HashMap<?,?> result = task.getResult();
                 if ((Boolean) result.get("modified")) {
 
+                    throwToast(R.string.editOriginSuccesful);
+
                     Intent intent = new Intent(OriginEdit.this, OriginMain.class);
                     intent.putExtra("origin", originEditOriginObject.getId());
-                    startActivity(intent);
-                    throwToast(R.string.editOriginSuccesful);
                     finish();
+                    startActivity(intent);
                 }
-                else throwToast(R.string.errOriginAlreadyExists);
-                removeProgressBar();
+                else {
+
+                    throwToast(R.string.errOriginAlreadyExists);
+                    removeProgressBar();
+                }
             }
         });
     }
