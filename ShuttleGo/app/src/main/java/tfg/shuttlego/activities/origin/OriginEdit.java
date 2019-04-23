@@ -55,7 +55,9 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
         setCredencials();
         originEditText.append(originEditOriginObject.getName());
         removeProgressBar();
-        listeners();
+
+        originEditEditButton.setOnClickListener(this);
+        originEditCancelButton.setOnClickListener(this);
     }
 
     /**
@@ -108,20 +110,14 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
      */
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  this.navigationView.getHeaderView(0);
+
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
-        nav_name_text.setText(user.getName() + " " + user.getSurname());
-        nav_email_text.setText(user.getEmail());
-    }
 
-    /**
-     * Have the listeners to the action components in the view
-     */
-    private void listeners() {
-
-        originEditEditButton.setOnClickListener(this);
-        originEditCancelButton.setOnClickListener(this);
+        String complete_name = this.user.getName() + " " + user.getSurname();
+        nav_name_text.setText(complete_name);
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
@@ -157,6 +153,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
      *
      * @param origin JSON with information to modify origin
      */
+    @SuppressWarnings("ConstantConditions")
     private void throwEventModifyOrigin(JSONObject origin) {
 
         EventDispatcher.getInstance(getApplicationContext())

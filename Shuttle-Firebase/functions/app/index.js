@@ -296,7 +296,7 @@
      * 
      * @returns {Promise} A promise with confirmation about deletion.
      */
-    exports.removePassengerFromRoute = functions.https.onCall((data, context) => {
+    exports.removePassengerFromRoute = functions.https.onCall((data) => {
 
       return checkData(data)
       .then(() => checkData(data.route))
