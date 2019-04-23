@@ -22,27 +22,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
-            style="@style/AppBarLayout">
+        <android.support.design.widget.AppBarLayout style="@style/AppBarLayout">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/admin_main_toolbar"
                 style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/admin"/>
+                app:title="@string/admin" />
         </android.support.design.widget.AppBarLayout>
 
-            <RelativeLayout
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
                 <RelativeLayout
                     android:id="@+id/relative_map"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:fillViewport="true"
                     android:layout_alignParentTop="true"
-                    android:background="@color/mapbox_blue">
+                    android:background="@color/mapbox_blue"
+                    android:fillViewport="true">
 
                     <com.mapbox.mapboxsdk.maps.MapView
                         android:id="@+id/admin_main_map"
@@ -52,39 +56,42 @@
                     <AutoCompleteTextView
                         android:id="@+id/admin_main_autocomplete"
                         style="@style/MapEditText"
-                        android:hint="@string/introduceAddresOrigin"/>
+                        android:hint="@string/introduceAddresOrigin" />
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relative_map"
-                    android:orientation="vertical"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="@dimen/fab_feedback_margin_top"
+                    android:orientation="vertical"
                     tools:targetApi="o">
 
                     <TextView
                         style="@style/TittleEditText"
-                        android:text="@string/setNameOriginAdmin"
-                        android:layout_marginStart="15dp"/>
+                        android:layout_marginStart="15dp"
+                        android:text="@string/setNameOriginAdmin" />
 
                     <EditText
                         android:id="@+id/admin_main_origin"
-                        android:theme="@style/ThemeData"
                         style="@style/MainEditText"
+                        android:layout_marginTop="10dp"
                         android:hint="@string/origin"
                         android:inputType="text"
-                        android:layout_marginTop="10dp"
+                        android:theme="@style/ThemeData"
                         tools:ignore="Autofill,TextFields" />
-                </LinearLayout>
 
-                <Button
-                    android:id="@+id/admin_main_button"
-                    style="@style/ButtonRoundWhite"
-                    android:text="@string/addOriginAdmin"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="70dp"/>
-        </RelativeLayout>
+                    <Button
+                        android:id="@+id/admin_main_button"
+                        style="@style/ButtonRoundWhite"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="@dimen/fab_feedback_margin_top"
+                        android:layout_marginBottom="@dimen/fab_margin_bottom"
+                        android:text="@string/addOriginAdmin" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 </LinearLayout>
