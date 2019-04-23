@@ -1,7 +1,7 @@
 const ERROR = require("../errors");
-const routeDao = require("../dataAccess/routeDAO");
-const originDao = require("../dataAccess/originDAO");
-const personDao = require("../dataAccess/personDAO");
+const routeDao = require("../data_access/routeDAO");
+const originDao = require("../data_access/originDAO");
+const personDao = require("../data_access/personDAO");
 
 function createRoute(route){
    return checkRequirements(route)

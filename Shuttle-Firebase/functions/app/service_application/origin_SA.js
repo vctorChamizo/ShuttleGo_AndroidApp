@@ -2,7 +2,7 @@
  * @module business/originSA
  */
 const ERROR = require("../errors");
-const originDAO = require("../dataAccess/originDAO");
+const originDAO = require("../data_access/originDAO");
 
 /**
  * @description Get all route origins

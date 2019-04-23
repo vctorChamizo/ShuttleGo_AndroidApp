@@ -2,7 +2,7 @@
  * @module business/personSA
  */
 const ERROR = require("../errors")
-const personDAO = require("../dataAccess/personDAO");
+const personDAO = require("../data_access/personDAO");
 
 /**
  * @description Check that the user exists and that the password entered is correct.

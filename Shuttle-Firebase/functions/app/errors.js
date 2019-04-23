@@ -1,9 +1,10 @@
 /**
- * @module errors
- */
-/**
- * @description Errors which will be sent to the clients
- */
+     * 
+     * @module errors
+     * 
+     * @description A enumeration errors to all application.
+     * 
+     */
 const errors = {
 
     /* General */
