@@ -117,12 +117,16 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.passenger_drawer_list: startActivity(new Intent(RouteMainPassengerChoose.this, RouteListPassenger.class)); finish(); break;
-            case R.id.passenger_drawer_home: startActivity(new Intent(RouteMainPassengerChoose.this, PassengerMain.class)); finish(); break;
+            case R.id.driver_drawer_list:
+                startActivity(new Intent(RouteMainPassengerChoose.this, RouteListPassenger.class));
+                break;
+            case R.id.driver_drawer_home:
+                startActivity(new Intent(RouteMainPassengerChoose.this, PassengerMain.class));
+                break;
         }
-
         routeMainDrawer.closeDrawer(GravityCompat.START);
 
+        finish();
         return true;
     }
 

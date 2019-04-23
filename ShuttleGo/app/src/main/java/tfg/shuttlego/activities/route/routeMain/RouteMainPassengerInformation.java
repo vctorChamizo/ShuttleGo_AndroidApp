@@ -101,8 +101,8 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.passenger_drawer_list: startActivity(new Intent(RouteMainPassengerInformation.this, RouteListPassenger.class)); finish(); break;
-            case R.id.passenger_drawer_home: startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class)); finish(); break;
+            case R.id.driver_drawer_list: startActivity(new Intent(RouteMainPassengerInformation.this, RouteListPassenger.class)); finish(); break;
+            case R.id.driver_drawer_home: startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class)); finish(); break;
         }
 
         routeMainDrawer.closeDrawer(GravityCompat.START);
