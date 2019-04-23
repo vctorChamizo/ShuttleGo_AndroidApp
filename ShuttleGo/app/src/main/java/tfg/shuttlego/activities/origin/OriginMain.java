@@ -31,14 +31,18 @@ import tfg.shuttlego.model.transfer.person.Person;
 public class OriginMain extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private Person user;
+
+    private DrawerLayout originMainDrawer;
+    private NavigationView originMainNavigation;
+
     private LinearLayout originMainLinear;
     private ProgressBar originMainProgress;
+
     private String originMainIdOrigin;
     private TextView originMainTextName;
     private Button originMainDelteButton, originMainEditButton;
     private Origin orginMainOriginObject;
-    private DrawerLayout originMainDrawer;
-    private NavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,9 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         setCredencials();
         throwEventGetOrigin(buildGetOriginJson());
 
-        originMainDelteButton.setOnClickListener(this);
-        originMainEditButton.setOnClickListener(this);
+        this.originMainDelteButton.setOnClickListener(this);
+        this.originMainEditButton.setOnClickListener(this);
+        this.originMainNavigation.setNavigationItemSelectedListener(this);
     }
 
     /**
@@ -63,30 +68,31 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
      */
     private void inicializateView() {
 
-        originMainLinear = findViewById(R.id.origin_main_linear);
-        originMainProgress = findViewById(R.id.origin_main_progress);
-        originMainTextName = findViewById(R.id.origin_main_text);
-        originMainDelteButton = findViewById(R.id.origin_main_delete_btn);
-        originMainEditButton = findViewById(R.id.origin_main_edit_btn);
-        originMainDrawer = findViewById(R.id.origin_main_drawer);
+        this.originMainNavigation = findViewById(R.id.origin_main_nav);
+        this.originMainDrawer = findViewById(R.id.origin_main_drawer);
+
+        this.originMainLinear = findViewById(R.id.origin_main_linear);
+        this.originMainProgress = findViewById(R.id.origin_main_progress);
+
+        this.originMainTextName = findViewById(R.id.origin_main_text);
+        this.originMainDelteButton = findViewById(R.id.origin_main_delete_btn);
+        this.originMainEditButton = findViewById(R.id.origin_main_edit_btn);
     }
 
     /**
      * Show the progress bar component visible and put invisble the rest of the view
      */
     private void setProgressBar () {
-
-        originMainProgress.setVisibility(View.VISIBLE);
-        originMainLinear.setVisibility(View.GONE);
+        this.originMainProgress.setVisibility(View.VISIBLE);
+        this.originMainLinear.setVisibility(View.GONE);
     }
 
     /**
      * Show the view visible and put invisble progress bar component
      */
     private void removeProgressBar () {
-
-        originMainProgress.setVisibility(View.GONE);
-        originMainLinear.setVisibility(View.VISIBLE);
+        this.originMainProgress.setVisibility(View.GONE);
+        this.originMainLinear.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -94,12 +100,11 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.origin_main_nav);
-        navigationView.setNavigationItemSelectedListener(this);
         Toolbar toolbar = findViewById(R.id.origin_main_toolbar);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, originMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        originMainDrawer.addDrawerListener(toggle);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, this.originMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        this.originMainDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -108,9 +113,11 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
      */
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  this.originMainNavigation.getHeaderView(0);
+
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
+
         String complete_name = user.getName() + " " + user.getSurname();
         nav_name_text.setText(complete_name);
         nav_email_text.setText(user.getEmail());
@@ -128,7 +135,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
         try {
 
-            id.put("id", originMainIdOrigin);
+            id.put("id", this.originMainIdOrigin);
             getOrigin.put("origin", id);
         }
         catch (JSONException e) { throwToast(R.string.err); }
@@ -152,8 +159,8 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
             else {
 
                 HashMap<?, ?> hm_origin = task.getResult();
-                orginMainOriginObject = new Origin((String)hm_origin.get("id"), (String)hm_origin.get("name"), (String)Objects.requireNonNull(hm_origin.get("coordinates")));
-                originMainTextName.setText(orginMainOriginObject.getName());
+                this.orginMainOriginObject = new Origin((String)hm_origin.get("id"), (String)hm_origin.get("name"), (String)Objects.requireNonNull(hm_origin.get("coordinates")));
+                this.originMainTextName.setText(this.orginMainOriginObject.getName());
 
                 removeProgressBar();
             }
@@ -196,10 +203,12 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
+                
                 removeProgressBar();
                 throwToast(R.string.errConexion);
             }
             else if (task.getResult().containsKey("error")) {
+
                 removeProgressBar();
                 throwToast(R.string.errServer);
             }
@@ -220,11 +229,13 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         switch (v.getId()){
 
             case R.id.origin_main_delete_btn:
+
                 setProgressBar();
                 throwEventDeleteOrigin(buildDeleteOriginJson());
                 break;
 
             case R.id.origin_main_edit_btn:
+
                 Intent intent = new Intent(OriginMain.this, OriginEdit.class);
                 intent.putExtra("origin", orginMainOriginObject);
                 startActivity(intent);
@@ -238,11 +249,13 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         switch (menuItem.getItemId()) {
 
             case R.id.admin_drawer_list:
+
                 startActivity(new Intent(OriginMain.this, OriginList.class));
                 finish();
                 break;
 
             case R.id.admin_drawer_home:
+
                 startActivity(new Intent(OriginMain.this, AdminMain.class));
                 finish();
                 break;
