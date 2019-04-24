@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.person.admin.AdminMain;
-import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
+import tfg.shuttlego.activities.adapter.RecyclerViewAdapterOrigin;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;

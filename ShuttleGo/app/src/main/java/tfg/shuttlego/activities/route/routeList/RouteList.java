@@ -2,7 +2,6 @@ package tfg.shuttlego.activities.route.routeList;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
+import tfg.shuttlego.activities.adapter.RecyclerViewAdapterRoute;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;

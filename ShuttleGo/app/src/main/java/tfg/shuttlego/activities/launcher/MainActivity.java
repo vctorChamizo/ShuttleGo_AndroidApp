@@ -7,26 +7,22 @@ import android.os.Bundle;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.account.LoginMain;
 
-/**
- * Initial activity of the application.
- * It is responsible for generating the necessary view when the application starts.
- */
 public class MainActivity extends AppCompatActivity {
-
-    private final int DURATION_SPLASH = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_splash);
 
-        new Handler().postDelayed(new Runnable(){
-            public void run(){
+        int DURATION_SPLASH = 3000;
 
-                Intent intent = new Intent(MainActivity.this, LoginMain.class);
-                startActivity(intent);
-                finish();
-            };
-        },DURATION_SPLASH);
+        new Handler().postDelayed(() -> {
+
+            Intent intent = new Intent(MainActivity.this, LoginMain.class);
+            startActivity(intent);
+            finish();
+        },
+        DURATION_SPLASH);
     }
 }

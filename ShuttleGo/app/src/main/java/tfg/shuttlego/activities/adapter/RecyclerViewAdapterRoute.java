@@ -1,4 +1,4 @@
-package tfg.shuttlego.model.adapter;
+package tfg.shuttlego.activities.adapter;
 
 import android.content.Context;
 import android.content.Intent;

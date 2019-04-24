@@ -203,7 +203,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
-                
+
                 removeProgressBar();
                 throwToast(R.string.errConexion);
             }

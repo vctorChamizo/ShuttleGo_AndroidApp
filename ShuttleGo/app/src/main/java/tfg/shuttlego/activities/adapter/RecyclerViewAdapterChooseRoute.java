@@ -1,4 +1,4 @@
-package tfg.shuttlego.model.adapter;
+package tfg.shuttlego.activities.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
