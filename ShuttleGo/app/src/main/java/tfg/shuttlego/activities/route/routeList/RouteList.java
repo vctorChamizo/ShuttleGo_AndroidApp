@@ -72,8 +72,8 @@ public abstract class RouteList extends AppCompatActivity {
         this.routeListLinear = findViewById(R.id.route_list_linear);
         this.routeListProgress = findViewById(R.id.route_list_progress);
 
-        if (user.getType() == TypePerson.DRIVER) this.routeListNavigation = findViewById(R.id.route_list_nav_driver);
-        else this.routeListNavigation = findViewById(R.id.route_list_nav_passenger);
+        this.routeListNavigation = findViewById(R.id.route_list_nav_driver);
+        //else this.routeListNavigation = findViewById(R.id.route_list_nav_passenger);
 
         this.routeListNavigation.setVisibility(View.VISIBLE);
         this.routeListDrawer = findViewById(R.id.route_list_drawer);

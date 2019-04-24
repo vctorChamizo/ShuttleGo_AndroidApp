@@ -1,6 +1,7 @@
 package tfg.shuttlego.activities.route;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,7 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.util.ArrayList;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.adapter.RecyclerViewAdapterChooseRoute;
+import tfg.shuttlego.activities.person.passenger.PassengerMain;
+import tfg.shuttlego.activities.route.routeList.RouteListPassenger;
+import tfg.shuttlego.model.adapter.RecyclerViewAdapterChooseRoute;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
@@ -137,7 +140,21 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) { return false; }
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
+
+            case R.id.passenger_drawer_home:
+                startActivity(new Intent(RouteChoosePassenger.this, PassengerMain.class));
+                break;
+            case R.id.passenger_drawer_list:
+                startActivity(new Intent(RouteChoosePassenger.this, RouteListPassenger.class));
+                break;
+        }
+
+        routeChoosePassengerDrawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
     @Override
     public void onBackPressed() {

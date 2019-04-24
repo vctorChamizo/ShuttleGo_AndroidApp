@@ -251,25 +251,22 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
             case R.id.admin_drawer_list:
 
                 startActivity(new Intent(OriginMain.this, OriginList.class));
-                finish();
                 break;
 
             case R.id.admin_drawer_home:
 
                 startActivity(new Intent(OriginMain.this, AdminMain.class));
-                finish();
                 break;
         }
 
         originMainDrawer.closeDrawer(GravityCompat.START);
+
+        finish();
 
         return true;
     }
 
 
     @Override
-    public void onBackPressed() {
-        if (originMainDrawer.isDrawerOpen(GravityCompat.START)) originMainDrawer.closeDrawer(GravityCompat.START);
-        else { startActivity(new Intent(OriginMain.this, AdminMain.class)); finish(); }
-    }
+    public void onBackPressed() {finish();}
 }

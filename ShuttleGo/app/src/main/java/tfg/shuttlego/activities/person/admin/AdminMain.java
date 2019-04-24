@@ -2,6 +2,8 @@ package tfg.shuttlego.activities.person.admin;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -28,6 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.FeatureCollection;
+import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -39,6 +44,10 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -309,6 +318,9 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         this.mapboxMap = mapboxMap;
         mapboxMap.setStyle(Style.OUTDOORS);
 
+        this.mapboxMap.getUiSettings().setCompassEnabled(false);
+        this.mapboxMap.getUiSettings().setLogoEnabled(false);
+
         CameraPosition cp = new CameraPosition.Builder()
                 .target(new LatLng(40.0000000, -4.0000000))
                 .zoom(4)
@@ -349,19 +361,36 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         else { Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show(); finish(); }
     }
 
-    @SuppressWarnings("deprecation")
     private void moveMap(List<Double> coordinates) {
 
         CameraPosition cp = new CameraPosition.Builder()
-                                .target(new LatLng(coordinates.get(1), coordinates.get(0)))
-                                .zoom(15)
-                                .tilt(20)
-                                .build();
+                .target(new LatLng(coordinates.get(1), coordinates.get(0)))
+                .zoom(17)
+                .tilt(20)
+                .build();
 
-        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),3000);
-        this.mapboxMap.addMarker(new MarkerOptions().position(new LatLng(coordinates.get(1), coordinates.get(0))));
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
+
+
+        ArrayList<Feature> point = new ArrayList<>();
+
+        point.add(Feature.fromGeometry(Point.fromLngLat(coordinates.get(0), coordinates.get(1))));
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.start);
+
+        mapboxMap.getStyle().addImage("start", bitmap);
+
+        if(mapboxMap.getStyle().getLayer("start-layer")!=null)
+            mapboxMap.getStyle().removeLayer("start-layer");
+
+        if(mapboxMap.getStyle().getSource("start-source") != null)
+            mapboxMap.getStyle().removeSource("start-source");
+
+        mapboxMap.getStyle().addSource(new GeoJsonSource("start-source",FeatureCollection.fromFeatures(point)));
+
+        mapboxMap.getStyle().addLayer(new SymbolLayer("start-layer", "start-source")
+                .withProperties(PropertyFactory.iconImage("start")));
     }
-
 
     /*********************************************************************************************************************
     Activity´s action */
@@ -389,6 +418,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         }
 
         this.admiMainDrawer.closeDrawer(GravityCompat.START);
+
+        finish();
 
         return true;
     }

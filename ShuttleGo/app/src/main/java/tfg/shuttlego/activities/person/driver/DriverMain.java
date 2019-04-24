@@ -24,6 +24,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.account.LoginMain;
+import tfg.shuttlego.activities.person.passenger.PassengerMain;
 import tfg.shuttlego.activities.route.routeList.RouteListDriver;
 import tfg.shuttlego.activities.route.routeMain.RouteMainDriver;
 import tfg.shuttlego.model.event.Event;
@@ -270,6 +272,8 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(DriverMain.this,LoginMain.class);
+        startActivity(intent);
         finish();
     }
 }
