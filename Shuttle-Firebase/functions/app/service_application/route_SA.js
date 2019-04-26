@@ -15,11 +15,11 @@
     /* *********************************************************************************************** */
 
     /**
-     * @description
+     * @description Create a new route.
      * 
-     * @param {Object}
+     * @param {Object} route The new route.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with a new id route.
      * 
      * @throws {Object} Error.
      */
@@ -44,11 +44,12 @@
     };
 
     /**
-     * @description
+     * @description Get the route data.
      * 
-     * @param {Object}
+     * @param {String} id The route id.
+     * @param {Object} uer The user that belong the route.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise that returns the route.
      * 
      * @throws {Object} Error.
      */
@@ -103,11 +104,12 @@
     };
 
     /**
-     * @description
+     * @description Look for the route match with origin and destination.
      * 
-     * @param {Object}
+     * @param {String} origin The origin of route.
+     * @param {String} destination The destination of route.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with a list of coincides routes.
      * 
      * @throws {Object} Error.
      */
@@ -119,15 +121,18 @@
     }
 
     /**
-     * @description
+     * @description Add a user to a exists route.
      * 
-     * @param {Object}
+     * @param {Object} user The data user.
+     * @param {Object} route The data route.
+     * @param {Object} address The address to end route for user.
+     * @param {Object} coordinates The coordinates os address.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with confirmation.
      * 
      * @throws {Object} Error.
      */
-    function addToRoute(user,route,address,coordinates) {
+    function addToRoute(user, route, address, coordinates) {
 
         let passenger;
 
@@ -152,11 +157,12 @@
     };
 
     /**
-     * @description
+     * @description Delete a user from the route.
      * 
-     * @param {Object}
+     * @param {Object} passenger The data user.
+     * @param {Object} route The data user.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with confirmation.
      * 
      * @throws {Object} Error.
      */
@@ -184,11 +190,12 @@
     };
 
     /**
-     * @description
+     * @description Delete a route from database.
      * 
-     * @param {Object}
+     * @param {Object} driver The data user.
+     * @param {Object} route The data route.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with confirmation.
      * 
      * @throws {Object} Error.
      */
@@ -217,11 +224,11 @@
     };
 
     /**
-     * @description
+     * @description Get the routes that belong a user.
      * 
-     * @param {Object}
+     * @param {Object} user The data user.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with a list os routes.
      * 
      * @throws {Object} Error.
      */
@@ -238,11 +245,12 @@
     };
 
     /**
-     * @description
+     * @description Get the coordinates belong routes.
      * 
-     * @param {Object}
+     * @param {Object} route The data route.
+     * @param {Object} driver the data user.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with list of route points.
      * 
      * @throws {Object} Error.
      */
@@ -284,11 +292,11 @@
     /* Private function of module */
 
     /**
-     * @description
+     * @description Check the data os a route.
      * 
-     * @param {Object}
+     * @param {Object} route The data route.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with confirmation.
      * 
      * @throws {Object} Error.
      */
@@ -316,3 +324,4 @@
         getRoutesByUser:getRoutesByUser,
         getRoutePoints:getRoutePoints
     }
+    

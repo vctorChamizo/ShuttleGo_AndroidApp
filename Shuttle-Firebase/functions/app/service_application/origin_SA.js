@@ -100,7 +100,7 @@
     };
 
     /**
-     * @description Creates a new origin if not exists.
+     * @description Create a new origin if not exists.
      * 
      * @param {Object} newOrigin The new origin.
      * 
