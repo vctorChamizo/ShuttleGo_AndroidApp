@@ -17,8 +17,6 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -34,7 +32,6 @@ import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
@@ -54,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.account.RegisterMain;
+import tfg.shuttlego.activities.account.LoginMain;
 import tfg.shuttlego.activities.origin.OriginList;
 import tfg.shuttlego.activities.origin.OriginMain;
 import tfg.shuttlego.model.event.Event;
@@ -78,8 +75,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
     private ProgressBar adminMainProgress;
     private LinearLayout adminMainLinear;
-
-    private Animation adminMainAnimationLeftIn, adminMainAnimationLeftOut;
 
     private EditText adminMainOriginText;
     private AutoCompleteTextView adminMainOriginAutocomplete;
@@ -109,7 +104,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         setMenuDrawer();
         setCredencials();
 
-        startLeftAnimation(this.adminMainProgress, this.adminMainLinear);
+        //startLeftAnimation(this.adminMainProgress, this.adminMainLinear);
         removeProgressBar();
 
         this.navigationView.setNavigationItemSelectedListener(this);
@@ -117,6 +112,49 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         this.adminMainOriginAutocomplete.addTextChangedListener(this);
         this.adminMainOriginAutocomplete.setOnItemClickListener(this);
         this.adminMainButton.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        this.mapView.onStart();
+        super.onStart();
+    }
+
+    @Override
+    protected void onRestart(){
+        this.mapView.onStart();
+        removeProgressBar();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        this.mapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        this.mapView.onStop();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.mapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        this.mapView.onLowMemory();
+        super.onLowMemory();
+    }
+
+    @Override
+    protected void onResume() {
+        this.mapView.onResume();
+        super.onResume();
     }
 
     /**
@@ -138,8 +176,8 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         this.adminMainDestinySelected = false;
 
-        this.adminMainAnimationLeftIn = AnimationUtils.loadAnimation(AdminMain.this, R.anim.left_in);
-        this.adminMainAnimationLeftOut = AnimationUtils.loadAnimation(AdminMain.this, R.anim.left_out);
+        //this.adminMainAnimationLeftIn = AnimationUtils.loadAnimation(AdminMain.this, R.anim.left_in);
+        //this.adminMainAnimationLeftOut = AnimationUtils.loadAnimation(AdminMain.this, R.anim.left_out);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
@@ -186,15 +224,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         String complete_name = this.user.getName() + " " + user.getSurname();
         nav_name_text.setText(complete_name);
         nav_email_text.setText(this.user.getEmail());
-    }
-
-    /**
-     * Start the animation between with layouts that enters as a parameter.
-     */
-    private void startLeftAnimation(View rOut, View rIn) {
-
-        rOut.startAnimation(this.adminMainAnimationLeftOut);
-        rIn.startAnimation(this.adminMainAnimationLeftIn);
     }
 
     /**
@@ -321,13 +350,13 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         this.mapboxMap.getUiSettings().setCompassEnabled(false);
         this.mapboxMap.getUiSettings().setLogoEnabled(false);
 
-        CameraPosition cp = new CameraPosition.Builder()
+        /*CameraPosition cp = new CameraPosition.Builder()
                 .target(new LatLng(40.0000000, -4.0000000))
                 .zoom(4)
                 .tilt(20)
                 .build();
 
-        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),3000);
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),3000);*/
     }
 
     @SuppressLint("MissingPermission")
@@ -371,25 +400,23 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
 
-
         ArrayList<Feature> point = new ArrayList<>();
 
         point.add(Feature.fromGeometry(Point.fromLngLat(coordinates.get(0), coordinates.get(1))));
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.start);
+        if(Objects.requireNonNull(this.mapboxMap.getStyle()).getImage("start")==null){
 
-        mapboxMap.getStyle().addImage("start", bitmap);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.start);
+            Objects.requireNonNull(mapboxMap.getStyle()).addImage("start", bitmap);
+        }
 
-        if(mapboxMap.getStyle().getLayer("start-layer")!=null)
-            mapboxMap.getStyle().removeLayer("start-layer");
+        if(this.mapboxMap.getStyle().getLayer("start-layer")!=null) mapboxMap.getStyle().removeLayer("start-layer");
 
-        if(mapboxMap.getStyle().getSource("start-source") != null)
-            mapboxMap.getStyle().removeSource("start-source");
+        if(this.mapboxMap.getStyle().getSource("start-source") != null) mapboxMap.getStyle().removeSource("start-source");
 
-        mapboxMap.getStyle().addSource(new GeoJsonSource("start-source",FeatureCollection.fromFeatures(point)));
+        this.mapboxMap.getStyle().addSource(new GeoJsonSource("start-source",FeatureCollection.fromFeatures(point)));
 
-        mapboxMap.getStyle().addLayer(new SymbolLayer("start-layer", "start-source")
-                .withProperties(PropertyFactory.iconImage("start")));
+        this.mapboxMap.getStyle().addLayer(new SymbolLayer("start-layer", "start-source").withProperties(PropertyFactory.iconImage("start")));
     }
 
     /*********************************************************************************************************************
@@ -419,11 +446,21 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         this.admiMainDrawer.closeDrawer(GravityCompat.START);
 
-        finish();
+        if (menuItem.getItemId() != R.id.admin_drawer_settings &&
+            menuItem.getItemId() != R.id.admin_drawer_signout &&
+            menuItem.getItemId() != R.id.admin_drawer_home) finish();
 
         return true;
     }
 
     @Override
-    public void onBackPressed() { finish(); }
+    public void onBackPressed() {
+
+        if (this.admiMainDrawer.isDrawerOpen(GravityCompat.START)) this.admiMainDrawer.closeDrawer(GravityCompat.START);
+        else {
+
+            startActivity(new Intent(AdminMain.this, LoginMain.class));
+            finish();
+        }
+    }
 }

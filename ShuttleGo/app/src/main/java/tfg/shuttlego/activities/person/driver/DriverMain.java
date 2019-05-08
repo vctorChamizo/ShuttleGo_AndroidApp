@@ -272,8 +272,8 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DriverMain.this,LoginMain.class);
-        startActivity(intent);
+
+        startActivity(new Intent(DriverMain.this, LoginMain.class));
         finish();
     }
 }

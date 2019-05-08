@@ -18,11 +18,11 @@
     <item android:title="@string/nav_account">
         <menu>
             <item
-                android:id="@+id/nav_settings_admin"
+                android:id="@+id/admin_drawer_settings"
                 android:icon="@drawable/ic_settings"
                 android:title="@string/action_settings" />
             <item
-                android:id="@+id/nav_signout_admin"
+                android:id="@+id/admin_drawer_signout"
                 android:icon="@drawable/ic_exit"
                 android:title="@string/action_logout" />
         </menu>

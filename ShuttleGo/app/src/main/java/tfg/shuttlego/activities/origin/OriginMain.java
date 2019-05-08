@@ -46,6 +46,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.origin_main);
 
@@ -215,7 +216,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
             else {
 
                 throwToast(R.string.deleteOriginSuccesful);
-                startActivity(new Intent(OriginMain.this, AdminMain.class));
+                startActivity(new Intent(OriginMain.this, OriginList.class));
                 finish();
             }
         });
@@ -239,6 +240,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
                 Intent intent = new Intent(OriginMain.this, OriginEdit.class);
                 intent.putExtra("origin", orginMainOriginObject);
                 startActivity(intent);
+                finish();
                 break;
         }
     }
@@ -266,7 +268,14 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         return true;
     }
 
-
     @Override
-    public void onBackPressed() {finish();}
+    public void onBackPressed() {
+
+        if (this.originMainDrawer.isDrawerOpen(GravityCompat.START)) this.originMainDrawer.closeDrawer(GravityCompat.START);
+        else {
+
+            startActivity(new Intent(OriginMain.this, OriginList.class));
+            finish();
+        }
+    }
 }

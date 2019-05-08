@@ -189,6 +189,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
             else {
 
                 HashMap<?,?> result = task.getResult();
+
                 if ((Boolean) result.get("modified")) {
 
                     throwToast(R.string.editOriginSuccesful);
@@ -254,6 +255,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
+
         if (this.originEditDrawer.isDrawerOpen(GravityCompat.START)) this.originEditDrawer.closeDrawer(GravityCompat.START);
         else finish();
     }
