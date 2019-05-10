@@ -68,6 +68,8 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
                 removeProgressBar();
                 if(task.getResult().get("error").equals("userAlreadyAdded"))
                     throwToast(R.string.errUserAlreadyAdded);
+                else if(task.getResult().get("error").equals("routeSoldOut"))
+                    throwToast(R.string.errSoldOut);
                 else throwToast(R.string.errServer);
             }
             else {

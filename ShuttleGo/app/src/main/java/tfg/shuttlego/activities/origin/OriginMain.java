@@ -270,12 +270,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-
-        if (this.originMainDrawer.isDrawerOpen(GravityCompat.START)) this.originMainDrawer.closeDrawer(GravityCompat.START);
-        else {
-
-            startActivity(new Intent(OriginMain.this, OriginList.class));
-            finish();
-        }
+        startActivity(new Intent(OriginMain.this, AdminMain.class));
+        finish();
     }
 }
