@@ -31,30 +31,45 @@
                 app:title="@string/origin"/>
         </android.support.design.widget.AppBarLayout>
 
-        <TextView
-            android:id="@+id/origin_main_text"
-            style="@style/TittleWelcome"
-            android:textAlignment="center"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="20dp"
-            android:text="Origen Prueba"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/origin_main_edit_btn"
-            style="@style/ButtonBigRound"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="300dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="@string/edit"/>
+            <TextView
+                android:layout_alignParentTop="true"
+                android:id="@+id/origin_main_text"
+                style="@style/TittleWelcome"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="20dp"
+                android:text="Origen Prueba"
+                android:textAlignment="center" />
 
-        <Button
-            android:id="@+id/origin_main_delete_btn"
-            style="@style/ButtonDeleteOrigin"
-            android:textColor="@color/colorWhite"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="@string/delete"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/origin_main_edit_btn"
+                    style="@style/ButtonBigRound"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorPrimary" />
+
+                <Button
+                    android:id="@+id/origin_main_delete_btn"
+                    style="@style/ButtonDeleteOrigin"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/fab_feedback_margin_top"
+                    android:text="@string/delete"
+                    android:textColor="@color/colorWhite" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
     </LinearLayout>
 </LinearLayout>
