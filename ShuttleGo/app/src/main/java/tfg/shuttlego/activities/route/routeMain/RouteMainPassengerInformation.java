@@ -90,7 +90,7 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         String phone = this.routeMainPhone.getText() + " " + String.valueOf(resultEvent.get("driverNumber"));
         this.routeMainPhone.setText(phone);
 
-        String driverNameComplete = this.routeMainDriver.getText() + " " + resultEvent.get("driverSurname") + " " + resultEvent.get("driverName");
+        String driverNameComplete = this.routeMainDriver.getText() + " " + resultEvent.get("driverName") + " " + resultEvent.get("driverSurname");
         this.routeMainDriver.setText(driverNameComplete);
     }
 

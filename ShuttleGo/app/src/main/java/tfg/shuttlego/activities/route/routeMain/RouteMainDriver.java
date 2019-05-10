@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.account.LoginMain;
 import tfg.shuttlego.activities.person.driver.DriverMain;
 import tfg.shuttlego.activities.route.RouteCalculate;
 import tfg.shuttlego.activities.route.routeList.RouteListDriver;
@@ -135,6 +136,7 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
 
     @Override
     public void onBackPressed() {
-            finish();
-        }
+        startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
+        finish();
+    }
 }

@@ -232,5 +232,6 @@
     <string name="addHour">¿A que hora quieres salir?</string>
     <string name="tooFar">Estás demasiado lejos del comienzo</string>
     <string name="cantAccessToLocation">No se puede acceder a su localización.</string>
+    <string name="createRouteSucessful">Ruta creada correctamente</string>
 
 </resources>

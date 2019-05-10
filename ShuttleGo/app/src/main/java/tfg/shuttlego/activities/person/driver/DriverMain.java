@@ -33,7 +33,7 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.Person;
 
-public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, View.OnFocusChangeListener {
 
     private ProgressBar driverMainProgress;
     private LinearLayout driverMainLinear;
@@ -61,6 +61,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
         driverMainButton.setOnClickListener(this);
         driverMainHour.setOnClickListener(this);
+        driverMainOrigin.setOnFocusChangeListener(this);
     }
 
     /**
@@ -207,7 +208,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 Intent logIntent = new Intent(DriverMain.this, RouteMainDriver.class);
                 logIntent.putExtra("route", task.getResult().get("id"));
                 startActivity(logIntent);
-                throwToast(R.string.createOriginSuccesful);
+                throwToast(R.string.createRouteSucessful);
             }
 
         });
@@ -270,6 +271,10 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(getCurrentFocus() == this.driverMainOrigin) this.driverMainOrigin.showDropDown();
+    }
     @Override
     public void onBackPressed() {
 
