@@ -235,6 +235,11 @@
     <string name="createRouteSucessful">Ruta creada correctamente</string>
 
     <string name="begin">Comenzar</string>
+    <string name="errDataRouteDriverEmpty">Debes introducir los datos necesarios para crear una ruta</string>
+    <string name="errOriginDriverEmpty">Debes introducir un origen</string>
+    <string name="errLimitDriverEmpty">Debes introducir un area límite</string>
+    <string name="errPassengerDriverEmpty">Debes introducir el número de pasajeros máximos</string>
+    <string name="errHourDriverEmpty">Debes introducir una hora de salida</string>
 
 
 </resources>

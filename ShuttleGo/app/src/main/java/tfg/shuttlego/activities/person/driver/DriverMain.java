@@ -209,6 +209,7 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
                 logIntent.putExtra("route", task.getResult().get("id"));
                 startActivity(logIntent);
                 throwToast(R.string.createRouteSucessful);
+                finish();
             }
 
         });
@@ -246,10 +247,11 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
     @Override
     public void onClick(View v) {
 
-        if (driverMainOrigin.getText().toString().isEmpty() ||
-                driverMainLimit.getText().toString().isEmpty() ||
-                driverMainPassenger.getText().toString().isEmpty() ||
-                driverMainHour.getText().toString().isEmpty())  throwToast(R.string.errDataEmpty);
+        if (driverMainOrigin.getText().toString().isEmpty() && driverMainLimit.getText().toString().isEmpty() && driverMainPassenger.getText().toString().isEmpty() && driverMainHour.getText().toString().isEmpty()) throwToast(R.string.errDataRouteDriverEmpty);
+        else if (driverMainOrigin.getText().toString().isEmpty()) throwToast(R.string.errOriginDriverEmpty);
+        else if (driverMainLimit.getText().toString().isEmpty()) throwToast(R.string.errLimitDriverEmpty);
+        else if (driverMainPassenger.getText().toString().isEmpty()) throwToast(R.string.errPassengerDriverEmpty);
+        else if (driverMainHour.getText().toString().isEmpty()) throwToast(R.string.errHourDriverEmpty);
         else {
 
             setProgressBar();

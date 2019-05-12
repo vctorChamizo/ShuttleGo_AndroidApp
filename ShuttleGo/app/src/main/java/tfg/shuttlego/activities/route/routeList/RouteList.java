@@ -1,5 +1,6 @@
 package tfg.shuttlego.activities.route.routeList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.adapter.RecyclerViewAdapterRoute;
+import tfg.shuttlego.activities.person.driver.DriverMain;
+import tfg.shuttlego.activities.person.passenger.PassengerMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
@@ -203,6 +206,8 @@ public abstract class RouteList extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+
+        if (this.user.getType() == TypePerson.DRIVER) startActivity(new Intent(this, DriverMain.class));
+        else startActivity(new Intent(this, PassengerMain.class));
     }
 }

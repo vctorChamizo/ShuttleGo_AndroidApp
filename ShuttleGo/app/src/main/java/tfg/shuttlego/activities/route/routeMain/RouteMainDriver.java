@@ -59,7 +59,7 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
             else {
 
                 throwToast(R.string.deleteRouteSuccesful);
-                startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
+                startActivity(new Intent(RouteMainDriver.this, RouteListDriver.class));
                 finish();
             }
         });
@@ -136,7 +136,8 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
+
+        startActivity(new Intent(RouteMainDriver.this, RouteListDriver.class));
         finish();
     }
 }

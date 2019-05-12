@@ -2,6 +2,7 @@ package tfg.shuttlego.activities.route;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -12,16 +13,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.BoundingBox;
-import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -33,15 +29,16 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.route.routeList.RouteListDriver;
+import tfg.shuttlego.activities.route.routeMain.RouteMainDriver;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
@@ -49,10 +46,9 @@ import tfg.shuttlego.model.transfer.origin.Origin;
 
 public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener, View.OnClickListener {
 
-    MapView mapView;
+    private MapView mapView;
     private MapboxMap mapboxMap;
     private LocationComponent locationComponent;
-    private PermissionsManager permissionsManager;
     private String routeId;
     private LinearLayout routeCalculateLinear;
     private LinearLayout routeCalculateProgress;
@@ -60,34 +56,24 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
     private ArrayList<Point> waypoints;
     private TextView textLoading;
     private Button start;
-    private final double MAX_DISTANCE = 100;
     private boolean started = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Mapbox.getInstance(this, getString(R.string.access_token));
+
+        this.routeId = Objects.requireNonNull(getIntent().getExtras()).getString("routeId");
+
         setContentView(R.layout.route_calculate);
+        super.onCreate(savedInstanceState);
+
         inicializateView();
         mapView.onCreate(savedInstanceState);
         textLoading.setText(R.string.loadingMap);
-        listeners();
-        super.onCreate(savedInstanceState);
 
-    }
-
-    private void listeners() {
-        mapView.getMapAsync(RouteCalculate.this);
+        this.mapView.getMapAsync(RouteCalculate.this);
         this.start.setOnClickListener(this);
-    }
-
-    private void inicializateView() {
-
-        this.routeCalculateLinear = findViewById(R.id.route_calculate_content_linear1);
-        this.textLoading = findViewById(R.id.loading_text);
-        mapView = findViewById(R.id.route_calculate_map);
-        routeId = getIntent().getExtras().getString("routeId");
-        this.routeCalculateProgress = findViewById(R.id.route_calculate_progress);
-        this.start = findViewById(R.id.route_calculate_start);
     }
 
     @Override
@@ -126,14 +112,36 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         super.onResume();
     }
 
-    public void onExplanationNeeded(List<String> permissionsToExplain) {
-        Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
+    private void inicializateView() {
+
+        this.routeCalculateLinear = findViewById(R.id.route_calculate_content_linear1);
+        this.textLoading = findViewById(R.id.loading_text);
+        this.mapView = findViewById(R.id.route_calculate_map);
+        this.routeCalculateProgress = findViewById(R.id.route_calculate_progress);
+        this.start = findViewById(R.id.route_calculate_start);
     }
 
+    protected void setProgressBar() {
+
+        routeCalculateProgress.setVisibility(View.VISIBLE);
+        routeCalculateLinear.setVisibility(View.GONE);
+    }
+
+    /**
+     * Show the view visible and put invisble progress bar component
+     */
+    protected void removeProgressBar() {
+        routeCalculateProgress.setVisibility(View.GONE);
+        routeCalculateLinear.setVisibility(View.VISIBLE);
+    }
+
+    public void onExplanationNeeded(List<String> permissionsToExplain) { Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show(); }
     @Override
     public void onPermissionResult(boolean granted) {
-        if (granted) enableLocationComponent(mapboxMap.getStyle());
+
+        if (granted) enableLocationComponent(Objects.requireNonNull(mapboxMap.getStyle()));
         else {
+
             Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
             finish();
         }
@@ -165,76 +173,62 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
         textLoading.setText(R.string.calculatingRoute);
 
-        tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap).addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                removeProgressBar();
-                locationComponent.setCameraMode(CameraMode.NONE);
-                moveMap(originPoint.coordinates());
-            }
+        tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap).addOnCompleteListener(task -> {
+
+            removeProgressBar();
+            locationComponent.setCameraMode(CameraMode.NONE);
+            moveMap(originPoint.coordinates());
         });
-
-    }
-
-    ;
-
-    protected void setProgressBar() {
-        routeCalculateProgress.setVisibility(View.VISIBLE);
-        routeCalculateLinear.setVisibility(View.GONE);
-
-    }
-
-    /**
-     * Show the view visible and put invisble progress bar component
-     */
-    protected void removeProgressBar() {
-        routeCalculateProgress.setVisibility(View.GONE);
-        routeCalculateLinear.setVisibility(View.VISIBLE);
     }
 
     private void throwEventGetPoints() {
+
         this.textLoading.setText(R.string.gettingPoints);
-        EventDispatcher.getInstance(getApplicationContext()).dispatchEvent(Event.GETROUTEPOINTS, buildJson()).addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+        EventDispatcher.getInstance(getApplicationContext()).dispatchEvent(Event.GETROUTEPOINTS, buildJson()).addOnCompleteListener(task -> {
 
-                if (!task.isSuccessful() || task.getResult() == null) {
-                    throwToast(R.string.errConexion);
-                } else if (task.getResult().containsKey("error")) {
-                    if (task.getResult().get("error").equals("routeDoesntExists"))
-                        throwToast(R.string.errRuteNotFound);
-                    else throwToast(R.string.errServer);
-                } else {
+            if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
+            else if (task.getResult().containsKey("error")) {
 
-                    HashMap<?, ?> result = task.getResult();
-                    HashMap<?, ?> points = (HashMap<?, ?>) result.get("points");
-                    HashMap<?, ?> originHas = (HashMap<?, ?>) points.get("origin");
+                if (Objects.requireNonNull(task.getResult().get("error")).equals("routeDoesntExists")) throwToast(R.string.errRuteNotFound);
+                else throwToast(R.string.errServer);
+            }
+            else {
 
-                    Origin origin = new Origin();
-                    origin.setId((String) originHas.get("id"));
-                    origin.setName((String) originHas.get("name"));
-                    origin.setCoordinates((String) originHas.get("coordinates"));
+                HashMap<?, ?> result = task.getResult();
+                HashMap<?, ?> points = (HashMap<?, ?>) result.get("points");
+                HashMap<?, ?> originHas = (HashMap<?, ?>) Objects.requireNonNull(points).get("origin");
 
-                    ArrayList<HashMap<?, ?>> waypointsHas = (ArrayList<HashMap<?, ?>>) points.get("waypoints");
+                Origin origin = new Origin();
+                origin.setId((String) Objects.requireNonNull(originHas).get("id"));
+                origin.setName((String) originHas.get("name"));
+                origin.setCoordinates((String) originHas.get("coordinates"));
 
-                    if (waypointsHas.size() == 0) {
-                        throwToast(R.string.NoWaypoints);
-                        finish();
-                    } else {
-                        waypoints = new ArrayList<>();
+                ArrayList<HashMap<?, ?>> waypointsHas = (ArrayList<HashMap<?, ?>>) points.get("waypoints");
 
-                        for (HashMap<?, ?> waypoint : waypointsHas) {
-                            String[] coordinatesString = ((String) waypoint.get("coordinates")).split(",");
-                            List<Double> coordinates = new ArrayList<Double>();
-                            coordinates.add(Double.parseDouble(coordinatesString[0]));
-                            coordinates.add(Double.parseDouble(coordinatesString[1]));
-                            waypoints.add(createPoint(coordinates));
-                        }
+                if (Objects.requireNonNull(waypointsHas).size() == 0) {
 
-                        originPoint = createPoint(origin.getCoordinates());
-                        throwCalculateRoute();
+                    throwToast(R.string.NoWaypoints);
+
+                    Intent intent = new Intent(RouteCalculate.this, RouteMainDriver.class);
+                    intent.putExtra("route", this.routeId);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+
+                    waypoints = new ArrayList<>();
+
+                    for (HashMap<?, ?> waypoint : waypointsHas) {
+
+                        String[] coordinatesString = ((String) Objects.requireNonNull(waypoint.get("coordinates"))).split(",");
+                        List<Double> coordinates = new ArrayList<>();
+                        coordinates.add(Double.parseDouble(coordinatesString[0]));
+                        coordinates.add(Double.parseDouble(coordinatesString[1]));
+                        waypoints.add(createPoint(coordinates));
                     }
 
+                    originPoint = createPoint(origin.getCoordinates());
+                    throwCalculateRoute();
                 }
             }
         });
@@ -243,6 +237,7 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
     private Point createPoint(List<Double> coordinates) {
 
         return new Point() {
+
             @NonNull
             @Override
             public String type() {
@@ -268,6 +263,7 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         JSONObject result = new JSONObject();
 
         try {
+
             JSONObject route = new JSONObject();
             route.put("id", routeId);
 
@@ -278,16 +274,13 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
             result.put("route", route);
             result.put("user", user);
 
-        } catch (JSONException exception) {
-            throwToast(R.string.err);
         }
+        catch (JSONException exception) { throwToast(R.string.err); }
 
         return result;
     }
 
-    protected void throwToast(int msg) {
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-    }
+    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @SuppressLint("MissingPermission")
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
@@ -298,9 +291,11 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
             locationComponent.setCameraMode(CameraMode.TRACKING_GPS_NORTH);
-        } else {
 
-            permissionsManager = new PermissionsManager(this);
+        }
+        else {
+
+            PermissionsManager permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(this);
         }
     }
@@ -316,14 +311,12 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp), 1000);
     }
 
-
     @Override
     public void onClick(View v) {
+
         if (!this.started) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                throwToast(R.string.cantAccessToLocation);
-                return;
-            }
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { throwToast(R.string.cantAccessToLocation); }
 
             started = true;
             locationComponent.setCameraMode(CameraMode.TRACKING_COMPASS);
@@ -331,24 +324,26 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
             Location a = new Location("");
             Location b = new Location("");
 
-            a.setLatitude(locationComponent.getLastKnownLocation().getLatitude());
+            a.setLatitude(Objects.requireNonNull(locationComponent.getLastKnownLocation()).getLatitude());
             a.setLongitude(locationComponent.getLastKnownLocation().getLongitude());
 
             b.setLatitude(originPoint.latitude());
             b.setLongitude(originPoint.longitude());
 
             double distance = a.distanceTo(b);
+            double MAX_DISTANCE = 100;
 
             if (distance > MAX_DISTANCE) throwToast(R.string.tooFar);
 
             this.start.setText(R.string.cancel);
 
-        }else{
+        }
+        else {
+
             started = false;
             this.start.setText(R.string.start);
             locationComponent.setCameraMode(CameraMode.NONE);
             moveMap(originPoint.coordinates());
         }
-
     }
 }
