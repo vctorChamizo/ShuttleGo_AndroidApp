@@ -64,6 +64,24 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
         routeChoosePassengerNavigation.setNavigationItemSelectedListener(this);
     }
 
+    @Override
+    protected void onStart() { super.onStart(); }
+
+    @Override
+    protected void onPause() { super.onPause(); }
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); }
+
+    @Override
+    public void onLowMemory() { super.onLowMemory(); }
+
+    @Override
+    protected void onResume() { super.onResume(); }
+
     /**
      * Inicializate the componentes of this view
      */
@@ -109,7 +127,7 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
 
         setSupportActionBar(routeChoosePassengerToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeChoosePassengerDrawer, routeChoosePassengerToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        routeChoosePassengerDrawer.addDrawerListener(toggle);
+        this.routeChoosePassengerDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -119,14 +137,14 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
     @SuppressLint("SetTextI18n")
     private void setCredencials() {
 
-        View hView =  routeChoosePassengerNavigation.getHeaderView(0);
+        View hView =  this.routeChoosePassengerNavigation.getHeaderView(0);
 
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + this.user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
@@ -135,9 +153,9 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
     private void createListView() {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        routeChoosePassengerRecycler.setLayoutManager(layoutManager);
+        this.routeChoosePassengerRecycler.setLayoutManager(layoutManager);
         RecyclerView.Adapter<RecyclerViewAdapterChooseRoute.RouteViewHolder> adapter = new RecyclerViewAdapterChooseRoute(this.routeChoosePassengerListRoutes, this.routeChoosePassengerAdress);
-        routeChoosePassengerRecycler.setAdapter(adapter);
+        this.routeChoosePassengerRecycler.setAdapter(adapter);
     }
 
     @Override
@@ -153,13 +171,14 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
                 break;
         }
 
-        routeChoosePassengerDrawer.closeDrawer(GravityCompat.START);
+        this.routeChoosePassengerDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-//        if (routeChoosePassengerDrawer.isDrawerOpen(GravityCompat.START)) routeChoosePassengerDrawer.closeDrawer(GravityCompat.START);
-        finish();
+
+        if (this.routeChoosePassengerDrawer.isDrawerOpen(GravityCompat.START)) this.routeChoosePassengerDrawer.closeDrawer(GravityCompat.START);
+        else finish();
     }
 }

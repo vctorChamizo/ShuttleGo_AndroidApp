@@ -1,7 +1,6 @@
 package tfg.shuttlego.activities.route.routeMain;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +17,13 @@ import tfg.shuttlego.model.event.EventDispatcher;
 
 public class RouteMainPassengerInformation extends RouteMain implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
+    /**
+     * Build a JSON to delete a route
+     *
+     * @param route necesary data to make the correct JSON
+     *
+     * @return JSON with information about the current route
+     */
     private JSONObject buildJson(String route) {
 
         JSONObject dataUser = new JSONObject();
@@ -39,6 +45,11 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         return deleteRoute;
     }
 
+    /**
+     * Throw the event that allow to delete a route
+     *
+     * @param route JSON with information to add route
+     */
     private void throwEventDeleteRoute(JSONObject route) {
 
         EventDispatcher.getInstance(getApplicationContext())
@@ -46,10 +57,12 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
+
                 removeProgressBar();
                 throwToast(R.string.errConexion);
             }
             else if (task.getResult().containsKey("error")) {
+
                 removeProgressBar();
                 throwToast(R.string.errServer);
             }
@@ -65,7 +78,7 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
     protected void listeners() {
 
         this.routeMainMainButton.setOnClickListener(this);
-        routeMainNavigation.setNavigationItemSelectedListener(this);
+        this.routeMainNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -105,8 +118,18 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.driver_drawer_list: startActivity(new Intent(RouteMainPassengerInformation.this, RouteListPassenger.class)); finish(); break;
-            case R.id.driver_drawer_home: startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class)); finish(); break;
+
+            case R.id.driver_drawer_list:
+
+                startActivity(new Intent(RouteMainPassengerInformation.this, RouteListPassenger.class));
+                finish();
+                break;
+
+            case R.id.driver_drawer_home:
+
+                startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class));
+                finish();
+                break;
         }
 
         routeMainDrawer.closeDrawer(GravityCompat.START);

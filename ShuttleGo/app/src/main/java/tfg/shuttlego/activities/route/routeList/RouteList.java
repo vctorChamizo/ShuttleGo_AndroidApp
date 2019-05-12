@@ -3,6 +3,7 @@ package tfg.shuttlego.activities.route.routeList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,18 +44,12 @@ public abstract class RouteList extends AppCompatActivity {
     protected Person user;
 
     @Override
-    protected void onRestart(){
-        setProgressBar();
-        throwEventGetAllRoutes();
-        super.onRestart();
-    }
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_list);
 
-        user = Session.getInstance().getUser();
+        this.user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();
@@ -66,6 +61,34 @@ public abstract class RouteList extends AppCompatActivity {
 
         listeners();
     }
+
+    @Override
+    protected void onRestart(){
+
+        setProgressBar();
+        throwEventGetAllRoutes();
+
+        super.onRestart();
+    }
+
+
+    @Override
+    protected void onStart() { super.onStart(); }
+
+    @Override
+    protected void onPause() { super.onPause(); }
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); }
+
+    @Override
+    public void onLowMemory() { super.onLowMemory(); }
+
+    @Override
+    protected void onResume() { super.onResume(); }
 
     /**
      * Inicializate the componentes of this view.
@@ -119,14 +142,14 @@ public abstract class RouteList extends AppCompatActivity {
      */
     private void setCredencials(){
 
-        View hView =  routeListNavigation.getHeaderView(0);
+        View hView =  this.routeListNavigation.getHeaderView(0);
 
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + this.user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
@@ -135,6 +158,7 @@ public abstract class RouteList extends AppCompatActivity {
     private void buildJSON() {
 
         JSONObject dataUser = new JSONObject();
+
         this.getRoutes = new JSONObject();
 
         try {
@@ -207,7 +231,8 @@ public abstract class RouteList extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (this.user.getType() == TypePerson.DRIVER) startActivity(new Intent(this, DriverMain.class));
+        if (this.routeListDrawer.isDrawerOpen(GravityCompat.START)) this.routeListDrawer.closeDrawer(GravityCompat.START);
+        else if (this.user.getType() == TypePerson.DRIVER) startActivity(new Intent(this, DriverMain.class));
         else startActivity(new Intent(this, PassengerMain.class));
     }
 }

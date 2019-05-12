@@ -31,6 +31,13 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Build a JSON to add a route
+     *
+     * @param idRoute necesary data to make the correct JSON
+     *
+     * @return JSON with information about the current route
+     */
     private JSONObject buildJson(String idRoute) {
 
         JSONObject addToRoute = new JSONObject();
@@ -54,6 +61,11 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
         return addToRoute;
     }
 
+    /**
+     * Throw the event that allow to add a route
+     *
+     * @param route JSON with information to add route
+     */
     private void throwEventAddToRoute(JSONObject route) {
 
         EventDispatcher.getInstance(getApplicationContext())
@@ -61,18 +73,25 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
+
                 removeProgressBar();
                 throwToast(R.string.errConexion);
             }
             else if (task.getResult().containsKey("error")) {
+
                 removeProgressBar();
-                if(task.getResult().get("error").equals("userAlreadyAdded"))
-                    throwToast(R.string.errUserAlreadyAdded);
-                else if(task.getResult().get("error").equals("routeSoldOut"))
-                    throwToast(R.string.errSoldOut);
-                else throwToast(R.string.errServer);
+
+                switch (Objects.requireNonNull(task.getResult().get("error"))) {
+
+                    case "userAlreadyAdded": throwToast(R.string.errUserAlreadyAdded);break;
+
+                    case "routeSoldOut": throwToast(R.string.errSoldOut);break;
+
+                    default: throwToast(R.string.errServer);break;
+                }
             }
             else {
+
                 startActivity(new Intent(RouteMainPassengerChoose.this, PassengerMain.class));
                 throwToast(R.string.successfullyAdded);
             }
@@ -119,21 +138,29 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
+
             case R.id.driver_drawer_list:
+
                 startActivity(new Intent(RouteMainPassengerChoose.this, RouteListPassenger.class));
+                finish();
                 break;
+
             case R.id.driver_drawer_home:
+
                 startActivity(new Intent(RouteMainPassengerChoose.this, PassengerMain.class));
+                finish();
                 break;
         }
-        routeMainDrawer.closeDrawer(GravityCompat.START);
 
-        finish();
+        this.routeMainDrawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        finish();
+
+        if (this.routeMainDrawer.isDrawerOpen(GravityCompat.START)) this.routeMainDrawer.closeDrawer(GravityCompat.START);
+        else finish();
     }
 }

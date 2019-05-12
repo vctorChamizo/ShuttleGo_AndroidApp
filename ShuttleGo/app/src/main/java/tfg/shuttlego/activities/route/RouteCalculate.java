@@ -35,9 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
 import tfg.shuttlego.R;
-import tfg.shuttlego.activities.route.routeList.RouteListDriver;
 import tfg.shuttlego.activities.route.routeMain.RouteMainDriver;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
@@ -46,16 +44,20 @@ import tfg.shuttlego.model.transfer.origin.Origin;
 
 public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener, View.OnClickListener {
 
+    private LinearLayout routeCalculateLinear;
+    private LinearLayout routeCalculateProgress;
+
+    private Button start;
+
     private MapView mapView;
     private MapboxMap mapboxMap;
     private LocationComponent locationComponent;
+
     private String routeId;
-    private LinearLayout routeCalculateLinear;
-    private LinearLayout routeCalculateProgress;
     private Point originPoint;
     private ArrayList<Point> waypoints;
     private TextView textLoading;
-    private Button start;
+
     private boolean started = false;
 
     @Override
@@ -69,8 +71,10 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
 
         inicializateView();
-        mapView.onCreate(savedInstanceState);
-        textLoading.setText(R.string.loadingMap);
+
+        this.mapView.onCreate(savedInstanceState);
+
+        this.textLoading.setText(R.string.loadingMap);
 
         this.mapView.getMapAsync(RouteCalculate.this);
         this.start.setOnClickListener(this);
@@ -78,40 +82,44 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     protected void onStart() {
+        this.mapView.onStart();
         super.onStart();
-        mapView.onStart();
+
     }
 
     @Override
     protected void onPause() {
-        mapView.onPause();
+        this.mapView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        mapView.onStop();
+        this.mapView.onStop();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        mapView.onDestroy();
+        this.mapView.onDestroy();
         super.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
+        this.mapView.onLowMemory();
         super.onLowMemory();
-        mapView.onLowMemory();
     }
 
     @Override
     protected void onResume() {
-        mapView.onResume();
+        this.mapView.onResume();
         super.onResume();
     }
 
+    /**
+     * Inicializate the componentes of this view
+     */
     private void inicializateView() {
 
         this.routeCalculateLinear = findViewById(R.id.route_calculate_content_linear1);
@@ -121,62 +129,54 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         this.start = findViewById(R.id.route_calculate_start);
     }
 
+    /**
+     * Show the progress bar component visible and put invisble the rest of the view
+     */
     protected void setProgressBar() {
 
-        routeCalculateProgress.setVisibility(View.VISIBLE);
-        routeCalculateLinear.setVisibility(View.GONE);
+        this.routeCalculateProgress.setVisibility(View.VISIBLE);
+        this.routeCalculateLinear.setVisibility(View.GONE);
     }
 
     /**
      * Show the view visible and put invisble progress bar component
      */
     protected void removeProgressBar() {
-        routeCalculateProgress.setVisibility(View.GONE);
-        routeCalculateLinear.setVisibility(View.VISIBLE);
+
+        this.routeCalculateProgress.setVisibility(View.GONE);
+        this.routeCalculateLinear.setVisibility(View.VISIBLE);
     }
 
-    public void onExplanationNeeded(List<String> permissionsToExplain) { Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show(); }
-    @Override
-    public void onPermissionResult(boolean granted) {
+    private JSONObject buildJson() {
 
-        if (granted) enableLocationComponent(Objects.requireNonNull(mapboxMap.getStyle()));
-        else {
+        JSONObject result = new JSONObject();
 
-            Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
-            finish();
+        try {
+
+            JSONObject route = new JSONObject();
+            route.put("id", routeId);
+
+            JSONObject user = new JSONObject();
+            user.put("email", Session.getInstance().getUser().getEmail());
+            user.put("password", Session.getInstance().getUser().getPassword());
+
+            result.put("route", route);
+            result.put("user", user);
+
         }
-    }
+        catch (JSONException exception) { throwToast(R.string.err); }
 
-    @Override
-    public boolean onMapClick(@NonNull LatLng point) {
-        return false;
-    }
-
-    @Override
-    public void onMapReady(@NonNull MapboxMap mapboxMap) {
-
-        setProgressBar();
-
-        this.mapboxMap = mapboxMap;
-
-        this.mapboxMap.getUiSettings().setLogoEnabled(false);
-
-        mapboxMap.setStyle(Style.OUTDOORS, style -> {
-
-            enableLocationComponent(style);
-            this.mapboxMap.addOnMapClickListener(RouteCalculate.this);
-            throwEventGetPoints();
-        });
+        return result;
     }
 
     private void throwCalculateRoute() {
 
-        textLoading.setText(R.string.calculatingRoute);
+        this.textLoading.setText(R.string.calculatingRoute);
 
         tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap).addOnCompleteListener(task -> {
 
             removeProgressBar();
-            locationComponent.setCameraMode(CameraMode.NONE);
+            this.locationComponent.setCameraMode(CameraMode.NONE);
             moveMap(originPoint.coordinates());
         });
     }
@@ -216,7 +216,7 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
                 }
                 else {
 
-                    waypoints = new ArrayList<>();
+                    this.waypoints = new ArrayList<>();
 
                     for (HashMap<?, ?> waypoint : waypointsHas) {
 
@@ -224,10 +224,10 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
                         List<Double> coordinates = new ArrayList<>();
                         coordinates.add(Double.parseDouble(coordinatesString[0]));
                         coordinates.add(Double.parseDouble(coordinatesString[1]));
-                        waypoints.add(createPoint(coordinates));
+                        this.waypoints.add(createPoint(coordinates));
                     }
 
-                    originPoint = createPoint(origin.getCoordinates());
+                    this.originPoint = createPoint(origin.getCoordinates());
                     throwCalculateRoute();
                 }
             }
@@ -258,29 +258,47 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         };
     }
 
-    private JSONObject buildJson() {
+    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
-        JSONObject result = new JSONObject();
+    /*********************************************************************************************************************
+     MAPBOX **/
 
-        try {
+    @Override
+    public void onMapReady(@NonNull MapboxMap mapboxMap) {
 
-            JSONObject route = new JSONObject();
-            route.put("id", routeId);
+        setProgressBar();
 
-            JSONObject user = new JSONObject();
-            user.put("email", Session.getInstance().getUser().getEmail());
-            user.put("password", Session.getInstance().getUser().getPassword());
+        this.mapboxMap = mapboxMap;
 
-            result.put("route", route);
-            result.put("user", user);
+        this.mapboxMap.getUiSettings().setLogoEnabled(false);
 
-        }
-        catch (JSONException exception) { throwToast(R.string.err); }
+        mapboxMap.setStyle(Style.OUTDOORS, style -> {
 
-        return result;
+            enableLocationComponent(style);
+            this.mapboxMap.addOnMapClickListener(RouteCalculate.this);
+            throwEventGetPoints();
+        });
     }
 
-    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
+    @Override
+    public boolean onMapClick(@NonNull LatLng point) {
+        return false;
+    }
+
+    @Override
+    public void onExplanationNeeded(List<String> permissionsToExplain) { Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show(); }
+
+
+    @Override
+    public void onPermissionResult(boolean granted) {
+
+        if (granted) enableLocationComponent(Objects.requireNonNull(mapboxMap.getStyle()));
+        else {
+
+            Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
 
     @SuppressLint("MissingPermission")
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
@@ -324,11 +342,11 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
             Location a = new Location("");
             Location b = new Location("");
 
-            a.setLatitude(Objects.requireNonNull(locationComponent.getLastKnownLocation()).getLatitude());
+            a.setLatitude(Objects.requireNonNull(this.locationComponent.getLastKnownLocation()).getLatitude());
             a.setLongitude(locationComponent.getLastKnownLocation().getLongitude());
 
-            b.setLatitude(originPoint.latitude());
-            b.setLongitude(originPoint.longitude());
+            b.setLatitude(this.originPoint.latitude());
+            b.setLongitude(this.originPoint.longitude());
 
             double distance = a.distanceTo(b);
             double MAX_DISTANCE = 100;
@@ -340,9 +358,9 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         }
         else {
 
-            started = false;
+            this.started = false;
             this.start.setText(R.string.start);
-            locationComponent.setCameraMode(CameraMode.NONE);
+            this.locationComponent.setCameraMode(CameraMode.NONE);
             moveMap(originPoint.coordinates());
         }
     }
