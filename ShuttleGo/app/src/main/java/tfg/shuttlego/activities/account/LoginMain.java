@@ -28,15 +28,10 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
 
     private ProgressBar loginMainProgress;
     private LinearLayout loginMainLinear;
+
     private EditText loginMainTextEmail, loginMainTextPassword;
     private Button loginMainButtonSignin, loginMainButtonRegister;
     private Class loginMainNextClass;
-
-    @Override
-    protected void onRestart(){
-        removeProgressBar();
-        super.onRestart();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +44,30 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
         this.loginMainButtonRegister.setOnClickListener(this);
         this.loginMainButtonSignin .setOnClickListener(this);
     }
+
+    @Override
+    protected void onRestart(){
+        removeProgressBar();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() { super.onStart(); }
+
+    @Override
+    protected void onPause() { super.onPause(); }
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); }
+
+    @Override
+    public void onLowMemory() { super.onLowMemory(); }
+
+    @Override
+    protected void onResume() { super.onResume(); }
 
     /**
      * Inicializate the components of this view
@@ -200,17 +219,19 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
                 else if (this.loginMainTextEmail.getText().toString().isEmpty()) throwToast(R.string.errEmailLoginEmpty);
                 else if (this.loginMainTextPassword.getText().toString().isEmpty()) throwToast(R.string.errPasswordLoginEmpty);
                 else {
+
                     setProgressBar();
                     throwEventLoginUser(buildJson());
                 }
+
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
+
         finishAffinity();
         finish();
-       // System.exit(0);
     }
 }
