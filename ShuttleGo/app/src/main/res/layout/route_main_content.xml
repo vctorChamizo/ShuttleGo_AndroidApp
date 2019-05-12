@@ -194,7 +194,7 @@
                     style="@style/ButtonDeleteOrigin"
                     android:layout_width="match_parent"
                     android:layout_margin="@dimen/fab_margin_bottom"
-                    android:text="Comenzar"
+                    android:text="@string/begin"
                     android:textColor="@color/colorWhite" />
 
                 <Button

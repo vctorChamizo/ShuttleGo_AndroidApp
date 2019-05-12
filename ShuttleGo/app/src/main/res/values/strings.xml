@@ -234,4 +234,7 @@
     <string name="cantAccessToLocation">No se puede acceder a su localización.</string>
     <string name="createRouteSucessful">Ruta creada correctamente</string>
 
+    <string name="begin">Comenzar</string>
+
+
 </resources>

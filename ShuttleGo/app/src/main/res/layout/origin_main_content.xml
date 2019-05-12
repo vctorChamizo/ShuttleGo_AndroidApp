@@ -53,18 +53,15 @@
                 <Button
                     android:id="@+id/origin_main_edit_btn"
                     style="@style/ButtonBigRound"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="@dimen/fab_margin_bottom"
                     android:text="@string/edit"
                     android:textColor="@color/colorPrimary" />
 
                 <Button
                     android:id="@+id/origin_main_delete_btn"
                     style="@style/ButtonDeleteOrigin"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="@dimen/fab_feedback_margin_top"
+                    android:layout_margin="@dimen/fab_margin_bottom"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/delete"
                     android:textColor="@color/colorWhite" />
             </LinearLayout>
