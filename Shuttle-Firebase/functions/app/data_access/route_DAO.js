@@ -13,11 +13,11 @@
     /* *********************************************************************************************** */
 
     /**
-     * @description
+     * @description Create a nre route in database.
      * 
-     * @param {}
+     * @param {Object} newData The new route data.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with confirmation the new created route.
      */
     function insertRoute(newData) {
 
@@ -28,11 +28,11 @@
     }
 
     /**
-     * @description
+     * @description Get a route.
      * 
-     * @param {}
+     * @param {String} id The route id.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with route data.
      */
     function getRouteById(id) {
 
@@ -62,11 +62,11 @@
     }
 
     /**
-     * @description
+     * @description Get a list of passengers of route.
      * 
-     * @param {}
+     * @param {String} route The route id
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with a list of passengers.
      */
     function getPassengers(route) {
 
@@ -75,13 +75,14 @@
     }
 
     /**
-     * @description
+     * @description Get a route to match with the parameters.
      * 
-     * @param {}
+     * @param {String} origin The name of origin.
+     * @param {String} destination The name of destination.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with the route.
      */
-    function getRoutesByOriginAndDestination(origin,destination) {
+    function getRoutesByOriginAndDestination(origin, destination) {
 
         return db.collection("routes").where("destination", "==", destination).where("origin", "==", origin).get()
         .then((snapshot) => {
@@ -101,13 +102,16 @@
     }
 
     /**
-     * @description
+     * @description Add a new route to database.
      * 
-     * @param {}
+     * @param {Object} user The user data.
+     * @param {Route} route The route data.
+     * @param {String} address The name of address.
+     * @param {Object} coordinates The coordinates of address.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with confirmation the new added route.
      */
-    function addToRoute(user,route,address,coordinates){
+    function addToRoute(user, route, address, coordinates){
 
         let oldPassengersNumber;
 
@@ -129,11 +133,12 @@
     }
 
     /**
-     * @description
+     * @description Delete a user to the list of route.
      * 
-     * @param {}
+     * @param {String} passengerId The id of user.
+     * @param {String} routeId The id of route.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with confirmation the deleted passenger of route.
      */
     function removePassengerFromRoute(passengerId, routeId) {
 
@@ -145,11 +150,11 @@
     }
 
     /**
-     * @description
+     * @description Remove a route of databse
      * 
-     * @param {}
+     * @param {String} routeId The id of route.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise withe confirmation removed route.
      */
     function deleteRouteById(routeId) {
 
@@ -167,11 +172,11 @@
     }
 
     /**
-     * @description
+     * @description Get a list of route´s driver.
      * 
-     * @param {}
+     * @param {String} DriverId the id of driver.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A list with route´s driver. 
      */
     function getRoutesByDriver(DriverId) {
 
@@ -208,11 +213,11 @@
     }
 
     /**
-     * @description
+     * @description Get a list of passenger´s routes.
      * 
-     * @param {}
+     * @param {String} passengerId The id of passenger.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with the list of passenger´s routes.
      */
     function getRoutesByPassenger(passengerId) {
 
@@ -262,11 +267,11 @@
     }
 
     /**
-     * @description
+     * @description Get a list of route's coordinates.
      * 
-     * @param {}
+     * @param {String} routeId The id of route.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with the list of route's coordinates.
      */
     function getRoutePoints(routeId) {
 
@@ -275,11 +280,12 @@
     }
 
     /**
-     * @description
+     * @description Get a destination of a route.
      * 
-     * @param {}
+     * @param {String} routeId The id of route.
+     * @param {String} passengerId The id of passenger.
      * 
-     * @returns {Promise}
+     * @returns {Promise} A promise with the destination match with route and passenger.
      */
     function getDestination(routeId, passengerId) {
 

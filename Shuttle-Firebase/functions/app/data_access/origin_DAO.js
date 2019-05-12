@@ -83,7 +83,7 @@
     /**
      * @description Deletes a origin.
      * 
-     * @param {String} id the origin id.
+     * @param {String} id The origin id.
      */
     function deleteOriginById(id) { 
 
