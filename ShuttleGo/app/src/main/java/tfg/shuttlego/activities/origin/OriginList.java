@@ -48,7 +48,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.origin_list);
 
-        user = Session.getInstance().getUser();
+        this.user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();
@@ -77,6 +77,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      * Show the progress bar component visible and put invisble the rest of the view
      */
     private void setProgressBar() {
+
         originListProgress.setVisibility(View.VISIBLE);
         originListLinear.setVisibility(View.GONE);
     }
@@ -85,6 +86,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      * Show the view visible and put invisble progress bar component
      */
     private void removeProgressBar() {
+
         originListProgress.setVisibility(View.GONE);
         originListLinear.setVisibility(View.VISIBLE);
     }
@@ -112,9 +114,9 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + this.user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
@@ -148,7 +150,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
                     Origin origin = new Origin();
                     origin.setId((String) list.get(i).get("id"));
                     origin.setName((String) list.get(i).get("name"));
-                    listOrigins.add(origin);
+                    this.listOrigins.add(origin);
                 }
 
                 createListView();
@@ -176,6 +178,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
         switch (menuItem.getItemId()) {
 
             case R.id.admin_drawer_home:
+
                 startActivity(new Intent(OriginList.this, AdminMain.class));
                 finish();
                 break;
@@ -188,7 +191,12 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(OriginList.this, AdminMain.class));
-        finish();
+
+        if (this.originListDrawer.isDrawerOpen(GravityCompat.START)) this.originListDrawer.closeDrawer(GravityCompat.START);
+        else {
+
+            startActivity(new Intent(OriginList.this, AdminMain.class));
+            finish();
+        }
     }
 }

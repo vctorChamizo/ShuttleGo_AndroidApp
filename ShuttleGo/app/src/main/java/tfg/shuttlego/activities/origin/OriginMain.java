@@ -119,9 +119,9 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + this.user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
@@ -186,8 +186,8 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
             dataOrigin.put("id", orginMainOriginObject.getId());
             deleteOrigin.put("user", dataUser);
             deleteOrigin.put("origin", dataOrigin);
-        }
-        catch (JSONException e) { throwToast(R.string.err); }
+
+        } catch (JSONException e) { throwToast(R.string.err); }
 
         return deleteOrigin;
     }
@@ -261,7 +261,7 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
                 break;
         }
 
-        originMainDrawer.closeDrawer(GravityCompat.START);
+        this.originMainDrawer.closeDrawer(GravityCompat.START);
 
         finish();
 
@@ -271,7 +271,11 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onBackPressed() {
 
-        startActivity(new Intent(OriginMain.this, OriginList.class));
-        finish();
+        if (this.originMainDrawer.isDrawerOpen(GravityCompat.START)) this.originMainDrawer.closeDrawer(GravityCompat.START);
+        else {
+
+            startActivity(new Intent(OriginMain.this, OriginList.class));
+            finish();
+        }
     }
 }

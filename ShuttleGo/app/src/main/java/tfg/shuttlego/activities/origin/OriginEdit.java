@@ -158,8 +158,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
             editOrigin.put("user", dataUser);
             editOrigin.put("origin", dataOrigin);
 
-        }
-        catch (JSONException e) { throwToast(R.string.err); }
+        } catch (JSONException e) { throwToast(R.string.err); }
 
         return editOrigin;
     }
@@ -195,7 +194,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
                     throwToast(R.string.editOriginSuccesful);
 
                     Intent intent = new Intent(OriginEdit.this, OriginMain.class);
-                    intent.putExtra("origin", originEditOriginObject.getId());
+                    intent.putExtra("origin", this.originEditOriginObject.getId());
                     finish();
                     startActivity(intent);
                 }
@@ -224,9 +223,8 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
                     setProgressBar();
                     throwEventModifyOrigin(buildJson(this.originEditText.getText()));
                 }
-                break;
 
-            default: finish(); break;
+                break;
         }
     }
 
