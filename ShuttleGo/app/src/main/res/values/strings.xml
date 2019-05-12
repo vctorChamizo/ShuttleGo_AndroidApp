@@ -242,4 +242,10 @@
     <string name="errHourDriverEmpty">Debes introducir una hora de salida</string>
 
 
+    <string name="cancelRouteSuccesful">La ruta ha sido cancelada correctamente</string>
+
+    <string name="errDataRoutePassengerEmpty">Debes introducir los datos necesarios para buscar una ruta</string>
+    <string name="errOriginPassengerEmpty">Debes introducir un origen</string>
+    <string name="errDestinyPassengerEmpty">Debes introducir un destino</string>
+
 </resources>

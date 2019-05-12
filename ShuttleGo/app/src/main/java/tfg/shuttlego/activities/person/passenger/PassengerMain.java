@@ -250,9 +250,11 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
     @Override
     public void onClick(View v) {
 
-        if(getCurrentFocus() == this.passengerMainOrigin) this.passengerMainOrigin.showDropDown();
-        else if (passengerMainDestiny.getText().toString().isEmpty() ||
-        passengerMainOrigin.getText().toString().isEmpty()) throwToast(R.string.errDataEmpty);
+        //if(getCurrentFocus() == this.passengerMainOrigin) this.passengerMainOrigin.showDropDown();
+
+        if (passengerMainDestiny.getText().toString().isEmpty() && passengerMainOrigin.getText().toString().isEmpty()) throwToast(R.string.errDataRoutePassengerEmpty);
+        else if (passengerMainOrigin.getText().toString().isEmpty()) throwToast(R.string.errOriginPassengerEmpty);
+        else if (passengerMainDestiny.getText().toString().isEmpty()) throwToast(R.string.errDestinyPassengerEmpty);
         else {
 
             setProgressBar();
@@ -490,7 +492,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(PassengerMain.this,LoginMain.class);
+        Intent intent = new Intent(PassengerMain.this, LoginMain.class);
         startActivity(intent);
         finish();
 

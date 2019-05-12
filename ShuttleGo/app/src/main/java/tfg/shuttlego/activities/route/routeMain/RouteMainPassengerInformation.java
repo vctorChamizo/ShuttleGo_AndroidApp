@@ -55,7 +55,7 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
             }
             else {
 
-                throwToast(R.string.deleteRouteSuccesful);
+                throwToast(R.string.cancelRouteSuccesful);
                 finish();
             }
         });
@@ -95,7 +95,11 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
     }
 
     @Override
-    public void onClick(View v) { throwEventDeleteRoute(buildJson(routeMainIdRoute)); }
+    public void onClick(View v) {
+
+        setProgressBar();
+        throwEventDeleteRoute(buildJson(routeMainIdRoute));
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
