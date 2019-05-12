@@ -52,18 +52,17 @@
 
                 <Button
                     android:id="@+id/origin_main_edit_btn"
-                    style="@style/ButtonBigRound"
+                    style="@style/ButtonRoundWhite"
                     android:layout_margin="@dimen/fab_margin_bottom"
                     android:text="@string/edit"
                     android:textColor="@color/colorPrimary" />
 
                 <Button
                     android:id="@+id/origin_main_delete_btn"
-                    style="@style/ButtonDeleteOrigin"
+                    style="@style/ButtonRoundeOrange"
                     android:layout_margin="@dimen/fab_margin_bottom"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/delete"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/delete" />
             </LinearLayout>
 
         </RelativeLayout>

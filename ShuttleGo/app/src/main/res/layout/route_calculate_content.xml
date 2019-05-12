@@ -68,7 +68,7 @@
 
             <Button
                 android:id="@+id/route_calculate_start"
-                style="@style/ButtonBigRound"
+                style="@style/ButtonRoundWhite"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginHorizontal="@dimen/fab_margin"

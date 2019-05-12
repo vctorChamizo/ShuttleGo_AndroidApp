@@ -191,15 +191,14 @@
 
                 <Button
                     android:id="@+id/route_main_main_btn"
-                    style="@style/ButtonDeleteOrigin"
+                    style="@style/ButtonRoundeOrange"
                     android:layout_width="match_parent"
                     android:layout_margin="@dimen/fab_margin_bottom"
-                    android:text="@string/begin"
-                    android:textColor="@color/colorWhite" />
+                    android:text="@string/begin" />
 
                 <Button
                     android:id="@+id/route_main_secondary_btn"
-                    style="@style/ButtonBigRound"
+                    style="@style/ButtonRoundWhite"
                     android:layout_width="match_parent"
                     android:layout_margin="@dimen/fab_margin_bottom"
                     android:text="@string/delete"

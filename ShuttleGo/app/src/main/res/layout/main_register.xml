@@ -116,7 +116,7 @@
                     android:id="@+id/main_register_next_btn"
                     android:text="@string/next"
                     android:textColor="@color/colorPrimary"
-                    style="@style/ButtonBigRound"/>
+                    style="@style/ButtonRoundWhite"/>
 
             </LinearLayout>
         </RelativeLayout>
@@ -213,7 +213,7 @@
                     android:id="@+id/main_register_finish_btn"
                     android:text="@string/finish"
                     android:textColor="@color/colorPrimary"
-                    style="@style/ButtonBigRound"/>
+                    style="@style/ButtonRoundWhite"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
