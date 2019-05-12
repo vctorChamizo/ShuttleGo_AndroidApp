@@ -39,12 +39,6 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
     private Animation registerMainAnimationLeftIn, registerMainAnimationLeftOut, registerMainAnimationRightIn, registerMainAnimationRightOut;
 
     @Override
-    protected void onRestart(){
-        removeProgressBar();
-        super.onRestart();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -55,6 +49,30 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
         this.registerMainButtonNext.setOnClickListener(this);
         this.registerMainButtonFinish.setOnClickListener(this);
     }
+
+    @Override
+    protected void onRestart(){
+        removeProgressBar();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() { super.onStart(); }
+
+    @Override
+    protected void onPause() { super.onPause(); }
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); }
+
+    @Override
+    public void onLowMemory() { super.onLowMemory(); }
+
+    @Override
+    protected void onResume() { super.onResume(); }
 
     /**
      * Inicializate the componentes of this view.
@@ -193,11 +211,13 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
             else {
 
                 try {
+
                     Session.getInstance().setUser(parserTypePerson(data));
                     startActivity(new Intent(RegisterMain.this, this.registerMainNextClass));
                     finish();
-                }
-                catch (JSONException e) {
+
+                } catch (JSONException e) {
+
                     throwToast(R.string.err);
                     removeProgressBar();
                 }
@@ -277,6 +297,7 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
             setVisible(registerMainLinear1);
         }
         else {
+
             finish();
             overridePendingTransition(R.anim.left_in, R.anim.left_out);
         }
