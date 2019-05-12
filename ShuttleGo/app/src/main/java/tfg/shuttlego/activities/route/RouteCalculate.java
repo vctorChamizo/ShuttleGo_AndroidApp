@@ -147,6 +147,11 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         this.routeCalculateLinear.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Build a JSON to calculate a route
+     *
+     * @return JSON with information about the current route
+     */
     private JSONObject buildJson() {
 
         JSONObject result = new JSONObject();
@@ -169,6 +174,10 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         return result;
     }
 
+    /**
+     * Throw the event that allow to calculate a route
+     *
+     */
     private void throwCalculateRoute() {
 
         this.textLoading.setText(R.string.calculatingRoute);
@@ -181,6 +190,10 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         });
     }
 
+    /**
+     * Throw the event that allow to get the points of routes
+     *
+     */
     private void throwEventGetPoints() {
 
         this.textLoading.setText(R.string.gettingPoints);
