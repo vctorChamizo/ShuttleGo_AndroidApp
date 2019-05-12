@@ -96,7 +96,7 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_main);
 
-        this.user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance().getUser();
 
         incializateView();
         setProgressBar();

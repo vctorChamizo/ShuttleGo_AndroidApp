@@ -49,7 +49,7 @@ public class RouteChoosePassenger extends AppCompatActivity implements Navigatio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_choose_passenger);
 
-        this.user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance().getUser();
         this.routeChoosePassengerListRoutes =  (ArrayList<Route>)getIntent().getSerializableExtra("routes");
         this.routeChoosePassengerOrigin = (String) getIntent().getSerializableExtra("originName");
         this.routeChoosePassengerAdress = (Address) getIntent().getSerializableExtra("userAddress");

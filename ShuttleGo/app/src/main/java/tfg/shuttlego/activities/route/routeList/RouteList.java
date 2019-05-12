@@ -54,7 +54,7 @@ public abstract class RouteList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_list);
 
-        user = Session.getInstance(getApplicationContext()).getUser();
+        user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();
@@ -139,8 +139,8 @@ public abstract class RouteList extends AppCompatActivity {
 
         try {
 
-            dataUser.put("email", Session.getInstance(getApplicationContext()).getUser().getEmail());
-            dataUser.put("password", Session.getInstance(getApplicationContext()).getUser().getPassword());
+            dataUser.put("email", Session.getInstance().getUser().getEmail());
+            dataUser.put("password", Session.getInstance().getUser().getPassword());
             this.getRoutes.put("user", dataUser);
 
         }

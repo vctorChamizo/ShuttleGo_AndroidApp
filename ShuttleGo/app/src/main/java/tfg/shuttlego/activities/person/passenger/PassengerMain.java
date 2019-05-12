@@ -99,7 +99,7 @@ public class PassengerMain extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.passenger_main);
 
-        user = Session.getInstance(getApplicationContext()).getUser();
+        user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();

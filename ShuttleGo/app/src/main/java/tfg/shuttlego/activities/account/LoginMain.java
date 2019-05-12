@@ -134,7 +134,7 @@ public class LoginMain extends AppCompatActivity implements View.OnClickListener
             else {
 
                 Person user = parserTypePerson(task.getResult());
-                Session.getInstance(getApplicationContext()).setUser(user);
+                Session.getInstance().setUser(user);
                 startActivity(new Intent(LoginMain.this, this.loginMainNextClass));
                 finish();
             }

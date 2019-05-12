@@ -46,7 +46,7 @@ public abstract class RouteMain extends AppCompatActivity {
         setContentView(R.layout.route_main);
 
         this.routeMainIdRoute = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
-        this.user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();

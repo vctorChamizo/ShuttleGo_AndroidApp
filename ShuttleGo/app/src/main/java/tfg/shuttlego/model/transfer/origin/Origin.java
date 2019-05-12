@@ -1,6 +1,5 @@
 package tfg.shuttlego.model.transfer.origin;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,7 @@ public class Origin implements Serializable {
 
     private String id;
     private String name;
-    private List<Double> coordinates = new ArrayList<Double>();
+    private List<Double> coordinates = new ArrayList<>();
 
     public Origin() {}
 
@@ -24,25 +23,21 @@ public class Origin implements Serializable {
         this.id = id;
         this.name = name;
 
-        for(String coordinate:coordinates.split(","))
-            this.coordinates.add(Double.parseDouble(coordinate));
-
+        for(String coordinate:coordinates.split(",")) this.coordinates.add(Double.parseDouble(coordinate));
     }
+
     public String getId() { return id; }
 
     public String getName() { return name; }
 
-    public void setId(String id) { this.id = id;    }
+    public List<Double> getCoordinates() { return coordinates; }
+
+
+    public void setId(String id) { this.id = id; }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public List<Double> getCoordinates() { return coordinates; }
-
-    public void setCoordinates(String coordinates) {
-
-        for(String coordinate:coordinates.split(","))
-            this.coordinates.add(Double.parseDouble(coordinate));
-    }
+    public void setCoordinates(String coordinates) { for(String coordinate:coordinates.split(",")) this.coordinates.add(Double.parseDouble(coordinate)); }
 }

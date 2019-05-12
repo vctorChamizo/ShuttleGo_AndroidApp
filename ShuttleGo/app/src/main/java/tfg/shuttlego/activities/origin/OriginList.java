@@ -48,7 +48,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.origin_list);
 
-        user = Session.getInstance(getApplicationContext()).getUser();
+        user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();

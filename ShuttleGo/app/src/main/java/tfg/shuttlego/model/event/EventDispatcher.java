@@ -1,19 +1,13 @@
 package tfg.shuttlego.model.event;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.HttpsCallableResult;
 import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Objects;
 
-/**
- * Access the business data to create the content of the view with respect to the returned data.
- */
 public class EventDispatcher {
 
     private static EventDispatcher ourInstance = null;
@@ -21,11 +15,6 @@ public class EventDispatcher {
 
     private EventDispatcher() {}
 
-    /**
-     *
-     * @param applicationContext
-     * @return
-     */
     public static EventDispatcher getInstance(Context applicationContext) {
 
         if(ourInstance == null){
@@ -39,10 +28,12 @@ public class EventDispatcher {
     }
 
     /**
+     * Manager the petitions to server.
      *
-     * @param event
-     * @param data
-     * @return
+     * @param event The name of event to make a petition.
+     * @param data The data object with the information.
+     *
+     * @return The promise threw to server.
      */
     public Task<HashMap<String,String>> dispatchEvent(Event event, JSONObject data){
 
@@ -75,6 +66,14 @@ public class EventDispatcher {
         return null;
     }
 
+    /**
+     * Throw the event to get as parameter to make the petition to server.
+     *
+     * @param nameFunction The name to execute function in server.
+     * @param data The data object with the information.
+     *
+     * @return The promise threw to server.
+     */
     private Task<HashMap<String,String>> throwEvent(String nameFunction, JSONObject data){
 
         return this.mFunctions

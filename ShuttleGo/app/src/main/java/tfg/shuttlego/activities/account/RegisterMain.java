@@ -193,7 +193,7 @@ public class RegisterMain extends AppCompatActivity implements View.OnClickListe
             else {
 
                 try {
-                    Session.getInstance(getApplicationContext()).setUser(parserTypePerson(data));
+                    Session.getInstance().setUser(parserTypePerson(data));
                     startActivity(new Intent(RegisterMain.this, this.registerMainNextClass));
                     finish();
                 }

@@ -52,7 +52,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.origin_edit);
 
         this.originEditOriginObject = (Origin)Objects.requireNonNull(getIntent().getExtras()).getSerializable("origin");
-        this.user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();
@@ -147,8 +147,8 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
 
         try {
 
-            dataUser.put("email", Session.getInstance(getApplicationContext()).getUser().getEmail());
-            dataUser.put("password", Session.getInstance(getApplicationContext()).getUser().getPassword());
+            dataUser.put("email", Session.getInstance().getUser().getEmail());
+            dataUser.put("password", Session.getInstance().getUser().getPassword());
             dataOrigin.put("id", this.originEditOriginObject.getId());
             dataOrigin.put("name", newNameOrigin);
 
