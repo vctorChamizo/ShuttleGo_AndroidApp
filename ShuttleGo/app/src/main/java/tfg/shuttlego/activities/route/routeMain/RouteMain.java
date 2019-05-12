@@ -26,18 +26,20 @@ import tfg.shuttlego.model.transfer.person.TypePerson;
 
 public abstract class RouteMain extends AppCompatActivity {
 
+    private LinearLayout routeMainLinear;
+    private ProgressBar routeMainProgress;
+
+    protected NavigationView routeMainNavigation;
+    protected DrawerLayout routeMainDrawer;
+
     protected LinearLayout routeMainLinearDriver, routeMainLinearPhone;
     protected Button routeMainMainButton, routeMainSecondaryButton;
     protected TextView routeMainOrigin, routeMainLimit, routeMainPassengerMax, routeMainPassengerCurrent, routeMainDriver, routeMainPhone;
     protected ImageView routeMainImage;
-    protected NavigationView routeMainNavigation;
-    protected DrawerLayout routeMainDrawer;
-
-    private LinearLayout routeMainLinear;
-    private ProgressBar routeMainProgress;
 
     protected String routeMainIdRoute;
     protected Person user;
+
     protected boolean searching = false;
 
     @Override
