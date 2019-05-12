@@ -31,19 +31,23 @@ public class RecyclerViewAdapterOrigin extends RecyclerView.Adapter<RecyclerView
         OriginViewHolder(View v) {
 
             super(v);
-            context = v.getContext();
-            originCard = v.findViewById(R.id.origin_list_cardview_card);
-            originNameButton = v.findViewById(R.id.origin_list_cardview_btn);
-            originIdText = v.findViewById(R.id.origin_list_cardview_name_text);
+
+            this.context = v.getContext();
+
+            this.originCard = v.findViewById(R.id.origin_list_cardview_card);
+            this.originNameButton = v.findViewById(R.id.origin_list_cardview_btn);
+            this.originIdText = v.findViewById(R.id.origin_list_cardview_name_text);
         }
 
         void setOnClickListeners() {
 
-            originNameButton.setOnClickListener(v -> {
+            this.originNameButton.setOnClickListener(v -> {
 
-                Intent intent = new Intent(context, OriginMain.class);
-                intent.putExtra("origin", originIdText.getText());
-                context.startActivity(intent);
+                Intent intent = new Intent(this.context, OriginMain.class);
+
+                intent.putExtra("origin", this.originIdText.getText());
+
+                this.context.startActivity(intent);
             });
         }
     }

@@ -37,30 +37,32 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
         RouteViewHolder(View v) {
 
             super(v);
-            context = v.getContext();
-            routeCard = v.findViewById(R.id.route_list_cardview_cardview);
-            originText = v.findViewById(R.id.route_list_cardview_origin);
-            destinyText = v.findViewById(R.id.route_list_cardview_destiny);
-            hourText = v.findViewById(R.id.route_list_cardview_hour);
-            passengerText = v.findViewById(R.id.route_list_cardview_passengers);
 
-            destinyTittle = v.findViewById(R.id.route_list_cardview_destiny_text);
-            destinyImage = v.findViewById(R.id.route_list_cardview_image_destiny);
-            passengerLinear = v.findViewById(R.id.route_list_cardview_passenger_linear);
+            this.context = v.getContext();
 
-            idText = v.findViewById(R.id.route_list_cardview_id);
+            this.routeCard = v.findViewById(R.id.route_list_cardview_cardview);
+            this.originText = v.findViewById(R.id.route_list_cardview_origin);
+            this.destinyText = v.findViewById(R.id.route_list_cardview_destiny);
+            this.hourText = v.findViewById(R.id.route_list_cardview_hour);
+            this.passengerText = v.findViewById(R.id.route_list_cardview_passengers);
+            this.destinyTittle = v.findViewById(R.id.route_list_cardview_destiny_text);
+            this.destinyImage = v.findViewById(R.id.route_list_cardview_image_destiny);
+            this.passengerLinear = v.findViewById(R.id.route_list_cardview_passenger_linear);
+            this.idText = v.findViewById(R.id.route_list_cardview_id);
         }
 
         void setOnClickListeners() {
 
-            routeCard.setOnClickListener(v -> {
+            this.routeCard.setOnClickListener(v -> {
 
                 Intent intent;
 
                 if (Session.getInstance().getUser().getType() == TypePerson.DRIVER) intent = new Intent(context, RouteMainDriver.class);
                 else intent = new Intent(context, RouteMainPassengerInformation.class);
-                intent.putExtra("route", idText.getText());
-                context.startActivity(intent);
+
+                intent.putExtra("route", this.idText.getText());
+
+                this.context.startActivity(intent);
             });
         }
     }
@@ -68,6 +70,7 @@ public class RecyclerViewAdapterRoute extends RecyclerView.Adapter<RecyclerViewA
     @NonNull
     @Override
     public RouteViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.route_list_cardview, viewGroup, false);
         return new RouteViewHolder(v);
     }

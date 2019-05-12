@@ -39,23 +39,25 @@ public class RecyclerViewAdapterChooseRoute extends RecyclerView.Adapter<Recycle
 
             super(v);
 
-            this.userAddress = userAddress;
+            this.context = v.getContext();
 
-            context = v.getContext();
-            routeCard = v.findViewById(R.id.route_choose_passenger_cardview_cardview);
-            freePlacesText = v.findViewById(R.id.route_choose_passenger_cardview_freeplaces);
-            hourText = v.findViewById(R.id.route_choose_passenger_cardview_hour);
-            idText = v.findViewById(R.id.route_choose_passenger_cardview_id);
+            this.userAddress = userAddress;
+            this.routeCard = v.findViewById(R.id.route_choose_passenger_cardview_cardview);
+            this.freePlacesText = v.findViewById(R.id.route_choose_passenger_cardview_freeplaces);
+            this.hourText = v.findViewById(R.id.route_choose_passenger_cardview_hour);
+            this.idText = v.findViewById(R.id.route_choose_passenger_cardview_id);
         }
 
         void setOnClickListeners() {
 
-            routeCard.setOnClickListener(view -> {
+            this.routeCard.setOnClickListener(view -> {
 
-                Intent getRoute = new Intent(context, RouteMainPassengerChoose.class);
-                getRoute.putExtra("route", idText.getText());
+                Intent getRoute = new Intent(this.context, RouteMainPassengerChoose.class);
+
+                getRoute.putExtra("route", this.idText.getText());
                 getRoute.putExtra("userAddress", this.userAddress);
-                context.startActivity(getRoute);
+
+                this.context.startActivity(getRoute);
             });
         }
     }
