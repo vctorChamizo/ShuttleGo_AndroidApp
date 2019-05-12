@@ -270,7 +270,8 @@ public class OriginMain extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(OriginMain.this, AdminMain.class));
+
+        startActivity(new Intent(OriginMain.this, OriginList.class));
         finish();
     }
 }

@@ -177,12 +177,12 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
 
             case R.id.admin_drawer_home:
                 startActivity(new Intent(OriginList.this, AdminMain.class));
+                finish();
                 break;
         }
 
         originListDrawer.closeDrawer(GravityCompat.START);
 
-        finish();
         return true;
     }
 
