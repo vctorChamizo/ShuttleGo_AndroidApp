@@ -61,12 +61,7 @@ import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.address.Address;
 import tfg.shuttlego.model.transfer.person.Person;
 
-public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-                                                            View.OnClickListener,
-                                                            OnMapReadyCallback,
-                                                            PermissionsListener,
-                                                            AdapterView.OnItemClickListener,
-                                                            TextWatcher {
+public class AdminMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, OnMapReadyCallback, PermissionsListener, AdapterView.OnItemClickListener, TextWatcher {
 
     private Person user;
 
@@ -100,11 +95,12 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
 
         incializateView();
         setProgressBar();
+
         this.mapView.onCreate(savedInstanceState);
+
         setMenuDrawer();
         setCredencials();
 
-        //startLeftAnimation(this.adminMainProgress, this.adminMainLinear);
         removeProgressBar();
 
         this.navigationView.setNavigationItemSelectedListener(this);
@@ -175,9 +171,6 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         this.mapView = findViewById(R.id.admin_main_map);
 
         this.adminMainDestinySelected = false;
-
-        //this.adminMainAnimationLeftIn = AnimationUtils.loadAnimation(AdminMain.this, R.anim.left_in);
-        //this.adminMainAnimationLeftOut = AnimationUtils.loadAnimation(AdminMain.this, R.anim.left_out);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
@@ -266,13 +259,16 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
+
                 removeProgressBar();
                 throwToast(R.string.errConexion);
 
             } else if (task.getResult().containsKey("error")){
+
                 removeProgressBar();
 
                 switch (Objects.requireNonNull(task.getResult().get("error"))) {
+
                     case "badRequestForm": throwToast(R.string.errBadFormat); break;
                     case "originAlreadyExists": throwToast(R.string.errOriginAlreadyExists); break;
                     case "server": throwToast(R.string.errServer); break;
@@ -350,13 +346,13 @@ public class AdminMain extends AppCompatActivity implements NavigationView.OnNav
         this.mapboxMap.getUiSettings().setCompassEnabled(false);
         this.mapboxMap.getUiSettings().setLogoEnabled(false);
 
-        /*CameraPosition cp = new CameraPosition.Builder()
+        CameraPosition cp = new CameraPosition.Builder()
                 .target(new LatLng(40.0000000, -4.0000000))
                 .zoom(4)
                 .tilt(20)
                 .build();
 
-        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),3000);*/
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),3000);
     }
 
     @SuppressLint("MissingPermission")
