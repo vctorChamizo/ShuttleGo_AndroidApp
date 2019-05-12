@@ -3,10 +3,6 @@
 ##### Autores: Carlos Castellanos Mateo y Víctor Chamizo Rodriguez.
 ##### Tutor: Antonio Sarasa Cabezuelo.
 
-
-## Descripción
-
-
 ## Documentación
 
 ### Servidor:
@@ -20,19 +16,7 @@
 ##### Documentación Android: https://developer.android.com/docs/
 ##### Docuementación Android Studio: https://developer.android.com/studio/
 ##### Documentacion Mapbox: https://docs.mapbox.com/android/maps/overview/
-##### Credenciales Account-Mapbox:
-- username: shuttleGoTFG
-- mail: vicham01@ucm.es
-- password: shuttle2018
 
 ### Otros:
 ##### Turorial Markdown: https://markdown.es/
 ##### Tutorial Latex: http://gaia.fdi.ucm.es/files/research/texis/nightlybuilds/TeXiS-Manual-NightlyBuild.pdf
-
-
-## Guia de estilo
-### Arbol de directorios:
-### Declaración de variables:
-### Declaración de identificadores:
-### Declaración de archivos.xml:
-### Declaración de archivos.java:
