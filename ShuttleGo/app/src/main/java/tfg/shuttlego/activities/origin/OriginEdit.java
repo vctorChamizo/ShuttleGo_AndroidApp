@@ -42,7 +42,7 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
     private ProgressBar originEditProgress;
     private LinearLayout originEditLinear;
 
-    private Button originEditEditButton, originEditCancelButton;
+    private Button originEditEditButton;
     private EditText originEditText;
 
     @Override
@@ -64,7 +64,6 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
         removeProgressBar();
 
         this.originEditEditButton.setOnClickListener(this);
-        this.originEditCancelButton.setOnClickListener(this);
 
         this.originEditNavigation.setNavigationItemSelectedListener(this);
     }
@@ -81,7 +80,6 @@ public class OriginEdit extends AppCompatActivity implements View.OnClickListene
         this.originEditDrawer = findViewById(R.id.origin_edit_drawer);
 
         this.originEditEditButton = findViewById(R.id.origin_edit_edit_btn);
-        this.originEditCancelButton = findViewById(R.id.origin_edit_cancel_btn);
 
         this.originEditText = findViewById(R.id.origin_edit_text);
 
