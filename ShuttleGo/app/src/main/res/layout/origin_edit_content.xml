@@ -53,19 +53,11 @@
         <Button
             android:id="@+id/origin_edit_edit_btn"
             style="@style/ButtonRoundeOrange"
-            android:textColor="@color/colorWhite"
-            android:layout_marginTop="280dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp"
-            android:text="@string/edit"/>
+            android:layout_marginTop="380dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/edit"
+            android:textColor="@color/colorWhite" />
 
-        <Button
-            android:id="@+id/origin_edit_cancel_btn"
-            style="@style/ButtonRoundWhite"
-            android:textColor="@color/colorPrimary"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="@string/cancel"/>
     </LinearLayout>
 </LinearLayout>
