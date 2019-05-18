@@ -20,6 +20,13 @@ import tfg.shuttlego.model.event.EventDispatcher;
 @SuppressLint("Registered")
 public class RouteMainDriver extends RouteMain implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
+    /**
+     * Build a JSON to delete a route
+     *
+     * @param route necesary data to make the correct JSON
+     *
+     * @return JSON with information about the current route
+     */
     private JSONObject buildJSONDeleteRoute(String route) {
 
         JSONObject dataUser = new JSONObject();
@@ -28,19 +35,24 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
 
         try {
 
-        dataUser.put("email", this.user.getEmail());
-        dataUser.put("password", this.user.getPassword());
+            dataUser.put("email", this.user.getEmail());
+            dataUser.put("password", this.user.getPassword());
 
-        dataRoute.put("id", route);
+            dataRoute.put("id", route);
 
-        deleteRoute.put("user", dataUser);
-        deleteRoute.put("route", dataRoute);
+            deleteRoute.put("user", dataUser);
+            deleteRoute.put("route", dataRoute);
         }
         catch (JSONException e) { throwToast(R.string.err); }
 
         return deleteRoute;
     }
 
+    /**
+     * Throw the event that allow to delete a route
+     *
+     * @param route JSON with information to delete route
+     */
     private void throwEventDeleteRoute(JSONObject route) {
 
         EventDispatcher.getInstance(getApplicationContext())
@@ -48,17 +60,19 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
+
                 removeProgressBar();
                 throwToast(R.string.errConexion);
             }
             else if (task.getResult().containsKey("error")) {
+
                 removeProgressBar();
                 throwToast(R.string.errServer);
             }
             else {
 
                 throwToast(R.string.deleteRouteSuccesful);
-                startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
+                startActivity(new Intent(RouteMainDriver.this, RouteListDriver.class));
                 finish();
             }
         });
@@ -67,9 +81,9 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
     @Override
     protected void listeners() {
 
-        routeMainMainButton.setOnClickListener(this);
-        routeMainSecondaryButton.setOnClickListener(this);
-        routeMainNavigation.setNavigationItemSelectedListener(this);
+        this.routeMainMainButton.setOnClickListener(this);
+        this.routeMainSecondaryButton.setOnClickListener(this);
+        this.routeMainNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -80,7 +94,7 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
 
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
 
-        this.routeMainImage.setImageDrawable(getDrawable(R.drawable.ic_limit));
+        this.routeMainImage.setImageDrawable(getDrawable(R.drawable.ic_limit_black));
         String limit = getString(R.string.limitCardview) + " " + String.valueOf(resultEvent.get("destination"));
 
         String passengersMax = this.routeMainPassengerMax.getText() + " " + String.valueOf(resultEvent.get("max"));
@@ -106,6 +120,7 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
                 break;
 
             case R.id.route_main_secondary_btn:
+
                 setProgressBar();
                 throwEventDeleteRoute(buildJSONDeleteRoute(routeMainIdRoute));
                 break;
@@ -118,17 +133,19 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
         switch (menuItem.getItemId()) {
 
             case R.id.driver_drawer_list:
+
                 startActivity(new Intent(RouteMainDriver.this, RouteListDriver.class));
                 finish();
                 break;
 
             case R.id.driver_drawer_home:
+
                 startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
                 finish();
                 break;
         }
 
-        routeMainDrawer.closeDrawer(GravityCompat.START);
+        this.routeMainDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
@@ -136,9 +153,10 @@ public class RouteMainDriver extends RouteMain implements View.OnClickListener, 
     @Override
     public void onBackPressed() {
 
-        if (routeMainDrawer.isDrawerOpen(GravityCompat.START)) routeMainDrawer.closeDrawer(GravityCompat.START);
+        if (this.routeMainDrawer.isDrawerOpen(GravityCompat.START)) this.routeMainDrawer.closeDrawer(GravityCompat.START);
         else {
-            startActivity(new Intent(RouteMainDriver.this, DriverMain.class));
+
+            startActivity(new Intent(RouteMainDriver.this, RouteListDriver.class));
             finish();
         }
     }

@@ -1,17 +1,20 @@
 package tfg.shuttlego.activities.route;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.geojson.BoundingBox;
@@ -31,211 +34,223 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.route.routeMain.RouteMainDriver;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.origin.Origin;
 
-public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener {
+public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallback, MapboxMap.OnMapClickListener, PermissionsListener, View.OnClickListener {
 
-    MapView mapView;
-    private MapboxMap mapboxMap;
-    private LocationComponent locationComponent;
-    private PermissionsManager permissionsManager;
-    private String routeId;
     private LinearLayout routeCalculateLinear;
     private LinearLayout routeCalculateProgress;
+
+    private Button start;
+
+    private MapView mapView;
+    private MapboxMap mapboxMap;
+    private LocationComponent locationComponent;
+
+    private String routeId;
     private Point originPoint;
     private ArrayList<Point> waypoints;
     private TextView textLoading;
 
+    private boolean started = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Mapbox.getInstance(this, getString(R.string.access_token));
+
+        this.routeId = Objects.requireNonNull(getIntent().getExtras()).getString("routeId");
+
         setContentView(R.layout.route_calculate);
-        inicializateView();
-        mapView.onCreate(savedInstanceState);
-        textLoading.setText(R.string.loadingMap);
-        listeners();
         super.onCreate(savedInstanceState);
 
+        inicializateView();
+
+        this.mapView.onCreate(savedInstanceState);
+
+        this.textLoading.setText(R.string.loadingMap);
+
+        this.mapView.getMapAsync(RouteCalculate.this);
+        this.start.setOnClickListener(this);
     }
 
-    private void listeners() {
-        mapView.getMapAsync(RouteCalculate.this);
-    }
-
-    private void inicializateView(){
-
-        this.routeCalculateLinear = findViewById(R.id.route_calculate_content_linear1);
-        this.textLoading = findViewById(R.id.loading_text);
-        mapView = findViewById(R.id.route_calculate_map);
-        routeId = getIntent().getExtras().getString("routeId");
-        this.routeCalculateProgress = findViewById(R.id.route_calculate_progress);
-    }
     @Override
-    protected  void onStart(){
+    protected void onStart() {
+        this.mapView.onStart();
         super.onStart();
-        mapView.onStart();
+
     }
 
     @Override
-    protected void onPause(){
-        mapView.onPause();
+    protected void onPause() {
+        this.mapView.onPause();
         super.onPause();
     }
 
     @Override
-    protected void onStop(){
-        mapView.onStop();
+    protected void onStop() {
+        this.mapView.onStop();
         super.onStop();
     }
 
     @Override
-    protected void onDestroy(){
-        mapView.onDestroy();
+    protected void onDestroy() {
+        this.mapView.onDestroy();
         super.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
+        this.mapView.onLowMemory();
         super.onLowMemory();
-        mapView.onLowMemory();
     }
 
     @Override
-    protected void onResume(){
-        mapView.onResume();
+    protected void onResume() {
+        this.mapView.onResume();
         super.onResume();
     }
 
-    public void onExplanationNeeded(List<String> permissionsToExplain) {
-        Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
+    /**
+     * Inicializate the componentes of this view
+     */
+    private void inicializateView() {
+
+        this.routeCalculateLinear = findViewById(R.id.route_calculate_content_linear1);
+        this.textLoading = findViewById(R.id.loading_text);
+        this.mapView = findViewById(R.id.route_calculate_map);
+        this.routeCalculateProgress = findViewById(R.id.route_calculate_progress);
+        this.start = findViewById(R.id.route_calculate_start);
     }
 
-    @Override
-    public void onPermissionResult(boolean granted) {
-        if (granted) enableLocationComponent(mapboxMap.getStyle());
-        else {
-            Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
-            finish();
-        }
-    }
+    /**
+     * Show the progress bar component visible and put invisble the rest of the view
+     */
+    protected void setProgressBar() {
 
-    @Override
-    public boolean onMapClick(@NonNull LatLng point) {
-        return false;
-    }
-
-    @Override
-    public void onMapReady(@NonNull MapboxMap mapboxMap) {
-
-        setProgressBar();
-        
-        this.mapboxMap = mapboxMap;
-
-        this.mapboxMap.getUiSettings().setLogoEnabled(false);
-
-        mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
-
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-
-                enableLocationComponent(style);
-                mapboxMap.addOnMapClickListener(RouteCalculate.this);
-                throwEventGetPoints();
-            }
-        });
-
-        CameraPosition cp = new CameraPosition.Builder()
-                .zoom(25)
-                .tilt(20)
-                .build();
-
-        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp),1000);
-    }
-
-    private void throwCalculateRoute(){
-
-        textLoading.setText(R.string.calculatingRoute);
-
-        tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap).addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                removeProgressBar();
-            }
-        });
-
-    };
-
-    protected void setProgressBar () {
-        routeCalculateProgress.setVisibility(View.VISIBLE);
-        routeCalculateLinear.setVisibility(View.GONE);
-
+        this.routeCalculateProgress.setVisibility(View.VISIBLE);
+        this.routeCalculateLinear.setVisibility(View.GONE);
     }
 
     /**
      * Show the view visible and put invisble progress bar component
      */
-    protected void removeProgressBar () {
-        routeCalculateProgress.setVisibility(View.GONE);
-        routeCalculateLinear.setVisibility(View.VISIBLE);
+    protected void removeProgressBar() {
+
+        this.routeCalculateProgress.setVisibility(View.GONE);
+        this.routeCalculateLinear.setVisibility(View.VISIBLE);
     }
 
-    private void throwEventGetPoints() {
-        this.textLoading.setText(R.string.gettingPoints);
-        EventDispatcher.getInstance(getApplicationContext()).dispatchEvent(Event.GETROUTEPOINTS,buildJson()).addOnCompleteListener(new OnCompleteListener<HashMap<String, String>>() {
-            @Override
-            public void onComplete(@NonNull Task<HashMap<String, String>> task) {
+    /**
+     * Build a JSON to calculate a route
+     *
+     * @return JSON with information about the current route
+     */
+    private JSONObject buildJson() {
 
-                if (!task.isSuccessful() || task.getResult() == null) {
-                    throwToast(R.string.errConexion);
-                }
-                else if (task.getResult().containsKey("error")) {
-                    if(task.getResult().get("error").equals("routeDoesntExists")) throwToast(R.string.errRuteNotFound);
-                    else throwToast(R.string.errServer);
+        JSONObject result = new JSONObject();
+
+        try {
+
+            JSONObject route = new JSONObject();
+            route.put("id", routeId);
+
+            JSONObject user = new JSONObject();
+            user.put("email", Session.getInstance().getUser().getEmail());
+            user.put("password", Session.getInstance().getUser().getPassword());
+
+            result.put("route", route);
+            result.put("user", user);
+
+        }
+        catch (JSONException exception) { throwToast(R.string.err); }
+
+        return result;
+    }
+
+    /**
+     * Throw the event that allow to calculate a route
+     *
+     */
+    private void throwCalculateRoute() {
+
+        this.textLoading.setText(R.string.calculatingRoute);
+
+        tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap).addOnCompleteListener(task -> {
+
+            removeProgressBar();
+            this.locationComponent.setCameraMode(CameraMode.NONE);
+            moveMap(originPoint.coordinates());
+        });
+    }
+
+    /**
+     * Throw the event that allow to get the points of routes
+     *
+     */
+    private void throwEventGetPoints() {
+
+        this.textLoading.setText(R.string.gettingPoints);
+        EventDispatcher.getInstance(getApplicationContext()).dispatchEvent(Event.GETROUTEPOINTS, buildJson()).addOnCompleteListener(task -> {
+
+            if (!task.isSuccessful() || task.getResult() == null) throwToast(R.string.errConexion);
+            else if (task.getResult().containsKey("error")) {
+
+                if (Objects.requireNonNull(task.getResult().get("error")).equals("routeDoesntExists")) throwToast(R.string.errRuteNotFound);
+                else throwToast(R.string.errServer);
+            }
+            else {
+
+                HashMap<?, ?> result = task.getResult();
+                HashMap<?, ?> points = (HashMap<?, ?>) result.get("points");
+                HashMap<?, ?> originHas = (HashMap<?, ?>) Objects.requireNonNull(points).get("origin");
+
+                Origin origin = new Origin();
+                origin.setId((String) Objects.requireNonNull(originHas).get("id"));
+                origin.setName((String) originHas.get("name"));
+                origin.setCoordinates((String) originHas.get("coordinates"));
+
+                ArrayList<HashMap<?, ?>> waypointsHas = (ArrayList<HashMap<?, ?>>) points.get("waypoints");
+
+                if (Objects.requireNonNull(waypointsHas).size() == 0) {
+
+                    throwToast(R.string.NoWaypoints);
+
+                    Intent intent = new Intent(RouteCalculate.this, RouteMainDriver.class);
+                    intent.putExtra("route", this.routeId);
+                    startActivity(intent);
+                    finish();
                 }
                 else {
 
-                    HashMap<?, ?> result = task.getResult();
-                    HashMap<?, ?> points = (HashMap<?, ?>) result.get("points");
-                    HashMap<?, ?> originHas = (HashMap<?, ?>)points.get("origin");
+                    this.waypoints = new ArrayList<>();
 
-                    Origin origin = new Origin();
-                    origin.setId((String) originHas.get("id"));
-                    origin.setName((String) originHas.get("name"));
-                    origin.setCoordinates((String) originHas.get("coordinates"));
+                    for (HashMap<?, ?> waypoint : waypointsHas) {
 
-                    ArrayList<HashMap<?,?>>waypointsHas = (ArrayList<HashMap<?,?>>)points.get("waypoints");
-
-                    if(waypointsHas.size()==0){
-                        throwToast(R.string.NoWaypoints);
-                        finish();
-                    }
-                    else {
-                        waypoints = new ArrayList<>();
-
-                        for (HashMap<?, ?> waypoint : waypointsHas) {
-                            String[] coordinatesString = ((String) waypoint.get("coordinates")).split(",");
-                            List<Double> coordinates = new ArrayList<Double>();
-                            coordinates.add(Double.parseDouble(coordinatesString[0]));
-                            coordinates.add(Double.parseDouble(coordinatesString[1]));
-                            waypoints.add(createPoint(coordinates));
-                        }
-
-                        originPoint = createPoint(origin.getCoordinates());
-                        throwCalculateRoute();
+                        String[] coordinatesString = ((String) Objects.requireNonNull(waypoint.get("coordinates"))).split(",");
+                        List<Double> coordinates = new ArrayList<>();
+                        coordinates.add(Double.parseDouble(coordinatesString[0]));
+                        coordinates.add(Double.parseDouble(coordinatesString[1]));
+                        this.waypoints.add(createPoint(coordinates));
                     }
 
+                    this.originPoint = createPoint(origin.getCoordinates());
+                    throwCalculateRoute();
                 }
             }
         });
     }
 
-    private Point createPoint(List<Double>coordinates) {
+    private Point createPoint(List<Double> coordinates) {
 
         return new Point() {
+
             @NonNull
             @Override
             public String type() {
@@ -256,29 +271,47 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
         };
     }
 
-    private JSONObject buildJson() {
+    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
-        JSONObject result = new JSONObject();
+    /*********************************************************************************************************************
+     MAPBOX **/
 
-        try {
-            JSONObject route = new JSONObject();
-            route.put("id", routeId);
+    @Override
+    public void onMapReady(@NonNull MapboxMap mapboxMap) {
 
-            JSONObject user = new JSONObject();
-            user.put("email", Session.getInstance().getUser().getEmail());
-            user.put("password", Session.getInstance().getUser().getPassword());
+        setProgressBar();
 
-            result.put("route", route);
-            result.put("user", user);
+        this.mapboxMap = mapboxMap;
 
-        }catch (JSONException exception){
-            throwToast(R.string.err);
-        }
+        this.mapboxMap.getUiSettings().setLogoEnabled(false);
 
-        return result;
+        mapboxMap.setStyle(Style.OUTDOORS, style -> {
+
+            enableLocationComponent(style);
+            this.mapboxMap.addOnMapClickListener(RouteCalculate.this);
+            throwEventGetPoints();
+        });
     }
 
-    protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
+    @Override
+    public boolean onMapClick(@NonNull LatLng point) {
+        return false;
+    }
+
+    @Override
+    public void onExplanationNeeded(List<String> permissionsToExplain) { Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show(); }
+
+
+    @Override
+    public void onPermissionResult(boolean granted) {
+
+        if (granted) enableLocationComponent(Objects.requireNonNull(mapboxMap.getStyle()));
+        else {
+
+            Toast.makeText(this, R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
 
     @SuppressLint("MissingPermission")
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
@@ -289,14 +322,59 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
             locationComponent.activateLocationComponent(this, loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
             locationComponent.setCameraMode(CameraMode.TRACKING_GPS_NORTH);
+
         }
         else {
 
-            permissionsManager = new PermissionsManager(this);
+            PermissionsManager permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(this);
         }
     }
 
+    private void moveMap(List<Double> coordinates) {
 
+        CameraPosition cp = new CameraPosition.Builder()
+                .target(new LatLng(coordinates.get(1), coordinates.get(0)))
+                .zoom(17)
+                .tilt(20)
+                .build();
 
+        this.mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cp), 1000);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (!this.started) {
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { throwToast(R.string.cantAccessToLocation); }
+
+            started = true;
+            locationComponent.setCameraMode(CameraMode.TRACKING_COMPASS);
+
+            Location a = new Location("");
+            Location b = new Location("");
+
+            a.setLatitude(Objects.requireNonNull(this.locationComponent.getLastKnownLocation()).getLatitude());
+            a.setLongitude(locationComponent.getLastKnownLocation().getLongitude());
+
+            b.setLatitude(this.originPoint.latitude());
+            b.setLongitude(this.originPoint.longitude());
+
+            double distance = a.distanceTo(b);
+            double MAX_DISTANCE = 100;
+
+            if (distance > MAX_DISTANCE) throwToast(R.string.tooFar);
+
+            this.start.setText(R.string.cancel);
+
+        }
+        else {
+
+            this.started = false;
+            this.start.setText(R.string.start);
+            this.locationComponent.setCameraMode(CameraMode.NONE);
+            moveMap(originPoint.coordinates());
+        }
+    }
 }

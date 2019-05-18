@@ -1,6 +1,5 @@
 package tfg.shuttlego.model.transfer.person;
 
-
 import java.io.Serializable;
 
 public class Person implements Serializable {
@@ -57,6 +56,7 @@ public class Person implements Serializable {
     }
 
     public String getId() { return this.id; }
+
 
     public void setName(String name) {
         this.name = name;

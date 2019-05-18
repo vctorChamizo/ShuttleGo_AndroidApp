@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
+import tfg.shuttlego.activities.account.LoginMain;
 import tfg.shuttlego.activities.route.routeList.RouteListDriver;
 import tfg.shuttlego.activities.route.routeMain.RouteMainDriver;
 import tfg.shuttlego.model.event.Event;
@@ -31,25 +32,28 @@ import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
 import tfg.shuttlego.model.transfer.person.Person;
 
-public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class DriverMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, View.OnFocusChangeListener {
 
     private ProgressBar driverMainProgress;
     private LinearLayout driverMainLinear;
+
+    private NavigationView driverMainNavigation;
+    private DrawerLayout driverMainDrawer;
+
     private EditText driverMainLimit, driverMainPassenger, driverMainHour;
     private AutoCompleteTextView driverMainOrigin;
     private Button driverMainButton;
-    private NavigationView navigationView;
-    private DrawerLayout driverMainDrawer;
 
     private String idOrigin;
     private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.driver_main);
 
-        user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();
@@ -57,23 +61,46 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         setCredencials();
         throwEventGerAllOrigins();
 
-        driverMainButton.setOnClickListener(this);
-        driverMainHour.setOnClickListener(this);
+        this.driverMainButton.setOnClickListener(this);
+        this.driverMainHour.setOnClickListener(this);
+        this.driverMainOrigin.setOnFocusChangeListener(this);
+        this.driverMainNavigation.setNavigationItemSelectedListener(this);
     }
+
+    @Override
+    protected void onStart() { super.onStart(); }
+
+    @Override
+    protected void onPause() { super.onPause(); }
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); }
+
+    @Override
+    public void onLowMemory() { super.onLowMemory(); }
+
+    @Override
+    protected void onResume() { super.onResume(); }
 
     /**
      * Inicializate the componentes of this view
      */
     private void inicializateView() {
 
-        driverMainProgress = findViewById(R.id.driver_main_progress);
-        driverMainLinear = findViewById(R.id.driver_main_linear);
-        driverMainLimit = findViewById(R.id.driver_main_limit);
-        driverMainPassenger = findViewById(R.id.driver_main_passenger);
-        driverMainHour = findViewById(R.id.driver_main_hour);
-        driverMainOrigin = findViewById(R.id.driver_main_origin);
-        driverMainButton = findViewById(R.id.driver_main_button);
-        driverMainDrawer = findViewById(R.id.driver_main_drawer);
+        this.driverMainProgress = findViewById(R.id.driver_main_progress);
+        this.driverMainLinear = findViewById(R.id.driver_main_linear);
+
+        this.driverMainNavigation = findViewById(R.id.driver_main_nav);
+        this.driverMainDrawer = findViewById(R.id.driver_main_drawer);
+
+        this.driverMainLimit = findViewById(R.id.driver_main_limit);
+        this.driverMainPassenger = findViewById(R.id.driver_main_passenger);
+        this.driverMainHour = findViewById(R.id.driver_main_hour);
+        this.driverMainOrigin = findViewById(R.id.driver_main_origin);
+        this.driverMainButton = findViewById(R.id.driver_main_button);
     }
 
     /**
@@ -81,8 +108,8 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
      */
     private void setProgressBar () {
 
-        driverMainProgress.setVisibility(View.VISIBLE);
-        driverMainLinear.setVisibility(View.GONE);
+        this.driverMainProgress.setVisibility(View.VISIBLE);
+        this.driverMainLinear.setVisibility(View.GONE);
     }
 
     /**
@@ -90,8 +117,8 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
      */
     private void removeProgressBar () {
 
-        driverMainProgress.setVisibility(View.GONE);
-        driverMainLinear.setVisibility(View.VISIBLE);
+        this.driverMainProgress.setVisibility(View.GONE);
+        this.driverMainLinear.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -99,12 +126,10 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.driver_main_nav);
-        navigationView.setNavigationItemSelectedListener(this);
         Toolbar toolbar = findViewById(R.id.driver_main_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, driverMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        driverMainDrawer.addDrawerListener(toggle);
+        this.driverMainDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -113,18 +138,18 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
      */
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  this.driverMainNavigation.getHeaderView(0);
 
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + this.user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
-     * Throw the event that allow to get a list of all origins in the server
+     * Throw the event that allow to get a list of all origins in the server.
      *
      */
     private void throwEventGerAllOrigins(){
@@ -146,71 +171,26 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
 
                 setAutoCompleteTextView(originList);
             }
+
             removeProgressBar();
         });
     }
 
     /**
-     *
+     * Write the options in the auto edit text.
      */
     private void setAutoCompleteTextView(ArrayList<String> originList) {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, originList);
-        driverMainOrigin.setThreshold(1);
-        driverMainOrigin.setAdapter(adapter);
+        this.driverMainOrigin.setThreshold(1);
+        this.driverMainOrigin.setAdapter(adapter);
     }
 
-    private void throwEventGetRouteByName(JSONObject origin) {
-
-        EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.GETORIGINBYNAME, origin )
-        .addOnCompleteListener(task -> {
-
-            if (!task.isSuccessful() || task.getResult() == null) {
-
-                removeProgressBar();
-                throwToast(R.string.errConexion);
-            }
-            else if (task.getResult().containsKey("error")) {
-
-                removeProgressBar();
-                throwToast(R.string.errServer);
-            }
-            else {
-
-                idOrigin = task.getResult().get("id");
-                throwEventCreteRoute(buildJson());
-            }
-        });
-    }
-
-    private void throwEventCreteRoute(JSONObject route) {
-
-        EventDispatcher.getInstance(getApplicationContext())
-        .dispatchEvent(Event.CREATEROUTE, route)
-        .addOnCompleteListener(task -> {
-
-            if (!task.isSuccessful() || task.getResult() == null) {
-
-                removeProgressBar();
-                throwToast(R.string.errConexion);
-            }
-            else if (task.getResult().containsKey("error")) {
-
-                removeProgressBar();
-                throwToast(R.string.errServer);
-            }
-            else {
-
-                Intent logIntent = new Intent(DriverMain.this, RouteMainDriver.class);
-                logIntent.putExtra("route", task.getResult().get("id"));
-                startActivity(logIntent);
-                throwToast(R.string.createOriginSuccesful);
-            }
-
-        });
-    }
-
+    /**
+     * Build a JSON to get a route
+     *
+     * @return JSON with information about the current route
+     */
     private JSONObject buildJson() {
 
         JSONObject json = new JSONObject();
@@ -235,22 +215,87 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
         } catch (JSONException e) { throwToast(R.string.err);}
 
         return json;
-    }//buildJson
+    }
 
+    /**
+     * Throw the event that allow to get a route.
+     *
+     * @param origin The data necessary to throw the event.
+     */
+    private void throwEventGetRouteByName(JSONObject origin) {
+
+        EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(Event.GETORIGINBYNAME, origin )
+        .addOnCompleteListener(task -> {
+
+            if (!task.isSuccessful() || task.getResult() == null) {
+
+                removeProgressBar();
+                throwToast(R.string.errConexion);
+            }
+            else if (task.getResult().containsKey("error")) {
+
+                removeProgressBar();
+                throwToast(R.string.errServer);
+            }
+            else {
+
+                this.idOrigin = task.getResult().get("id");
+                throwEventCreteRoute(buildJson());
+            }
+        });
+    }
+
+    /**
+     * Throw the event that allow to create a route.
+     *
+     * @param route The data necessary to throw the event.
+     */
+    private void throwEventCreteRoute(JSONObject route) {
+
+        EventDispatcher.getInstance(getApplicationContext())
+        .dispatchEvent(Event.CREATEROUTE, route)
+        .addOnCompleteListener(task -> {
+
+            if (!task.isSuccessful() || task.getResult() == null) {
+
+                removeProgressBar();
+                throwToast(R.string.errConexion);
+            }
+            else if (task.getResult().containsKey("error")) {
+
+                removeProgressBar();
+                throwToast(R.string.errServer);
+            }
+            else {
+
+                Intent logIntent = new Intent(DriverMain.this, RouteMainDriver.class);
+                logIntent.putExtra("route", task.getResult().get("id"));
+                startActivity(logIntent);
+                throwToast(R.string.createRouteSucessful);
+                finish();
+            }
+        });
+    }
 
     private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
     @Override
+    public void onFocusChange(View v, boolean hasFocus) { if(getCurrentFocus() == this.driverMainOrigin) this.driverMainOrigin.showDropDown(); }
+
+    @Override
     public void onClick(View v) {
 
-        if (driverMainOrigin.getText().toString().isEmpty() ||
-                driverMainLimit.getText().toString().isEmpty() ||
-                driverMainPassenger.getText().toString().isEmpty() ||
-                driverMainHour.getText().toString().isEmpty())  throwToast(R.string.errDataEmpty);
+        if (this.driverMainOrigin.getText().toString().isEmpty() && this.driverMainLimit.getText().toString().isEmpty() && this.driverMainPassenger.getText().toString().isEmpty() && this.driverMainHour.getText().toString().isEmpty()) throwToast(R.string.errDataRouteDriverEmpty);
+        else if (this.driverMainOrigin.getText().toString().isEmpty()) throwToast(R.string.errOriginDriverEmpty);
+        else if (this.driverMainLimit.getText().toString().isEmpty()) throwToast(R.string.errLimitDriverEmpty);
+        else if (this.driverMainPassenger.getText().toString().isEmpty()) throwToast(R.string.errPassengerDriverEmpty);
+        else if (this.driverMainHour.getText().toString().isEmpty()) throwToast(R.string.errHourDriverEmpty);
         else {
 
             setProgressBar();
-            try { throwEventGetRouteByName(new JSONObject().put("origin", new JSONObject().put("name", driverMainOrigin.getText().toString()))); }
+
+            try { throwEventGetRouteByName(new JSONObject().put("origin", new JSONObject().put("name", this.driverMainOrigin.getText().toString()))); }
             catch (JSONException e) { throwToast(R.string.err);}
         }
     }
@@ -263,14 +308,19 @@ public class DriverMain extends AppCompatActivity implements NavigationView.OnNa
             case R.id.driver_drawer_list: startActivity(new Intent(DriverMain.this, RouteListDriver.class)); break;
         }
 
-        driverMainDrawer.closeDrawer(GravityCompat.START);
+        this.driverMainDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        if (driverMainDrawer.isDrawerOpen(GravityCompat.START)) driverMainDrawer.closeDrawer(GravityCompat.START);
-        else finish();
+
+        if (this.driverMainDrawer.isDrawerOpen(GravityCompat.START)) this.driverMainDrawer.closeDrawer(GravityCompat.START);
+        else {
+
+            startActivity(new Intent(DriverMain.this, LoginMain.class));
+            finish();
+        }
     }
 }

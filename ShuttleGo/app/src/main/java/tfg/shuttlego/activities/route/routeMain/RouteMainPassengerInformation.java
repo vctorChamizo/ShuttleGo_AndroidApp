@@ -17,6 +17,13 @@ import tfg.shuttlego.model.event.EventDispatcher;
 
 public class RouteMainPassengerInformation extends RouteMain implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
+    /**
+     * Build a JSON to delete a route
+     *
+     * @param route necesary data to make the correct JSON
+     *
+     * @return JSON with information about the current route
+     */
     private JSONObject buildJson(String route) {
 
         JSONObject dataUser = new JSONObject();
@@ -38,6 +45,11 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         return deleteRoute;
     }
 
+    /**
+     * Throw the event that allow to delete a route
+     *
+     * @param route JSON with information to add route
+     */
     private void throwEventDeleteRoute(JSONObject route) {
 
         EventDispatcher.getInstance(getApplicationContext())
@@ -45,17 +57,18 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
+
                 removeProgressBar();
                 throwToast(R.string.errConexion);
             }
             else if (task.getResult().containsKey("error")) {
+
                 removeProgressBar();
                 throwToast(R.string.errServer);
             }
             else {
 
-                throwToast(R.string.deleteRouteSuccesful);
-                startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class));
+                throwToast(R.string.cancelRouteSuccesful);
                 finish();
             }
         });
@@ -65,13 +78,13 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
     protected void listeners() {
 
         this.routeMainMainButton.setOnClickListener(this);
-        routeMainNavigation.setNavigationItemSelectedListener(this);
+        this.routeMainNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
     protected void setDataText(HashMap<?, ?> resultEvent) {
 
-        this.routeMainSecondaryButton.setVisibility(View.INVISIBLE);
+        this.routeMainSecondaryButton.setVisibility(View.GONE);
         this.routeMainMainButton.setText(getString(R.string.cancelRoute));
 
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
@@ -90,19 +103,33 @@ public class RouteMainPassengerInformation extends RouteMain implements View.OnC
         String phone = this.routeMainPhone.getText() + " " + String.valueOf(resultEvent.get("driverNumber"));
         this.routeMainPhone.setText(phone);
 
-        String driverNameComplete = this.routeMainDriver.getText() + " " + resultEvent.get("driverSurname") + " " + resultEvent.get("driverName");
+        String driverNameComplete = this.routeMainDriver.getText() + " " + resultEvent.get("driverName") + " " + resultEvent.get("driverSurname");
         this.routeMainDriver.setText(driverNameComplete);
     }
 
     @Override
-    public void onClick(View v) { throwEventDeleteRoute(buildJson(routeMainIdRoute)); }
+    public void onClick(View v) {
+
+        setProgressBar();
+        throwEventDeleteRoute(buildJson(routeMainIdRoute));
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.passenger_drawer_list: startActivity(new Intent(RouteMainPassengerInformation.this, RouteListPassenger.class)); finish(); break;
-            case R.id.passenger_drawer_home: startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class)); finish(); break;
+
+            case R.id.driver_drawer_list:
+
+                startActivity(new Intent(RouteMainPassengerInformation.this, RouteListPassenger.class));
+                finish();
+                break;
+
+            case R.id.driver_drawer_home:
+
+                startActivity(new Intent(RouteMainPassengerInformation.this, PassengerMain.class));
+                finish();
+                break;
         }
 
         routeMainDrawer.closeDrawer(GravityCompat.START);

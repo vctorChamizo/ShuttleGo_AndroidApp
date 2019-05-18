@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
 import tfg.shuttlego.activities.person.admin.AdminMain;
-import tfg.shuttlego.model.adapter.RecyclerViewAdapterOrigin;
+import tfg.shuttlego.activities.adapter.RecyclerViewAdapterOrigin;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
@@ -30,25 +30,33 @@ import tfg.shuttlego.model.transfer.person.Person;
 
 public class OriginList extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private NavigationView navigationView;
+    private NavigationView originListNavigation;
+    private DrawerLayout originListDrawer;
+
     private LinearLayout originListLinear;
     private ProgressBar originListProgress;
+
     private ArrayList<Origin> listOrigins;
-    private DrawerLayout originListDrawer;
+
+    private RecyclerView originListRecycler;
+
     private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.origin_list);
 
-        user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();
         setMenuDrawer();
         setCredencials();
         throwEventGetAllOrigins();
+
+        this.originListNavigation.setNavigationItemSelectedListener(this);
     }
 
     /**
@@ -56,9 +64,13 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void inicializateView() {
 
-        originListLinear = findViewById(R.id.origin_list_linear);
-        originListProgress = findViewById(R.id.origin_list_progress);
-        originListDrawer = findViewById(R.id.origin_list_drawer);
+        this.originListNavigation = findViewById(R.id.origin_list_nav);
+        this.originListDrawer = findViewById(R.id.origin_list_drawer);
+
+        this.originListLinear = findViewById(R.id.origin_list_linear);
+        this.originListProgress = findViewById(R.id.origin_list_progress);
+
+        this.originListRecycler = findViewById(R.id.origin_list_recycler);
     }
 
     /**
@@ -84,12 +96,11 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void setMenuDrawer() {
 
-        navigationView = findViewById(R.id.origin_list_nav);
-        navigationView.setNavigationItemSelectedListener(this);
         Toolbar toolbar = findViewById(R.id.origin_list_toolbar);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, originListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        originListDrawer.addDrawerListener(toggle);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, this.originListDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        this.originListDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -98,14 +109,14 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void setCredencials() {
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView =  this.originListNavigation.getHeaderView(0);
 
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + this.user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
@@ -124,6 +135,7 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(new Intent(OriginList.this, AdminMain.class));
             }
             else if (task.getResult().containsKey("error")) {
+
                 throwToast(R.string.errServer);
                 startActivity(new Intent(OriginList.this, AdminMain.class));
             }
@@ -131,14 +143,14 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
 
                 HashMap<?, ?> result = task.getResult();
                 ArrayList<HashMap<?, ?>> list = (ArrayList<HashMap<?, ?>>) result.get("origins");
-                listOrigins = new ArrayList<>();
+                this.listOrigins = new ArrayList<>();
 
                 assert list != null;
                 for (int i = 0; i < list.size(); ++i) {
                     Origin origin = new Origin();
                     origin.setId((String) list.get(i).get("id"));
                     origin.setName((String) list.get(i).get("name"));
-                    listOrigins.add(origin);
+                    this.listOrigins.add(origin);
                 }
 
                 createListView();
@@ -152,11 +164,10 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
      */
     private void createListView() {
 
-        RecyclerView recycler = findViewById(R.id.origin_list_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recycler.setLayoutManager(layoutManager);
+        this.originListRecycler.setLayoutManager(layoutManager);
         RecyclerView.Adapter<RecyclerViewAdapterOrigin.OriginViewHolder> adapter = new RecyclerViewAdapterOrigin(listOrigins);
-        recycler.setAdapter(adapter);
+        this.originListRecycler.setAdapter(adapter);
     }
 
     private void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
@@ -166,7 +177,11 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
 
         switch (menuItem.getItemId()) {
 
-            case R.id.admin_drawer_home: startActivity(new Intent(OriginList.this, AdminMain.class)); finish(); break;
+            case R.id.admin_drawer_home:
+
+                startActivity(new Intent(OriginList.this, AdminMain.class));
+                finish();
+                break;
         }
 
         originListDrawer.closeDrawer(GravityCompat.START);
@@ -176,7 +191,12 @@ public class OriginList extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        if (originListDrawer.isDrawerOpen(GravityCompat.START)) originListDrawer.closeDrawer(GravityCompat.START);
-        else finish();
+
+        if (this.originListDrawer.isDrawerOpen(GravityCompat.START)) this.originListDrawer.closeDrawer(GravityCompat.START);
+        else {
+
+            startActivity(new Intent(OriginList.this, AdminMain.class));
+            finish();
+        }
     }
 }

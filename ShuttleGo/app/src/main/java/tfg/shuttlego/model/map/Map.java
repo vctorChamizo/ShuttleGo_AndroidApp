@@ -1,7 +1,8 @@
 package tfg.shuttlego.model.map;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-
+import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
@@ -14,17 +15,17 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import com.mapbox.geojson.Point;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tfg.shuttlego.R;
 import tfg.shuttlego.model.transfer.address.Address;
 
+@SuppressLint("StaticFieldLeak")
 public class Map {
 
     private static Map ourInstance = null;
@@ -33,11 +34,14 @@ public class Map {
     public static Map getInstance(Context applicationContext) {
 
         if(ourInstance == null) {
+
             Mapbox.getInstance(applicationContext, applicationContext.getString(R.string.access_token));
+
             accessToken =applicationContext.getString(R.string.access_token);
             ourInstance = new Map();
             context = applicationContext;
         }
+
         return ourInstance;
     }
 
@@ -45,22 +49,21 @@ public class Map {
 
     public Task<String> calculateRoute(Point origin, ArrayList<Point>waypoints, MapView mapView, MapboxMap mapboxMap){
 
-        TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<String>();
+        TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
 
-        NavigationRoute.Builder builder = NavigationRoute.builder(this.context)
-                .accessToken(this.accessToken)
-                .origin(origin);
+        NavigationRoute.Builder builder = NavigationRoute.builder(context).accessToken(accessToken).origin(origin);
 
         for(Point waypoint:waypoints) builder = builder.addWaypoint(waypoint);
 
         builder.build().getRoute(new Callback<DirectionsResponse>() {
             @Override
-            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
-                if (response.body() == null) {
-                    taskCompletionSource.setResult(Map.context.getString(R.string.errConexion));
-                } else if (response.body().routes().size() < 1) {
-                    taskCompletionSource.setResult(Map.context.getString(R.string.errRuteNotFound));
-                }else {
+            public void onResponse(@NonNull Call<DirectionsResponse> call, @NonNull Response<DirectionsResponse> response) {
+
+                if (response.body() == null) taskCompletionSource.setResult(Map.context.getString(R.string.errConexion));
+                else if (response.body().routes().size() < 1) taskCompletionSource.setResult(Map.context.getString(R.string.errRuteNotFound));
+
+                else {
+
                     DirectionsRoute route = response.body().routes().get(0);
                     NavigationMapRoute nmr = new NavigationMapRoute(null, mapView, mapboxMap);
                     nmr.addRoute(route);
@@ -69,9 +72,7 @@ public class Map {
             }
 
             @Override
-            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
-                taskCompletionSource.setResult(Map.context.getString(R.string.errConexion));
-            }
+            public void onFailure(@NonNull Call<DirectionsResponse> call, @NonNull Throwable t) { taskCompletionSource.setResult(Map.context.getString(R.string.errConexion)); }
         });
 
         return taskCompletionSource.getTask();
@@ -83,7 +84,7 @@ public class Map {
      */
     public Task<List<Address>> getFullAddress(String address){
 
-        TaskCompletionSource<List<Address>> taskCompletionSource = new TaskCompletionSource<List<Address>>();
+        TaskCompletionSource<List<Address>> taskCompletionSource = new TaskCompletionSource<>();
 
         MapboxGeocoding query = MapboxGeocoding.builder()
                 .accessToken(Map.accessToken)
@@ -92,30 +93,27 @@ public class Map {
                 .build();
 
         query.enqueueCall(new Callback<GeocodingResponse>() {
-            @Override
-            public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
 
-                List<CarmenFeature> results = response.body().features();
-                List<Address> addresses = new ArrayList<Address>();
-                String postalCode;
+            @Override
+            public void onResponse(@NonNull Call<GeocodingResponse> call, @NonNull Response<GeocodingResponse> response) {
+
+                List<CarmenFeature> results = Objects.requireNonNull(response.body()).features();
+                List<Address> addresses = new ArrayList<>();
 
                 for(CarmenFeature result:results) {
-                    postalCode="";
-                    for (int i = 0; postalCode.equals("") && result.context()!=null && i < result.context().size(); i++)
-                        if (result.context().get(i).id().matches("postcode.*"))
-                            addresses.add(new Address(result.placeName(),result.context().get(i).text(),result.center()));
+
+                    for (int i = 0; result.context() != null && i < Objects.requireNonNull(result.context()).size(); i++)
+                        if (Objects.requireNonNull(Objects.requireNonNull(result.context()).get(i).id()).matches("postcode.*"))
+                            addresses.add(new Address(result.placeName(),Objects.requireNonNull(result.context()).get(i).text(),result.center()));
                 }
 
                 taskCompletionSource.setResult(addresses);
             }
 
-
             @Override
-            public void onFailure(Call<GeocodingResponse> call, Throwable t) {
-                taskCompletionSource.setResult(null);
-            }
+            public void onFailure(@NonNull Call<GeocodingResponse> call, @NonNull Throwable t) { taskCompletionSource.setResult(null); }
         });
 
         return taskCompletionSource.getTask();
-    };
+    }
 }

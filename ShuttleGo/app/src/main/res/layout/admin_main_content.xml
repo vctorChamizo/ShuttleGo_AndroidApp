@@ -22,14 +22,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
-            style="@style/AppBarLayout">
+        <android.support.design.widget.AppBarLayout style="@style/AppBarLayout">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/admin_main_toolbar"
                 style="@style/AppBarLayout"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/admin"/>
+                app:title="@string/admin" />
         </android.support.design.widget.AppBarLayout>
 
         <ScrollView
@@ -39,11 +38,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical" >
 
                 <RelativeLayout
+                    android:id="@+id/relative_map"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="350dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/mapbox_blue"
                     android:fillViewport="true">
 
                     <com.mapbox.mapboxsdk.maps.MapView
@@ -53,55 +55,43 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/admin_main_autocomplete"
-                        style="@style/dataMap"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:ems="10"
-                        android:hint="@string/introduceOrigin"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:paddingEnd="10dp"/>
+                        style="@style/MapEditText"
+                        android:hint="@string/introduceAddresOrigin" />
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relative_map"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="@dimen/fab_feedback_margin_top"
+                    android:orientation="vertical"
+                    tools:targetApi="o">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="30dp"
-                        android:orientation="vertical">
+                    <TextView
+                        style="@style/TittleEditText"
+                        android:layout_marginStart="15dp"
+                        android:text="@string/setNameOriginAdmin" />
 
-                        <TextView
-                            style="@style/SubTittleDriveMain"
-                            android:textAlignment="textStart"
-                            android:hint="@string/origin"
-                            android:text="@string/setNameOrigin" />
-
-                        <EditText
-                            android:id="@+id/admin_main_origin"
-                            android:hint="@string/origin"
-                            android:inputType="text"
-                            style="@style/DataLogin"
-                            android:layout_marginTop="10dp"
-                            android:theme="@style/ThemeData" />
-                    </LinearLayout>
+                    <EditText
+                        android:id="@+id/admin_main_origin"
+                        style="@style/MainEditText"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/origin"
+                        android:inputType="text"
+                        android:theme="@style/ThemeData"
+                        tools:ignore="Autofill,TextFields" />
 
                     <Button
                         android:id="@+id/admin_main_button"
-                        android:text="@string/add"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_marginTop="80dp"
-                        android:layout_marginHorizontal="20dp"
-                        style="@style/ButtonBigRound"
-                        tools:targetApi="o" />
-
+                        style="@style/ButtonRoundWhite"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="@dimen/fab_feedback_margin_top"
+                        android:layout_marginBottom="@dimen/fab_margin_bottom"
+                        android:text="@string/addOriginAdmin" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
 </LinearLayout>

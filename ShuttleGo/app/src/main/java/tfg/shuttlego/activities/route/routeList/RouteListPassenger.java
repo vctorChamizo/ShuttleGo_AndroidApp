@@ -15,7 +15,6 @@ public class RouteListPassenger extends RouteList implements NavigationView.OnNa
 
     @Override
     protected void listeners() {
-
         this.routeListNavigation.setNavigationItemSelectedListener(this);
     }
 
@@ -25,6 +24,7 @@ public class RouteListPassenger extends RouteList implements NavigationView.OnNa
         switch (menuItem.getItemId()) {
 
             case R.id.driver_drawer_home:
+
                 startActivity(new Intent(RouteListPassenger.this, PassengerMain.class));
                 finish();
                 break;
@@ -33,5 +33,10 @@ public class RouteListPassenger extends RouteList implements NavigationView.OnNa
         this.routeListDrawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 }

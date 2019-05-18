@@ -1,5 +1,6 @@
 package tfg.shuttlego.activities.route.routeList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +20,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import tfg.shuttlego.R;
-import tfg.shuttlego.model.adapter.RecyclerViewAdapterRoute;
+import tfg.shuttlego.activities.adapter.RecyclerViewAdapterRoute;
+import tfg.shuttlego.activities.person.driver.DriverMain;
+import tfg.shuttlego.activities.person.passenger.PassengerMain;
 import tfg.shuttlego.model.event.Event;
 import tfg.shuttlego.model.event.EventDispatcher;
 import tfg.shuttlego.model.session.Session;
@@ -46,7 +49,7 @@ public abstract class RouteList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_list);
 
-        user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();
@@ -59,6 +62,34 @@ public abstract class RouteList extends AppCompatActivity {
         listeners();
     }
 
+    @Override
+    protected void onRestart(){
+
+        setProgressBar();
+        throwEventGetAllRoutes();
+
+        super.onRestart();
+    }
+
+
+    @Override
+    protected void onStart() { super.onStart(); }
+
+    @Override
+    protected void onPause() { super.onPause(); }
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); }
+
+    @Override
+    public void onLowMemory() { super.onLowMemory(); }
+
+    @Override
+    protected void onResume() { super.onResume(); }
+
     /**
      * Inicializate the componentes of this view.
      */
@@ -67,8 +98,8 @@ public abstract class RouteList extends AppCompatActivity {
         this.routeListLinear = findViewById(R.id.route_list_linear);
         this.routeListProgress = findViewById(R.id.route_list_progress);
 
-        if (user.getType() == TypePerson.DRIVER) this.routeListNavigation = findViewById(R.id.route_list_nav_driver);
-        else this.routeListNavigation = findViewById(R.id.route_list_nav_passenger);
+        this.routeListNavigation = findViewById(R.id.route_list_nav_driver);
+        //else this.routeListNavigation = findViewById(R.id.route_list_nav_passenger);
 
         this.routeListNavigation.setVisibility(View.VISIBLE);
         this.routeListDrawer = findViewById(R.id.route_list_drawer);
@@ -111,14 +142,14 @@ public abstract class RouteList extends AppCompatActivity {
      */
     private void setCredencials(){
 
-        View hView =  routeListNavigation.getHeaderView(0);
+        View hView =  this.routeListNavigation.getHeaderView(0);
 
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + this.user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
@@ -127,12 +158,13 @@ public abstract class RouteList extends AppCompatActivity {
     private void buildJSON() {
 
         JSONObject dataUser = new JSONObject();
+
         this.getRoutes = new JSONObject();
 
         try {
 
-            dataUser.put("email", Session.getInstance(getApplicationContext()).getUser().getEmail());
-            dataUser.put("password", Session.getInstance(getApplicationContext()).getUser().getPassword());
+            dataUser.put("email", Session.getInstance().getUser().getEmail());
+            dataUser.put("password", Session.getInstance().getUser().getPassword());
             this.getRoutes.put("user", dataUser);
 
         }
@@ -200,6 +232,7 @@ public abstract class RouteList extends AppCompatActivity {
     public void onBackPressed() {
 
         if (this.routeListDrawer.isDrawerOpen(GravityCompat.START)) this.routeListDrawer.closeDrawer(GravityCompat.START);
-        else finish();
+        else if (this.user.getType() == TypePerson.DRIVER) startActivity(new Intent(this, DriverMain.class));
+        else startActivity(new Intent(this, PassengerMain.class));
     }
 }

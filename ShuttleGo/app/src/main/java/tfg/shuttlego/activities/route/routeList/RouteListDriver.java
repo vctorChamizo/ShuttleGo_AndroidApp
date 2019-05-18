@@ -13,10 +13,7 @@ import tfg.shuttlego.activities.person.driver.DriverMain;
 public class RouteListDriver extends RouteList implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
-    protected void listeners() {
-
-        this.routeListNavigation.setNavigationItemSelectedListener(this);
-    }
+    protected void listeners() { this.routeListNavigation.setNavigationItemSelectedListener(this); }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -24,6 +21,7 @@ public class RouteListDriver extends RouteList implements NavigationView.OnNavig
         switch (menuItem.getItemId()) {
 
             case R.id.driver_drawer_home:
+
                 startActivity(new Intent(RouteListDriver.this, DriverMain.class));
                 finish();
                 break;

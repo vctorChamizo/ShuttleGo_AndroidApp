@@ -26,35 +26,58 @@ import tfg.shuttlego.model.transfer.person.TypePerson;
 
 public abstract class RouteMain extends AppCompatActivity {
 
+    private LinearLayout routeMainLinear;
+    private ProgressBar routeMainProgress;
+
+    protected NavigationView routeMainNavigation;
+    protected DrawerLayout routeMainDrawer;
+
     protected LinearLayout routeMainLinearDriver, routeMainLinearPhone;
     protected Button routeMainMainButton, routeMainSecondaryButton;
     protected TextView routeMainOrigin, routeMainLimit, routeMainPassengerMax, routeMainPassengerCurrent, routeMainDriver, routeMainPhone;
     protected ImageView routeMainImage;
-    protected NavigationView routeMainNavigation;
-    protected DrawerLayout routeMainDrawer;
-
-    private LinearLayout routeMainLinear;
-    private ProgressBar routeMainProgress;
 
     protected String routeMainIdRoute;
     protected Person user;
 
+    protected boolean searching = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.route_main);
 
         this.routeMainIdRoute = (String)Objects.requireNonNull(getIntent().getExtras()).getSerializable("route");
-        this.user = Session.getInstance(getApplicationContext()).getUser();
+        this.user = Session.getInstance().getUser();
 
         inicializateView();
         setProgressBar();
         setMenuDrawer();
         setCredencials();
-        throwEventGetRoute(buildJson(routeMainIdRoute));
+        throwEventGetRoute(buildJson(this.routeMainIdRoute));
 
         listeners();
     }
+
+
+    @Override
+    protected void onStart() { super.onStart(); }
+
+    @Override
+    protected void onPause() { super.onPause(); }
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); }
+
+    @Override
+    public void onLowMemory() { super.onLowMemory(); }
+
+    @Override
+    protected void onResume() { super.onResume(); }
 
     /**
      * Inicializate the componentes of this view
@@ -88,8 +111,8 @@ public abstract class RouteMain extends AppCompatActivity {
      */
     protected void setProgressBar () {
 
-        routeMainProgress.setVisibility(View.VISIBLE);
-        routeMainLinear.setVisibility(View.GONE);
+        this.routeMainProgress.setVisibility(View.VISIBLE);
+        this.routeMainLinear.setVisibility(View.GONE);
     }
 
     /**
@@ -97,8 +120,8 @@ public abstract class RouteMain extends AppCompatActivity {
      */
     protected void removeProgressBar () {
 
-        routeMainProgress.setVisibility(View.GONE);
-        routeMainLinear.setVisibility(View.VISIBLE);
+        this.routeMainProgress.setVisibility(View.GONE);
+        this.routeMainLinear.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -109,7 +132,7 @@ public abstract class RouteMain extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.route_main_toolbar);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, routeMainDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        routeMainDrawer.addDrawerListener(toggle);
+        this.routeMainDrawer.addDrawerListener(toggle);
         toggle.syncState();
     }
 
@@ -118,14 +141,14 @@ public abstract class RouteMain extends AppCompatActivity {
      */
     private void setCredencials() {
 
-        View hView =  routeMainNavigation.getHeaderView(0);
+        View hView =  this.routeMainNavigation.getHeaderView(0);
 
         TextView nav_name_text = hView.findViewById(R.id.menu_nav_header_name);
         TextView nav_email_text = hView.findViewById(R.id.menu_nav_header_email);
 
-        String complete_name = user.getName() + " " + user.getSurname();
+        String complete_name = this.user.getName() + " " + user.getSurname();
         nav_name_text.setText(complete_name);
-        nav_email_text.setText(user.getEmail());
+        nav_email_text.setText(this.user.getEmail());
     }
 
     /**
@@ -133,7 +156,7 @@ public abstract class RouteMain extends AppCompatActivity {
      *
      * @param route necesary data to make the correct JSON
      *
-     * @return JSON with information about the current origin
+     * @return JSON with information about the current route
      */
     private JSONObject buildJson(String route) {
 
@@ -145,7 +168,7 @@ public abstract class RouteMain extends AppCompatActivity {
 
             routeJSON.put("id", route);
 
-            if (this.user.getType() != TypePerson.DRIVER) {
+            if (this.user.getType() != TypePerson.DRIVER && !searching) {
 
                 userJSON.put("email", this.user.getEmail());
                 userJSON.put("password", this.user.getPassword());
@@ -162,7 +185,7 @@ public abstract class RouteMain extends AppCompatActivity {
     /**
      * Throw the event that allow to get a route
      *
-     * @param route JSON with information to get origin
+     * @param route JSON with information to get route
      */
     private void throwEventGetRoute(JSONObject route) {
 
@@ -185,7 +208,15 @@ public abstract class RouteMain extends AppCompatActivity {
 
     protected void throwToast(int msg) { Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show(); }
 
+    /**
+     * The listener to action in lists.
+     */
     abstract protected void listeners();
 
+    /**
+     * Put the information of route in his edit text
+     *
+     * @param resultEvent The data information about route.
+     */
     abstract protected void setDataText(HashMap<?,?> resultEvent);
 }

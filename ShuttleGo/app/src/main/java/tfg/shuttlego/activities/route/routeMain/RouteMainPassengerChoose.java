@@ -1,6 +1,7 @@
 package tfg.shuttlego.activities.route.routeMain;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,9 +20,25 @@ import tfg.shuttlego.model.transfer.address.Address;
 
 public class RouteMainPassengerChoose extends RouteMain implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    private JSONObject buildJson(String idRoute) {
+    private Address address;
 
-        Address address = (Address)Objects.requireNonNull(getIntent().getExtras()).getSerializable("userAddress");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        this.searching = true;
+        this.address = (Address)Objects.requireNonNull(getIntent().getExtras()).getSerializable("userAddress");
+
+        super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * Build a JSON to add a route
+     *
+     * @param idRoute necesary data to make the correct JSON
+     *
+     * @return JSON with information about the current route
+     */
+    private JSONObject buildJson(String idRoute) {
 
         JSONObject addToRoute = new JSONObject();
         JSONObject route = new JSONObject();
@@ -44,6 +61,11 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
         return addToRoute;
     }
 
+    /**
+     * Throw the event that allow to add a route
+     *
+     * @param route JSON with information to add route
+     */
     private void throwEventAddToRoute(JSONObject route) {
 
         EventDispatcher.getInstance(getApplicationContext())
@@ -51,12 +73,22 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
         .addOnCompleteListener(task -> {
 
             if (!task.isSuccessful() || task.getResult() == null) {
+
                 removeProgressBar();
                 throwToast(R.string.errConexion);
             }
             else if (task.getResult().containsKey("error")) {
+
                 removeProgressBar();
-                throwToast(R.string.errServer);
+
+                switch (Objects.requireNonNull(task.getResult().get("error"))) {
+
+                    case "userAlreadyAdded": throwToast(R.string.errUserAlreadyAdded);break;
+
+                    case "routeSoldOut": throwToast(R.string.errSoldOut);break;
+
+                    default: throwToast(R.string.errServer);break;
+                }
             }
             else {
 
@@ -76,13 +108,13 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
     @Override
     protected void setDataText(HashMap<?, ?> resultEvent) {
 
-        this.routeMainSecondaryButton.setVisibility(View.INVISIBLE);
         this.routeMainMainButton.setText(getString(R.string.add));
+        this.routeMainSecondaryButton.setVisibility(View.GONE);
 
         String origin = this.routeMainOrigin.getText() + " " + resultEvent.get("origin");
         this.routeMainOrigin.setText(origin);
 
-        String limit = this.routeMainLimit.getText() + " " + String.valueOf(resultEvent.get("destinationName"));
+        String limit = this.routeMainLimit.getText() + " " + this.address.getAddress().split(",")[0];
         this.routeMainLimit.setText(limit);
 
         String passengersMax = this.routeMainPassengerMax.getText() + " " + String.valueOf(resultEvent.get("max"));
@@ -106,11 +138,21 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.passenger_drawer_list: startActivity(new Intent(RouteMainPassengerChoose.this, RouteListPassenger.class)); finish(); break;
-            case R.id.passenger_drawer_home: startActivity(new Intent(RouteMainPassengerChoose.this, PassengerMain.class)); finish(); break;
+
+            case R.id.driver_drawer_list:
+
+                startActivity(new Intent(RouteMainPassengerChoose.this, RouteListPassenger.class));
+                finish();
+                break;
+
+            case R.id.driver_drawer_home:
+
+                startActivity(new Intent(RouteMainPassengerChoose.this, PassengerMain.class));
+                finish();
+                break;
         }
 
-        routeMainDrawer.closeDrawer(GravityCompat.START);
+        this.routeMainDrawer.closeDrawer(GravityCompat.START);
 
         return true;
     }
@@ -118,7 +160,7 @@ public class RouteMainPassengerChoose extends RouteMain implements View.OnClickL
     @Override
     public void onBackPressed() {
 
-        if (routeMainDrawer.isDrawerOpen(GravityCompat.START)) routeMainDrawer.closeDrawer(GravityCompat.START);
+        if (this.routeMainDrawer.isDrawerOpen(GravityCompat.START)) this.routeMainDrawer.closeDrawer(GravityCompat.START);
         else finish();
     }
 }
