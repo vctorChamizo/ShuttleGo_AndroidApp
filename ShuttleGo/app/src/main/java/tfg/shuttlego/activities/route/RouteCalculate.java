@@ -184,7 +184,10 @@ public class RouteCalculate extends AppCompatActivity implements OnMapReadyCallb
 
         tfg.shuttlego.model.map.Map.getInstance(getApplicationContext()).calculateRoute(originPoint, waypoints, mapView, mapboxMap).addOnCompleteListener(task -> {
 
+
             removeProgressBar();
+            if(task.getResult()!=null) this.throwToast(task.getResult());
+
             this.locationComponent.setCameraMode(CameraMode.NONE);
             moveMap(originPoint.coordinates());
         });

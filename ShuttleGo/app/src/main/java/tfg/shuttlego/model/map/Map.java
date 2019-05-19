@@ -47,9 +47,9 @@ public class Map {
 
     private Map() {}
 
-    public Task<String> calculateRoute(Point origin, ArrayList<Point>waypoints, MapView mapView, MapboxMap mapboxMap){
+    public Task<Integer> calculateRoute(Point origin, ArrayList<Point>waypoints, MapView mapView, MapboxMap mapboxMap){
 
-        TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
+        TaskCompletionSource<Integer> taskCompletionSource = new TaskCompletionSource<>();
 
         NavigationRoute.Builder builder = NavigationRoute.builder(context).accessToken(accessToken).origin(origin);
 
@@ -59,9 +59,8 @@ public class Map {
             @Override
             public void onResponse(@NonNull Call<DirectionsResponse> call, @NonNull Response<DirectionsResponse> response) {
 
-                if (response.body() == null) taskCompletionSource.setResult(Map.context.getString(R.string.errConexion));
-                else if (response.body().routes().size() < 1) taskCompletionSource.setResult(Map.context.getString(R.string.errRuteNotFound));
-
+                if (response.body() == null) taskCompletionSource.setResult(R.string.errConexion);
+                else if (response.body().routes().size() < 1) taskCompletionSource.setResult(R.string.errRuteNotFound);
                 else {
 
                     DirectionsRoute route = response.body().routes().get(0);
@@ -72,7 +71,7 @@ public class Map {
             }
 
             @Override
-            public void onFailure(@NonNull Call<DirectionsResponse> call, @NonNull Throwable t) { taskCompletionSource.setResult(Map.context.getString(R.string.errConexion)); }
+            public void onFailure(@NonNull Call<DirectionsResponse> call, @NonNull Throwable t) { taskCompletionSource.setResult(R.string.errConexion); }
         });
 
         return taskCompletionSource.getTask();
