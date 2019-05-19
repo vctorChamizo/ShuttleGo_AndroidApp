@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
+import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.api.geocoding.v5.MapboxGeocoding;
@@ -51,7 +52,7 @@ public class Map {
 
         TaskCompletionSource<Integer> taskCompletionSource = new TaskCompletionSource<>();
 
-        NavigationRoute.Builder builder = NavigationRoute.builder(context).accessToken(accessToken).origin(origin);
+        NavigationRoute.Builder builder = NavigationRoute.builder(context).accessToken(accessToken).profile(DirectionsCriteria.PROFILE_DRIVING).origin(origin);
 
         for(Point waypoint:waypoints) builder = builder.addWaypoint(waypoint);
 
