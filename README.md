@@ -21,7 +21,3 @@ ShuttleGo es el Trabajo de Fin de Grado para la Facultad de Informática de la U
 ##### Documentación Android: https://developer.android.com/docs/
 ##### Docuementación Android Studio: https://developer.android.com/studio/
 ##### Documentacion Mapbox: https://docs.mapbox.com/android/maps/overview/
-
-### Otros:
-##### Turorial Markdown: https://markdown.es/
-##### Tutorial Latex: http://gaia.fdi.ucm.es/files/research/texis/nightlybuilds/TeXiS-Manual-NightlyBuild.pdf
