@@ -1,7 +1,12 @@
-# TFG_GIS
-
+# ShuttleGo_AndroidApp
+ShuttleGo es el Trabajo de Fin de Grado para la Facultad de Informática de la Universidad Complutense de Madrid.
 ##### Autores: Carlos Castellanos Mateo y Víctor Chamizo Rodriguez.
 ##### Tutor: Antonio Sarasa Cabezuelo.
+## Contenido
+ - Memoria de proyecto.
+ - Código del servidor.
+ - Código del cliente.
+ - APK de la aplicación.
 
 ## Documentación
 
