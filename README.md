@@ -17,11 +17,11 @@ Although the project started as an idea only for airports, it’s scalable and c
 used to solve another transport situations.
 
 ## Content
- - Project Report
+ - Project report.
  - Source code server.
  - Source code client.
  - APK application.
  
 ## Athors: 
- - Carlos Castellanos Mateo
+ - Carlos Castellanos Mateo.
  - Víctor Chamizo Rodriguez.
