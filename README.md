@@ -1,23 +1,23 @@
-# ShuttleGo_AndroidApp
-ShuttleGo es el Trabajo de Fin de Grado para la Facultad de Informática de la Universidad Complutense de Madrid.
-##### Autores: Carlos Castellanos Mateo y Víctor Chamizo Rodriguez.
-##### Tutor: Antonio Sarasa Cabezuelo.
-## Contenido
- - Memoria de proyecto.
- - Código del servidor.
- - Código del cliente.
- - APK de la aplicación.
+# ShuttleGo-Android
 
-## Documentación
+Most of the traffic between european airports and hotels is caused by
+private vehicles, it usually causes important traffic jams between these two.
+Providing a low cost and efficient access to airports has become a fundamental
+mobility issue for cities, so some minority transport methods are being promoted.
+Shuttle bus is one of these new initiatives, which has become popular
+during the last years, making companies offer this new type of service as an
+alternative.
+The goal of this bachelor thesis is showing a smartphone app that solves
+the user’s problem when booking these kind of services, giving portability,
+simplicity and quickness to the experience, properties that cannot be found in other
+similar apps. This application works for both ways, passengers and drivers.
+Although the project started as an idea only for airports, it’s scalable and can be
+used to solve another transport situations.
 
-### Servidor:
-##### Documentación Firebase: https://firebase.google.com/docs/
-##### Limitaciones Firebase: https://firebase.google.com/pricing/
-##### Google Cloud Functions: https://cloud.google.com/functions/docs/
-##### Promesas JavaScript: https://javascript.info/promise-chaining
-##### Documentación JavaScript: https://michelletorres.mx/documentacion-de-api-javascript-con-jsdoc/
+##### Athors: Carlos Castellanos Mateo y Víctor Chamizo Rodriguez.
 
-### Cliente:
-##### Documentación Android: https://developer.android.com/docs/
-##### Docuementación Android Studio: https://developer.android.com/studio/
-##### Documentacion Mapbox: https://docs.mapbox.com/android/maps/overview/
+## Content
+ - Project Report
+ - Source code server.
+ - Source code client.
+ - APK application.
