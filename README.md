@@ -22,6 +22,6 @@ used to solve another transport situations.
  - Source code client.
  - APK application.
  
-## Athors: 
+## Authors: 
  - Carlos Castellanos Mateo.
  - Víctor Chamizo Rodriguez.
