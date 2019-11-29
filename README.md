@@ -9,7 +9,7 @@ Shuttle bus is one of these new initiatives, which has become popular during the
 
 The goal of this bachelor thesis is showing a smartphone app that solves the user’s problem when booking these kind of services, giving portability, simplicity and quickness to the experience, properties that cannot be found in other similar apps. This application works for both ways, passengers and drivers. Although the project started as an idea only for airports, it’s scalable and can be used to solve another transport situations.
 
-![airpot animation](https://cdn.dribbble.com/users/181980/screenshots/3786965/shot_1.gif)
+![](https://i.pinimg.com/originals/38/07/cd/3807cdf23c778c8789dbc7e723cae490.gif)
 
 ## Documentation
 
