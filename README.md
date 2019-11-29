@@ -25,6 +25,14 @@ At the level of internal design and coding, attempts have been made to adapt des
 - Source Andorid Studio client: /src/android-shuttle-go
 - Source server: /src/firebase-server
 
+## Technologies
+  - **Android Studio**: for the client application development and graphical interface. This module has been 
+    developed with **Java**.
+    
+  - **Firebase API**: for server application development. This module has been developed with **JavaScript**.
+  
+  - **Mapbox API**: to render and manage the map management used by the application.
+
 ## Setup
 This section provides the necessary indications and requirementsfor the correct installation of the ShuttleGo mobile application.
 
@@ -41,14 +49,6 @@ That this implies.
   5. This file can be copied by connecting the terminal to a computer through a USB and dragging it to any device directory; or, it can be downloaded from the repository where it is hosted. In this manual, the following will be followed Steps of the second option.
   
   6. The file is downloaded and the device automatically starts the installation process. Must be press install to continue.
-
-## Technologies
-  - **Android Studio**: for the client application development and graphical interface. This module has been 
-    developed with **Java**.
-    
-  - **Firebase API**: for server application development. This module has been developed with **JavaScript**.
-  
-  - **Mapbox API**: to render and manage the map management used by the application.
 
 ## Authors
 The project has been carried out by [Carlos Castellanos](https://github.com/carlosCharlie) and [Victor Chamizo](https://github.com/vctorChamizo).
